@@ -132,9 +132,9 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
       {
         nom: 'Affacturage (factoring)',
         description:
-          'Cession de vos factures clients à un affactureur (banque, Bpifrance, société spécialisée) qui vous avance jusqu\'à 90 % sous 48 h, puis recouvre auprès du client. Différent du crédit fournisseur : c\'est un financement, pas un délai. Commission 1-3 % + intérêts. Adapté si vous avez plusieurs clients B2B solvables.',
+          'Cession de vos factures clients à un affactureur (banque, Bpifrance, société spécialisée) qui vous avance rapidement une partie de leur montant, puis recouvre auprès du client. Différent du crédit fournisseur : c\'est un financement, pas un délai. Coût : commission et frais de financement, à comparer entre offres. Adapté si vous avez plusieurs clients B2B solvables.',
         site: 'https://www.bpifrance.fr/catalogue-offres/garantie-affacturage',
-        badge: 'Cash sous 48 h',
+        badge: 'Trésorerie rapide',
       },
       {
         nom: 'Escompte commercial',
@@ -151,7 +151,7 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
       {
         nom: 'Mobilisation créances publiques (Bpifrance)',
         description:
-          'Si vous travaillez avec des collectivités ou administrations, Bpifrance avance jusqu\'à 100 % de vos factures publiques (DGFIP, conseil régional, hôpital). Délai 48 h, jusqu\'à un plafond de 30 000 € automatique, plus au-delà.',
+          'Si vous travaillez avec des collectivités ou administrations, Bpifrance peut avancer tout ou partie du montant de vos factures publiques (conditions et plafonds sur bpifrance.fr).',
         site: 'https://www.bpifrance.fr/catalogue-offres/avance',
         badge: 'Marchés publics',
       },
@@ -182,7 +182,7 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
   });
   nationales.push({
     nom: 'ADIE · Micro-crédit',
-    description: 'Prêts jusqu\'à 17 000 € sur 5 ans. Accessible même si vous êtes interdit bancaire ou fiché FICP.',
+    description: 'Prêts jusqu\'à 15 000 € remboursables sur 48 mois au plus (adie.org). Accessible même si vous êtes interdit bancaire ou fiché FICP.',
     telephone: '0 969 328 110',
     site: 'https://www.adie.org',
     badge: 'Même interdit bancaire',

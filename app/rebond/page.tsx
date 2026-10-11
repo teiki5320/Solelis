@@ -23,7 +23,7 @@ const financements: Financement[] = [
   {
     nom: 'ADIE (micro-crédit)',
     description:
-      'Jusqu’à 17 000 € sur 5 ans. Accessible même si interdit bancaire ou fiché FICP.',
+      'Jusqu’à 15 000 € remboursables sur 48 mois au plus (adie.org). Accessible même si interdit bancaire ou fiché FICP.',
     tel: '0 969 328 110',
     url: 'https://adie.org',
     urlLabel: 'adie.org',

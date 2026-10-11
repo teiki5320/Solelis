@@ -183,7 +183,7 @@ export default function BlocPlateformes() {
             si vous étiez salarié auparavant.
           </li>
           <li>
-            <strong>Adie</strong> — Micro-crédit jusqu&apos;à 17 000 €
+            <strong>Adie</strong> — Micro-crédit jusqu&apos;à 15 000 €
             même si interdit bancaire (changement véhicule, équipement).
           </li>
         </ul>

@@ -131,11 +131,12 @@ export default function BlocNationaliteSejour() {
             <strong>OFII — Office français de l&apos;immigration et de
             l&apos;intégration</strong> : visite médicale, attestation
             d&apos;intégration, aide au retour volontaire si vous le
-            souhaitez (allocation forfaitaire 650 € + billet d&apos;avion).
+            souhaitez (voyage pris en charge et allocation forfaitaire,
+            sous conditions).
           </li>
           <li>
             <strong>Association CIMADE</strong> : permanences juridiques
-            gratuites, dans chaque département.
+            gratuites dans de nombreux départements.
           </li>
         </ul>
       </div>
@@ -147,16 +148,18 @@ export default function BlocNationaliteSejour() {
         </p>
         <p className="mt-2 text-sm text-navy/80">
           L&apos;OFII propose une <strong>aide au retour volontaire</strong>{' '}
-          (montant forfaitaire 650 € + billet d&apos;avion + accompagnement)
-          aux ressortissants en situation régulière mais sans perspective.
-          Une <strong>aide à la réinsertion économique</strong>{' '}
-          (jusqu&apos;à 5 000 €) peut compléter pour un projet de
-          création dans le pays d&apos;origine.
+          (voyage pris en charge, allocation forfaitaire dont le montant
+          dépend de la situation, accompagnement), principalement aux
+          personnes en situation irrégulière ou visées par une obligation
+          de quitter le territoire (service-public.gouv.fr, fiche F33974).
+          Une <strong>aide à la réinsertion</strong> peut compléter, y
+          compris pour un projet de création d&apos;entreprise dans le
+          pays d&apos;origine (projets sélectionnés).
         </p>
         <p className="mt-2 text-sm text-navy/80">
           C&apos;est une option <strong>volontaire, non infamante</strong>,
-          souvent méconnue, qui peut éviter une OQTF et permettre une
-          reconstruction professionnelle ailleurs.
+          souvent méconnue, qui peut permettre une reconstruction
+          professionnelle ailleurs.
         </p>
       </div>
 

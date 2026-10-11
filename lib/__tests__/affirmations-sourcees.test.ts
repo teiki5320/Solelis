@@ -55,6 +55,9 @@ const INTERDITS: { re: RegExp; pourquoi: string }[] = [
   { re: /CPAM \/ SSI|indépendants \(jusqu.à 3[\s ]000|vous y avez droit\./, pourquoi: 'action sociale des indépendants : Urssaf / CPSTI, au cas par cas (urssaf.fr)' },
   { re: /Comptez environ 3 000 à 10 000|compter 5 000 à 15 000|frais de greffe environ 80|audience ne dure souvent que 15 minutes|Le juge accorde généralement 1 mois|répond généralement sous 15 jours/, pourquoi: 'chiffres sans source officielle' },
   { re: /FISAC|Bonus écologique flotte|nom: 'USPF'|nom: 'SYNHORCAT'/, pourquoi: 'dispositifs disparus (FISAC éteint depuis 2019, Sénat PLF 2023) ou organismes fusionnés/mal nommés' },
+  { re: /jusqu.à 90 % sous 48 h|Commission 1-3 %|Délai 48 h, jusqu.à un plafond/, pourquoi: 'conditions commerciales non officielles' },
+  { re: /17[\s\u202f]000 €|18,17 ?€/, pourquoi: 'Adie : 15 000 € sur 48 mois (adie.org) ; ASS 19,48 €/jour (service-public F12484)' },
+  { re: /forfaitaire 650 €|réinsertion économique<\/strong>\{' '\}\s*\(jusqu/, pourquoi: 'aide au retour OFII : montants de l\'arrêté du 9 octobre 2023 (service-public F33974)' },
   { re: /souvent\s+inférieurs à 15 jours|commander vos formulaires CSP/, pourquoi: 'OPCO : délai non sourcé ; documents CSP fournis par France Travail' },
   { re: /loi 14 fév\. 2022\)|loi du 14 fév\. 2022\)|loi du 14 fév\. 2022\)\./, pourquoi: 'limite de 5 ans du conjoint collaborateur : C. com. art. L121-4 (LFSS 2022)' },
 ];

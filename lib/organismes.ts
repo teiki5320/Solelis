@@ -512,7 +512,7 @@ export function buildAidesPersonnelles(reponses: Reponses): GroupeOrganismes {
     type: 'France Travail',
     telephone: '39 49',
     site: 'https://www.francetravail.fr',
-    badge: '18,17€/jour · fin de droits chômage',
+    badge: '19,48 €/jour · fin de droits chômage',
   });
 
   // APL logement
@@ -692,7 +692,7 @@ export function buildReseauxSpecifiques(
       nom: 'Garantie Égalité Femmes (ex-FGIF)',
       type: 'France Active · garantie de prêt',
       site: 'https://www.franceactive.org',
-      badge: 'Garantie jusqu\'à 80 % du prêt',
+      badge: 'Garantie de prêt bancaire',
     },
   ];
   if (age === 'plus-60' || age === '50-60') {
