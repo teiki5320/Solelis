@@ -42,7 +42,7 @@ export const REGLES: Regle[] = [
     base: 'Livre des procédures fiscales',
     reference: 'LPF art. L169 (délai de reprise)',
     point:
-      "31 décembre de la 3e année qui suit celle au titre de laquelle l'impôt est dû.",
+      "Année au titre de laquelle l'impôt est dû ; le délai court jusqu'au 31 décembre de la 3e année qui suit.",
     interruption:
       "Proposition de rectification, jugement, demande d'assistance internationale.",
 
@@ -55,7 +55,7 @@ export const REGLES: Regle[] = [
     base: 'Livre des procédures fiscales',
     reference: 'LPF art. L176 (délai de reprise)',
     point:
-      "31 décembre de la 3e année qui suit celle au cours de laquelle la TVA est devenue exigible.",
+      "Année au cours de laquelle la TVA est devenue exigible ; le délai court jusqu'au 31 décembre de la 3e année qui suit.",
     interruption: "Proposition de rectification, action en recouvrement.",
     finAnneeCivile: true,
   },
@@ -104,8 +104,10 @@ export const REGLES: Regle[] = [
     cle: 'penal-amende',
     label: "Amendes pénales / contraventions",
     duree: 3,
-    base: 'Code de procédure pénale',
-    reference: 'CPP art. 133-3',
+    // Peines contraventionnelles : 3 ans révolus à compter de la décision
+    // définitive (C. pén. art. 133-4, legifrance.gouv.fr).
+    base: 'Code pénal',
+    reference: 'C. pén. art. 133-4',
     point: "Date à laquelle la décision est devenue définitive.",
     interruption: "Tout acte d'exécution.",
   },

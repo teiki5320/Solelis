@@ -29,6 +29,12 @@ describe('vérificateur de prescription', () => {
     expect(calculerPrescription(regle('urssaf'), '2026-01-15', null, AUJOURDHUI)!.departFutur).toBe(false);
   });
 
+  it('amendes contraventionnelles : 3 ans, article 133-4 du Code pénal', () => {
+    expect(regle('penal-amende').duree).toBe(3);
+    expect(regle('penal-amende').reference).toBe('C. pén. art. 133-4');
+    expect(regle('penal-amende').base).toBe('Code pénal');
+  });
+
   it('sans date : pas de résultat', () => {
     expect(calculerPrescription(regle('urssaf'), '', null, AUJOURDHUI)).toBeNull();
   });
