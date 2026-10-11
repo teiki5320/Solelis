@@ -173,6 +173,7 @@ export default function ValorisationStocksPage() {
           <div className="block text-sm text-navy/80">
             Nature dominante du stock
             <select
+              aria-label="Nature dominante du stock"
               value={nature}
               onChange={(e) => setNature(e.target.value as NatureStock)}
               className="mt-2 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2 text-base"
@@ -189,6 +190,7 @@ export default function ValorisationStocksPage() {
           <div className="sm:col-span-2 block text-sm text-navy/80">
             Voie de réalisation envisagée
             <select
+              aria-label="Voie de réalisation envisagée"
               value={voie}
               onChange={(e) => setVoie(e.target.value as Voie)}
               className="mt-2 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2 text-base"

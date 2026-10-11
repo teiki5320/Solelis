@@ -46,8 +46,9 @@ export default function AtiPage() {
   const [foyer, setFoyer] = useState(1);
 
   // Plafond : montant forfaitaire du RSA pour une personne seule, quelle que
-  // soit la taille du foyer (décret n° 2026-220 du 30 mars 2026 : 651,69 €
-  // au 1er avril 2026). La taille du foyer reste affichée à titre indicatif.
+  // soit la taille du foyer (C. trav. R5424-70, 4° ; décret n° 2026-220 du
+  // 30 mars 2026 : 651,69 € au 1er avril 2026). Le champ « foyer » est gardé
+  // pour la mise en page, mais il n'entre pas dans le calcul.
   const plafondRSA = 651.69;
 
   const result = useMemo<Result>(() => {
@@ -80,10 +81,10 @@ export default function AtiPage() {
     }
 
     if (ressourcesMensuelles <= plafondRSA) {
-      motifs.push(`Ressources actuelles sous le plafond RSA (${formatEuros(plafondRSA)}/mois pour votre foyer).`);
+      motifs.push(`Ressources personnelles sous le plafond (RSA d'une personne seule : ${formatEuros(plafondRSA)}/mois).`);
     } else {
       blocages.push(
-        `Ressources actuelles (${formatEuros(ressourcesMensuelles)}/mois) supérieures au plafond RSA pour votre foyer (${formatEuros(plafondRSA)}).`
+        `Ressources personnelles (${formatEuros(ressourcesMensuelles)}/mois) supérieures au plafond : RSA d'une personne seule (${formatEuros(plafondRSA)}/mois).`
       );
     }
 
@@ -122,8 +123,8 @@ export default function AtiPage() {
       },
       {
         '@type': 'HowToStep',
-        name: 'Renseigner le foyer et les ressources',
-        text: 'Indiquez la taille du foyer et les ressources mensuelles actuelles pour vérifier le plafond RSA.',
+        name: 'Renseigner vos ressources',
+        text: 'Indiquez vos ressources personnelles mensuelles : le plafond est le RSA d\'une personne seule, quelle que soit la taille du foyer.',
       },
       {
         '@type': 'HowToStep',
@@ -223,6 +224,9 @@ export default function AtiPage() {
               onChange={(e) => setFoyer(Number(e.target.value))}
               className="mt-1 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2"
             />
+            <span className="mt-1 block text-[11px] text-navy/55">
+              Sans effet sur le calcul : pour l&apos;ATI, le plafond est celui d&apos;une personne seule, quelle que soit la taille du foyer.
+            </span>
           </label>
           <label className="block text-sm text-navy">
             Vos ressources personnelles mensuelles (€)
@@ -319,7 +323,7 @@ export default function AtiPage() {
       </div>
 
       <p className="mt-6 text-xs text-navy/50">
-        Sources officielles : Code du travail art. L5424-24 à L5424-26 et R5424-69 à R5424-72 ;
+        Sources officielles : Code du travail art. L5424-24 à L5424-26 et R5424-69 à R5424-72 (plafond de ressources : R5424-70, 4°) ;
         décret n° 2019-796 ; loi n° 2022-172 du 14 février 2022 et décret n° 2022-450 du 30 mars 2022 ;
         www.francetravail.fr et www.unedic.org (fiche ATI) ; décret n° 2026-220 du 30 mars 2026 (RSA).
       </p>
