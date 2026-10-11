@@ -88,7 +88,7 @@ export default function BlocPeriodeSuspecte() {
             <strong>Paiement d&apos;une dette échue</strong> par un mode normal (virement, chèque) — annulable si le créancier savait votre situation.
           </li>
           <li>
-            <strong>Vente à un proche</strong> (conjoint, enfant, ami) même au juste prix — la connaissance est présumée.
+            <strong>Vente à un proche</strong> (conjoint, enfant, ami), même au juste prix — la loi ne présume pas sa connaissance de la cessation des paiements : elle doit être prouvée, mais le juge peut la déduire d&apos;indices (lien familial, informations partagées).
           </li>
           <li>
             <strong>Cession de fonds de commerce</strong> à prix anormalement bas.

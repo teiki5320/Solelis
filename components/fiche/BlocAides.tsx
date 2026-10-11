@@ -3,6 +3,7 @@ import type { Reponses, CompanyData } from '@/lib/types';
 import type { SectorInfo } from '@/lib/secteur';
 import { getAidesRegionales } from '@/lib/aidesRegionales';
 import { isEI } from '@/lib/strategie';
+import { contactCotisations } from '@/lib/organismes';
 import { useFiche } from '@/lib/FicheContext';
 import BlocAccordeon from './BlocAccordeon';
 
@@ -24,11 +25,12 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
   // Section 1: Aides liées au problème principal
   const specifiques: Aide[] = [];
   if (r.probleme === 'urssaf') {
+    const cot = contactCotisations(s, r.effectif, dep);
     specifiques.push({
-      nom: 'Échelonnement URSSAF',
-      description: `Demandez un échéancier auprès de l'URSSAF ${dep ? `de votre département (${dep})` : ''}. Les cotisations de plus de 3 ans sont potentiellement prescrites.`,
-      telephone: '3957',
-      site: 'https://www.urssaf.fr',
+      nom: cot.org === 'URSSAF' ? 'Échelonnement URSSAF' : `Échelonnement · ${cot.org}`,
+      description: `Demandez un échéancier auprès de ${cot.orgAvecArticle}${cot.tel ? '' : ` (${cot.telLibelle})`}. Les cotisations de plus de 3 ans sont potentiellement prescrites.`,
+      telephone: cot.tel ?? undefined,
+      site: cot.site,
       badge: 'Prioritaire pour vous',
     });
     specifiques.push({
@@ -39,7 +41,7 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
   }
   if (r.probleme === 'impots') {
     specifiques.push({
-      nom: `Service des impôts des entreprises${ville ? ` de ${ville}` : ''}`,
+      nom: 'Votre service des impôts des entreprises (SIE)',
       description: 'Demande de délai de paiement, échelonnement ou remise gracieuse. En cas de gêne exceptionnelle, l\'administration peut réduire l\'impôt dû.',
       site: 'https://www.impots.gouv.fr',
       badge: 'Prioritaire pour vous',
@@ -131,7 +133,7 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
         nom: 'Affacturage (factoring)',
         description:
           'Cession de vos factures clients à un affactureur (banque, Bpifrance, société spécialisée) qui vous avance jusqu\'à 90 % sous 48 h, puis recouvre auprès du client. Différent du crédit fournisseur : c\'est un financement, pas un délai. Commission 1-3 % + intérêts. Adapté si vous avez plusieurs clients B2B solvables.',
-        site: 'https://www.bpifrance.fr/nos-solutions/financement/financer-court-terme/affacturage',
+        site: 'https://www.bpifrance.fr/catalogue-offres/garantie-affacturage',
         badge: 'Cash sous 48 h',
       },
       {
@@ -150,7 +152,7 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
         nom: 'Mobilisation créances publiques (Bpifrance)',
         description:
           'Si vous travaillez avec des collectivités ou administrations, Bpifrance avance jusqu\'à 100 % de vos factures publiques (DGFIP, conseil régional, hôpital). Délai 48 h, jusqu\'à un plafond de 30 000 € automatique, plus au-delà.',
-        site: 'https://www.bpifrance.fr/nos-solutions/financement/financer-court-terme/avance-creances-publiques',
+        site: 'https://www.bpifrance.fr/catalogue-offres/avance',
         badge: 'Marchés publics',
       },
     ];
@@ -209,8 +211,8 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
     },
     {
       nom: 'Aide juridictionnelle',
-      description: 'Avocat et frais de justice pris en charge si revenus < 12 957 €/an. Pour vos procédures personnelles.',
-      site: 'https://www.service-public.fr',
+      description: 'Avocat et frais de justice pris en charge : en totalité si votre revenu fiscal de référence est d\'au plus 12 957 €, en partie jusqu\'à 19 433 € (personne seule, barème 2026). Pour vos procédures personnelles.',
+      site: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F18074',
       badge: 'Sous conditions',
     },
     {
@@ -223,15 +225,21 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
   sections.push({ titre: 'Pour vous personnellement', aides: personnelles });
 
   // Aides locales
-  const chambreLabel = s.chambre === 'CMA' ? 'Chambre de Métiers' : s.chambre === 'CA' ? 'Chambre d\'agriculture' : 'CCI';
-  const regionales: Aide[] = [
-    {
-      nom: `${chambreLabel}${dep ? ` (${dep})` : ''}`,
-      description: `Accompagnement gratuit et confidentiel pour les entreprises en difficulté${ville ? ` dans la région de ${ville}` : ''}.`,
-      site: s.chambre === 'CMA' ? 'https://www.artisanat.fr' : s.chambre === 'CA' ? 'https://chambres-agriculture.fr' : 'https://www.cci.fr',
-      badge: 'Gratuit · local',
-    },
-  ];
+  // Pas de chambre consulaire pour les professions libérales, la santé et
+  // les associations : le CIP (aides nationales) est leur interlocuteur.
+  const sansChambre =
+    s.secteur === 'liberal' || s.secteur === 'sante' || s.secteur === 'ess' || /association|fondation/i.test(c.formeJuridique || '');
+  const chambreLabel = s.chambre === 'CMA' ? 'Chambre de métiers et de l\'artisanat' : s.chambre === 'CA' ? 'Chambre d\'agriculture' : 'CCI';
+  const regionales: Aide[] = sansChambre
+    ? []
+    : [
+        {
+          nom: `${chambreLabel}${dep ? ` (${dep})` : ''}`,
+          description: `Accompagnement gratuit et confidentiel pour les entreprises en difficulté${ville ? ` dans la région de ${ville}` : ''}.`,
+          site: s.chambre === 'CMA' ? 'https://www.artisanat.fr' : s.chambre === 'CA' ? 'https://chambres-agriculture.fr' : 'https://www.cci.fr',
+          badge: 'Gratuit · local',
+        },
+      ];
   if (r.probleme === 'urssaf' || r.probleme === 'impots') {
     regionales.push({
       nom: 'Médiateur national de l\'énergie',
@@ -240,7 +248,9 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
       badge: 'TPE uniquement',
     });
   }
-  sections.push({ titre: `Aides locales${dep ? ` · département ${dep}` : ''}`, aides: regionales });
+  if (regionales.length > 0) {
+    sections.push({ titre: `Aides locales${dep ? ` · département ${dep}` : ''}`, aides: regionales });
+  }
 
   // Aides régionales ciblées
   const regionInfo = getAidesRegionales(dep);

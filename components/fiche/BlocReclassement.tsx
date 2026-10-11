@@ -62,9 +62,11 @@ export default function BlocReclassement() {
             ou refuser, à compter de la remise du document.
           </li>
           <li>
-            Si le salarié refuse ou si l&apos;employeur omet de proposer le
-            CSP : <strong>contribution due à France Travail</strong>
-            équivalente à 2 mois de salaire (sanction).
+            Si l&apos;employeur omet de proposer le CSP, France Travail le
+            propose à sa place et l&apos;employeur doit une{' '}
+            <strong>contribution à France Travail</strong> de 2 mois de
+            salaire, 3 mois si le salarié adhère (art. L1233-66 C. trav.).
+            Le refus du salarié, lui, n&apos;entraîne aucune sanction.
           </li>
         </ul>
       </div>
@@ -196,12 +198,12 @@ export default function BlocReclassement() {
               <span aria-hidden>☎</span> 39 95
             </a>
             <a
-              href="https://www.francetravail.fr/employeur"
+              href="https://www.francetravail.fr/employeur/vos-declarations-et-cotisations/la-fin-de-vos-contrats-de-travai/le-contrat-de-securisation-profe.html"
               target="_blank"
               rel="noreferrer"
               className="rounded-full bg-white/80 px-3 py-1.5 text-bleu-fonce hover:bg-white"
             >
-              <span aria-hidden>🌐</span> francetravail.fr/employeur
+              <span aria-hidden>🌐</span> francetravail.fr — CSP employeur
             </a>
           </div>
         </div>

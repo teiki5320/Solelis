@@ -153,10 +153,11 @@ export default function BlocGarantieBPI() {
             (34 14, gratuit, confidentiel).
           </li>
           <li>
-            <strong>Mandat ad hoc</strong> si la situation est plus
-            grave : permet de tout renégocier dans un cadre confidentiel
-            (homologué tribunal commerce) sans déclencher la procédure
-            collective.
+            <strong>Mandat ad hoc ou conciliation</strong> si la
+            situation est plus grave : permet de tout renégocier dans un
+            cadre confidentiel sans déclencher la procédure collective.
+            Seul l&apos;accord de conciliation peut être homologué par le
+            tribunal (art. L611-8 C. com.).
           </li>
         </ol>
       </div>

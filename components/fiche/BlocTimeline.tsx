@@ -96,7 +96,7 @@ function etapesPrevention(): Etape[] {
       jour: 'Aujourd\'hui',
       titre: 'Vous anticipez — c\'est la bonne décision',
       description:
-        "Les dispositifs amiables (mandat ad hoc, conciliation) sont ouverts aux entreprises qui ne sont pas en cessation des paiements depuis plus de 45 jours.",
+        "Les dispositifs amiables sont ouverts : le mandat ad hoc tant que vous n'êtes pas en cessation des paiements, la conciliation jusqu'à 45 jours après la cessation (art. L611-3 et L611-4 C. com.).",
       niveau: 'present',
     },
     {
@@ -124,7 +124,7 @@ function etapesPrevention(): Etape[] {
       jour: '+ 6 mois',
       titre: 'Accord ou bascule en procédure collective',
       description:
-        "Soit un accord est trouvé (homologué ou non), soit la situation s'aggrave et il faut basculer en redressement. Agir tôt donne plus d'options.",
+        "Soit un accord est trouvé (en conciliation, il peut être constaté ou homologué par le tribunal), soit la situation s'aggrave et il faut basculer en redressement. Agir tôt donne plus d'options.",
       niveau: 'futur',
     },
   ];

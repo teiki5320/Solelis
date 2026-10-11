@@ -12,8 +12,10 @@ import BlocAccordeon from './BlocAccordeon';
 export default function BlocPGE() {
   const { reponses } = useFiche();
 
+  // Affiché aussi quand un PGE est déclaré en cours : la carte prioritaire
+  // « PGE en cours » renvoie vers ce bloc.
   const pertinent =
-    reponses.probleme === 'banque' || reponses.situation === 'tresorie';
+    reponses.probleme === 'banque' || reponses.situation === 'tresorie' || reponses.pgeEnCours === 'oui';
 
   if (!pertinent) return null;
 

@@ -1,29 +1,38 @@
 'use client';
 import { useState, useMemo, type ReactNode } from 'react';
-import type { Reponses } from '@/lib/types';
 import { scorePriorityCards, scrollToId, type PriorityCardMeta } from '@/lib/priorites';
+import { getResponsabiliteAssocies, type ResponsabiliteAssocies } from '@/lib/strategie';
+import { contactCotisations, type ContactCotisations } from '@/lib/organismes';
 import { useFiche } from '@/lib/FicheContext';
 import PriorityCard from './PriorityCard';
 
-function buildExpandedContent(card: PriorityCardMeta, reponses: Reponses): ReactNode {
+interface ContexteCartes {
+  cotisations: ContactCotisations;
+  responsabilite: ResponsabiliteAssocies;
+}
+
+function buildExpandedContent(card: PriorityCardMeta, ctx: ContexteCartes): ReactNode {
   switch (card.id) {
     case 'cessation': {
-      const ville = (card.extra?.ville as string) ?? 'votre ville';
+      const tribunal = (card.extra?.tribunal as string | undefined) ?? 'tribunal compétent';
       return (
         <div className="space-y-3 text-sm text-navy/80">
           <p>
             L&apos;article <strong>L631-4 du Code de commerce</strong>{' '}
-            impose au dirigeant de déclarer la cessation dans les{' '}
-            <strong>45 jours</strong> suivant son constat. Au-delà :
-            action en comblement de passif (L651-2), faillite personnelle
-            (L653-1), banqueroute pénale (L654-1, jusqu&apos;à 5 ans de
-            prison et 75 000 € d&apos;amende).
+            impose au dirigeant de demander l&apos;ouverture d&apos;une
+            procédure dans les <strong>45 jours</strong> qui suivent la
+            cessation des paiements, sauf conciliation demandée dans ce
+            délai. Omettre sciemment de le faire expose à une interdiction
+            de gérer (art. L653-8) ; en liquidation, le retard peut aussi
+            être retenu comme faute de gestion (art. L651-2). La banqueroute
+            (art. L654-2) vise, elle, des actes frauduleux — pas un simple
+            retard.
           </p>
           <ul className="space-y-1.5">
             <li className="flex gap-2"><span className="text-navy/40">→</span>Avocat / mandataire sous 48 h (premier RDV souvent gratuit)</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Formulaire <strong>CERFA 10530</strong> sur service-public.fr</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Pièces : K-bis &lt; 3 mois, état actif/passif exigible, comptes annuels, trésorerie &lt; 1 mois, liste créanciers</li>
-            <li className="flex gap-2"><span className="text-navy/40">→</span>Dépôt au tribunal de commerce{ville !== 'votre ville' ? ` de ${ville}` : ''} (ou TAE si ressort réformé)</li>
+            <li className="flex gap-2"><span className="text-navy/40">→</span>Dépôt au {tribunal}</li>
           </ul>
           <button type="button" onClick={() => scrollToId('echeances')} className="inline-flex text-sm font-medium text-rouge hover:underline">
             Voir le décompte complet ↓
@@ -110,7 +119,7 @@ function buildExpandedContent(card: PriorityCardMeta, reponses: Reponses): React
           <ul className="space-y-1.5">
             <li className="flex gap-2"><span className="text-navy/40">→</span>Prévisionnel 6 mois avec votre expert-comptable (2-4 h)</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span><strong>Médiation du crédit</strong> — Banque de France, gratuit, réponse sous 5 j (34 14)</li>
-            <li className="flex gap-2"><span className="text-navy/40">→</span>Moratoire URSSAF (3957) / SIE (téléprocédure) / bailleur (LRAR)</li>
+            <li className="flex gap-2"><span className="text-navy/40">→</span>Délais de paiement : {ctx.cotisations.libelle} / SIE (messagerie de l&apos;espace professionnel) / bailleur (LRAR)</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>CCSF si dettes fiscales ET sociales (guichet unique, CERFA 15772*02)</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Affacturage / escompte pour accélérer les encaissements</li>
           </ul>
@@ -133,8 +142,12 @@ function buildExpandedContent(card: PriorityCardMeta, reponses: Reponses): React
             créancier qui prouve la fraude — art. 1341-2 C. civ.).
           </p>
           <ul className="space-y-1.5">
-            <li className="flex gap-2"><span className="text-navy/40">→</span>EI : résidence principale insaisissable de droit (loi Macron 2015)</li>
-            <li className="flex gap-2"><span className="text-navy/40">→</span>Société : vos biens personnels ne répondent pas des dettes sociales, sauf caution ou faute de gestion. La déclaration notariée d&apos;insaisissabilité est réservée à l&apos;entrepreneur·e individuel·le (art. L526-1 C. com.)</li>
+            <li className="flex gap-2"><span className="text-navy/40">→</span>EI : résidence principale insaisissable de droit (art. L526-1 C. com., loi Macron 2015) et, depuis le 15 mai 2022, patrimoine personnel séparé de plein droit du patrimoine professionnel (art. L526-22 C. com.)</li>
+            {ctx.responsabilite.illimitee ? (
+              <li className="flex gap-2"><span className="text-navy/40">→</span>Votre forme juridique : {ctx.responsabilite.texte}</li>
+            ) : (
+              <li className="flex gap-2"><span className="text-navy/40">→</span>Société : vos biens personnels ne répondent pas des dettes sociales, sauf caution ou faute de gestion. La déclaration notariée d&apos;insaisissabilité est réservée à l&apos;entrepreneur·e individuel·le (art. L526-1 C. com.)</li>
+            )}
             <li className="flex gap-2"><span className="text-navy/40">→</span>Assurance-vie avec bénéficiaire : hors succession, difficilement saisissable</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Régime communauté : changement possible, mais opposable pour dettes FUTURES seulement</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Véhicule en LOA/LLD : reste propriété du loueur, protégé</li>
@@ -257,7 +270,7 @@ function buildExpandedContent(card: PriorityCardMeta, reponses: Reponses): React
       return (
         <div className="space-y-3 text-sm text-navy/80">
           <p>
-            Le statut de votre conjoint détermine ses protections
+            Le statut de votre conjoint·e détermine ses protections
             (AGS, chômage, retraite) et les risques personnels qui
             pèsent sur vous deux.
           </p>
@@ -275,10 +288,13 @@ function buildExpandedContent(card: PriorityCardMeta, reponses: Reponses): React
       return (
         <div className="space-y-3 text-sm text-navy/80">
           <p>
-            Plusieurs dirigeants = <strong>solidarité fiscale et
-            sociale</strong>. Le SIE (L267 LPF) et l&apos;URSSAF
-            (L243-6-2 CSS) peuvent poursuivre n&apos;importe quel
-            co-gérant pour la totalité des dettes en cas de faute.
+            Plusieurs dirigeants = <strong>responsabilités à
+            partager</strong>. Le comptable public peut demander au
+            tribunal de déclarer un dirigeant solidairement responsable
+            des impôts de la société en cas de manœuvres frauduleuses ou
+            de manquements graves et répétés (art. L267 LPF). En
+            liquidation, chaque dirigeant peut aussi être poursuivi pour
+            faute de gestion (art. L651-2 C. com.).
           </p>
           <ul className="space-y-1.5">
             <li className="flex gap-2"><span className="text-navy/40">→</span>Établir un PV de répartition des fonctions (gérance technique, financière, commerciale)</li>
@@ -298,6 +314,10 @@ function buildExpandedContent(card: PriorityCardMeta, reponses: Reponses): React
 export default function PriorityCards() {
   const { reponses, company, sector, seuils } = useFiche();
   const cards = useMemo(() => scorePriorityCards({ reponses, company, sector, seuils }), [reponses, company, sector, seuils]);
+  const ctx: ContexteCartes = {
+    cotisations: contactCotisations(sector, reponses.effectif, company.departement),
+    responsabilite: getResponsabiliteAssocies(company.formeJuridique),
+  };
   const [expanded, setExpanded] = useState<string | null>(null);
 
   return (
@@ -311,7 +331,7 @@ export default function PriorityCards() {
           valeur={c.valeur}
           detail={c.detail}
           tone={c.tone}
-          expandedContent={buildExpandedContent(c, reponses)}
+          expandedContent={buildExpandedContent(c, ctx)}
           isOpen={expanded === c.id}
           onToggle={() => setExpanded(expanded === c.id ? null : c.id)}
         />

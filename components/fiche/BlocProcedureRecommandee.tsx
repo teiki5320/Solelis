@@ -2,7 +2,7 @@
 import type { Reponses, CompanyData } from '@/lib/types';
 import type { SectorInfo } from '@/lib/secteur';
 import { getEffectifSeuils } from '@/lib/secteur';
-import { isEI } from '@/lib/strategie';
+import { prpEnvisageable } from '@/lib/strategie';
 import { useFiche } from '@/lib/FicheContext';
 import BlocAccordeon from './BlocAccordeon';
 
@@ -16,8 +16,6 @@ interface Procedure {
 
 function buildProcedures(r: Reponses, c: CompanyData, s: SectorInfo): Procedure[] {
   const procs: Procedure[] = [];
-  // getFormeDetail (via isEI) : une forme inconnue (« Non renseignée ») n'est pas une EI.
-  const ei = isEI(c.formeJuridique);
   const seuils = getEffectifSeuils(c.effectif);
 
   if (r.situation === 'prevention') {
@@ -62,15 +60,6 @@ function buildProcedures(r: Reponses, c: CompanyData, s: SectorInfo): Procedure[
       conditions: "Cessation des paiements. Déclaration dans les 45 jours obligatoire.",
       lien: '/glossaire',
     });
-    if (ei) {
-      procs.push({
-        nom: 'Rétablissement professionnel (PRP)',
-        pertinence: 'possible',
-        description: "Efface vos dettes professionnelles en 4 mois, sans liquidation complète. Réservé aux entrepreneurs individuels sans salariés et avec peu d’actifs.",
-        conditions: 'EI, aucun salarié, actifs < 15 000 €.',
-        lien: '/rebond',
-      });
-    }
   }
 
   if (r.situation === 'assignation') {
@@ -86,6 +75,18 @@ function buildProcedures(r: Reponses, c: CompanyData, s: SectorInfo): Procedure[
       description: "Si l’entreprise peut encore être sauvée. Le tribunal peut ordonner un plan de continuation ou un plan de cession.",
       conditions: 'Cessation des paiements.',
       lien: '/glossaire',
+    });
+  }
+
+  // Rétablissement professionnel : débiteur personne physique en cessation
+  // des paiements, sans salarié (art. L645-1 C. com.).
+  if (prpEnvisageable(r, c)) {
+    procs.push({
+      nom: 'Rétablissement professionnel (PRP)',
+      pertinence: 'possible',
+      description: "Efface vos dettes professionnelles en 4 mois, sans liquidation complète. Réservé aux entrepreneur·e·s individuel·le·s en cessation des paiements, sans salarié et avec peu d’actif.",
+      conditions: 'Personne physique en cessation des paiements, redressement manifestement impossible, aucun salarié au cours des 6 derniers mois, aucune instance prud’homale en cours, actif déclaré inférieur à 15 000 € (art. L645-1 et R645-1 C. com.).',
+      lien: '/rebond',
     });
   }
 
@@ -160,7 +161,7 @@ export default function BlocProcedureRecommandee() {
         ))}
       </div>
       <p className="mt-5 text-xs text-navy/50">
-        Ces recommandations sont indicatives. Un avocat ou le tribunal de commerce peuvent confirmer la procédure la plus adaptée.
+        Ces recommandations sont indicatives. Un avocat (ou le CIP, gratuitement) peut confirmer la procédure la plus adaptée.
       </p>
     </BlocAccordeon>
   );

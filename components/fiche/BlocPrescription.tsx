@@ -1,6 +1,7 @@
 'use client';
 import type { Reponses } from '@/lib/types';
 import { useFiche } from '@/lib/FicheContext';
+import { getTribunalCompetent } from '@/lib/strategie';
 import BlocAccordeon from './BlocAccordeon';
 
 interface Alerte {
@@ -9,7 +10,12 @@ interface Alerte {
   urgence: 'info' | 'attention';
 }
 
-function buildAlertes(r: Reponses, age: number | null, seuils: { cse: boolean; obligations50: boolean }): Alerte[] {
+export function buildAlertes(
+  r: Reponses,
+  age: number | null,
+  seuils: { cse: boolean; obligations50: boolean },
+  tribunal = 'le tribunal',
+): Alerte[] {
   const alertes: Alerte[] = [];
 
   if (r.probleme === 'urssaf') {
@@ -40,7 +46,7 @@ function buildAlertes(r: Reponses, age: number | null, seuils: { cse: boolean; o
     alertes.push({
       texte: 'Vous avez 45 jours pour déclarer la cessation des paiements',
       detail:
-        'L\'article L631-4 du Code de commerce impose de déclarer la cessation des paiements dans les 45 jours. Ne pas le faire peut engager votre responsabilité personnelle.',
+        'L\'article L631-4 du Code de commerce impose de demander l\'ouverture d\'une procédure dans les 45 jours qui suivent la cessation des paiements, sauf si une conciliation a été demandée dans ce délai. L\'omettre sciemment expose à une interdiction de gérer (art. L653-8 C. com.).',
       urgence: 'attention',
     });
   }
@@ -49,7 +55,7 @@ function buildAlertes(r: Reponses, age: number | null, seuils: { cse: boolean; o
     alertes.push({
       texte: 'Respectez les délais de comparution du tribunal',
       detail:
-        'Une assignation devant le tribunal de commerce contient une date de comparution. Si vous ne vous présentez pas et ne vous faites pas représenter, un jugement peut être rendu par défaut — souvent en votre défaveur.',
+        `Une assignation devant ${tribunal} contient une date de comparution. Si vous ne vous présentez pas et ne vous faites pas représenter, un jugement peut être rendu par défaut — souvent en votre défaveur.`,
       urgence: 'attention',
     });
   }
@@ -90,19 +96,28 @@ function buildAlertes(r: Reponses, age: number | null, seuils: { cse: boolean; o
     });
   }
 
-  alertes.push({
-    texte: 'Un mandat ad hoc peut être demandé à tout moment',
-    detail:
-      'Tant que vous n\'êtes pas en cessation des paiements depuis plus de 45 jours, vous pouvez demander un mandat ad hoc. C\'est confidentiel, peu coûteux, et souvent très efficace.',
-    urgence: 'info',
-  });
+  if (r.situation === 'redressement' || r.situation === 'assignation') {
+    alertes.push({
+      texte: 'La conciliation reste possible jusqu\'à 45 jours après la cessation des paiements',
+      detail:
+        'Le mandat ad hoc suppose de ne pas être en cessation des paiements. La conciliation, elle, peut encore être demandée si la cessation date de moins de 45 jours (art. L611-4 C. com.). C\'est confidentiel, et la demander dans ce délai dispense de l\'obligation de déclarer la cessation sous 45 jours (art. L631-4).',
+      urgence: 'info',
+    });
+  } else {
+    alertes.push({
+      texte: 'Un mandat ad hoc peut être demandé tant que vous n\'êtes pas en cessation des paiements',
+      detail:
+        'Le mandat ad hoc (art. L611-3 C. com.) est ouvert à l\'entreprise qui n\'est pas en cessation des paiements. Si la cessation survient, la conciliation reste possible pendant 45 jours (art. L611-4). C\'est confidentiel, peu coûteux, et souvent très efficace.',
+      urgence: 'info',
+    });
+  }
 
   return alertes;
 }
 
 export default function BlocPrescription() {
-  const { reponses, companyAge, seuils } = useFiche();
-  const alertes = buildAlertes(reponses, companyAge, seuils);
+  const { reponses, company, companyAge, seuils } = useFiche();
+  const alertes = buildAlertes(reponses, companyAge, seuils, getTribunalCompetent(company).leGenerique);
 
   return (
     <BlocAccordeon

@@ -20,15 +20,16 @@ export default function BlocConjointCollaborateur() {
     <BlocAccordeon
       icone="👫"
       titre="Statut du conjoint — droits, risques et protections"
-      soustitre="Trois statuts légaux ; un statut de fait reconnu par la jurisprudence"
+      soustitre="Trois statuts légaux ; à défaut de déclaration, conjoint·e salarié·e"
     >
       <p className="text-sm text-navy/80">
-        Le conjoint du chef d&apos;entreprise qui participe régulièrement
-        à l&apos;activité <strong>doit obligatoirement choisir un statut</strong>{' '}
-        (loi du 2 août 2005, art. L121-4 C. com.) : salarié, collaborateur
-        ou associé. À défaut, la jurisprudence reconnaît un{' '}
-        <strong>statut de conjoint collaborateur de fait</strong> ouvrant
-        droit à indemnisation.
+        Le conjoint du chef d&apos;entreprise qui exerce une activité
+        professionnelle régulière dans l&apos;entreprise{' '}
+        <strong>doit obligatoirement choisir un statut</strong> (art.
+        L121-4 C. com.) : salarié, collaborateur ou associé. À défaut de
+        déclaration, le chef d&apos;entreprise est{' '}
+        <strong>réputé avoir déclaré le statut de conjoint salarié</strong>{' '}
+        (art. L121-4, issu de la loi PACTE du 22 mai 2019).
       </p>
 
       {statut === 'salarie' && (
@@ -39,6 +40,15 @@ export default function BlocConjointCollaborateur() {
             de travail, perçoit un salaire et bénéficie des mêmes droits
             qu&apos;un salarié classique.
           </p>
+          {reponses.effectif === 'independant' && (
+            <p className="mt-2 text-sm text-navy/80">
+              <strong>À vérifier</strong> : vous avez indiqué ne pas avoir
+              de salarié. Si votre conjoint·e est salarié·e de
+              l&apos;entreprise, il·elle compte dans l&apos;effectif : les
+              règles propres aux employeurs (AGS, CSP, licenciement) le
+              ou la concernent.
+            </p>
+          )}
           <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-navy/80">
             <li>
               <strong>Protection AGS</strong> en cas de procédure
@@ -146,30 +156,27 @@ export default function BlocConjointCollaborateur() {
       {statut === 'aucun' && (
         <div className="mt-5 rounded-2xl border border-jaune/30 bg-jaune/5 p-4">
           <p className="font-display text-base text-jaune">
-            Conjoint sans statut déclaré — attention au statut de fait
+            Conjoint sans statut déclaré — vous êtes réputé·e l&apos;employer
           </p>
           <p className="mt-2 text-sm text-navy/80">
-            Si votre conjoint participe régulièrement à l&apos;activité{' '}
-            <strong>sans statut déclaré</strong>, vous êtes en infraction
-            (art. L121-4 C. com.) et il/elle peut faire reconnaître un{' '}
-            <strong>statut de collaborateur de fait</strong> en cas de
-            séparation, divorce ou décès — avec indemnisation
-            rétroactive (Cass. com. n° 21-19.387, 8 fév. 2023).
+            Si votre conjoint·e exerce une activité professionnelle
+            régulière dans l&apos;entreprise <strong>sans statut
+            déclaré</strong>, la loi vous répute avoir choisi le statut de{' '}
+            <strong>conjoint salarié</strong> (art. L121-4 C. com.) : vous
+            êtes alors redevable des salaires et des cotisations
+            correspondantes.
           </p>
           <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-navy/80">
             <li>
               <strong>Si participation effective</strong> (tenue caisse,
-              relation clients, comptabilité…) : <strong>régularisez</strong>{' '}
-              dès que possible — formulaire P0/P2 selon la situation.
+              relation clients, comptabilité…) : <strong>déclarez un
+              statut</strong> dès que possible, sur le guichet unique
+              formalites.entreprises.gouv.fr.
             </li>
             <li>
-              <strong>Sanction</strong> : le conjoint est présumé
-              collaborateur s&apos;il participe sans rémunération.
-            </li>
-            <li>
-              <strong>En procédure</strong>, l&apos;action en
-              reconnaissance peut bloquer la clôture si elle est engagée
-              avant.
+              <strong>Faites-vous conseiller</strong> (expert-comptable,
+              avocat) avant toute procédure collective : les sommes dues
+              au titre du statut de conjoint salarié pèsent sur le passif.
             </li>
           </ul>
         </div>
@@ -179,23 +186,20 @@ export default function BlocConjointCollaborateur() {
       {reponses.coGerants === 'oui' && (
         <div className="mt-4 rounded-2xl border border-rouge/30 bg-rouge/5 p-4">
           <p className="font-display text-base text-rouge">
-            ⚠️ Co-gérance déclarée — solidarité fiscale et sociale
+            ⚠️ Co-gérance déclarée — responsabilités personnelles possibles
           </p>
           <p className="mt-2 text-sm text-navy/80">
-            Vous avez indiqué être plusieurs gérants. <strong>Tous les
-            co-gérants sont solidairement responsables</strong> :
+            Vous avez indiqué être plusieurs gérants. <strong>Chaque
+            dirigeant peut, dans certains cas, être tenu
+            personnellement</strong> :
           </p>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
             <li>
-              <strong>Solidarité fiscale</strong> (art. L267 LPF) : en cas
-              de manœuvres frauduleuses, le SIE peut poursuivre n&apos;importe
-              lequel des co-gérants pour la totalité de la dette fiscale
-              de la société.
-            </li>
-            <li>
-              <strong>Solidarité sociale</strong> (art. L243-6-2 CSS) :
-              idem URSSAF pour les cotisations en cas d&apos;inobservation
-              grave et répétée.
+              <strong>Solidarité fiscale</strong> (art. L267 LPF) : le
+              dirigeant responsable de manœuvres frauduleuses ou de
+              manquements graves et répétés aux obligations fiscales qui
+              ont rendu le recouvrement impossible peut être déclaré par
+              le juge solidairement responsable des impôts de la société.
             </li>
             <li>
               <strong>Insuffisance d&apos;actif</strong> (art. L651-2 C.
@@ -217,8 +221,7 @@ export default function BlocConjointCollaborateur() {
         Sources : C. com. art. L121-4 à L121-8 (statut du conjoint) ;
         loi n° 2005-882 du 2 août 2005 ; loi PACTE n° 2019-486 du 22
         mai 2019 ; loi n° 2022-172 du 14 février 2022 (limite 5 ans
-        conjoint collaborateur) ; LPF art. L267 ; CSS art. L243-6-2 ;
-        Cass. com. n° 21-19.387 du 8 fév. 2023 (collaborateur de fait).
+        conjoint collaborateur) ; LPF art. L267 ; C. com. art. L651-2.
       </p>
     </BlocAccordeon>
   );
