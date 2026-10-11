@@ -42,7 +42,20 @@ export interface DepartementData {
    * officielle des codes postaux (La Poste).
    */
   tribunauxSecondaires?: (TribunalAvecRessort & { codesPostaux: string[] })[];
-  cci: OrganismeLocal;
+  /**
+   * CCI du chef-lieu. Si elle porte `codesPostaux`, le département compte
+   * plusieurs CCI territoriales (`ccisSecondaires`) et elle ne couvre que
+   * les communes listées (même format que les tribunaux).
+   */
+  cci: TribunalAvecRessort;
+  /**
+   * Autres CCI territoriales du département. Ressort limité aux communes où
+   * chaque CCI a son siège, une délégation ou une antenne (annuaire officiel,
+   * api-lannuaire.service-public.fr, type « cci »), codes postaux d'après la
+   * base officielle de La Poste. Toute autre commune du département reçoit
+   * la carte « CCI dont dépend votre commune » (voir cciSelonCommune).
+   */
+  ccisSecondaires?: (TribunalAvecRessort & { codesPostaux: string[] })[];
   urssaf: OrganismeLocal;
   sie: OrganismeLocal;
   mandataires?: OrganismeLocal[];
@@ -211,6 +224,40 @@ export function tribunalSelonCodePostal(dep: DepartementData, codePostal?: strin
   };
 }
 
+/** Annuaire officiel des CCI (lannuaire.service-public.gouv.fr, 267 implantations). */
+export const ANNUAIRE_CCI = 'https://lannuaire.service-public.gouv.fr/navigation/cci';
+
+/**
+ * CCI dont dépend l'entreprise, d'après son code postal (et sa commune
+ * quand le code postal est partagé), même logique que tribunalSelonCodePostal :
+ * - département à une seule CCI : celle-ci ;
+ * - plusieurs CCI territoriales (ex. Seine-Maritime : Rouen Métropole et
+ *   Seine Estuaire) : la CCI de la commune si elle y est implantée, sinon
+ *   une carte générique « CCI dont dépend votre commune » avec la liste des
+ *   CCI du département et le lien vers l'annuaire officiel (jamais une CCI
+ *   possiblement fausse).
+ */
+export function cciSelonCommune(dep: DepartementData, codePostal?: string, ville?: string): OrganismeLocal {
+  const cp = (codePostal ?? '').trim();
+  const cle = cp && ville ? `${cp}|${normaliserCommune(ville)}` : '';
+  const couvre = (t: TribunalAvecRessort) =>
+    !!cp && ((t.codesPostaux ?? []).includes(cp) || (!!cle && (t.communes ?? []).includes(cle)));
+  const secondaire = dep.ccisSecondaires?.find(couvre);
+  if (secondaire) return sansRessort(secondaire);
+  if (!dep.cci.codesPostaux || couvre(dep.cci)) return sansRessort(dep.cci);
+  const liste = [dep.cci, ...(dep.ccisSecondaires ?? [])]
+    // « CCI Seine Estuaire (agence de Lisieux) » → « CCI Seine Estuaire »
+    .map((t) => t.nom.replace(/\s*\([^)]*\)\s*$/, ''))
+    .filter((nom, i, tous) => tous.indexOf(nom) === i)
+    .join(', ');
+  return {
+    nom: 'CCI dont dépend votre commune',
+    type: dep.cci.type || 'Chambre de commerce et d’industrie',
+    adresse: `Dans le département : ${liste}`,
+    site: ANNUAIRE_CCI,
+  };
+}
+
 export interface OrganismeCard {
   nom: string;
   type: string;
@@ -362,6 +409,8 @@ export function buildOrganismes(
   effectifInsee?: string,
   /** Résultat de getJuridiction(company) : tribunal de commerce ou judiciaire. */
   juridiction?: 'TC' | 'TJ',
+  /** Code postal et commune de l'entreprise : CCI du ressort (cciSelonCommune). */
+  lieu?: { codePostal?: string; ville?: string },
 ): GroupeOrganismes[] {
   const groups: GroupeOrganismes[] = [];
   // Urssaf : 36 98 pour les travailleurs indépendants, 39 57 pour les
@@ -407,13 +456,14 @@ export function buildOrganismes(
     if (carte) inst.push(carte);
   }
   if (dep?.cci) {
+    const cci = cciSelonCommune(dep, lieu?.codePostal, lieu?.ville);
     inst.push({
-      nom: dep.cci.nom,
+      nom: cci.nom,
       type: 'CCI',
-      telephone: dep.cci.telephone,
-      telephoneNote: dep.cci.telephoneNote,
-      adresse: dep.cci.adresse,
-      site: dep.cci.site,
+      telephone: cci.telephone,
+      telephoneNote: cci.telephoneNote,
+      adresse: cci.adresse,
+      site: cci.site,
       badge: 'Accompagnement gratuit',
     });
   }

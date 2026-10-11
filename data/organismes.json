@@ -624,8 +624,45 @@
       "type": "Chambre de commerce et d’industrie",
       "adresse": "Palais de la Bourse, 9 la Canebière, CS 21856, 13221 Marseille Cedex 01",
       "telephone": "04 91 39 34 34",
-      "site": "https://www.cciamp.com"
+      "site": "https://www.cciamp.com",
+      "codesPostaux": [
+        "13001",
+        "13002",
+        "13003",
+        "13004",
+        "13005",
+        "13006",
+        "13007",
+        "13008",
+        "13009",
+        "13010",
+        "13011",
+        "13012",
+        "13013",
+        "13014",
+        "13015",
+        "13016",
+        "13117",
+        "13400",
+        "13500"
+      ]
     },
+    "ccisSecondaires": [
+      {
+        "nom": "CCI du Pays d'Arles",
+        "type": "Chambre de commerce et d’industrie",
+        "adresse": "Avenue de la 1re-Division-France-Libre, 13633 Arles Cedex 01",
+        "telephone": "04 90 99 08 08",
+        "site": "https://www.arles.cci.fr",
+        "codesPostaux": [
+          "13104",
+          "13123",
+          "13129",
+          "13200",
+          "13280"
+        ]
+      }
+    ],
     "urssaf": {
       "nom": "Urssaf Provence-Alpes-Côte d'Azur — site des Bouches-du-Rhône",
       "type": "URSSAF",
@@ -995,12 +1032,31 @@
       ]
     },
     "cci": {
-      "nom": "CCI Normandie - Caen",
+      "nom": "CCI Caen Normandie",
       "type": "Chambre de commerce et d’industrie",
       "adresse": "1 rue René-Cassin, Saint-Contest, 14911 Caen Cedex 9",
       "telephone": "02 31 54 54 54",
-      "site": "https://www.normandie.cci.fr"
+      "site": "https://www.caen.cci.fr",
+      "codesPostaux": [
+        "14000"
+      ],
+      "communes": [
+        "14280|ST CONTEST"
+      ]
     },
+    "ccisSecondaires": [
+      {
+        "nom": "CCI Seine Estuaire (agence de Lisieux)",
+        "type": "Chambre de commerce et d’industrie",
+        "adresse": "100 avenue Guillaume-le-Conquérant, 14100 Lisieux",
+        "telephone": "02 31 61 55 55",
+        "site": "https://www.seine-estuaire.cci.fr",
+        "codesPostaux": [],
+        "communes": [
+          "14100|LISIEUX"
+        ]
+      }
+    ],
     "urssaf": {
       "nom": "Urssaf Normandie — site du Calvados",
       "type": "URSSAF",
@@ -1542,11 +1598,11 @@
       ]
     },
     "cci": {
-      "nom": "CCI de La Rochelle",
+      "nom": "CCI Charente-Maritime",
       "type": "Chambre de commerce et d’industrie",
-      "adresse": "21 chemin du Prieuré, 17024 La Rochelle Cedex 1",
-      "telephone": "05 46 00 54 00",
-      "site": "https://www.nouvelle-aquitaine.cci.fr"
+      "adresse": "La Corderie Royale, BP 20129, 17306 Rochefort Cedex",
+      "telephone": "05 46 84 11 84",
+      "site": "https://www.charente-maritime.cci.fr"
     },
     "urssaf": {
       "nom": "Urssaf Poitou-Charentes — site de la Charente-Maritime",
@@ -5760,8 +5816,26 @@
       "type": "Chambre de commerce et d’industrie",
       "adresse": "5-7 place Robert-Schuman, CS 90297, 38016 Grenoble Cedex 1",
       "telephone": "04 76 28 28 28",
-      "site": "https://www.auvergne-rhone-alpes.cci.fr"
+      "site": "https://www.grenoble.cci.fr",
+      "codesPostaux": [
+        "38000",
+        "38100"
+      ]
     },
+    "ccisSecondaires": [
+      {
+        "nom": "CCI Nord-Isère",
+        "type": "Chambre de commerce et d’industrie",
+        "adresse": "2 place Saint-Pierre, CS 50209, 38217 Vienne Cedex",
+        "telephone": "04 74 95 24 00",
+        "site": "https://www.ccinordisere.fr",
+        "codesPostaux": [],
+        "communes": [
+          "38090|VILLEFONTAINE",
+          "38200|VIENNE"
+        ]
+      }
+    ],
     "urssaf": {
       "nom": "Urssaf Rhône-Alpes — site de l'Isère",
       "type": "URSSAF",
@@ -10166,8 +10240,48 @@
       "type": "Chambre de commerce et d’industrie",
       "adresse": "40 place du Théâtre, CS 60359, 59020 Lille Cedex",
       "telephone": "03 20 63 77 77",
-      "site": "https://www.hautsdefrance.cci.fr"
+      "site": "https://hautsdefrance.cci.fr/cci-grand-lille/",
+      "codesPostaux": [
+        "59000",
+        "59500",
+        "59777",
+        "59800"
+      ],
+      "communes": [
+        "59160|LILLE",
+        "59190|HAZEBROUCK",
+        "59260|LILLE"
+      ]
     },
+    "ccisSecondaires": [
+      {
+        "nom": "CCI Grand Hainaut",
+        "type": "Chambre de commerce et d’industrie",
+        "adresse": "3 avenue du Sénateur-Girard, BP 80577, 59308 Valenciennes Cedex",
+        "telephone": "03 27 51 35 13",
+        "site": "https://hautsdefrance.cci.fr/cci-grand-hainaut/",
+        "codesPostaux": [],
+        "communes": [
+          "59300|VALENCIENNES"
+        ]
+      },
+      {
+        "nom": "CCI Littoral Hauts-de-France (agence de Dunkerque)",
+        "type": "Chambre de commerce et d’industrie",
+        "adresse": "33 rue du Ponceau, 59140 Dunkerque",
+        "telephone": "03 21 46 00 00",
+        "site": "https://littoral-hautsdefrance.cci.fr",
+        "codesPostaux": [
+          "59140",
+          "59240",
+          "59430",
+          "59640"
+        ],
+        "communes": [
+          "59279|DUNKERQUE"
+        ]
+      }
+    ],
     "urssaf": {
       "nom": "Urssaf Nord-Pas-de-Calais — site du Nord",
       "type": "URSSAF",
@@ -10853,12 +10967,31 @@
       "site": "https://www.justice.fr/recherche/annuaires"
     },
     "cci": {
-      "nom": "CCI d'Alençon (Orne)",
+      "nom": "CCI Portes de Normandie (délégation de l'Orne)",
       "type": "Chambre de commerce et d’industrie",
       "adresse": "23 boulevard de Strasbourg, BP 42, 61002 Alençon Cedex",
       "telephone": "02 33 82 82 82",
-      "site": "https://www.normandie.cci.fr"
+      "site": "https://www.portesdenormandie.cci.fr",
+      "codesPostaux": [],
+      "communes": [
+        "61000|ALENCON",
+        "61400|MORTAGNE AU PERCHE"
+      ]
     },
+    "ccisSecondaires": [
+      {
+        "nom": "CCI Ouest Normandie (délégation de l'Orne)",
+        "type": "Chambre de commerce et d’industrie",
+        "adresse": "Aérodrome Flers Saint-Paul, CS 80159, 61103 Flers",
+        "telephone": "02 33 64 68 00",
+        "site": "https://www.ouestnormandie.cci.fr",
+        "codesPostaux": [],
+        "communes": [
+          "61100|FLERS",
+          "61200|ARGENTAN"
+        ]
+      }
+    ],
     "urssaf": {
       "nom": "Urssaf Normandie — site de l'Orne",
       "type": "URSSAF",
@@ -11119,12 +11252,42 @@
       ]
     },
     "cci": {
-      "nom": "CCI Artois (Arras)",
+      "nom": "CCI Artois",
       "type": "Chambre de commerce et d’industrie",
       "adresse": "8 rue du 29-Juillet, BP 70540, 62008 Arras Cedex",
       "telephone": "03 21 23 24 24",
-      "site": "https://www.hautsdefrance.cci.fr"
+      "site": "https://hautsdefrance.cci.fr/cci-artois/",
+      "codesPostaux": [],
+      "communes": [
+        "62000|ARRAS",
+        "62300|LENS",
+        "62400|BETHUNE"
+      ]
     },
+    "ccisSecondaires": [
+      {
+        "nom": "CCI Littoral Hauts-de-France",
+        "type": "Chambre de commerce et d’industrie",
+        "adresse": "24 boulevard des Alliés, CS 50199, 62104 Calais Cedex",
+        "telephone": "03 21 46 00 00",
+        "site": "https://littoral-hautsdefrance.cci.fr",
+        "codesPostaux": [
+          "62100",
+          "62200"
+        ]
+      },
+      {
+        "nom": "CCI Grand Lille (antenne de Saint-Omer)",
+        "type": "Chambre de commerce et d’industrie",
+        "adresse": "Maison du développement économique, 16 place Victor-Hugo, BP 10094, 62502 Saint-Omer",
+        "telephone": "03 28 52 90 30",
+        "site": "https://hautsdefrance.cci.fr/cci-grand-lille/",
+        "codesPostaux": [],
+        "communes": [
+          "62500|ST OMER"
+        ]
+      }
+    ],
     "urssaf": {
       "nom": "Urssaf Nord-Pas-de-Calais — site du Pas-de-Calais",
       "type": "URSSAF",
@@ -11641,8 +11804,23 @@
       "type": "Chambre de commerce et d’industrie",
       "adresse": "21 rue Louis-Barthou, BP 128, 64001 Pau Cedex",
       "telephone": "05 59 82 51 11",
-      "site": "https://www.nouvelle-aquitaine.cci.fr"
+      "site": "https://www.pau.cci.fr",
+      "codesPostaux": [
+        "64000"
+      ]
     },
+    "ccisSecondaires": [
+      {
+        "nom": "CCI Bayonne Pays Basque",
+        "type": "Chambre de commerce et d’industrie",
+        "adresse": "50-51 allées Marines, BP 215, 64102 Bayonne Cedex",
+        "telephone": "05 59 46 59 46",
+        "site": "https://www.bayonne.cci.fr",
+        "codesPostaux": [
+          "64100"
+        ]
+      }
+    ],
     "urssaf": {
       "nom": "Urssaf Aquitaine — site des Pyrénées-Atlantiques",
       "type": "URSSAF",
@@ -12874,8 +13052,32 @@
       "type": "Chambre de commerce et d’industrie",
       "adresse": "Palais du Commerce, 21 rue de la République, 69289 Lyon Cedex 02",
       "telephone": "04 72 40 58 58",
-      "site": "https://www.lyon-metropole.cci.fr"
+      "site": "https://www.lyon-metropole.cci.fr",
+      "codesPostaux": [
+        "69001",
+        "69002",
+        "69003",
+        "69004",
+        "69005",
+        "69006",
+        "69007",
+        "69008",
+        "69009"
+      ]
     },
+    "ccisSecondaires": [
+      {
+        "nom": "CCI Beaujolais",
+        "type": "Chambre de commerce et d’industrie",
+        "adresse": "23 chemin du Martelet, 69400 Limas",
+        "telephone": "04 74 62 73 00",
+        "site": "https://www.beaujolais.cci.fr",
+        "codesPostaux": [],
+        "communes": [
+          "69400|LIMAS"
+        ]
+      }
+    ],
     "urssaf": {
       "nom": "Urssaf Rhône-Alpes — site du Rhône",
       "type": "URSSAF",
@@ -14319,12 +14521,48 @@
       ]
     },
     "cci": {
-      "nom": "CCI Rouen Métropole (Seine-Maritime)",
+      "nom": "CCI Rouen Métropole",
       "type": "Chambre de commerce et d’industrie",
       "adresse": "20 passage de la Luciline, CS 40641, 76007 Rouen Cedex 1",
       "telephone": "02 32 10 05 00",
-      "site": "https://www.normandie.cci.fr"
+      "site": "https://www.rouen-metropole.cci.fr",
+      "codesPostaux": [
+        "76000",
+        "76100",
+        "76200"
+      ],
+      "communes": [
+        "76190|YVETOT",
+        "76220|GOURNAY EN BRAY",
+        "76260|EU",
+        "76270|NEUFCHATEL EN BRAY",
+        "76370|DIEPPE",
+        "76410|CLEON",
+        "76460|ST VALERY EN CAUX",
+        "76560|DOUDEVILLE",
+        "76740|FONTAINE LE DUN",
+        "76760|YERVILLE"
+      ]
     },
+    "ccisSecondaires": [
+      {
+        "nom": "CCI Seine Estuaire",
+        "type": "Chambre de commerce et d’industrie",
+        "adresse": "181 quai Frissard, BP 1410, 76067 Le Havre Cedex",
+        "telephone": "02 35 55 26 00",
+        "site": "https://www.seine-estuaire.cci.fr",
+        "codesPostaux": [
+          "76600",
+          "76610",
+          "76620"
+        ],
+        "communes": [
+          "76170|PORT JEROME SUR SEINE",
+          "76330|PORT JEROME SUR SEINE",
+          "76400|FECAMP"
+        ]
+      }
+    ],
     "urssaf": {
       "nom": "Urssaf Normandie — site de la Seine-Maritime",
       "type": "URSSAF",
@@ -15204,12 +15442,32 @@
       "site": "https://www.justice.fr/recherche/annuaires"
     },
     "cci": {
-      "nom": "CCI Amiens-Picardie (Somme)",
+      "nom": "CCI Amiens-Picardie",
       "type": "Chambre de commerce et d’industrie",
       "adresse": "6 boulevard de Belfort, 80000 Amiens",
       "telephone": "03 22 82 22 22",
-      "site": "https://www.hautsdefrance.cci.fr"
+      "site": "https://hautsdefrance.cci.fr/amiens-picardie/",
+      "codesPostaux": [
+        "80000",
+        "80080",
+        "80090"
+      ],
+      "communes": [
+        "80200|PERONNE"
+      ]
     },
+    "ccisSecondaires": [
+      {
+        "nom": "CCI Littoral Hauts-de-France (agence d'Abbeville)",
+        "type": "Chambre de commerce et d’industrie",
+        "adresse": "Village d'entreprises, route des Deux-Vallées, 80100 Abbeville",
+        "telephone": "03 21 46 00 00",
+        "site": "https://littoral-hautsdefrance.cci.fr",
+        "codesPostaux": [
+          "80100"
+        ]
+      }
+    ],
     "urssaf": {
       "nom": "Urssaf Picardie — site de la Somme",
       "type": "URSSAF",

@@ -228,6 +228,7 @@ async function renderFiche(data: FicheData) {
       sector.secteur,
       company_data.effectif,
       getJuridiction(company_data),
+      { codePostal: company_data.codePostal, ville: company_data.ville },
     );
     const groupeOrdres = buildOrdresProfessionnels(sector);
     const groupeSoutien = buildSoutien(reponses);
