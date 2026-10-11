@@ -1,6 +1,7 @@
 'use client';
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { nombreFr } from '@/lib/format';
 
 type SecteurVal =
   | 'commerce-detail'
@@ -83,7 +84,7 @@ const MULTIPLES: Record<SecteurVal, Multiples> = {
 };
 
 function formatEuros(n: number): string {
-  if (n >= 1000000) return (n / 1000000).toFixed(2) + ' M€';
+  if (n >= 1000000) return nombreFr(n / 1000000, 2) + ' M€';
   if (n >= 1000) return (n / 1000).toFixed(0) + ' k€';
   return Math.round(n).toLocaleString('fr-FR') + ' €';
 }
@@ -209,7 +210,7 @@ export default function ValorisationPage() {
             ))}
           </select>
           <span className="mt-1 block text-[11px] text-navy/55">
-            Multiples : {m.ebeBas}× à {m.ebeHaut}× EBE · {(m.caBas * 100).toFixed(0)} % à {(m.caHaut * 100).toFixed(0)} % CA
+            Multiples : {nombreFr(m.ebeBas)}× à {nombreFr(m.ebeHaut)}× EBE · {(m.caBas * 100).toFixed(0)} % à {(m.caHaut * 100).toFixed(0)} % CA
           </span>
         </label>
 

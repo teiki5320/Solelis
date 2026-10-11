@@ -2,6 +2,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useFiche, useFicheStorageKey } from '@/lib/FicheContext';
 import BlocAccordeon from './BlocAccordeon';
+import { nombreFr } from '@/lib/format';
 
 interface Inputs {
   soldeInitial: number;
@@ -21,7 +22,7 @@ const EMPTY: Inputs = {
 
 function formatEuros(n: number): string {
   if (Math.abs(n) >= 1000) {
-    return `${(n / 1000).toFixed(1)} k€`;
+    return `${nombreFr(n / 1000, 1)} k€`;
   }
   return `${Math.round(n).toLocaleString('fr-FR')} €`;
 }

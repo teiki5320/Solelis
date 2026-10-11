@@ -1,6 +1,7 @@
 'use client';
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { dureeEnAnnees } from '@/lib/format';
 
 // ATI (Allocation des Travailleurs Indépendants)
 // Source : francetravail.fr / chomage-independant.francetravail.fr / Code du travail L5424-24 à L5424-26
@@ -56,9 +57,9 @@ export default function AtiPage() {
     const blocages: string[] = [];
 
     if (activiteMois >= DUREE_ACTIVITE_MIN_MOIS) {
-      motifs.push(`${(activiteMois / 12).toFixed(1)} ans d'activité — seuil de 2 ans respecté.`);
+      motifs.push(`${dureeEnAnnees(activiteMois)} d'activité — seuil de 2 ans respecté.`);
     } else {
-      blocages.push(`Activité de ${(activiteMois / 12).toFixed(1)} ans, seuil légal minimum : 2 ans.`);
+      blocages.push(`Activité de ${dureeEnAnnees(activiteMois)}, seuil légal minimum : 2 ans.`);
     }
 
     if (revenuAnnuelMoyen >= MIN_REVENU_ANNUEL) {

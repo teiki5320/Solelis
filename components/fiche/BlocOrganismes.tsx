@@ -51,7 +51,7 @@ function Carte({ o, couleur }: { o: OrganismeCard; couleur: string }) {
       </div>
       {(o.note || o.avis) && (
         <p className="mt-2 text-xs text-navy/70">
-          ⭐ {o.note?.toFixed(1)} {o.avis ? `· ${o.avis} avis` : ''}
+          ⭐ {o.note?.toLocaleString('fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} {o.avis ? `· ${o.avis} avis` : ''}
         </p>
       )}
       {o.adresse && (
