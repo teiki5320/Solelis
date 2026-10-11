@@ -482,7 +482,7 @@ export function buildOrganismes(
   // Correspondant TPE-PME Banque de France (IEDOM / IEOM outre-mer) — diagnostic gratuit et confidentiel
   const emission = institutionEmission(dep?.code);
   fin.push({
-    nom: `${emission.accompagnement} ${emission.nom}`,
+    nom: emission.nom === 'IEOM' ? `${emission.accompagnement} de ${emission.avecArticle}` : `${emission.accompagnement} ${emission.nom}`,
     type: 'Diagnostic financier confidentiel',
     telephone: emission.telephone || undefined,
     site: emission.site,

@@ -279,5 +279,9 @@ describe('institutionEmission : Banque de France, IEDOM, IEOM (tour 5)', () => {
     for (const d of ['986', '987', '988']) {
       expect(institutionEmission(d).accompagnement).toBe('Accompagnement des entreprises');
     }
+    const r = makeReponses({ probleme: 'banque' });
+    const noms = buildOrganismes(getDepartement('988'), r, [], 'autre', '', 'TC').flatMap((g) => g.cartes.map((c) => c.nom));
+    expect(noms).toContain("Accompagnement des entreprises de l'IEOM");
+    expect(noms.some((n) => /Correspondant TPE-PME/.test(n))).toBe(false);
   });
 });
