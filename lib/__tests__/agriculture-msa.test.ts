@@ -62,7 +62,7 @@ function ficheComplete(r: Reponses, c: CompanyData) {
     ...groupesBase,
     ...(ordres ? [ordres] : []),
     buildSoutien(r),
-    buildAidesPersonnelles(r),
+    buildAidesPersonnelles(r, sector.secteur, c.departement),
     ...buildReseauxSpecifiques(r, sector),
   ];
   const html = renderToStaticMarkup(
@@ -158,13 +158,38 @@ describe('EARL à Vert (40420) : aucune orientation CPSTI / Urssaf indépendants
   it('fiche rendue en entier : jamais CPSTI, « Action sociale des indépendants » ni 36 98', () => {
     for (const probleme of ['urssaf', 'banque', 'impots', 'fournisseurs'] as const) {
       const { html } = ficheComplete({ ...INDEP_URSSAF, probleme }, EARL_VERT);
-      // Seule exception admise : l'ACRE (« Rebond après liquidation »), qui
-      // concerne une future activité, pas l'exploitation agricole actuelle.
-      const sansAcre = html.replace(/ACRE · Aide à la Création[\s\S]{0,900}?tel:3698[\s\S]{0,200}?36 ?98/, '');
-      const m = CPSTI.exec(sansAcre);
-      expect(m ? sansAcre.slice(Math.max(0, m.index - 120), m.index + 80) : null).toBeNull();
+      const m = CPSTI.exec(html);
+      expect(m ? html.slice(Math.max(0, m.index - 120), m.index + 80) : null).toBeNull();
+      expect(html).not.toContain('tel:3698');
       expect(html).toContain('msa.fr');
     }
+  });
+
+  it('prescription et contestation : art. L725-7 C. rur. et CRA de la MSA', () => {
+    const { html } = ficheComplete(INDEP_URSSAF, EARL_VERT);
+    expect(html).toContain('Les cotisations MSA se prescrivent par 3 ans');
+    expect(html).toContain('art. L725-7 du Code rural et de la pêche maritime');
+    expect(html).toContain('Vous avez 2 mois pour contester une mise en demeure de la MSA');
+    expect(html).not.toContain('Les cotisations URSSAF se prescrivent');
+    expect(html).not.toContain('art. L244-3');
+    expect(html).toContain('Date de mise en demeure MSA reçue');
+    expect(html).toContain('Pour votre situation (MSA)');
+  });
+
+  it('ACRE (rebond) : pas de 36 98, orientation vers la caisse de MSA', () => {
+    const acre = buildAidesPersonnelles(INDEP_URSSAF, 'agriculture', '40').cartes.find((c) => c.nom.startsWith('ACRE'))!;
+    expect(acre.telephone).toBeUndefined();
+    expect(acre.site).toBe(MSA_CONTACT);
+    expect(acre.type).toMatch(/MSA/);
+    // Hors agriculture : inchangé (Urssaf, 36 98).
+    expect(buildAidesPersonnelles(INDEP_URSSAF, 'commerce', '33').cartes.find((c) => c.nom.startsWith('ACRE'))!.telephone).toBe('3698');
+  });
+
+  it('témoin non agricole : prescription Urssaf (art. L244-3 CSS) inchangée', () => {
+    const commercant = { ...EARL_VERT, formeJuridique: 'Entrepreneur individuel', naf: '47.11B' };
+    const { html } = ficheComplete(INDEP_URSSAF, commercant);
+    expect(html).toContain('Les cotisations URSSAF se prescrivent par 3 ans');
+    expect(html).toContain('Date de mise en demeure URSSAF reçue');
   });
 
   it('carte prioritaire « Aides » : MSA + CCSF + BPI (pas URSSAF)', () => {

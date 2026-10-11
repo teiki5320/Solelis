@@ -232,7 +232,7 @@ async function renderFiche(data: FicheData) {
     );
     const groupeOrdres = buildOrdresProfessionnels(sector);
     const groupeSoutien = buildSoutien(reponses);
-    const groupeAidesPerso = buildAidesPersonnelles(reponses);
+    const groupeAidesPerso = buildAidesPersonnelles(reponses, sector.secteur, company_data.departement);
     const groupesReseaux = buildReseauxSpecifiques(reponses, sector);
     groupes = [
       ...groupesBase,

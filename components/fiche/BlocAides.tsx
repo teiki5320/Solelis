@@ -8,6 +8,7 @@ import {
   institutionEmission,
   carteActionSocialeNonSalarie,
   relevantDuCpsti,
+  relevantDeLaMsa,
   URSSAF_ACTION_SOCIALE_CPSTI,
 } from '@/lib/organismes';
 import { useFiche } from '@/lib/FicheContext';
@@ -49,7 +50,7 @@ export function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre:
     const cot = contactCotisations(s, r.effectif, dep);
     specifiques.push({
       nom: cot.org === 'URSSAF' ? 'Échelonnement URSSAF' : `Échelonnement · ${cot.org}`,
-      description: `Demandez un échéancier auprès de ${cot.orgAvecArticle}${cot.tel ? '' : ` (${cot.telLibelle})`}. Des cotisations anciennes peuvent être prescrites (3 ans, sauf mise en demeure envoyée à temps — art. L244-3 CSS).`,
+      description: `Demandez un échéancier auprès de ${cot.orgAvecArticle}${cot.tel ? '' : ` (${cot.telLibelle})`}. Des cotisations anciennes peuvent être prescrites (3 ans, sauf mise en demeure envoyée à temps — ${relevantDeLaMsa(s.secteur, dep) ? 'art. L725-7 du Code rural et de la pêche maritime' : 'art. L244-3 CSS'}).`,
       telephone: cot.tel ?? undefined,
       site: cot.site,
       badge: 'Prioritaire pour vous',
@@ -96,7 +97,7 @@ export function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre:
     });
   }
   if (specifiques.length) {
-    sections.push({ titre: `Pour votre situation (${r.probleme === 'urssaf' ? 'URSSAF' : r.probleme === 'impots' ? 'impôts' : r.probleme === 'banque' ? 'banque' : 'fournisseurs'})`, aides: specifiques });
+    sections.push({ titre: `Pour votre situation (${r.probleme === 'urssaf' ? (relevantDeLaMsa(s.secteur, dep) ? 'MSA' : 'URSSAF') : r.probleme === 'impots' ? 'impôts' : r.probleme === 'banque' ? 'banque' : 'fournisseurs'})`, aides: specifiques });
   }
 
   // Section 2: Aides selon le statut
@@ -119,7 +120,7 @@ export function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre:
       description: 'Si votre revenu d\'activité est nul ou très faible, vous pouvez demander le RSA tout en poursuivant votre activité, sous conditions.',
       // Exploitant·e agricole : RSA demandé à la MSA (msa.fr, « Le RSA pour
       // les exploitants et les chefs d'entreprise agricoles »).
-      site: s.secteur === 'agriculture' && !/^9[78]/.test(dep) ? 'https://www.msa.fr/lfp/rsa' : 'https://www.caf.fr',
+      site: relevantDeLaMsa(s.secteur, dep) ? 'https://www.msa.fr/lfp/rsa' : 'https://www.caf.fr',
     });
   }
   if (r.effectif === 'salaries') {

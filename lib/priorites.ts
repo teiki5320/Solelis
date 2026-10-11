@@ -1,6 +1,7 @@
 import type { Reponses, CompanyData } from './types';
 import type { SectorInfo, EffectifSeuils } from './secteur';
 import { resolveStrategie, AXE_META, getTribunalCompetent } from './strategie';
+import { relevantDeLaMsa } from './organismes';
 
 export type Tone = 'rouge' | 'jaune' | 'bleu' | 'vert' | 'navy';
 
@@ -162,7 +163,7 @@ export function scorePriorityCards({ reponses, company, sector, seuils }: BuildC
   const scoreAides = reponses.probleme === 'urssaf' || reponses.probleme === 'impots' ? 6 : 4;
   // Cotisations : MSA pour un·e exploitant·e agricole (métropole), ENIM pour la pêche.
   const orgCotisations =
-    sector.secteur === 'peche' ? 'ENIM' : sector.secteur === 'agriculture' && !/^9[78]/.test(dep ?? '') ? 'MSA' : 'URSSAF';
+    sector.secteur === 'peche' ? 'ENIM' : relevantDeLaMsa(sector.secteur, dep) ? 'MSA' : 'URSSAF';
   cards.push({
     id: 'aides',
     icone: '💶',

@@ -370,6 +370,15 @@ export function relevantDuCpsti(sectorKey?: string): boolean {
 }
 
 /**
+ * Exploitant·e agricole en métropole : cotisations, action sociale, RSA et
+ * courriers relèvent de sa caisse de MSA. (Outre-mer, la caisse locale —
+ * CGSS, CSSM… — voir contactCotisations.)
+ */
+export function relevantDeLaMsa(sectorKey?: string, departement?: string): boolean {
+  return sectorKey === 'agriculture' && !/^9[78]/.test(departement ?? '');
+}
+
+/**
  * Carte « action sociale » d'un·e non-salarié·e en difficulté :
  * - régime général : action sociale du CPSTI, demandée à l'Urssaf (la
  *   « Sécurité sociale des indépendants » a disparu le 1er janvier 2020) ;
@@ -389,7 +398,7 @@ export function carteActionSocialeNonSalarie(sectorKey?: string, departement?: s
       badge: 'Sur demande · au cas par cas',
     };
   }
-  if (sectorKey === 'agriculture' && !/^9[78]/.test(departement ?? '')) {
+  if (relevantDeLaMsa(sectorKey, departement)) {
     return {
       nom: 'MSA · aides aux exploitant·e·s en difficulté',
       type: 'Prise en charge partielle de cotisations, échéancier de paiement (votre caisse de MSA)',
@@ -667,7 +676,12 @@ export function buildOrganismes(
  * revenus de remplacement, couverture santé, logement, accès au droit…
  * Retourne un groupe indépendant des 4 groupes "entreprise" de buildOrganismes.
  */
-export function buildAidesPersonnelles(reponses: Reponses): GroupeOrganismes {
+export function buildAidesPersonnelles(
+  reponses: Reponses,
+  /** Secteur (getSectorInfo) et département : exploitant·e agricole → MSA. */
+  sectorKey?: string,
+  departement?: string,
+): GroupeOrganismes {
   const cartes: OrganismeCard[] = [];
 
   // Indépendants : ATI en priorité
@@ -682,14 +696,27 @@ export function buildAidesPersonnelles(reponses: Reponses): GroupeOrganismes {
   }
 
   // ACRE : exonération de charges 1ère année après rebond
-  cartes.push({
-    nom: 'ACRE · Aide à la Création/Reprise d\'Entreprise',
-    type: 'URSSAF · exonération de charges',
-    // Ligne Urssaf des travailleurs indépendants (créateurs, repreneurs).
-    telephone: '3698',
-    site: 'https://www.urssaf.fr',
-    badge: 'Rebond après liquidation',
-  });
+  if (relevantDeLaMsa(sectorKey, departement)) {
+    // Exploitant·e agricole : l'ACRE vaut aussi pour une activité agricole
+    // (entreprendre.service-public.gouv.fr, fiche F11677) ; la démarche
+    // propre au régime agricole n'y est pas décrite → orientation prudente
+    // vers sa caisse de MSA, sans le 36 98 de l'Urssaf.
+    cartes.push({
+      nom: 'ACRE · Aide à la Création/Reprise d\'Entreprise',
+      type: 'Exonération de début d\'activité (activité agricole possible) · renseignez-vous auprès de votre caisse de MSA',
+      site: MSA_CONTACT,
+      badge: 'Rebond après liquidation',
+    });
+  } else {
+    cartes.push({
+      nom: 'ACRE · Aide à la Création/Reprise d\'Entreprise',
+      type: 'URSSAF · exonération de charges',
+      // Ligne Urssaf des travailleurs indépendants (créateurs, repreneurs).
+      telephone: '3698',
+      site: 'https://www.urssaf.fr',
+      badge: 'Rebond après liquidation',
+    });
+  }
 
   // ARCE : capital France Travail pour rebondir
   cartes.push({
