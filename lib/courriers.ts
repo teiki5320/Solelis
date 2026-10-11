@@ -175,12 +175,12 @@ Note : la saisine peut aussi se faire en ligne sur https://mediateur-credit.banq
   {
     slug: 'cessation-paiements',
     titre: 'Déclaration de cessation des paiements',
-    destinataire: 'Tribunal de commerce',
+    destinataire: 'Tribunal compétent (indiqué dans votre fiche : tribunal de commerce, des activités économiques ou judiciaire)',
     categorie: 'tribunal',
     icone: '⚠️',
     description: 'Déclarer la cessation des paiements auprès du tribunal (obligatoire dans les 45 jours).',
     objet: 'Déclaration de cessation des paiements — Art. L631-4 C. com.',
-    corps: `Madame, Monsieur le Président du Tribunal de Commerce,
+    corps: `Madame, Monsieur le Président du {{TRIBUNAL}},
 
 Je soussigné(e), {{NOM_DIRIGEANT}}, en qualité de {{QUALITE}} de la société {{NOM_ENTREPRISE}}, {{FORME_JURIDIQUE}} au capital de {{CAPITAL}} €, immatriculée sous le numéro SIRET {{SIRET}}, dont le siège social est situé {{ADRESSE}},
 
@@ -233,12 +233,12 @@ Cordialement,`,
   {
     slug: 'mandat-ad-hoc',
     titre: 'Demande de mandat ad hoc',
-    destinataire: 'Président du Tribunal de commerce',
+    destinataire: 'Président du tribunal compétent (indiqué dans votre fiche)',
     categorie: 'tribunal',
     icone: '🔒',
     description: 'Demander la désignation d\'un mandataire pour négocier confidentiellement.',
     objet: 'Requête aux fins de désignation d\'un mandataire ad hoc',
-    corps: `Monsieur le Président du Tribunal de Commerce,
+    corps: `Madame, Monsieur le Président du {{TRIBUNAL}},
 
 Je soussigné(e), {{NOM_DIRIGEANT}}, en qualité de {{QUALITE}} de la société {{NOM_ENTREPRISE}} (SIRET : {{SIRET}}), ai l'honneur de solliciter, sur le fondement de l'article L611-3 du Code de commerce, la désignation d'un mandataire ad hoc.
 
@@ -261,17 +261,17 @@ Mission souhaitée pour le mandataire :
 
 Je reste à la disposition du Tribunal pour tout complément d'information.
 
-Veuillez agréer, Monsieur le Président, l'expression de ma haute considération.`,
+Veuillez agréer, Madame, Monsieur le Président, l'expression de ma haute considération.`,
   },
   {
     slug: 'conciliation',
     titre: 'Demande de conciliation',
-    destinataire: 'Président du Tribunal de commerce',
+    destinataire: 'Président du tribunal compétent (indiqué dans votre fiche)',
     categorie: 'tribunal',
     icone: '🤝',
     description: 'Demander l\'ouverture d\'une conciliation pour trouver un accord global.',
     objet: 'Requête aux fins d\'ouverture d\'une procédure de conciliation',
-    corps: `Monsieur le Président du Tribunal de Commerce,
+    corps: `Madame, Monsieur le Président du {{TRIBUNAL}},
 
 Je soussigné(e), {{NOM_DIRIGEANT}}, en qualité de {{QUALITE}} de la société {{NOM_ENTREPRISE}} (SIRET : {{SIRET}}), ai l'honneur de solliciter, sur le fondement des articles L611-4 et suivants du Code de commerce, l'ouverture d'une procédure de conciliation.
 
@@ -298,7 +298,7 @@ Pièces jointes :
 - État prévisionnel de trésorerie
 - État des créances et dettes
 
-Veuillez agréer, Monsieur le Président, l'expression de ma haute considération.`,
+Veuillez agréer, Madame, Monsieur le Président, l'expression de ma haute considération.`,
   },
   {
     slug: 'creancier-arrangement',
@@ -603,7 +603,7 @@ PIÈCES JOINTES
 
 Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
 
-Important : à déposer au bureau d'aide juridictionnelle du tribunal compétent (TJ ou TC selon votre forme juridique). Délai de réponse : 1 à 3 mois. L'AJ totale couvre 100 % des frais ; l'AJ partielle couvre 55 % (RFR jusqu'à 15 547 €) ou 25 % (RFR jusqu'à 19 411 €).`,
+Important : à déposer au bureau d'aide juridictionnelle, installé au tribunal judiciaire. Délai de réponse : 1 à 3 mois. Barème 2026 pour une personne seule (service-public.gouv.fr) : l'AJ totale couvre 100 % des frais (RFR jusqu'à 12 957 €) ; l'AJ partielle couvre 55 % (RFR de 12 958 à 15 316 €) ou 25 % (RFR de 15 317 à 19 433 €).`,
   },
 ];
 
@@ -670,11 +670,11 @@ const SITUATION_URGENCY: Record<Situation, 'normale' | 'elevee' | 'critique'> = 
 
 const MORAL_CLOSINGS: Record<Moral, string> = {
   combatif:
-    "Je reste pleinement mobilisé pour traverser cette période et m'engage à respecter scrupuleusement les modalités que nous conviendrons.",
+    "Je reste pleinement mobilisé·e pour traverser cette période et m'engage à respecter scrupuleusement les modalités que nous conviendrons.",
   epuise:
     "Je traverse une période éprouvante et je vous remercie sincèrement de l'attention que vous porterez à ma demande.",
   perdu:
-    "Je reconnais avoir besoin d'être accompagné pour avancer. Un échange, même bref, m'aiderait à clarifier la marche à suivre.",
+    "Je reconnais avoir besoin d'être accompagné·e pour avancer. Un échange, même bref, m'aiderait à clarifier la marche à suivre.",
 };
 
 /**
@@ -706,7 +706,7 @@ function conseilCategorie(template: CourrierTemplate, ctx: CourrierContext): str
   switch (template.categorie) {
     case 'urssaf':
       if (ctx.situation === 'assignation') {
-        return "URGENT : envoyez ce courrier en recommandé AR sous 48 h et appelez en parallèle votre URSSAF (3957). En cas d'assignation, demandez explicitement une suspension des poursuites.";
+        return `URGENT : envoyez ce courrier en recommandé AR sous 48 h et appelez en parallèle votre URSSAF (${telUrssaf(ctx.effectif)}). En cas d'assignation, demandez explicitement une suspension des poursuites.`;
       }
       return "Envoyez en recommandé AR. L'URSSAF traite les demandes argumentées plus vite — joignez bilan + situation de trésorerie + prévisionnel.";
     case 'impots':
@@ -732,8 +732,17 @@ function conseilCategorie(template: CourrierTemplate, ctx: CourrierContext): str
   }
 }
 
-// Reconnaît la formule de politesse finale d'un paragraphe.
-const FORMULE_REGEX = /^(Veuillez agréer|Je vous prie d'agréer|Avec mes (?:meilleures|salutations|sincères)|Cordialement|Avec mes salutations|Fait à)/i;
+// Reconnaît le paragraphe qui contient la formule de politesse finale,
+// y compris quand elle n'ouvre pas le paragraphe (« Dans l'attente de
+// votre réponse, je vous prie d'agréer… »).
+const FORMULE_REGEX = /(veuillez agr[ée]er|je vous prie d.agr[ée]er|avec mes (?:meilleures|sinc[èe]res)? ?salutations|cordialement|bien à vous|^fait à)/i;
+
+/** Urssaf : 36 98 pour les travailleurs indépendants, 39 57 pour les employeurs. */
+function telUrssaf(effectif?: Effectif): string {
+  if (effectif === 'independant') return '3698';
+  if (effectif === 'salaries') return '3957';
+  return '3698 pour les indépendant·e·s, 3957 pour les employeurs';
+}
 
 function injectFragments(corps: string, preambule?: string, closing?: string): string {
   if (!preambule && !closing) return corps;
