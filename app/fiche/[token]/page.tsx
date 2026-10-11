@@ -63,6 +63,11 @@ interface FicheData {
   siret: string;
   reponses: Reponses;
   company_data: CompanyData;
+  /**
+   * La fiche est-elle déjà liée à une adresse e-mail ? Seul ce booléen part
+   * au navigateur : l'adresse elle-même ne quitte jamais le serveur.
+   */
+  emailEnregistre: boolean;
 }
 
 async function loadFiche(
@@ -80,6 +85,7 @@ async function loadFiche(
       siret: locale.siret,
       reponses: locale.reponses,
       company_data,
+      emailEnregistre: false,
     };
   }
 
@@ -98,6 +104,7 @@ async function loadFiche(
     siret: rec.siret,
     reponses: rec.reponses as Reponses,
     company_data,
+    emailEnregistre: !!rec.email?.trim(),
   };
 }
 
@@ -160,7 +167,7 @@ async function ContenuFiche({ token, d }: { token: string; d?: string }) {
 }
 
 async function renderFiche(data: FicheData) {
-  const { token, siret, reponses, company_data } = data;
+  const { token, siret, reponses, company_data, emailEnregistre } = data;
 
   let bodacc: BodaccItem[] = [];
   let infogreffe: BodaccItem[] = [];
@@ -305,7 +312,7 @@ async function renderFiche(data: FicheData) {
       )}
 
       {token !== 'local' ? (
-        <SaveBanner token={token} />
+        <SaveBanner token={token} emailEnregistre={emailEnregistre} />
       ) : (
         <div role="note" className="dashed-band p-4 text-sm text-navy sm:p-5">
           <p className="font-medium">Cette fiche n&apos;a pas pu être enregistrée.</p>

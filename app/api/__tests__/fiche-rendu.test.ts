@@ -5,9 +5,10 @@ import type { CompanyData } from '@/lib/types';
 const TOKEN = 'abcdef0123456789abcdef01';
 let company: CompanyData;
 
+let emailFiche: string | undefined;
 vi.mock('@/lib/db', () => ({
-  getFicheByToken: async () => ({ token: TOKEN, siret: company.siret, reponses: REPONSES, company_data: company }),
-  getFicheByTokenMemo: async () => ({ token: TOKEN, siret: company.siret, reponses: REPONSES, company_data: company }),
+  getFicheByToken: async () => ({ token: TOKEN, siret: company.siret, reponses: REPONSES, company_data: company, email: emailFiche }),
+  getFicheByTokenMemo: async () => ({ token: TOKEN, siret: company.siret, reponses: REPONSES, company_data: company, email: emailFiche }),
 }));
 vi.mock('@/lib/sirene', () => ({ fetchSirene: vi.fn(async () => company) }));
 vi.mock('@/lib/bodacc', async (importOriginal) => ({
@@ -26,6 +27,7 @@ vi.mock('next/headers', () => ({ cookies: async () => ({ get: () => undefined })
 const REPONSES = { situation: 'tresorie', probleme: 'urssaf', effectif: 'independant', moral: 'combatif' };
 
 import FichePage from '@/app/fiche/[token]/page';
+import SaveBanner from '@/components/fiche/SaveBanner';
 
 /** Parcourt l'arbre JSX renvoyé (sans rendre les composants) et rassemble textes et éléments. */
 function parcourir(n: ReactNode, textes: string[], elements: { type: unknown; props: Record<string, unknown> }[]) {
@@ -76,6 +78,23 @@ const BASE: CompanyData = {
 describe('fiche : entreprise introuvable et avocats', () => {
   beforeEach(() => {
     company = { ...BASE };
+    emailFiche = undefined;
+  });
+
+  it('fiche liée à une adresse : SaveBanner reçoit emailEnregistre=true, jamais l’adresse', async () => {
+    emailFiche = 'dirigeant@exemple.fr';
+    const { elements } = await rendre();
+    const banniere = elements.find((e) => e.type === SaveBanner);
+    expect(banniere?.props).toEqual({ token: TOKEN, emailEnregistre: true });
+    // L'adresse ne figure dans aucune prop transmise aux composants.
+    const props = JSON.stringify(elements.map((e) => ({ ...e.props, children: undefined })));
+    expect(props).not.toContain('dirigeant@exemple.fr');
+  });
+
+  it('fiche sans adresse : SaveBanner reçoit emailEnregistre=false', async () => {
+    const { elements } = await rendre();
+    const banniere = elements.find((e) => e.type === SaveBanner);
+    expect(banniere?.props).toEqual({ token: TOKEN, emailEnregistre: false });
   });
 
   it('entreprise non trouvée : message sobre avec le SIRET au format 3-3-3-5', async () => {
