@@ -115,6 +115,16 @@ describe('data/organismes.json : ressorts des CCI', () => {
     }
   });
 
+  it('noms à jour : CCI Métropole de Bourgogne (21, 71), CCI Finistère (29)', () => {
+    expect(DEPS['21'].cci.nom).toMatch(/^CCI Métropole de Bourgogne/);
+    expect(DEPS['71'].cci.nom).toMatch(/^CCI Métropole de Bourgogne/);
+    expect(DEPS['29'].cci.nom).toMatch(/^CCI Finistère/);
+    const t = JSON.stringify(data);
+    expect(t).not.toContain('CCI de la Côte-d');
+    expect(t).not.toContain('CCI de Saône-et-Loire');
+    expect(t).not.toContain('Métropolitaine Bretagne Ouest');
+  });
+
   it('pas de CCI régionale à la place d’une CCI territoriale', () => {
     for (const [code, d] of Object.entries(DEPS)) {
       expect(d.cci.nom, code).not.toMatch(/^CCI (Normandie|Hauts-de-France|Occitanie|Bretagne|Nouvelle-Aquitaine|Grand Est)\b/);

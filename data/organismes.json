@@ -2132,11 +2132,11 @@
       "site": "https://www.justice.fr/recherche/annuaires"
     },
     "cci": {
-      "nom": "CCI de la Côte-d'Or",
+      "nom": "CCI Métropole de Bourgogne (Dijon)",
       "type": "Chambre de commerce et d’industrie",
       "adresse": "2 avenue de Marbotte, BP 17440, 21074 Dijon Cedex",
       "telephone": "03 80 65 91 00",
-      "site": "https://www.bourgognefranchecomte.cci.fr"
+      "site": "https://www.metropoledebourgogne.cci.fr"
     },
     "urssaf": {
       "nom": "Urssaf Bourgogne — site de la Côte-d'Or",
@@ -3921,11 +3921,11 @@
       ]
     },
     "cci": {
-      "nom": "CCI Métropolitaine Bretagne Ouest (Quimper)",
+      "nom": "CCI Finistère (délégation de Quimper)",
       "type": "Chambre de commerce et d’industrie",
       "adresse": "145 avenue de Kéradennec, CS 76029, 29330 Quimper Cedex",
       "telephone": "02 98 98 29 29",
-      "site": "https://www.bretagne.cci.fr"
+      "site": "https://www.bretagne.cci.fr/ma-cci/cci-finistere"
     },
     "urssaf": {
       "nom": "Urssaf Bretagne — site du Finistère",
@@ -13476,11 +13476,11 @@
       ]
     },
     "cci": {
-      "nom": "CCI de Saône-et-Loire (Chalon-sur-Saône)",
+      "nom": "CCI Métropole de Bourgogne (bureau de Chalon-sur-Saône)",
       "type": "Chambre de commerce et d’industrie",
       "adresse": "1 avenue de Verdun, BP 60190, 71105 Chalon-sur-Saône Cedex",
       "telephone": "03 85 42 36 00",
-      "site": "https://www.bourgognefranchecomte.cci.fr"
+      "site": "https://www.metropoledebourgogne.cci.fr"
     },
     "urssaf": {
       "nom": "Urssaf Bourgogne — site de Saône-et-Loire",
