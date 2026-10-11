@@ -22,6 +22,7 @@ import {
 import { getSectorInfo, getCompanyAge, getEffectifSeuils } from '@/lib/secteur';
 import { tokenSchema } from '@/lib/schemas';
 import { getJuridiction } from '@/lib/strategie';
+import { formaterSiret } from '@/lib/siret';
 import { CLE_FICHE_LOCALE } from '@/lib/ficheLocale';
 import { lireCookieFicheLocale, lireParametreD } from '@/lib/ficheLocaleServeur';
 import type { CompanyData, Reponses, BodaccItem } from '@/lib/types';
@@ -151,7 +152,9 @@ async function renderFiche(data: FicheData) {
 
   const avocats: OrganismeCard[] = avocatsRaw.map((p) => ({
     nom: p.name,
-    type: 'Avocat · droit des entreprises en difficulté',
+    // Résultats Google Places : la spécialité n'est pas vérifiée (un cabinet de
+    // droit immobilier peut sortir) → étiquette neutre.
+    type: 'Avocat à proximité',
     adresse: p.address,
     note: p.rating,
     avis: p.reviews,
@@ -202,7 +205,7 @@ async function renderFiche(data: FicheData) {
       <div className="print-header hidden">
         <p style={{ fontFamily: 'Georgia, serif', fontSize: '22pt', letterSpacing: '0.05em' }}>Solelis</p>
         <p style={{ fontSize: '10pt', color: '#666', marginTop: '4px' }}>
-          Fiche confidentielle · {company_data.nom} · SIRET {company_data.siret}
+          Fiche confidentielle · {company_data.nom} · SIRET {formaterSiret(company_data.siret)}
         </p>
       </div>
 
@@ -234,6 +237,22 @@ async function renderFiche(data: FicheData) {
       )}
 
       <StoreCompanyData company={company_data} token={token} reponses={reponses} />
+
+      {!company_data.fetched && (
+        <div role="note" className="dashed-band p-4 text-sm text-navy sm:p-5">
+          <p className="font-medium">
+            Nous n&apos;avons pas trouvé votre entreprise (SIRET {formaterSiret(siret)}).
+          </p>
+          <p className="mt-1 text-xs text-navy/60">
+            Le numéro est peut-être mal saisi, ou le répertoire de l&apos;INSEE n&apos;a pas
+            répondu. Les conseils ci-dessous restent valables, mais sans votre forme
+            juridique, votre activité ni votre département.{' '}
+            <Link href="/" className="underline underline-offset-2">
+              Vérifier le numéro SIRET
+            </Link>
+          </p>
+        </div>
+      )}
 
       {token !== 'local' ? (
         <SaveBanner token={token} />
