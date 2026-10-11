@@ -1,5 +1,6 @@
 'use client';
 import { useFiche } from '@/lib/FicheContext';
+import { institutionEmission } from '@/lib/organismes';
 import BlocAccordeon from './BlocAccordeon';
 
 interface DispositifEtat {
@@ -45,13 +46,15 @@ export default function BlocAidesEtat() {
 
   // BdF TPE-PME : si problème bancaire ou trésorerie
   if (reponses.probleme === 'banque' || reponses.situation === 'tresorie') {
+    // Banque de France en métropole, IEDOM / IEOM outre-mer (iedom.fr, ieom.fr).
+    const emission = institutionEmission(company.departement);
     dispositifs.push({
       cle: 'bdf',
-      nom: 'Banque de France · Correspondant TPE-PME',
+      nom: `${emission.nom} · ${emission.accompagnement}`,
       description:
         "Numéro unique pour les dirigeants face à une difficulté bancaire, de trésorerie ou de financement. Un référent local vous oriente vers la médiation du crédit ou un dispositif adapté.",
-      telephone: '34 14',
-      site: 'https://entreprises.banque-france.fr',
+      telephone: emission.telephone || undefined,
+      site: emission.site,
       badge: 'Gratuit · confidentiel',
       accent: 'bleu',
     });
@@ -63,9 +66,8 @@ export default function BlocAidesEtat() {
       cle: 'ccsf',
       nom: 'CCSF — Commission des chefs des services financiers',
       description:
-        "Plan d'apurement unique couvrant à la fois vos dettes fiscales (impôts, TVA, IS) et sociales (URSSAF, retraite). Échelonnement jusqu'à 36 mois. Saisine via la DDFiP.",
-      telephone: '0 809 401 401',
-      site: 'https://www.impots.gouv.fr/professionnel/commission-des-chefs-des-services-financiers-ccsf',
+        "Plan d'apurement unique couvrant à la fois vos dettes fiscales (impôts, TVA, IS) et sociales (URSSAF, retraite). Durée fixée par la commission. Saisine auprès du secrétariat permanent de la CCSF, à la DDFiP de votre département.",
+      site: 'https://www.impots.gouv.fr/professionnel/accompagnement-individualise-en-cas-de-difficultes-economiques-et-financieres',
       badge: 'Dettes fiscales + sociales',
       accent: 'vert',
     });
@@ -122,7 +124,7 @@ export default function BlocAidesEtat() {
       description:
         "Cofinancement européen pour les actions de reclassement, formation et accompagnement des salariés lors de restructurations. Géré par les Régions (volet décentralisé) et la DGEFP (volet national). Mobilisable en complément d'un PSE ou d'un plan de reclassement.",
       site: 'https://www.fse.gouv.fr',
-      badge: 'Cofinancement UE · jusqu\'à 60 %',
+      badge: 'Cofinancement UE',
       accent: 'bleu',
     });
   }

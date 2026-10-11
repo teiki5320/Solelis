@@ -1,116 +1,7 @@
 'use client';
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-
-type Categorie =
-  | 'urssaf'
-  | 'fiscal-revenu'
-  | 'fiscal-tva'
-  | 'civil'
-  | 'commercial'
-  | 'baux'
-  | 'salaire'
-  | 'penal-amende';
-
-interface Regle {
-  cle: Categorie;
-  label: string;
-  duree: number; // années
-  base: string;
-  reference: string;
-  point: string; // point de départ du délai
-  interruption: string;
-}
-
-const REGLES: Regle[] = [
-  {
-    cle: 'urssaf',
-    label: 'Cotisations sociales (URSSAF, MSA, SSI)',
-    duree: 3,
-    base: 'Code de la Sécurité sociale',
-    reference: 'CSS art. L244-3',
-    point: "Date d'exigibilité de la cotisation (échéance déclarative).",
-    interruption:
-      "Mise en demeure, contrainte signifiée, reconnaissance écrite de la dette par le débiteur.",
-  },
-  {
-    cle: 'fiscal-revenu',
-    label: 'Impôt sur le revenu / Impôt sur les sociétés',
-    duree: 3,
-    base: 'Livre des procédures fiscales',
-    reference: 'LPF art. L169 (délai de reprise)',
-    point:
-      "31 décembre de la 3e année qui suit celle au titre de laquelle l'impôt est dû.",
-    interruption:
-      "Proposition de rectification, jugement, demande d'assistance internationale.",
-  },
-  {
-    cle: 'fiscal-tva',
-    label: 'TVA',
-    duree: 4,
-    base: 'Livre des procédures fiscales',
-    reference: 'LPF art. L176',
-    point:
-      "31 décembre de la 3e année qui suit celle au cours de laquelle la TVA est devenue exigible (soit ~4 ans).",
-    interruption: "Proposition de rectification, action en recouvrement.",
-  },
-  {
-    cle: 'civil',
-    label: 'Action civile (entre particuliers, dette personnelle)',
-    duree: 5,
-    base: 'Code civil',
-    reference: 'C. civ. art. 2224',
-    point:
-      "Jour où le titulaire du droit a connu ou aurait dû connaître les faits lui permettant de l'exercer.",
-    interruption:
-      "Demande en justice, acte d'exécution forcée, reconnaissance du droit par le débiteur (art. 2240 et s.).",
-  },
-  {
-    cle: 'commercial',
-    label: 'Action commerciale (entre commerçants)',
-    duree: 5,
-    base: 'Code de commerce',
-    reference: 'C. com. art. L110-4',
-    point: "Date d'exigibilité de la créance commerciale.",
-    interruption:
-      "Reconnaissance, demande en justice, mesure conservatoire.",
-  },
-  {
-    cle: 'baux',
-    label: 'Loyer commercial (action en paiement)',
-    duree: 5,
-    base: 'Code civil',
-    reference: 'C. civ. art. 2224 (jurisprudence Cass. 3e civ.)',
-    point: "Date d'échéance de chaque terme de loyer.",
-    interruption:
-      "Commandement de payer visant la clause résolutoire, action en justice.",
-  },
-  {
-    cle: 'salaire',
-    label: 'Action en paiement du salaire',
-    duree: 3,
-    base: 'Code du travail',
-    reference: 'C. trav. art. L3245-1',
-    point: "Jour où celui qui exerce l'action a connu ou aurait dû connaître les faits.",
-    interruption:
-      "Saisine du conseil de prud'hommes, reconnaissance écrite par l'employeur.",
-  },
-  {
-    cle: 'penal-amende',
-    label: "Amendes pénales / contraventions",
-    duree: 3,
-    base: 'Code de procédure pénale',
-    reference: 'CPP art. 133-3',
-    point: "Date à laquelle la décision est devenue définitive.",
-    interruption: "Tout acte d'exécution.",
-  },
-];
-
-function addYears(d: Date, n: number): Date {
-  const out = new Date(d);
-  out.setFullYear(out.getFullYear() + n);
-  return out;
-}
+import { REGLES, calculerPrescription, aideAnnee, type Categorie } from './calcul';
 
 function formatDateFR(d: Date): string {
   return d.toLocaleDateString('fr-FR', {
@@ -118,10 +9,6 @@ function formatDateFR(d: Date): string {
     month: 'long',
     year: 'numeric',
   });
-}
-
-function daysBetween(from: Date, to: Date): number {
-  return Math.floor((to.getTime() - from.getTime()) / (1000 * 60 * 60 * 24));
 }
 
 export default function PrescriptionPage() {
@@ -132,16 +19,10 @@ export default function PrescriptionPage() {
 
   const regle = REGLES.find((r) => r.cle === categorie)!;
 
-  const result = useMemo(() => {
-    if (!dateExig) return null;
-    const base = interrompue && dateInterruption ? new Date(dateInterruption) : new Date(dateExig);
-    if (isNaN(base.getTime())) return null;
-    const echeance = addYears(base, regle.duree);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const restants = daysBetween(today, echeance);
-    return { echeance, restants };
-  }, [dateExig, dateInterruption, interrompue, regle]);
+  const result = useMemo(
+    () => calculerPrescription(regle, dateExig, interrompue ? dateInterruption : null),
+    [dateExig, dateInterruption, interrompue, regle]
+  );
 
   const statut = !result
     ? null
@@ -167,7 +48,7 @@ export default function PrescriptionPage() {
       {
         '@type': 'HowToStep',
         name: 'Choisir le type de dette',
-        text: 'Sélectionnez la catégorie de dette (URSSAF, impôt sur le revenu, TVA, civile, commerciale, loyer, salaire, amende pénale).',
+        text: 'Sélectionnez la catégorie de dette (URSSAF, impôt sur le revenu, TVA, civile, commerciale, loyer, salaire, amende pour contravention).',
       },
       {
         '@type': 'HowToStep',
@@ -259,6 +140,11 @@ export default function PrescriptionPage() {
             onChange={(e) => setDateExig(e.target.value)}
             className="mt-1 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2"
           />
+          {aideAnnee(regle) && (
+            <span className="mt-1 block text-[11px] text-navy/55">
+              {aideAnnee(regle)}
+            </span>
+          )}
         </label>
 
         <label className="flex items-center gap-2 text-sm text-navy">
@@ -297,6 +183,11 @@ export default function PrescriptionPage() {
                 ? `Le délai est dépassé de ${Math.abs(result.restants)} jours. Vérifiez avec un avocat avant tout paiement.`
                 : `Encore ${result.restants} jours avant prescription.`}
             </p>
+            {result.departFutur && (
+              <p className="mt-2 text-sm text-navy/80">
+                ⚠️ La date saisie est dans le futur : le délai n&apos;a pas encore commencé à courir. Vérifiez la date.
+              </p>
+            )}
           </div>
         )}
       </div>
@@ -306,6 +197,11 @@ export default function PrescriptionPage() {
         <ul className="mt-2 list-disc space-y-1 pl-5">
           <li>
             Cet outil ne tient pas compte des suspensions (mineurs, force majeure, etc. — art. 2233 et s. C. civ.).
+          </li>
+          <li>
+            Impôts et TVA : ces délais sont ceux du <strong>contrôle</strong> (droit de reprise).
+            Une fois l&apos;impôt mis en recouvrement, le Trésor dispose de 4 ans pour le
+            recouvrer (LPF art. L274).
           </li>
           <li>
             Une prescription <strong>n&apos;efface pas la dette</strong> mais empêche
@@ -321,7 +217,8 @@ export default function PrescriptionPage() {
       <p className="mt-6 text-xs text-navy/50">
         Sources officielles : Code civil (art. 2219 à 2254), Code de la
         Sécurité sociale (L244-3), Livre des procédures fiscales (L169,
-        L176), Code du travail (L3245-1), Code de commerce (L110-4).
+        L176, L274), Code du travail (L3245-1), Code de commerce (L110-4),
+        Code pénal (133-4).
       </p>
     </section>
   );

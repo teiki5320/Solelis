@@ -17,7 +17,8 @@ vi.mock('next/headers', () => ({
 }));
 
 import FichePage from '@/app/fiche/[token]/page';
-import FicheTokenLayout from '@/app/fiche/[token]/layout';
+import FicheTokenLayout, { generateMetadata as metadataLayout } from '@/app/fiche/[token]/layout';
+import { generateMetadata as metadataPage } from '@/app/fiche/[token]/page';
 
 function props(token: string, d?: string) {
   return { params: Promise.resolve({ token }), searchParams: Promise.resolve(d ? { d } : {}) };
@@ -44,15 +45,24 @@ describe('page /fiche/[token]', () => {
     expect(getFicheByToken).not.toHaveBeenCalled();
   });
 
-  it('/fiche/local sans données : rend le composant client qui relit l’onglet', async () => {
-    const rendu = (await FichePage(props('local'))) as { type: { name?: string } };
-    expect(rendu.type.name).toBe('FicheLocale');
+  it('/fiche/local sans données : vrai 404 (la page 404 du segment relit l’onglet)', async () => {
+    await attendre404(FichePage(props('local')));
   });
 
-  it('/fiche/local?d= avec des réponses hors schéma : pas de fiche rendue', async () => {
+  it('/fiche/local?d= avec des réponses hors schéma : 404, pas de fiche rendue', async () => {
     const d = Buffer.from(JSON.stringify({ siret: '12345678901234', reponses: { situation: 'x' } })).toString('base64');
-    const rendu = (await FichePage(props('local', d))) as { type: { name?: string } };
-    expect(rendu.type.name).toBe('FicheLocale');
+    await attendre404(FichePage(props('local', d)));
+  });
+
+  it('/fiche/local avec le cookie : la fiche se charge (pas de 404)', async () => {
+    valeurCookie = encodeURIComponent(
+      JSON.stringify({
+        siret: '80186721900025',
+        reponses: { situation: 'tresorie', probleme: 'urssaf', effectif: 'independant', moral: 'combatif' },
+      }),
+    );
+    const rendu = (await FichePage(props('local'))) as { props: { children: { props: { token: string } } } };
+    expect(rendu.props.children.props.token).toBe('local');
   });
 });
 
@@ -81,5 +91,29 @@ describe('layout /fiche/[token] (avant la frontière de chargement)', () => {
   it('« local » : laissé à la page', async () => {
     expect(await layout('local')).toBe('contenu');
     expect(getFicheByToken).not.toHaveBeenCalled();
+  });
+});
+
+describe('titre des pages introuvables', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    valeurCookie = undefined;
+  });
+
+  it('token inconnu : « Page introuvable — Solelis »', async () => {
+    const m = await metadataLayout({ params: Promise.resolve({ token: 'abcdef0123456789abcdef01' }) });
+    expect(m.title).toBe('Page introuvable — Solelis');
+  });
+
+  it('fiche existante : titre par défaut', async () => {
+    getFicheByToken.mockResolvedValueOnce({ token: 'x' } as never);
+    const m = await metadataLayout({ params: Promise.resolve({ token: 'abcdef0123456789abcdef01' }) });
+    expect(m.title).toBeUndefined();
+  });
+
+  it('/fiche/local sans données : « Page introuvable — Solelis », jamais indexée', async () => {
+    const m = await metadataPage(props('local'));
+    expect(m.title).toBe('Page introuvable — Solelis');
+    expect(m.robots).toMatchObject({ index: false });
   });
 });

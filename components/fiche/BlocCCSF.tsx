@@ -38,9 +38,9 @@ export default function BlocCCSF() {
           <p className="font-display text-sm text-vert">✓ Avantages clés</p>
           <ul className="mt-2 space-y-1 text-sm text-navy/80">
             <li>• Un seul interlocuteur (DDFiP)</li>
-            <li>• Échelonnement jusqu&apos;à 36 mois</li>
+            <li>• Échelonnement dont la durée est fixée par la commission</li>
             <li>• Dettes fiscales + sociales traitées ensemble</li>
-            <li>• Suspension des poursuites pendant l&apos;instruction</li>
+            <li>• Poursuites des créanciers publics suspendues une fois le plan accordé</li>
             <li>• Confidentielle (non publiée)</li>
           </ul>
         </div>
@@ -48,8 +48,8 @@ export default function BlocCCSF() {
           <p className="font-display text-sm text-jaune">⚠️ Conditions</p>
           <ul className="mt-2 space-y-1 text-sm text-navy/80">
             <li>• Entreprise à jour de ses obligations déclaratives</li>
-            <li>• Cotisations courantes payées (ou plan accepté)</li>
-            <li>• Pas en procédure collective ouverte</li>
+            <li>• Part salariale des cotisations sociales payée</li>
+            <li>• Pas de procédure collective en cours (si une condition n&apos;est plus remplie, la CCSF met fin au plan et les poursuites peuvent reprendre)</li>
             <li>• Difficulté avérée mais activité viable</li>
           </ul>
         </div>
@@ -61,22 +61,25 @@ export default function BlocCCSF() {
         </p>
         <ol className="mt-2 space-y-2 text-sm text-navy/80">
           <li>
-            <strong>1.</strong> Téléchargez le formulaire CERFA
-            n°15772*02 sur <em>impots.gouv.fr</em> ou demandez-le à votre SIE.
+            <strong>1.</strong> Téléchargez le dossier de saisine de la
+            CCSF sur <em>impots.gouv.fr</em> (dossier simplifié pour les TPE)
+            ou demandez-le à votre SIE.
           </li>
           <li>
-            <strong>2.</strong> Joignez : 3 derniers bilans, situation
-            comptable récente, prévisionnel de trésorerie, état du passif
-            fiscal et social, plan d&apos;apurement proposé.
+            <strong>2.</strong> Joignez : état de vos dettes fiscales et
+            sociales, état de l&apos;actif, plan de trésorerie prévisionnel
+            sur la durée du plan demandé, vos propositions d&apos;apurement
+            (TPE : dossier simplifié avec dernier bilan et trésorerie).
           </li>
           <li>
-            <strong>3.</strong> Adressez-le à la <strong>DDFiP{dep ? ` du département ${dep}` : ''}</strong>{' '}
-            (Direction Départementale des Finances Publiques) — bureau du
-            recouvrement amiable.
+            <strong>3.</strong> Adressez-le au secrétaire permanent de la CCSF, à la <strong>DDFiP{dep ? ` du département ${dep}` : ''}</strong>{' '}
+            (Direction Départementale des Finances Publiques), qui assure
+            le secrétariat de la commission.
           </li>
           <li>
-            <strong>4.</strong> La CCSF se réunit en moyenne toutes les
-            6 semaines. Décision sous 2 à 3 mois.
+            <strong>4.</strong> La commission a 2 mois à compter de la
+            réception du dossier pour répondre ; sans réponse, la demande
+            est considérée comme rejetée.
           </li>
         </ol>
       </div>
@@ -91,12 +94,14 @@ export default function BlocCCSF() {
             <p className="mt-0.5 text-xs text-navy/60">{ddfip.adresse}</p>
           )}
           <div className="mt-3 flex flex-wrap gap-2 text-xs">
-            <a
-              href={`tel:${(ddfip.telephone ?? '0809401401').replace(/\s/g, '')}`}
-              className="rounded-full bg-white/80 px-3 py-1 text-navy/80 hover:bg-white"
-            >
-              <span aria-hidden>☎</span> {ddfip.telephone ?? '0 809 401 401'}
-            </a>
+            {ddfip.telephone && (
+              <a
+                href={`tel:${ddfip.telephone.replace(/\s/g, '')}`}
+                className="rounded-full bg-white/80 px-3 py-1 text-navy/80 hover:bg-white"
+              >
+                <span aria-hidden>☎</span> {ddfip.telephone}
+              </a>
+            )}
             {ddfip.site && (
               <a
                 href={ddfip.site}
@@ -113,7 +118,7 @@ export default function BlocCCSF() {
 
       <div className="mt-5 flex flex-wrap gap-2 text-sm">
         <a
-          href="https://www.impots.gouv.fr/professionnel/commission-des-chefs-des-services-financiers-ccsf"
+          href="https://www.impots.gouv.fr/professionnel/accompagnement-individualise-en-cas-de-difficultes-economiques-et-financieres"
           target="_blank"
           rel="noreferrer"
           className="rounded-full bg-white/80 px-3 py-1.5 text-bleu-fonce hover:bg-white"
@@ -121,18 +126,12 @@ export default function BlocCCSF() {
           <span aria-hidden>🌐</span> impots.gouv.fr — page officielle CCSF
         </a>
         <a
-          href="https://www.formulaires.service-public.fr/gf/cerfa_15772.do"
+          href="https://entreprendre.service-public.gouv.fr/vosdroits/F38326"
           target="_blank"
           rel="noreferrer"
           className="rounded-full bg-white/80 px-3 py-1.5 text-bleu-fonce hover:bg-white"
         >
-          📄 Formulaire Cerfa n°15772*02
-        </a>
-        <a
-          href="tel:0809401401"
-          className="rounded-full bg-white/80 px-3 py-1.5 text-navy/80 hover:bg-white"
-        >
-          <span aria-hidden>☎</span> 0 809 401 401 (renseignements fiscaux)
+          📄 Saisir la CCSF (service-public)
         </a>
         <a
           href="https://www.economie.gouv.fr/entreprises/commission-chefs-services-financiers-ccsf"
@@ -145,10 +144,9 @@ export default function BlocCCSF() {
       </div>
 
       <p className="mt-5 text-xs text-navy/50">
-        Source : décret n°2007-686 du 4 mai 2007 et articles D626-9 à
-        D626-15 du Code de commerce (remises de dettes publiques).
-        La CCSF traite environ 4 000 dossiers par an avec un taux
-        d&apos;acceptation supérieur à 80 % quand l&apos;entreprise est viable.
+        Source : décret n° 2007-686 du 4 mai 2007 ; Code de commerce,
+        art. D626-14 (remises de dettes) ; entreprendre.service-public.gouv.fr
+        (fiche F38326).
       </p>
     </BlocAccordeon>
   );

@@ -1,7 +1,11 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { m } from 'framer-motion';
 import { useFiche } from '@/lib/FicheContext';
+import { contactCotisations, institutionEmission } from '@/lib/organismes';
+
+/** Cible du focus quand on quitte le mode perdu (titre de la fiche, IdentiteHero). */
+export const ID_TITRE_FICHE = 'fiche-titre';
 
 /**
  * Mode « perdu » radical : affiché tout en haut de la fiche quand
@@ -13,37 +17,54 @@ import { useFiche } from '@/lib/FicheContext';
  * « rester en mode simple » et avoir toute sa fiche réduite.
  */
 export default function ModePerdu() {
-  const { reponses, company } = useFiche();
+  const { reponses, company, sector } = useFiche();
   const [masque, setMasque] = useState(false);
+
+  // Le bouton « Voir tout » disparaît avec le bloc : on place le focus sur
+  // le titre de la fiche pour ne pas le perdre (navigation clavier, lecteur d'écran).
+  useEffect(() => {
+    if (masque) document.getElementById(ID_TITRE_FICHE)?.focus();
+  }, [masque]);
 
   if (reponses.moral !== 'perdu' || masque) return null;
 
-  const ville = company.ville || 'votre ville';
+  const ville = company.ville;
   const dep = company.departement || '';
+  // Banque de France en métropole, IEDOM / IEOM outre-mer.
+  const emission = institutionEmission(dep);
 
   // 1 contact prioritaire selon la situation
   const contact = (() => {
     if (reponses.situation === 'assignation') {
       return {
         nom: 'Avocat en droit des entreprises en difficulté',
-        action: 'Premier RDV souvent gratuit · sous 48 h',
+        action: 'Sous 48 h · consultation gratuite possible en point-justice (3039)',
         tel: null as string | null,
-        site: dep ? `https://www.cnb.avocat.fr/fr/annuaire-des-avocats?departement=${dep}` : 'https://www.cnb.avocat.fr/fr/annuaire-des-avocats',
+        site: 'https://www.cnb.avocat.fr/annuaire-des-avocats-de-france',
         labelSite: 'Trouver un avocat',
       };
     }
     if (reponses.situation === 'redressement') {
       return {
         nom: 'CIP — Centre d\'Information sur la Prévention',
-        action: 'RDV gratuit, confidentiel, 1 h avec juriste + comptable + dirigeant',
+        action: 'RDV gratuit et confidentiel avec un expert-comptable, un avocat et un ancien juge',
         tel: null as string | null,
         site: 'https://www.cip-national.fr',
         labelSite: 'cip-national.fr',
       };
     }
+    if (emission.nom !== 'Banque de France') {
+      return {
+        nom: `${emission.nom} · ${emission.accompagnement}`,
+        action: 'Échange gratuit pour faire le point et vous orienter',
+        tel: emission.telephone || null,
+        site: emission.site,
+        labelSite: emission.nom === 'IEDOM' ? 'iedom.fr' : 'ieom.fr',
+      };
+    }
     return {
       nom: 'Banque de France · Correspondant TPE-PME',
-      action: 'Premier diagnostic confidentiel, gratuit, sous 5 jours',
+      action: 'Échange gratuit pour faire le point et vous orienter',
       tel: '3414',
       site: 'https://entreprises.banque-france.fr',
       labelSite: 'entreprises.banque-france.fr',
@@ -59,7 +80,14 @@ export default function ModePerdu() {
       return 'Vous avez 45 jours pour déclarer la cessation. Cette semaine : appeler 1 avocat ou le CIP. Pas plus.';
     }
     if (reponses.probleme === 'urssaf' || reponses.probleme === 'impots') {
-      return 'Cette semaine : 1 coup de fil à l\'URSSAF (3957) ou au SIE pour demander un délai. Rien d\'autre.';
+      if (reponses.probleme === 'impots') {
+        return 'Cette semaine : 1 message à votre service des impôts des entreprises (SIE) pour demander un délai. Rien d\'autre.';
+      }
+      const cot = contactCotisations(sector, reponses.effectif, dep);
+      return `Cette semaine : 1 coup de fil à ${cot.orgAvecArticle} (${cot.telLibelle}) pour demander un délai. Rien d'autre.`;
+    }
+    if (emission.nom !== 'Banque de France') {
+      return `Cette semaine : appelez ${emission.avecArticle}${emission.telephone ? ` (${emission.telephone})` : ''}. 10 minutes au téléphone suffisent pour commencer.`;
     }
     return 'Cette semaine : appelez le 34 14 (Banque de France). 10 minutes au téléphone suffisent pour commencer.';
   })();
@@ -87,8 +115,7 @@ export default function ModePerdu() {
         <button
           type="button"
           onClick={() => setMasque(true)}
-          className="shrink-0 rounded-full bg-white/80 px-3 py-1.5 text-xs text-navy/70 hover:bg-white"
-          aria-label="Masquer le mode urgence et voir la fiche complète"
+          className="no-print shrink-0 rounded-full bg-white/80 px-3 py-1.5 text-xs text-navy/70 hover:bg-white"
         >
           Voir tout
         </button>
@@ -139,7 +166,7 @@ export default function ModePerdu() {
           <p className="mt-2 font-display text-base text-navy">Vous n&apos;êtes pas seul·e</p>
           <p className="mt-2 text-xs text-navy/70">
             <strong>APESA</strong> — soutien psychologique gratuit pour
-            dirigeant·e·s, numéro vert 0 805 65 50 50 (7 j/7, de 8 h à 20 h). Si c&apos;est très lourd ce soir : <strong>3114</strong>{' '}
+            dirigeant·e·s, gratuit et confidentiel (apesa-france.com). Si c&apos;est très lourd ce soir : <strong>3114</strong>{' '}
             (prévention suicide, 24h/24, gratuit, anonyme).
           </p>
           <div className="mt-4 flex flex-wrap gap-2 text-sm">

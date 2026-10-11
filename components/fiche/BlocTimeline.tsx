@@ -16,7 +16,7 @@ function etapesAssignation(): Etape[] {
       jour: 'J-0',
       titre: 'Réception de l\'assignation',
       description:
-        "L'huissier vous remet l'assignation. À partir de maintenant, les délais courent.",
+        "Le commissaire de justice (ex-huissier) vous remet l'assignation. À partir de maintenant, les délais courent.",
       niveau: 'present',
     },
     {
@@ -44,7 +44,7 @@ function etapesAssignation(): Etape[] {
       jour: 'Après jugement',
       titre: 'Notification et publication',
       description:
-        "Le jugement est notifié puis publié au BODACC. Possibilité d'appel dans un délai de 10 jours (selon jugement).",
+        "Le jugement est notifié puis publié au BODACC. Possibilité d'appel dans les 10 jours suivant la notification (C. com. R661-3).",
       niveau: 'futur',
     },
   ];
@@ -70,7 +70,7 @@ function etapesRedressement(): Etape[] {
       jour: '+ 7 à 15 j',
       titre: 'Jugement d\'ouverture',
       description:
-        "Ouverture d'une procédure de redressement ou de liquidation. Désignation d'un mandataire judiciaire et d'un administrateur.",
+        "Ouverture d'une procédure de redressement ou de liquidation. Désignation d'un mandataire judiciaire (ou d'un liquidateur) et, au-delà de seuils de taille fixés par décret, d'un administrateur judiciaire (art. L621-4 C. com.).",
       niveau: 'futur',
     },
     {
@@ -96,14 +96,14 @@ function etapesPrevention(): Etape[] {
       jour: 'Aujourd\'hui',
       titre: 'Vous anticipez — c\'est la bonne décision',
       description:
-        "Les dispositifs amiables (mandat ad hoc, conciliation) sont ouverts aux entreprises qui ne sont pas en cessation des paiements depuis plus de 45 jours.",
+        "Les dispositifs amiables sont ouverts : le mandat ad hoc tant que vous n'êtes pas en cessation des paiements, la conciliation jusqu'à 45 jours après la cessation (art. L611-3 et L611-4 C. com.).",
       niveau: 'present',
     },
     {
       jour: 'Semaines 1 à 2',
       titre: 'Premier RDV confidentiel',
       description:
-        "Prenez rendez-vous avec la CCI, le CIP, ou un avocat/mandataire. Ce premier échange est gratuit et confidentiel.",
+        "Prenez rendez-vous avec la CCI, le CIP, ou un avocat/mandataire. L'entretien au CIP est gratuit et confidentiel ; une consultation d'avocat gratuite est possible en point-justice (3039).",
       niveau: 'urgent',
     },
     {
@@ -124,7 +124,7 @@ function etapesPrevention(): Etape[] {
       jour: '+ 6 mois',
       titre: 'Accord ou bascule en procédure collective',
       description:
-        "Soit un accord est trouvé (homologué ou non), soit la situation s'aggrave et il faut basculer en redressement. Agir tôt donne plus d'options.",
+        "Soit un accord est trouvé (en conciliation, il peut être constaté ou homologué par le tribunal), soit la situation s'aggrave et il faut basculer en redressement. Agir tôt donne plus d'options.",
       niveau: 'futur',
     },
   ];
@@ -150,14 +150,14 @@ function etapesTresorerie(): Etape[] {
       jour: 'Semaines 1-2',
       titre: 'Demandes de délais (URSSAF, SIE, fournisseurs, banque)',
       description:
-        "Utilisez les modèles de courriers de Solelis. La plupart des demandes argumentées aboutissent à un accord partiel ou total.",
+        "Utilisez les modèles de courriers de Solelis. Une demande argumentée, accompagnée de votre prévisionnel, a plus de chances d'aboutir.",
       niveau: 'urgent',
     },
     {
       jour: 'Semaine 2-3',
       titre: 'Saisine médiation du crédit',
       description:
-        "Si votre banque refuse de discuter, saisissez gratuitement la médiation du crédit (réponse sous 5 jours).",
+        "Si votre banque refuse de discuter, saisissez gratuitement la médiation du crédit : le médiateur vous contacte sous 48 h, puis vos banques ont 5 jours ouvrés pour revoir leur position.",
       niveau: 'futur',
     },
     {

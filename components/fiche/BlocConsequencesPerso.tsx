@@ -19,7 +19,7 @@ const SECTIONS: Section[] = [
     intro:
       "Deux fichiers tenus par la Banque de France recensent les incidents de paiement. Une inscription n'est pas une sanction mais une information aux établissements bancaires.",
     points: [
-      { label: 'FICP', valeur: 'Fichier des Incidents de remboursement de Crédits aux Particuliers. Inscription en cas de 2 mensualités impayées (crédit à la conso) ou de 60 jours d\'impayé (crédit immobilier).' },
+      { label: 'FICP', valeur: 'Fichier des Incidents de remboursement de Crédits aux Particuliers. Inscription après un incident de paiement caractérisé (par exemple 2 mensualités impayées pour un crédit remboursé chaque mois), après un délai de 30 jours laissé pour régulariser.' },
       { label: 'FCC', valeur: "Fichier Central des Chèques. Inscription en cas de chèque sans provision non régularisé ou de retrait de carte bancaire pour usage abusif." },
       { label: 'Durée FICP', valeur: '5 ans maximum (levée possible avant si régularisation + notification par le créancier).' },
       { label: 'Durée FCC', valeur: "5 ans pour chèques ; 2 ans pour cartes. Levée immédiate après régularisation." },
@@ -44,9 +44,9 @@ const SECTIONS: Section[] = [
     intro:
       "La cotation est un indicateur de la capacité de l'entreprise à honorer ses engagements financiers. Elle est communiquée aux banques et influence fortement l'accès au crédit.",
     points: [
-      { label: 'Échelle', valeur: '3++ (excellente) à 9 (incapacité à honorer) ; P si procédure collective ouverte ; 0 si aucune info.' },
+      { label: 'Échelle', valeur: 'Depuis janvier 2022 : 22 positions, de 1+ (excellente) à 8 (fortement compromise) ; P (défaillante) si procédure collective ouverte ; 0 si aucune information significative.' },
       { label: 'Mise à jour', valeur: 'Au moins annuelle, ou suite à un événement significatif (dépôt des comptes, incident, jugement).' },
-      { label: "Seuil d'alerte", valeur: "Passage à 6 et en dessous : l'accès au crédit devient très difficile. 7 signale un risque élevé." },
+      { label: "Seuil d'alerte", valeur: "À partir de 6 (« menacée »), puis 6- (« compromise »), 7 et 8, la cote signale une capacité menacée ou compromise à honorer les engagements financiers." },
       { label: 'Votre droit', valeur: "Vous avez le droit de connaître votre cote, les motifs de la cotation, et de la contester via un entretien avec la BDF." },
     ],
     actions: [
@@ -55,8 +55,7 @@ const SECTIONS: Section[] = [
       "Communiquez tout élément positif (contrats, restructuration, recapitalisation)",
     ],
     sources: [
-      'Banque de France — « Cotation des entreprises »',
-      'Règlement BCE 2014/1374 (crédits éligibles à la BCE)',
+      'Banque de France — « Cotation des entreprises » (nouvelle échelle de cotation, janvier 2022)',
     ],
     liens: [
       { label: 'entreprises.banque-france.fr', url: 'https://entreprises.banque-france.fr' },
@@ -70,9 +69,9 @@ const SECTIONS: Section[] = [
     points: [
       { label: 'Action en responsabilité pour insuffisance d\'actif (ex-« comblement de passif »)', valeur: "Peut viser le dirigeant ayant commis une faute de gestion ayant contribué à l'insuffisance d'actif. Condamnation à payer tout ou partie du passif. Prescription : 3 ans à compter du jugement de liquidation." },
       { label: 'Faillite personnelle', valeur: "Interdiction de diriger toute entreprise pendant 15 ans max. Déclenchée pour fautes graves : poursuite abusive d'activité, détournement d'actif, comptabilité fictive." },
-      { label: 'Interdiction de gérer', valeur: "Sanction plus large (jusqu'à 15 ans) pour manquements de bonne foi moins graves que la faillite personnelle (défaut de déclaration dans les 45 j, absence de coopération avec le mandataire)." },
-      { label: 'Banqueroute (pénal)', valeur: "Délit passible de 5 ans de prison et 75 000 € d'amende. Suppose une procédure collective ET un comportement frauduleux (détournement, faux en écritures, augmentation frauduleuse du passif)." },
-      { label: 'Dettes sociales / fiscales', valeur: "L'administration peut engager la responsabilité solidaire du dirigeant (L267 LPF, L244-1 CSS) en cas de manœuvres frauduleuses ou d'inobservation grave et répétée." },
+      { label: 'Interdiction de gérer', valeur: "Sanction moins lourde que la faillite personnelle, prononcée à sa place (15 ans maximum), notamment pour avoir omis sciemment de demander l'ouverture d'une procédure dans les 45 jours ou, de mauvaise foi, ne pas avoir remis au mandataire les informations dues." },
+      { label: 'Banqueroute (pénal)', valeur: "Délit passible de 5 ans de prison et 75 000 € d'amende. Suppose une procédure collective ET un comportement frauduleux (détournement d'actif, comptabilité fictive ou disparue, augmentation frauduleuse du passif)." },
+      { label: 'Dettes sociales / fiscales', valeur: "L'administration peut engager la responsabilité solidaire du dirigeant (L267 LPF ; L243-3-2 CSS en cas de travail dissimulé) en cas de manœuvres frauduleuses ou d'inobservation grave et répétée." },
     ],
     actions: [
       "Déclarez la cessation des paiements dans les 45 jours — c'est la première protection",
@@ -85,7 +84,7 @@ const SECTIONS: Section[] = [
       'C. com. art. L651-2 (insuffisance d\'actif)',
       'C. com. art. L653-1 à L653-11 (faillite personnelle / interdiction de gérer)',
       'C. com. art. L654-1 à L654-6 (banqueroute)',
-      'LPF art. L267 (dettes fiscales) ; CSS art. L244-1 (dettes sociales)',
+      'LPF art. L267 (dettes fiscales) ; CSS art. L243-3-2 (dettes sociales)',
     ],
   },
   {
@@ -95,34 +94,34 @@ const SECTIONS: Section[] = [
       "Au-delà des sanctions principales, plusieurs mécanismes peu connus peuvent vous exposer personnellement. Les anticiper est la meilleure façon de les neutraliser — et la plupart sont évitables avec quelques précautions simples.",
     points: [
       {
-        label: 'Recouvrement personnel URSSAF (art. L243-6-2 CSS)',
+        label: 'Cotisations sociales : solidarité du dirigeant (art. L243-3-2 CSS)',
         valeur:
-          "En cas de manœuvres frauduleuses OU d'inobservation grave et répétée du paiement des cotisations sociales, le dirigeant peut être condamné solidairement avec la société. Exemples typiques : déclarations délibérément minorées, non-paiement systématique des cotisations sur plusieurs trimestres consécutifs. Une simple difficulté ponctuelle (même répétée) ne suffit pas : il faut une volonté manifeste de se soustraire.",
+          "Le dirigeant d'une société verbalisée pour travail dissimulé peut être déclaré solidairement responsable des cotisations par le président du tribunal judiciaire, s'il est responsable de manœuvres frauduleuses ou d'une inobservation grave et répétée de ses obligations. Hors de ce cas, une difficulté de paiement des cotisations ne rend pas le dirigeant personnellement redevable — sauf condamnation pour faute de gestion en liquidation (art. L651-2 C. com.).",
       },
       {
         label: 'Période suspecte — de la cessation des paiements au jugement (art. L631-8, L632-1 à L632-3 C. com.)',
         valeur:
-          "Le tribunal fixe une date de cessation des paiements, qui peut remonter jusqu'à 18 mois avant le jugement d'ouverture ; les actes accomplis entre cette date et le jugement peuvent être annulés. NULLITÉS DE DROIT : donation et acte à titre gratuit (y compris dans les 6 mois qui précèdent la cessation), contrat très déséquilibré (vente à prix dérisoire), paiement anticipé d'une dette, paiement par un moyen anormal (dation en paiement), sûreté pour une dette antérieure. NULLITÉS FACULTATIVES (à l'appréciation du juge) : paiements de dettes échues et actes à titre onéreux lorsque l'autre partie connaissait la cessation des paiements (par exemple un créancier « ami » payé en priorité). Le mandataire peut faire annuler ces actes pour récupérer des fonds.",
+          "Le tribunal fixe une date de cessation des paiements, qui peut remonter jusqu'à 18 mois avant le jugement d'ouverture ; les actes accomplis entre cette date et le jugement peuvent être annulés. NULLITÉS DE DROIT : donation et acte à titre gratuit (ceux des 6 mois qui précèdent la cessation peuvent aussi être annulés par le tribunal), contrat très déséquilibré (vente à prix dérisoire), paiement anticipé d'une dette, paiement par un moyen anormal (dation en paiement), sûreté pour une dette antérieure. NULLITÉS FACULTATIVES (à l'appréciation du juge) : paiements de dettes échues et actes à titre onéreux lorsque l'autre partie connaissait la cessation des paiements (par exemple un créancier « ami » payé en priorité). Le mandataire peut faire annuler ces actes pour récupérer des fonds.",
       },
       {
         label: 'Confusion de patrimoine — extension de procédure (art. L621-2 C. com.)',
         valeur:
-          "Si la justice constate une confusion entre votre patrimoine personnel et celui de la société (compte mixte, dépenses perso payées par la société, flux financiers anormaux), la procédure collective peut être ÉTENDUE à d'autres sociétés du groupe, voire à votre patrimoine personnel. C'est l'un des rares mécanismes capables de faire tomber les protections classiques — y compris, dans certains cas, la protection de la résidence principale de l'EIRL ou de l'entrepreneur individuel.",
+          "Si la justice constate une confusion entre votre patrimoine personnel et celui de la société (compte mixte, dépenses perso payées par la société, flux financiers anormaux), la procédure collective peut être ÉTENDUE à d'autres sociétés du groupe, voire à votre patrimoine personnel. C'est l'un des rares mécanismes capables de faire tomber les protections classiques — y compris la séparation entre patrimoine professionnel et patrimoine personnel de l'entrepreneur individuel.",
       },
       {
         label: 'Privilèges des créanciers en liquidation — l\'ordre de paiement',
         valeur:
-          "À savoir si vous êtes vous-même créancier de votre société (compte courant d'associé, apports) : (1) super-privilège des salaires (AGS), (2) frais de justice de la procédure, (3) privilège fiscal et social (Trésor + URSSAF), (4) créances garanties par sûreté, (5) créances chirographaires (sans garantie). Vos apports et comptes courants associés passent en DERNIER : il est très rare qu'ils soient remboursés. Ce n'est pas une injustice — c'est la règle légale.",
+          "À savoir si vous êtes vous-même créancier de votre société (compte courant d'associé, apports). En simplifiant : (1) super-privilège des salaires (avancés par l'AGS), (2) frais de justice, (3) créances nées après le jugement ou bénéficiant du privilège de conciliation, (4) créances garanties par une sûreté ou un privilège (Trésor, URSSAF, banques…), selon leur rang, (5) créances chirographaires (sans garantie). Un compte courant d'associé est en principe une créance chirographaire ; les apports en capital ne sont repris qu'après paiement de tous les créanciers. Ce n'est pas une injustice — c'est la règle légale.",
       },
       {
         label: 'Casier judiciaire B2 / B3 — conséquences professionnelles à long terme',
         valeur:
-          "Faillite personnelle, interdiction de gérer et banqueroute sont inscrites au bulletin n°2 du casier judiciaire. Le B2 est consultable par : employeurs publics, organismes de protection sociale, certaines professions réglementées (avocat, notaire, expert-comptable, médecin, agent immobilier, etc.). Durée d'inscription : 10 à 15 ans selon la peine. Conséquence concrète : impossibilité d'exercer certaines professions futures. Le B3 (votre exemplaire, demandable gratuitement) ne contient que les condamnations les plus lourdes.",
+          "Faillite personnelle, interdiction de gérer et condamnation pour banqueroute sont inscrites au casier judiciaire. Le bulletin n°2 peut être délivré à certaines autorités administratives (préfectures, mairies…), aux tribunaux de commerce et, dans les cas prévus par la loi, à certains employeurs. Conséquence concrète : l'accès à certaines professions ou fonctions peut être fermé. Le B3 (votre exemplaire, demandable gratuitement) ne contient que les condamnations les plus graves.",
       },
       {
         label: 'CRPC (Comparution sur Reconnaissance Préalable de Culpabilité) — en cas de banqueroute',
         valeur:
-          "Si vous êtes poursuivi pour banqueroute, le procureur peut vous proposer une CRPC (le « plaider-coupable » à la française). Vous reconnaissez les faits ; en échange, la peine proposée ne peut dépasser la moitié de la peine encourue. L'assistance d'un avocat est OBLIGATOIRE. Avantage : procédure plus rapide, peine plus faible, moins d'exposition médiatique. À discuter sérieusement avec votre avocat — c'est souvent la meilleure option quand les faits sont matériellement établis.",
+          "Si vous êtes poursuivi pour banqueroute, le procureur peut vous proposer une CRPC (le « plaider-coupable » à la française). Vous reconnaissez les faits ; en échange, la peine de prison proposée ne peut dépasser ni 3 ans ni la moitié de la peine encourue. L'assistance d'un avocat est OBLIGATOIRE. Avantage : procédure plus rapide, peine plus faible, moins d'exposition médiatique. À discuter sérieusement avec votre avocat — c'est souvent la meilleure option quand les faits sont matériellement établis.",
       },
     ],
     actions: [
@@ -133,11 +132,11 @@ const SECTIONS: Section[] = [
       "Demandez gratuitement votre bulletin n°3 du casier (casier-judiciaire.justice.gouv.fr) pour savoir ce qui y figure",
     ],
     sources: [
-      'CSS art. L243-6-2 (recouvrement personnel URSSAF)',
+      'CSS art. L243-3-2 (solidarité du dirigeant en cas de travail dissimulé)',
       'C. com. art. L632-1 à L632-3 (période suspecte)',
       'C. com. art. L621-2 (extension pour confusion de patrimoine)',
-      'C. com. art. L641-13 (ordre des créanciers en liquidation)',
-      'Code de procédure pénale art. 775 (bulletin n°2) ; art. 495-7 et s. (CRPC)',
+      'C. com. art. L641-13 et L643-8 (ordre des créanciers en liquidation) ; C. trav. art. L3253-2 (super-privilège)',
+      'Code de procédure pénale art. 768 et s. (casier judiciaire) ; art. 495-7 et s. (CRPC) ; service-public.gouv.fr (fiche F14710)',
     ],
     liens: [
       { label: 'Demande de bulletin n°3', url: 'https://casier-judiciaire.justice.gouv.fr' },
@@ -220,8 +219,8 @@ export default function BlocConsequencesPerso() {
 
       <p className="mt-5 text-xs text-navy/50">
         Ces informations sont générales. L&apos;appréciation de votre
-        situation particulière par un avocat peut être utile — la
-        plupart proposent un premier RDV gratuit.
+        situation particulière par un avocat peut être utile — une
+        première consultation gratuite est possible dans un point-justice (3039).
       </p>
     </BlocAccordeon>
   );

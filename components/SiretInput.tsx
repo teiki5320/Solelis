@@ -2,12 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { m } from 'framer-motion';
-
-function formatSiret(v: string): string {
-  if (!v) return '';
-  const digits = v.replace(/\D/g, '').slice(0, 14);
-  return digits.replace(/(.{3})(?=.)/g, '$1 ').trim();
-}
+import { formaterSiret, siretValide } from '@/lib/siret';
 
 export default function SiretInput() {
   const router = useRouter();
@@ -16,12 +11,18 @@ export default function SiretInput() {
   const [error, setError] = useState<string | null>(null);
 
   const clean = (value || '').replace(/\s/g, '');
-  const isValid = /^\d{14}$/.test(clean);
+  const quatorzeChiffres = /^\d{14}$/.test(clean);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!isValid) {
+    if (!quatorzeChiffres) {
       setError('Un SIRET contient 14 chiffres.');
+      return;
+    }
+    if (!siretValide(clean)) {
+      setError(
+        'Ce numéro SIRET n’existe pas : un chiffre semble mal saisi. Vérifiez-le sur une facture ou votre extrait Kbis.'
+      );
       return;
     }
     setLoading(true);
@@ -55,7 +56,7 @@ export default function SiretInput() {
         aria-describedby={error ? 'siret-erreur' : undefined}
         value={value}
         onChange={(e) => {
-          setValue(formatSiret(e.target.value));
+          setValue(formaterSiret(e.target.value));
           setError(null);
         }}
         placeholder="123 456 789 00012"

@@ -23,7 +23,7 @@ const OUTILS: Outil[] = [
     icone: '⏰',
     titre: 'Vérificateur de prescription',
     description:
-      "Saisir une dette → date de prescription. URSSAF 3 ans, fiscal 4 ans, civil 5 ans, baux 1 an.",
+      "Saisir une dette → date de prescription. URSSAF 3 ans, fiscal 3 ans (reprise), civil et commercial 5 ans, loyers 5 ans.",
     source: 'CSS L244-3, LPF L169, C. civ. 2224',
   },
   {
@@ -47,8 +47,8 @@ const OUTILS: Outil[] = [
     icone: '⚖️',
     titre: 'Comparateur du coût des procédures',
     description:
-      "Mandat ad hoc, conciliation, sauvegarde, RJ : frais de greffe et fourchettes mandataires.",
-    source: 'CNAJMJ, décret 85-1389',
+      "Mandat ad hoc, conciliation, sauvegarde, RJ : qui fixe et qui paie les frais (greffe, mandataire, avocat).",
+    source: 'Code de commerce',
   },
   {
     href: '/outils/aide-juridictionnelle',
@@ -79,7 +79,7 @@ const OUTILS: Outil[] = [
     icone: '📦',
     titre: 'Préparateur de data room (cession)',
     description:
-      "Checklist officielle des pièces à rassembler pour céder votre entreprise.",
+      "Checklist des pièces à rassembler pour céder votre entreprise.",
     source: 'Bpifrance Création, CRA',
   },
   {
@@ -88,7 +88,7 @@ const OUTILS: Outil[] = [
     titre: 'Valorisation indicative',
     description:
       "Multiples sectoriels appliqués à votre EBE et CA. Fourchette pour préparer une cession.",
-    source: 'Bpifrance, INSEE Esane',
+    source: 'Ordres de grandeur de marché',
   },
   {
     href: '/outils/stocks',
@@ -96,7 +96,7 @@ const OUTILS: Outil[] = [
     titre: 'Valorisation des stocks',
     description:
       "Estimez la valeur de réalisation de vos stocks selon la nature et la voie (amiable, RJ, liquidation, enchères).",
-    source: 'Pratique CNAJMJ / CSCPJ',
+    source: 'Ordres de grandeur indicatifs',
   },
   {
     href: '/outils/seuils-effectif',
@@ -131,9 +131,9 @@ export default function OutilsPage() {
         Boîte à outils
       </h1>
       <p className="mt-4 max-w-2xl text-base text-navy/70 sm:text-lg">
-        Des calculateurs et vérificateurs basés exclusivement sur les
-        textes officiels (Code de commerce, Code du travail, sites
-        gouvernementaux). Tout ce que vous saisissez reste dans votre
+        Des calculateurs et vérificateurs fondés sur les textes officiels
+        (Code de commerce, Code du travail, sites gouvernementaux) ; les
+        outils de valorisation donnent des ordres de grandeur indicatifs. Tout ce que vous saisissez reste dans votre
         navigateur.
       </p>
 

@@ -44,7 +44,7 @@ describe('getOpcoFromNaf', () => {
 
   it('renvoie OPCO EP pour l\'artisanat de proximité', () => {
     expect(getOpcoFromNaf('96.02A').cle).toBe('opco-ep'); // coiffure
-    expect(getOpcoFromNaf('95.21Z').cle).toBe('opco-ep'); // réparation
+    expect(getOpcoFromNaf('96.02B').cle).toBe('opco-ep'); // soins de beauté
   });
 
   it('raffinements par classe : boulangerie, pharmacie, auto-école', () => {
@@ -53,7 +53,7 @@ describe('getOpcoFromNaf', () => {
     expect(getOpcoFromNaf('47.73Z').cle).toBe('opco-ep'); // pharmacie d'officine
     expect(getOpcoFromNaf('47.11D').cle).toBe('opcommerce'); // supermarché = Opcommerce inchangé
     expect(getOpcoFromNaf('85.53Z').cle).toBe('opco-mobilites'); // auto-école (services de l'automobile)
-    expect(getOpcoFromNaf('85.59A').cle).toBe('uniformation'); // formation continue inchangée
+    expect(getOpcoFromNaf('85.59A').cle).toBe('akto'); // formation continue (organismes de formation → AKTO)
   });
 
   it('renvoie OPCO EP pour les vétérinaires (75)', () => {
@@ -63,7 +63,24 @@ describe('getOpcoFromNaf', () => {
   it('renvoie OPCO 2i pour extraction, énergie, eau et déchets', () => {
     expect(getOpcoFromNaf('08.11Z').cle).toBe('opco-2i'); // carrières
     expect(getOpcoFromNaf('35.11Z').cle).toBe('opco-2i'); // production électricité
-    expect(getOpcoFromNaf('38.11Z').cle).toBe('opco-2i'); // collecte déchets
+    expect(getOpcoFromNaf('38.11Z').cle).toBe('akto'); // collecte déchets : AKTO majoritaire (France compétences)
+  });
+
+  it('suit l\'OPCO majoritaire publié par France compétences', () => {
+    expect(getOpcoFromNaf('62.01Z').cle).toBe('atlas'); // programmation informatique (Syntec)
+    expect(getOpcoFromNaf('70.22Z').cle).toBe('atlas'); // conseil de gestion
+    expect(getOpcoFromNaf('69.10Z').cle).toBe('opco-ep'); // avocats, notaires
+    expect(getOpcoFromNaf('69.20Z').cle).toBe('atlas'); // experts-comptables
+    expect(getOpcoFromNaf('71.11Z').cle).toBe('opco-ep'); // architecture
+    expect(getOpcoFromNaf('61.10Z').cle).toBe('afdas'); // télécommunications
+    expect(getOpcoFromNaf('46.90Z').cle).not.toBe('autre');
+    expect(getOpcoFromNaf('46.21Z').cle).toBe('ocapiat'); // gros céréales
+    expect(getOpcoFromNaf('47.22Z').cle).toBe('opco-ep'); // boucherie
+    expect(getOpcoFromNaf('88.10A').cle).toBe('uniformation'); // aide à domicile
+    expect(getOpcoFromNaf('86.23Z').cle).toBe('opco-ep'); // cabinets dentaires
+    expect(getOpcoFromNaf('85.20Z').cle).toBe('akto'); // enseignement privé
+    expect(getOpcoFromNaf('81.30Z').cle).toBe('ocapiat'); // paysagistes
+    expect(getOpcoFromNaf('84.11Z').cle).toBe('autre'); // emploi public : pas d'OPCO
   });
 
   it('renvoie OPCO Mobilités pour les agences de voyage (79)', () => {

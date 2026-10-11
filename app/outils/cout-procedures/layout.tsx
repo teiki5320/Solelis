@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/outils/cout-procedures' },
-  title: 'Estimateur du coût des procédures — Solelis',
+  title: 'Coût des procédures — Solelis',
   description:
-    'Estimez le coût d\'une procédure collective selon la taille de votre entreprise : mandat ad hoc, conciliation, sauvegarde, redressement, liquidation.',
+    'Qui fixe et qui paie les frais d\'une procédure (greffe, mandataire, avocat) : mandat ad hoc, conciliation, sauvegarde, redressement, liquidation, rétablissement professionnel.',
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

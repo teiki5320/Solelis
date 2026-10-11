@@ -10,77 +10,12 @@ import {
   loadContextFromStorage,
   type CourrierContext,
   type PersonalizedCourrier,
+  champsCourrier,
+  remplirChamps,
+  LIBELLES_CHAMPS,
 } from '@/lib/courriers';
 
-function extractFields(text: string): string[] {
-  const set = new Set<string>();
-  const re = /\{\{([A-Z_]+)\}\}/g;
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(text)) !== null) {
-    set.add(m[1]);
-  }
-  return Array.from(set);
-}
-
-const FIELD_LABELS: Record<string, string> = {
-  NOM_ENTREPRISE: 'Nom de l\'entreprise',
-  SIRET: 'SIRET',
-  NOM_DIRIGEANT: 'Nom du dirigeant',
-  QUALITE: 'Qualité (gérant, président…)',
-  ADRESSE: 'Adresse',
-  VILLE: 'Ville',
-  DATE: 'Date du courrier',
-  DUREE: 'Durée souhaitée (mois)',
-  MONTANT: 'Montant (€)',
-  TYPE_IMPOT: 'Nature de l\'impôt (TVA, IS…)',
-  DATE_ECHEANCE: 'Date d\'échéance initiale',
-  RAISON: 'Raison de la difficulté',
-  DATE_DEBUT: 'Date de début du plan',
-  NUM_FACTURE: 'Numéro de facture',
-  DUREE_RELATION: 'Durée de la relation commerciale',
-  MONTANT_1: 'Montant 1er versement (€)',
-  MONTANT_2: 'Montant 2e versement (€)',
-  MONTANT_3: 'Montant solde (€)',
-  DATE_1: 'Date 1er versement',
-  DATE_2: 'Date 2e versement',
-  DATE_3: 'Date solde',
-  NOM_ADVERSAIRE: 'Nom de l\'entreprise adverse',
-  SIRET_ADVERSAIRE: 'SIRET de l\'entreprise adverse',
-  NATURE_DIFFEREND: 'Nature du différend',
-  EXPOSE_FAITS: 'Exposé des faits',
-  TENTATIVES: 'Tentatives de résolution déjà faites',
-  NOM_BANQUE: 'Nom de votre banque',
-  AUTRE_MOTIF: 'Autre motif',
-  CONSEQUENCES: 'Conséquences pour l\'entreprise',
-  NB_SALARIES: 'Nombre de salariés',
-  CA: 'Chiffre d\'affaires annuel (€)',
-  FORME_JURIDIQUE: 'Forme juridique',
-  CAPITAL: 'Capital social (€)',
-  DATE_CESSATION: 'Date de cessation des paiements',
-  DATE_CREATION: 'Date de création',
-  ACTIVITE: 'Activité principale',
-  NATURE_DIFFICULTES: 'Nature des difficultés',
-  DISPONIBILITES: 'Vos disponibilités',
-  DESCRIPTION_DIFFICULTES: 'Description des difficultés',
-  LISTE_CREANCIERS: 'Liste des principaux créanciers',
-  MISSION_SOUHAITEE: 'Mission souhaitée pour le mandataire',
-  OBJECTIF_CONCILIATION: 'Objectif de la conciliation',
-  REFERENCE_DETTE: 'Référence de la dette',
-  PROPOSITION_ARRANGEMENT: 'Votre proposition d\'arrangement',
-  NUM_AFFILIATION: 'Numéro d\'affiliation SSI/CPAM',
-  STATUT: 'Statut (indépendant, auto-entrepreneur…)',
-  REVENUS: 'Revenus mensuels actuels (€)',
-  CHARGES: 'Charges fixes mensuelles (€)',
-  SITUATION_FAMILIALE: 'Situation familiale',
-  PERSONNES_A_CHARGE: 'Nombre de personnes à charge',
-  DESCRIPTION_SITUATION: 'Description de votre situation',
-  OBJECTIF_AIDE: 'Ce que l\'aide vous permettrait',
-  NUM_MED: 'Numéro de la mise en demeure',
-  DATE_MED: 'Date de la mise en demeure',
-  MOTIFS_CONTESTATION: 'Motifs de la contestation',
-  DATE_FIN: 'Date de fin de la période',
-  LISTE_PIECES: 'Liste des pièces justificatives',
-};
+const FIELD_LABELS = LIBELLES_CHAMPS;
 
 export default function CourrierDetail({ slug }: { slug: string }) {
   const template = getCourrier(slug);
@@ -115,7 +50,7 @@ export default function CourrierDetail({ slug }: { slug: string }) {
   );
 
   const allFields = useMemo(
-    () => template ? extractFields(template.objet + '\n' + template.corps) : [],
+    () => template ? champsCourrier(template.objet + '\n' + template.corps) : [],
     [template]
   );
 
@@ -123,7 +58,7 @@ export default function CourrierDetail({ slug }: { slug: string }) {
   if (!template) return null;
 
   function rendered(text: string): string {
-    return text.replace(/\{\{([A-Z_]+)\}\}/g, (_, key) => {
+    return remplirChamps(text, (key) => {
       const v = values[key];
       return v ? v : `[${FIELD_LABELS[key] ?? key}]`;
     });

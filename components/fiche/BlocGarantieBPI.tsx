@@ -6,7 +6,7 @@ import BlocAccordeon from './BlocAccordeon';
  * Bloc dédié aux emprunts garantis par Bpifrance (ex-OSEO Garantie).
  * À ne pas confondre avec le PGE (couvert par BlocPGE).
  *
- * Concerne tout prêt bancaire dont une part (souvent 40 à 70 %) est
+ * Concerne tout prêt bancaire dont une part est
  * garantie par Bpifrance — courant en TPE/PME, notamment pour
  * création, croissance, transmission, innovation.
  *
@@ -30,8 +30,8 @@ export default function BlocGarantieBPI() {
         (ex-OSEO) sur tout ou partie de votre prêt, elle est partiellement
         protégée contre votre défaillance. Cela <strong>change la
         dynamique de négociation</strong> : la banque a moins à perdre,
-        mais la garantie elle-même obéit à des règles strictes qui
-        peuvent jouer en votre faveur.
+        mais la garantie elle-même obéit à des règles que votre banque
+        doit respecter pour en bénéficier.
       </p>
 
       {/* Comment ça marche */}
@@ -41,24 +41,25 @@ export default function BlocGarantieBPI() {
         </p>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
-            La garantie est <strong>plafonnée</strong> (souvent 40 à
-            70 % du capital restant dû selon le dispositif).
+            La garantie est <strong>plafonnée</strong> : elle ne couvre
+            qu&apos;une partie du capital restant dû (quotité indiquée dans
+            le contrat).
           </li>
           <li>
-            Elle est <strong>activée à des conditions strictes</strong> :
-            mise en demeure formelle, défaut prolongé (généralement 90 j),
-            mise en œuvre des poursuites contre les co-emprunteurs et
-            cautions.
+            Elle n&apos;indemnise la banque qu&apos;aux conditions prévues
+            par les conditions générales de Bpifrance (défaillance de
+            l&apos;emprunteur, diligences de recouvrement).
           </li>
           <li>
-            La banque <strong>doit prouver</strong> qu&apos;elle a fait
-            toutes les diligences. Une garantie trop facilement activée
-            peut être refusée par Bpifrance.
+            <strong>Elle protège la banque, pas vous</strong> : la
+            garantie ne réduit pas ce que vous devez. Vous (et vos
+            cautions éventuelles) restez tenus de la totalité du prêt.
           </li>
           <li>
-            Bpifrance se subroge ensuite dans les droits de la banque
-            pour récupérer les sommes versées auprès de vous (sauf si
-            procédure collective qui efface ce recours).
+            Selon Bpifrance, sa garantie <strong>limite en général la
+            demande de cautions personnelles</strong> et protège votre
+            résidence principale ; vérifiez dans votre contrat le montant
+            exact de la caution demandée (bpifrance-creation.fr).
           </li>
         </ul>
       </div>
@@ -73,18 +74,18 @@ export default function BlocGarantieBPI() {
             partielle. Beaucoup préfèrent un réaménagement amiable.
           </li>
           <li>
-            <strong>Demandez explicitement un moratoire</strong> de 6 à
-            12 mois sans pénalité — la convention de garantie Bpifrance
-            l&apos;autorise sans perte de couverture (à vérifier sur
-            votre dispositif spécifique).
+            <strong>Demandez explicitement un moratoire</strong> ou un
+            allongement : votre banque peut vérifier auprès de Bpifrance
+            les conditions de maintien de la garantie en cas de
+            réaménagement.
           </li>
           <li>
-            <strong>Une procédure collective déclenche l&apos;appel de la
-            garantie</strong> — comme pour le PGE : la banque est
-            indemnisée par Bpifrance, qui devient créancier à la
-            procédure. Après le jugement d&apos;ouverture, la banque
-            couverte négocie beaucoup moins — d&apos;où l&apos;intérêt
-            d&apos;anticiper avec un mandat ad hoc / conciliation
+            <strong>Une procédure collective permet à la banque de
+            mettre en jeu la garantie</strong> : elle déclare sa créance
+            au passif et se tourne vers Bpifrance pour sa perte. Une fois
+            le jugement d&apos;ouverture prononcé, la marge de
+            négociation amiable se réduit — d&apos;où l&apos;intérêt
+            d&apos;anticiper avec un mandat ad hoc / une conciliation
             (confidentiels).
           </li>
           <li>
@@ -92,8 +93,8 @@ export default function BlocGarantieBPI() {
             une caution personnelle pour la part NON garantie, vérifiez
             sa proportionnalité et l&apos;information annuelle — art. 2300
             et 2302 du code civil pour les cautions signées depuis 2022,
-            anciens art. L341-4 et L341-6 C. conso pour les plus
-            anciennes. Beaucoup sont contestables.
+            anciens art. L332-1 et L333-2 C. conso (ex-L341-4 et L341-6)
+            pour les plus anciennes. Certaines sont contestables.
           </li>
         </ul>
       </div>
@@ -105,20 +106,24 @@ export default function BlocGarantieBPI() {
         </p>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
-            <strong>Garantie Création</strong> (jusqu&apos;à 70 %) : prêt
-            création/reprise.
+            <strong>Garantie Création</strong> : prêt création/reprise.
           </li>
           <li>
-            <strong>Garantie Développement</strong> (40 à 60 %) :
-            croissance, investissement.
+            <strong>Garantie Développement</strong> : croissance,
+            investissement.
           </li>
           <li>
-            <strong>Garantie Transmission</strong> (jusqu&apos;à 50 %) :
-            rachat de fonds ou de parts.
+            <strong>Garantie Transmission</strong> : rachat de fonds ou
+            de parts.
           </li>
           <li>
-            <strong>Garantie Innovation</strong> (60 à 80 %) : projets
-            R&amp;D, innovation.
+            <strong>Garantie Innovation</strong> : projets R&amp;D,
+            innovation.
+          </li>
+          <li>
+            La <strong>quotité garantie</strong> varie selon le fonds et
+            l&apos;opération (par exemple 50 % pour une reprise, 70 % avec
+            une intervention de la Région) : elle figure dans votre contrat.
           </li>
           <li>
             <strong>Prêts directs Bpifrance</strong> (développement,
@@ -135,28 +140,28 @@ export default function BlocGarantieBPI() {
         <ol className="mt-2 list-decimal space-y-1.5 pl-5 text-sm text-navy/80">
           <li>
             <strong>Identifier la garantie</strong> dans votre contrat
-            de prêt (mention obligatoire — souvent dans les conditions
-            particulières).
+            de prêt (souvent dans les conditions particulières).
           </li>
           <li>
             <strong>Contacter votre conseiller bancaire</strong> en LRAR
             pour demander un réaménagement (moratoire, allongement,
-            différé). Sous 15 jours, la banque doit répondre par écrit.
+            différé). Demandez une réponse écrite.
           </li>
           <li>
             <strong>En parallèle, contacter la direction régionale
-            Bpifrance</strong> — son conseiller pourra confirmer si la banque
-            est tenue d&apos;accepter le réaménagement.
+            Bpifrance</strong> — son conseiller pourra vous dire si la
+            garantie permet ce réaménagement.
           </li>
           <li>
             <strong>Si refus</strong> : saisir la Médiation du crédit
             (34 14, gratuit, confidentiel).
           </li>
           <li>
-            <strong>Mandat ad hoc</strong> si la situation est plus
-            grave : permet de tout renégocier dans un cadre confidentiel
-            (homologué tribunal commerce) sans déclencher la procédure
-            collective.
+            <strong>Mandat ad hoc ou conciliation</strong> si la
+            situation est plus grave : permet de tout renégocier dans un
+            cadre confidentiel sans déclencher la procédure collective.
+            Seul l&apos;accord de conciliation peut être homologué par le
+            tribunal (art. L611-8 C. com.).
           </li>
         </ol>
       </div>
@@ -196,8 +201,9 @@ export default function BlocGarantieBPI() {
 
       <p className="mt-5 text-xs text-navy/50">
         Sources : Bpifrance — conditions générales des garanties ;
-        Médiation du crédit aux entreprises ; C. mon. fin. art. L313-1
-        et s. ; jurisprudence Cass. com. sur la subrogation du garant.
+        bpifrance-creation.fr (dispositifs de garantie : quotités,
+        cautions personnelles) ; Médiation du crédit aux entreprises ; Code
+        civil, art. 2300 et 2302.
       </p>
     </BlocAccordeon>
   );

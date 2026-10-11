@@ -72,17 +72,18 @@ export default function ProtegerFamillePage() {
             <p className="mt-2 flex-1 text-sm leading-relaxed text-navy/65">
               Depuis la loi Macron 2015, la résidence principale est
               <strong className="text-navy/80"> AUTOMATIQUEMENT </strong>
-              protégée contre les créanciers professionnels.
-              Aucune démarche nécessaire.
+              protégée contre les créanciers professionnels
+              (art. L526-1 Code de commerce). Aucune démarche nécessaire.
             </p>
           </article>
 
           <article className="glass-soft border-l-4 border-vert flex flex-col p-5">
             <h3 className="font-display text-base text-navy">EIRL</h3>
             <p className="mt-2 flex-1 text-sm leading-relaxed text-navy/65">
-              Supprimé en 2022. Tous les EI bénéficient
-              désormais de la séparation automatique des patrimoines
-              — plus besoin de ce statut.
+              Plus possible d’en créer depuis 2022 (les EIRL existantes
+              continuent). Tous les EI bénéficient désormais de la
+              séparation automatique des patrimoines (art. L526-22 Code
+              de commerce) — plus besoin de ce statut.
             </p>
           </article>
 
@@ -104,10 +105,12 @@ export default function ProtegerFamillePage() {
               Déclaration d’insaisissabilité
             </h3>
             <p className="mt-2 flex-1 text-sm leading-relaxed text-navy/65">
-              Existe encore pour les <strong className="text-navy/80">AUTRES</strong> biens
-              immobiliers (pas la résidence). Doit être faite chez le
-              notaire. Ne protège que contre les dettes
-              POSTÉRIEURES à la déclaration.
+              Existe encore, pour l’entrepreneur individuel, pour les
+              <strong className="text-navy/80"> AUTRES</strong> biens
+              immobiliers non affectés à l’activité (pas la résidence).
+              Doit être faite chez le notaire et publiée. Ne protège que
+              contre les dettes professionnelles POSTÉRIEURES à sa
+              publication (art. L526-1).
             </p>
           </article>
         </div>
@@ -133,8 +136,10 @@ export default function ProtegerFamillePage() {
             <p className="mt-2 flex-1 text-sm leading-relaxed text-navy/65">
               Les biens communs
               <strong className="text-navy/80"> PEUVENT </strong>
-              être saisis pour payer les dettes de l’entreprise.
-              Risque réel pour le conjoint.
+              être saisis pour les dettes de chaque époux, y compris
+              celles liées à l’entreprise (art. 1413 Code civil) — sauf
+              cautions et emprunts signés sans l’accord exprès du
+              conjoint (art. 1415). Risque réel pour le conjoint.
             </p>
           </article>
 
@@ -154,8 +159,8 @@ export default function ProtegerFamillePage() {
               Changement de régime
             </h3>
             <p className="mt-2 flex-1 text-sm leading-relaxed text-navy/65">
-              Possible par acte notarié (1 500 à
-              3 000 €).
+              Possible par acte notarié (coût à
+              demander au notaire).
               <strong className="text-navy/80"> ATTENTION :</strong> doit
               être fait AVANT les difficultés — un changement
               effectué pour frauder les créanciers peut être
@@ -204,11 +209,14 @@ export default function ProtegerFamillePage() {
               Peut-on les contester ?
             </h3>
             <p className="mt-2 flex-1 text-sm leading-relaxed text-navy/65">
-              <strong className="text-vert">OUI</strong> si disproportionnée
-              par rapport à vos revenus et patrimoine au moment de la
-              signature (art. 2297 Code civil).
+              <strong className="text-vert">OUI</strong> si manifestement
+              disproportionnée par rapport à vos revenus et patrimoine au
+              moment de la signature : elle est alors réduite (art. 2300
+              Code civil, cautions signées depuis 2022 ; les plus
+              anciennes relèvent de l’ancien Code de la consommation).
               <strong className="text-vert"> OUI</strong> si le formalisme n’a
-              pas été respecté (mentions manuscrites).
+              pas été respecté (mention écrite par la caution elle-même).
+              La disproportion doit être prouvée par la caution.
             </p>
           </article>
 
@@ -216,9 +224,10 @@ export default function ProtegerFamillePage() {
             <h3 className="font-display text-base text-navy">Le conjoint</h3>
             <p className="mt-2 flex-1 text-sm leading-relaxed text-navy/65">
               Si le conjoint n’a PAS co-signé, ses biens personnels
-              sont protégés — même en communauté,
-              seuls les biens propres du signataire sont à risque selon la
-              jurisprudence.
+              sont protégés. En communauté, une caution signée sans son
+              accord exprès n’engage que les biens propres et les
+              revenus du signataire (art. 1415 Code civil) ; avec son
+              accord exprès, les biens communs sont aussi engagés.
             </p>
           </article>
 
@@ -326,8 +335,8 @@ export default function ProtegerFamillePage() {
       {/* Footer note */}
       <div className="dashed-band mt-12 p-6 text-center text-sm leading-relaxed text-navy/70">
         La protection du patrimoine familial est un sujet technique. Un notaire et
-        un avocat peuvent vous conseiller — la première consultation
-        est souvent gratuite.
+        un avocat peuvent vous conseiller — une première consultation
+        gratuite est possible dans un point-justice (3039).
       </div>
     </section>
   );

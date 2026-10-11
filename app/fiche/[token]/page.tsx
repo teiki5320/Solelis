@@ -1,10 +1,11 @@
+import { Suspense } from 'react';
+import type { Metadata } from 'next';
 import { notFound, unstable_rethrow } from 'next/navigation';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import SaveBanner from '@/components/fiche/SaveBanner';
 import ExportPDF from '@/components/fiche/ExportPDF';
 import StoreCompanyData from '@/components/fiche/StoreCompanyData';
-import FicheLocale from '@/components/fiche/FicheLocale';
 import LayoutDashboard from '@/components/fiche/layouts/LayoutDashboard';
 import { getFicheByTokenMemo } from '@/lib/db';
 import { fetchSirene } from '@/lib/sirene';
@@ -21,17 +22,36 @@ import {
 } from '@/lib/organismes';
 import { getSectorInfo, getCompanyAge, getEffectifSeuils } from '@/lib/secteur';
 import { tokenSchema } from '@/lib/schemas';
-import { getJuridiction } from '@/lib/strategie';
+import { getJuridiction, nomTribunalPourCourrier } from '@/lib/strategie';
+import { formaterSiret } from '@/lib/siret';
 import { CLE_FICHE_LOCALE } from '@/lib/ficheLocale';
 import { lireCookieFicheLocale, lireParametreD } from '@/lib/ficheLocaleServeur';
+import Chargement from './Chargement';
 import type { CompanyData, Reponses, BodaccItem } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
 
+/**
+ * Données d'une fiche locale : ancien format ?d=<base64> (toujours lisible),
+ * sinon cookie court posé par le navigateur (voir lib/ficheLocale.ts).
+ */
+async function lireFicheLocale(d?: string) {
+  return d
+    ? lireParametreD(d)
+    : lireCookieFicheLocale((await cookies()).get(CLE_FICHE_LOCALE)?.value);
+}
+
 // Les fiches sont des contenus personnels — ne pas indexer.
-export const metadata = {
-  robots: { index: false, follow: false, noarchive: true, nosnippet: true },
-};
+const ROBOTS = { index: false, follow: false, noarchive: true, nosnippet: true };
+
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
+  const { token } = await params;
+  if (token !== 'local') return { robots: ROBOTS };
+  // Fiche locale sans données : la page répond 404 (voir FichePage).
+  const { d } = await searchParams;
+  const locale = await lireFicheLocale(d);
+  return locale ? { robots: ROBOTS } : { robots: ROBOTS, title: 'Page introuvable — Solelis' };
+}
 
 interface PageProps {
   params: Promise<{ token: string }>;
@@ -52,9 +72,7 @@ async function loadFiche(
   if (token === 'local') {
     // Ancien format ?d=<base64> (toujours lisible), sinon cookie court posé par le
     // navigateur (voir lib/ficheLocale.ts) : les réponses ne passent plus par l'URL.
-    const locale = d
-      ? lireParametreD(d)
-      : lireCookieFicheLocale((await cookies()).get(CLE_FICHE_LOCALE)?.value);
+    const locale = await lireFicheLocale(d);
     if (!locale) return null;
     const company_data = await fetchSirene(locale.siret);
     return {
@@ -93,10 +111,34 @@ function ErreurChargement() {
   );
 }
 
+/**
+ * Vérifications rapides AVANT toute frontière de chargement : tant que rien
+ * n'est envoyé au navigateur, notFound() donne un vrai statut HTTP 404.
+ * (Un loading.tsx de segment figerait le statut à 200 dès le début du
+ * streaming : le chargement est donc une <Suspense> placée après ces tests.)
+ */
 export default async function FichePage({ params, searchParams }: PageProps) {
   const { token } = await params;
   const { d } = await searchParams;
 
+  if (token === 'local') {
+    // Fiche locale sans données (cookie expiré, ancien lien…) : vrai 404.
+    // La page 404 de ce segment (not-found.tsx) relit encore l'onglet
+    // (sessionStorage) et recharge la fiche si elle y est.
+    const locale = await lireFicheLocale(d);
+    if (!locale) notFound();
+  } else if (!tokenSchema.safeParse(token).success || !(await getFicheByTokenMemo(token))) {
+    notFound();
+  }
+
+  return (
+    <Suspense fallback={<Chargement />}>
+      <ContenuFiche token={token} d={d} />
+    </Suspense>
+  );
+}
+
+async function ContenuFiche({ token, d }: { token: string; d?: string }) {
   let data: FicheData | null;
   try {
     data = await loadFiche(token, d);
@@ -105,12 +147,8 @@ export default async function FichePage({ params, searchParams }: PageProps) {
     return <ErreurChargement />;
   }
 
-  if (!data) {
-    // Fiche locale : les données sont peut-être encore dans l'onglet (sessionStorage).
-    if (token === 'local') return <FicheLocale />;
-    // Hors de tout try/catch : notFound() doit remonter jusqu'à Next (vrai 404).
-    notFound();
-  }
+  // Cas déjà écartés avant la frontière de chargement (voir FichePage).
+  if (!data) notFound();
 
   try {
     return await renderFiche(data);
@@ -151,7 +189,9 @@ async function renderFiche(data: FicheData) {
 
   const avocats: OrganismeCard[] = avocatsRaw.map((p) => ({
     nom: p.name,
-    type: 'Avocat · droit des entreprises en difficulté',
+    // Résultats Google Places : la spécialité n'est pas vérifiée (un cabinet de
+    // droit immobilier peut sortir) → étiquette neutre.
+    type: 'Avocat à proximité',
     adresse: p.address,
     note: p.rating,
     avis: p.reviews,
@@ -202,7 +242,7 @@ async function renderFiche(data: FicheData) {
       <div className="print-header hidden">
         <p style={{ fontFamily: 'Georgia, serif', fontSize: '22pt', letterSpacing: '0.05em' }}>Solelis</p>
         <p style={{ fontSize: '10pt', color: '#666', marginTop: '4px' }}>
-          Fiche confidentielle · {company_data.nom} · SIRET {company_data.siret}
+          Fiche confidentielle · {company_data.nom} · SIRET {formaterSiret(company_data.siret)}
         </p>
       </div>
 
@@ -233,7 +273,29 @@ async function renderFiche(data: FicheData) {
         </div>
       )}
 
-      <StoreCompanyData company={company_data} token={token} reponses={reponses} />
+      <StoreCompanyData
+        company={company_data}
+        token={token}
+        reponses={reponses}
+        tribunal={nomTribunalPourCourrier(company_data)}
+        secteurLabel={sector.label}
+      />
+
+      {!company_data.fetched && (
+        <div role="note" className="dashed-band p-4 text-sm text-navy sm:p-5">
+          <p className="font-medium">
+            Nous n&apos;avons pas trouvé votre entreprise (SIRET {formaterSiret(siret)}).
+          </p>
+          <p className="mt-1 text-xs text-navy/60">
+            Le numéro est peut-être mal saisi, ou le répertoire de l&apos;INSEE n&apos;a pas
+            répondu. Les conseils ci-dessous restent valables, mais sans votre forme
+            juridique, votre activité ni votre département.{' '}
+            <Link href="/" className="underline underline-offset-2">
+              Vérifier le numéro SIRET
+            </Link>
+          </p>
+        </div>
+      )}
 
       {token !== 'local' ? (
         <SaveBanner token={token} />

@@ -4,11 +4,11 @@ import { ogMeta } from '@/lib/og';
 export const metadata = {
   ...ogMeta({
     chemin: '/procedures-comparaison',
-    titre: 'Comparatif des 8 procédures collectives',
+    titre: 'Comparatif des 8 procédures amiables et collectives',
     sous: 'Mandat ad hoc, conciliation, sauvegarde, RJ, LJ, PRP',
     description: 'Mandat ad hoc, conciliation, sauvegarde, redressement, liquidation, PRP : comparaison détaillée des procédures (confidentialité, durée, coût, conditions).',
     cat: 'procedure',
-    pageTitle: 'Comparatif des procédures collectives — Solelis',
+    pageTitle: 'Comparatif des procédures amiables et collectives — Solelis',
   }),
   robots: { index: true, follow: true },
 };
@@ -98,7 +98,7 @@ const PROCEDURES: Procedure[] = [
     confidentiel: 'non',
     cessationPaiement: 'oui',
     duree: '6 mois renouvelable (jusqu\'à 18 mois)',
-    conditionsCle: 'Cessation des paiements depuis ≤ 45 jours. Sauvetage encore possible.',
+    conditionsCle: 'Cessation des paiements (à déclarer dans les 45 jours). Sauvetage encore possible.',
     dirigeantReste: 'oui-controle',
     cout: 'eleve',
     protection: 'totale',
@@ -140,10 +140,10 @@ const PROCEDURES: Procedure[] = [
     icone: '♻️',
     couleur: 'navy',
     preventif: 'non',
-    confidentiel: 'non',
+    confidentiel: 'partiel',
     cessationPaiement: 'oui',
     duree: '4 mois maximum',
-    conditionsCle: 'Entrepreneur individuel uniquement (EI/micro/EIRL). Aucun salarié. Actifs < 15 000 €.',
+    conditionsCle: 'Entrepreneur individuel (personne physique) en cessation des paiements, redressement manifestement impossible. Aucun salarié depuis 6 mois. Actif < 15 000 €. Pas d\'instance prud\'homale en cours. Ouverture non publiée, clôture publiée au BODACC (R645-19).',
     dirigeantReste: 'non',
     cout: 'bas',
     protection: 'totale',
@@ -188,7 +188,7 @@ export default function ProceduresComparaisonPage() {
       </Link>
 
       <h1 className="font-display text-3xl text-navy sm:text-4xl">
-        Comparatif des 8 procédures collectives
+        Comparatif des 8 procédures amiables et collectives
       </h1>
       <p className="mt-4 max-w-2xl text-base text-navy/70">
         Du mandat ad hoc (préventif, confidentiel) à la liquidation simplifiée (fin d&apos;activité TPE) :
@@ -270,7 +270,7 @@ export default function ProceduresComparaisonPage() {
         </ul>
         <p className="mt-4 text-sm text-navy/70">
           Dans tous les cas, consultez un avocat en droit des entreprises en difficulté avant de choisir.
-          Le premier rendez-vous est souvent gratuit.
+          Une première consultation gratuite est possible dans un point-justice (3039).
         </p>
       </div>
 

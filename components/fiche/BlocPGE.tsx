@@ -12,8 +12,10 @@ import BlocAccordeon from './BlocAccordeon';
 export default function BlocPGE() {
   const { reponses } = useFiche();
 
+  // Affiché aussi quand un PGE est déclaré en cours : la carte prioritaire
+  // « PGE en cours » renvoie vers ce bloc.
   const pertinent =
-    reponses.probleme === 'banque' || reponses.situation === 'tresorie';
+    reponses.probleme === 'banque' || reponses.situation === 'tresorie' || reponses.pgeEnCours === 'oui';
 
   if (!pertinent) return null;
 
@@ -21,7 +23,7 @@ export default function BlocPGE() {
     <BlocAccordeon
       icone="💳"
       titre="PGE en difficulté ? Restructuration possible"
-      soustitre="Médiation du Crédit BdF — étalement jusqu'à 10 ans avant la procédure collective"
+      soustitre="Médiation du crédit BdF — jusqu'à +2 ans (+4 par exception), avant la procédure collective"
     >
       <p className="text-sm text-navy/80">
         Le <strong>PGE — Prêt Garanti par l&apos;État</strong>, distribué
@@ -41,36 +43,46 @@ export default function BlocPGE() {
           Prêt distribué par votre banque, <strong>garanti à 70 à 90 %
           par l&apos;État via Bpifrance</strong>. Différé de remboursement
           d&apos;1 ou 2 ans, puis amortissement initial sur 1 à 5 ans.
-          La garantie d&apos;État porte sur le capital, pas sur les
-          intérêts.
+          La garantie couvre un pourcentage du capital, des intérêts et
+          accessoires restant dus (arrêté du 23 mars 2020, art. 6).
         </p>
       </div>
 
       {/* Accord-cadre & restructuration */}
       <div className="mt-4 rounded-2xl border border-vert/30 bg-vert/5 p-4">
         <p className="font-display text-base text-vert">
-          Accord-cadre BdF / Fédération bancaire française
+          Accord de place du 19 janvier 2022 (État, BdF, IEDOM, IEOM, FBF)
         </p>
         <p className="mt-2 text-sm text-navy/80">
-          Un protocole de place signé entre la Banque de France, la
-          Médiation du crédit, la Fédération bancaire française et
-          Bpifrance permet de <strong>réétaler le PGE jusqu&apos;à 10 ans
-          au total</strong> (au lieu des 6 ans initiaux), <strong>sans
-          perte de la garantie d&apos;État</strong> et sans inscription
-          défavorable au fichier des incidents.
+          Un accord de place signé par l&apos;État, la Banque de France,
+          l&apos;IEDOM, l&apos;IEOM et la Fédération bancaire française,
+          prolongé jusqu&apos;au 31 décembre 2026, permet aux TPE et PME
+          dont les PGE totalisent au plus 50 000 € à l&apos;octroi (au-delà,
+          seulement par exception) et qui ne sont pas en cessation des
+          paiements d&apos;<strong>allonger le PGE de 2 ans au plus</strong> par rapport à
+          l&apos;échéancier initial (4 ans au plus si c&apos;est
+          particulièrement justifié, soit 10 ans au total au maximum) dans le cadre de la Médiation du
+          crédit, <strong>sans perte de la garantie d&apos;État</strong>.
+          Attention : la restructuration est en principe classée « en
+          défaut » par les banques, ce qui peut peser sur la cotation et
+          l&apos;accès à de nouveaux crédits.
         </p>
         <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
-            Demande à formuler à votre banque dès les premiers signes
-            de tension de trésorerie.
+            Parlez-en à votre banque dès les premiers signes de tension
+            de trésorerie.
           </li>
           <li>
-            En cas de refus, saisine gratuite et confidentielle de la
-            <strong> Médiation du crédit</strong>.
+            La restructuration passe par une saisine gratuite et
+            confidentielle de la<strong> Médiation du crédit</strong>.
           </li>
           <li>
-            La restructuration peut s&apos;accompagner d&apos;une période
-            de différé supplémentaire (6 à 12 mois).
+            Elle peut s&apos;accompagner, si c&apos;est particulièrement
+            justifié, d&apos;un différé en capital de 6 mois au plus,
+            compris dans la durée d&apos;allongement.
+          </li>
+          <li>
+            Ce recours n&apos;est possible qu&apos;une seule fois.
           </li>
         </ul>
       </div>
@@ -88,24 +100,25 @@ export default function BlocPGE() {
           </li>
           <li>
             <strong>Demande écrite à la banque</strong> (LRAR ou
-            courriel suivi) : « demande de réaménagement du PGE n° X
-            au titre du protocole de place du 19 janvier 2022 »,
-            durée totale ≤ 10 ans, différé éventuel.
+            courriel suivi) : « demande de réaménagement du PGE n° X »,
+            avec la durée et le différé souhaités.
           </li>
           <li>
-            <strong>RDV avec votre conseiller</strong> sous 15 jours.
-            La banque doit motiver son refus par écrit.
+            <strong>RDV avec votre conseiller</strong> : demandez une
+            réponse écrite et, en cas de refus, ses motifs.
           </li>
           <li>
-            <strong>En cas de refus ou silence &gt; 15 j</strong> :
+            <strong>En cas de refus ou sans réponse</strong> :
             saisir la Médiation du crédit (formulaire en ligne,
-            entièrement gratuit). Le médiateur reprend contact avec
-            votre banque sous 48 h.
+            entièrement gratuit) — c&apos;est dans ce cadre que
+            s&apos;applique l&apos;accord de place. Le médiateur vous
+            contacte sous 48 h.
           </li>
           <li>
-            <strong>Plan validé</strong> : signature d&apos;un avenant
-            au PGE — la garantie Bpifrance/État est <strong>maintenue</strong>{' '}
-            de plein droit (pas de nouvel accord à demander à Bpifrance).
+            <strong>Accord trouvé</strong> : signature d&apos;un avenant
+            au PGE — la garantie de l&apos;État est <strong>maintenue</strong>{' '}
+            sur le nouvel échéancier, sans prime de garantie sur la durée
+            supplémentaire.
           </li>
         </ol>
       </div>
@@ -163,7 +176,7 @@ export default function BlocPGE() {
             Correspondant TPE-PME · Banque de France
           </p>
           <p className="mt-1 text-xs text-navy/60">
-            Premier diagnostic confidentiel
+            Accompagnement gratuit et orientation
           </p>
           <div className="mt-3 flex flex-wrap gap-2 text-sm">
             <a
@@ -185,9 +198,11 @@ export default function BlocPGE() {
       </div>
 
       <p className="mt-5 text-xs text-navy/50">
-        Sources : protocole de place « Restructuration des PGE » du 19
-        janvier 2022 (BdF, FBF, Bpifrance) ; Médiation du crédit aux
-        entreprises ; loi de finances rectificative 2020 (PGE — art. 6).
+        Sources : accord de place du 19 janvier 2022 sur les
+        restructurations de PGE (État, Banque de France, IEDOM, IEOM, FBF),
+        prolongé jusqu&apos;au 31 décembre 2026 ; fiche « Restructuration
+        de PGE » de la Médiation du crédit (banque-france.fr) ; loi
+        n° 2020-289 du 23 mars 2020 de finances rectificative, art. 6.
       </p>
     </BlocAccordeon>
   );

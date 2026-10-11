@@ -44,18 +44,19 @@ export default function CiriCodefiPage() {
           </p>
           <dl className="mt-4 space-y-2 text-sm">
             <div className="flex justify-between gap-3"><dt className="text-navy/55">Cible</dt><dd className="font-medium text-navy">&lt; 400 salariés</dd></div>
-            <div className="flex justify-between gap-3"><dt className="text-navy/55">Saisine</dt><dd className="font-medium text-navy">Via Préfecture ou DDFiP</dd></div>
+            <div className="flex justify-between gap-3"><dt className="text-navy/55">Saisine</dt><dd className="font-medium text-navy">Secrétaire permanent du CODEFI (DDFiP) ou CRP de la région</dd></div>
             <div className="flex justify-between gap-3"><dt className="text-navy/55">Confidentialité</dt><dd className="font-medium text-navy">Totale</dd></div>
             <div className="flex justify-between gap-3"><dt className="text-navy/55">Coût</dt><dd className="font-medium text-navy">Gratuit</dd></div>
-            <div className="flex justify-between gap-3"><dt className="text-navy/55">Délai</dt><dd className="font-medium text-navy">1ère réunion sous 30 j</dd></div>
+            <div className="flex justify-between gap-3"><dt className="text-navy/55">Délai</dt><dd className="font-medium text-navy">Pas de délai fixé</dd></div>
           </dl>
           <p className="mt-4 text-sm text-navy/80">
-            <strong>Ce que peut faire le CODEFI :</strong> négocier un plan d&apos;apurement global, débloquer
-            les délais URSSAF/fisc, faciliter le dialogue avec les banques, vérifier l&apos;éligibilité aux aides
-            publiques.
+            <strong>Ce que peut faire le CODEFI :</strong> faire réaliser, avec votre accord, un audit de votre
+            situation, accorder un prêt du FDES (Fonds de développement économique et social) pour financer la
+            restructuration, faciliter le dialogue avec les créanciers publics et les banques. Pour un prêt du FDES, il faut être à
+            jour de vos obligations fiscales et sociales.
           </p>
           <p className="mt-3 text-xs text-navy/60">
-            <strong>Référence :</strong> Décret n° 82-307 du 5 avril 1982. Confidentialité couverte par le secret professionnel des agents publics (LPF L103).
+            <strong>Source :</strong> impots.gouv.fr, « CCSF et CODEFI/CIRI ». Confidentialité couverte par le secret professionnel des agents publics (LPF L103).
           </p>
         </article>
 
@@ -73,7 +74,7 @@ export default function CiriCodefiPage() {
             et les créanciers pour les <strong>grandes entreprises et ETI stratégiques</strong>.
           </p>
           <dl className="mt-4 space-y-2 text-sm">
-            <div className="flex justify-between gap-3"><dt className="text-navy/55">Cible</dt><dd className="font-medium text-navy">≥ 400 salariés ou stratégique ≥ 250</dd></div>
+            <div className="flex justify-between gap-3"><dt className="text-navy/55">Cible</dt><dd className="font-medium text-navy">Plus de 400 salariés</dd></div>
             <div className="flex justify-between gap-3"><dt className="text-navy/55">Saisine</dt><dd className="font-medium text-navy">DG Trésor / contact direct</dd></div>
             <div className="flex justify-between gap-3"><dt className="text-navy/55">Confidentialité</dt><dd className="font-medium text-navy">Totale</dd></div>
             <div className="flex justify-between gap-3"><dt className="text-navy/55">Coût</dt><dd className="font-medium text-navy">Gratuit</dd></div>
@@ -85,7 +86,7 @@ export default function CiriCodefiPage() {
             niveau, mobilisation de prêts FDES (Fonds de Développement Économique et Social).
           </p>
           <p className="mt-3 text-xs text-navy/60">
-            <strong>Référence :</strong> Décret n° 82-307 modifié. Site officiel : economie.gouv.fr/ciri.
+            <strong>Source :</strong> direction générale du Trésor, qui assure le secrétariat général du CIRI (tresor.economie.gouv.fr, rubrique « Services aux entreprises »).
           </p>
         </article>
       </div>
@@ -95,14 +96,14 @@ export default function CiriCodefiPage() {
         <div className="flex items-start gap-3">
           <span className="text-3xl">🗺️</span>
           <div>
-            <h2 className="font-display text-xl text-navy">CRP — Commissaire aux Restructurations et à la Prévention</h2>
+            <h2 className="font-display text-xl text-navy">CRP — Commissaire aux restructurations et à la prévention des difficultés des entreprises</h2>
             <p className="mt-1 text-xs text-navy/55">Représentant de l&apos;État en région (DREETS / Préfecture)</p>
           </div>
         </div>
         <p className="mt-4 text-sm text-navy/80">
-          <strong>13 CRP territoriaux</strong> répartis sur les régions de France. Le CRP intervient en amont d&apos;une
-          procédure collective publique pour les entreprises en difficulté, quelle que soit la taille. Particulièrement
-          utile pour les ETI et PME stratégiques régionalement.
+          <strong>Au moins un CRP par région</strong>, placé auprès de la DREETS. Le CRP intervient en amont d&apos;une
+          procédure collective publique pour les entreprises en difficulté. Particulièrement
+          utile pour les PME et ETI stratégiques régionalement.
         </p>
         <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>Coordination des créanciers publics et privés (banques, fournisseurs)</li>
@@ -112,8 +113,8 @@ export default function CiriCodefiPage() {
         </ul>
         <p className="mt-3 text-sm text-navy/80">
           <strong>Saisine :</strong> via la DREETS de votre région ou le préfet. Site officiel :{' '}
-          <a href="https://www.economie.gouv.fr/entreprises/commissaires-restructurations-prevention" target="_blank" rel="noreferrer" className="text-bleu-fonce underline">
-            economie.gouv.fr/commissaires-restructurations
+          <a href="https://www.entreprises.gouv.fr/espace-entreprises/etre-accompagne/annuaire-commissaires-restructurations-prevention-difficultes-entreprises" target="_blank" rel="noreferrer" className="text-bleu-fonce underline">
+            annuaire des CRP sur entreprises.gouv.fr
           </a>.
         </p>
       </article>
@@ -126,7 +127,7 @@ export default function CiriCodefiPage() {
             <strong>TPE / PME &lt; 400 salariés</strong> → CODEFI (départemental)
           </li>
           <li>
-            <strong>PME / ETI ≥ 400 salariés, ou ≥ 250 sal stratégique national</strong> → CIRI (national)
+            <strong>Entreprise de plus de 400 salariés</strong> → CIRI (national)
           </li>
           <li>
             <strong>ETI / activité critique régionalement</strong> → CRP (régional, complémentaire)

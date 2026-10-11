@@ -3,6 +3,7 @@ import type { Reponses, CompanyData } from '@/lib/types';
 import type { SectorInfo } from '@/lib/secteur';
 import { getAidesRegionales } from '@/lib/aidesRegionales';
 import { isEI } from '@/lib/strategie';
+import { contactCotisations, institutionEmission } from '@/lib/organismes';
 import { useFiche } from '@/lib/FicheContext';
 import BlocAccordeon from './BlocAccordeon';
 
@@ -24,22 +25,23 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
   // Section 1: Aides liées au problème principal
   const specifiques: Aide[] = [];
   if (r.probleme === 'urssaf') {
+    const cot = contactCotisations(s, r.effectif, dep);
     specifiques.push({
-      nom: 'Échelonnement URSSAF',
-      description: `Demandez un échéancier auprès de l'URSSAF ${dep ? `de votre département (${dep})` : ''}. Les cotisations de plus de 3 ans sont potentiellement prescrites.`,
-      telephone: '3957',
-      site: 'https://www.urssaf.fr',
+      nom: cot.org === 'URSSAF' ? 'Échelonnement URSSAF' : `Échelonnement · ${cot.org}`,
+      description: `Demandez un échéancier auprès de ${cot.orgAvecArticle}${cot.tel ? '' : ` (${cot.telLibelle})`}. Des cotisations anciennes peuvent être prescrites (3 ans, sauf mise en demeure envoyée à temps — art. L244-3 CSS).`,
+      telephone: cot.tel ?? undefined,
+      site: cot.site,
       badge: 'Prioritaire pour vous',
     });
     specifiques.push({
-      nom: 'Fonds d\'action sociale URSSAF',
-      description: 'Prise en charge partielle de cotisations en cas de difficulté avérée.',
+      nom: 'Action sociale des travailleurs indépendants',
+      description: 'Réservée aux travailleurs indépendants : prise en charge de tout ou partie de vos cotisations ou aide financière, au cas par cas (action sociale du CPSTI, demande par la messagerie de votre espace Urssaf). La prise en charge vise vos cotisations personnelles, pas les cotisations dues sur les salaires de vos salarié·e·s.',
       site: 'https://www.urssaf.fr',
     });
   }
   if (r.probleme === 'impots') {
     specifiques.push({
-      nom: `Service des impôts des entreprises${ville ? ` de ${ville}` : ''}`,
+      nom: 'Votre service des impôts des entreprises (SIE)',
       description: 'Demande de délai de paiement, échelonnement ou remise gracieuse. En cas de gêne exceptionnelle, l\'administration peut réduire l\'impôt dû.',
       site: 'https://www.impots.gouv.fr',
       badge: 'Prioritaire pour vous',
@@ -53,9 +55,9 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
   }
   if (r.probleme === 'banque') {
     specifiques.push({
-      nom: `Médiation du crédit${dep ? ` · Banque de France (${dep})` : ''}`,
-      description: 'Gratuit et confidentiel. Le médiateur contacte votre banque et négocie pour vous. Taux de succès élevé.',
-      telephone: '34 14',
+      nom: `Médiation du crédit${dep ? ` · ${institutionEmission(dep).nom} (${dep})` : ''}`,
+      description: 'Gratuit et confidentiel. Le médiateur contacte votre banque et négocie pour vous.',
+      telephone: institutionEmission(dep).telephone || undefined,
       site: 'https://mediateur-credit.banque-france.fr',
       badge: 'Prioritaire pour vous',
     });
@@ -64,7 +66,6 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
     specifiques.push({
       nom: 'Médiateur des entreprises',
       description: 'Différend avec un fournisseur ou client ? Le Médiateur des entreprises vous aide à renouer le dialogue. Gratuit et confidentiel.',
-      telephone: '01 53 17 87 40',
       site: 'https://www.economie.gouv.fr/mediateur-des-entreprises',
       badge: 'Prioritaire pour vous',
     });
@@ -77,15 +78,15 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
   const statut: Aide[] = [];
   if (r.effectif === 'independant' || ei) {
     statut.push({
-      nom: 'CPAM / SSI · Action sociale',
-      description: `Aide financière d'urgence pour indépendants (jusqu'à 3 000 €). Vous êtes ${ei ? 'entrepreneur individuel' : 'indépendant'} — vous y avez droit.`,
-      telephone: '36 46',
-      site: 'https://www.secu-independants.fr',
+      nom: 'Urssaf · Action sociale des indépendants',
+      description: `Aide financière exceptionnelle et prise en charge de cotisations pour les indépendants en difficulté. Vous êtes ${ei ? 'entrepreneur individuel' : 'indépendant'} : vous pouvez la demander (attribution au cas par cas).`,
+      telephone: '36 98',
+      site: 'https://www.urssaf.fr/accueil/services/services-independants/solliciter-action-sociale-cpsti.html',
       badge: 'Gratuit',
     });
     statut.push({
-      nom: 'RSA / ASS',
-      description: 'Si votre revenu d\'activité est nul ou très faible, vous pouvez cumuler RSA et activité professionnelle.',
+      nom: 'RSA',
+      description: 'Si votre revenu d\'activité est nul ou très faible, vous pouvez demander le RSA tout en poursuivant votre activité, sous conditions.',
       site: 'https://www.caf.fr',
     });
   }
@@ -98,8 +99,7 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
     });
     statut.push({
       nom: 'AGS · Garantie des salaires',
-      description: 'En cas de redressement ou liquidation, les salaires sont garantis par l\'AGS.',
-      telephone: '01 55 90 27 00',
+      description: 'En cas de redressement ou de liquidation judiciaire, l\'AGS garantit les sommes dues aux salarié·e·s, dans la limite d\'un plafond. Le mandataire judiciaire fait la demande au centre (CGEA) compétent.',
       site: 'https://www.ags-garantie-salaires.org',
     });
     statut.push({
@@ -130,27 +130,27 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
       {
         nom: 'Affacturage (factoring)',
         description:
-          'Cession de vos factures clients à un affactureur (banque, Bpifrance, société spécialisée) qui vous avance jusqu\'à 90 % sous 48 h, puis recouvre auprès du client. Différent du crédit fournisseur : c\'est un financement, pas un délai. Commission 1-3 % + intérêts. Adapté si vous avez plusieurs clients B2B solvables.',
-        site: 'https://www.bpifrance.fr/nos-solutions/financement/financer-court-terme/affacturage',
-        badge: 'Cash sous 48 h',
+          'Cession de vos factures clients à un affactureur (banque, Bpifrance, société spécialisée) qui vous avance rapidement une partie de leur montant, puis recouvre auprès du client. Différent du crédit fournisseur : c\'est un financement, pas un délai. Coût : commission et frais de financement, à comparer entre offres. Adapté si vous avez plusieurs clients B2B solvables.',
+        site: 'https://www.bpifrance.fr/catalogue-offres/garantie-affacturage',
+        badge: 'Trésorerie rapide',
       },
       {
         nom: 'Escompte commercial',
         description:
-          'Mobilisation auprès de votre banque d\'effets de commerce (lettres de change, billets à ordre) avant leur échéance. La banque vous paie immédiatement, déduction faite d\'un agio. Moins coûteux que l\'affacturage mais nécessite des effets acceptés. Différent de l\'escompte fournisseur (remise pour paiement comptant).',
+          'Mobilisation auprès de votre banque d\'effets de commerce (lettres de change, billets à ordre) avant leur échéance. La banque vous paie immédiatement, déduction faite d\'un agio. Nécessite des effets de commerce. Différent de l\'escompte fournisseur (remise pour paiement comptant).',
         badge: 'Si effets acceptés',
       },
       {
         nom: 'Cession Dailly (loi du 2 janv. 1981)',
         description:
-          'Cession de créances professionnelles à votre banque, via un bordereau simplifié (art. L313-23 CMF). Plus souple que l\'escompte (pas besoin d\'effet de commerce) et moins cher que l\'affacturage. Vous restez en relation avec votre client. Outil sous-utilisé en TPE/PME.',
+          'Cession de créances professionnelles à votre banque, via un bordereau simplifié (art. L313-23 CMF). Plus souple que l\'escompte (pas besoin d\'effet de commerce). Vous restez en relation avec votre client.',
         badge: 'Souple · banque',
       },
       {
         nom: 'Mobilisation créances publiques (Bpifrance)',
         description:
-          'Si vous travaillez avec des collectivités ou administrations, Bpifrance avance jusqu\'à 100 % de vos factures publiques (DGFIP, conseil régional, hôpital). Délai 48 h, jusqu\'à un plafond de 30 000 € automatique, plus au-delà.',
-        site: 'https://www.bpifrance.fr/nos-solutions/financement/financer-court-terme/avance-creances-publiques',
+          'Si vous travaillez avec des collectivités ou administrations, Bpifrance peut avancer tout ou partie du montant de vos factures publiques (conditions et plafonds sur bpifrance.fr).',
+        site: 'https://www.bpifrance.fr/catalogue-offres/avance',
         badge: 'Marchés publics',
       },
     ];
@@ -174,20 +174,19 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
   });
   nationales.push({
     nom: 'CIP · Centre d\'Information sur la Prévention',
-    description: 'Rendez-vous gratuit et confidentiel avec d\'anciens chefs d\'entreprise, avocats et comptables bénévoles.',
+    description: 'Rendez-vous gratuit et confidentiel avec un trio de bénévoles : expert-comptable, avocat et ancien juge du tribunal de commerce.',
     site: 'https://www.cip-national.fr',
     badge: 'Gratuit · confidentiel',
   });
   nationales.push({
     nom: 'ADIE · Micro-crédit',
-    description: 'Prêts jusqu\'à 17 000 € sur 5 ans. Accessible même si vous êtes interdit bancaire ou fiché FICP.',
-    telephone: '0 969 328 110',
+    description: 'Prêts jusqu\'à 15 000 € remboursables sur 48 mois au plus (adie.org), pour les personnes qui n\'ont pas accès au crédit bancaire.',
     site: 'https://www.adie.org',
-    badge: 'Même interdit bancaire',
+    badge: 'Sans accès au crédit bancaire',
   });
   nationales.push({
     nom: 'France Active · Garanties de prêts',
-    description: 'Garantit jusqu\'à 65 % d\'un prêt bancaire, réduisant le risque pour la banque. Accompagnement inclus.',
+    description: 'Garantit une partie d\'un prêt bancaire (jusqu\'à 80 % selon la garantie), réduisant le risque pour la banque. Accompagnement inclus.',
     site: 'https://www.franceactive.org',
   });
   sections.push({ titre: 'Aides nationales', aides: nationales });
@@ -196,21 +195,21 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
   const personnelles: Aide[] = [
     {
       nom: 'ATI · Allocation Travailleurs Indépendants',
-      description: 'Chômage spécifique indépendants : 592 à 789 €/mois pendant 6 mois après cessation involontaire.',
+      description: 'Chômage spécifique indépendants : environ 600 à 800 €/mois (19,73 à 26,30 €/jour) pendant 6 mois après cessation involontaire.',
       site: 'https://chomage-independant.francetravail.fr',
       badge: '6 mois',
     },
     {
       nom: 'CSS · Complémentaire Santé Solidaire',
-      description: 'Mutuelle gratuite si vos revenus ont fortement baissé (< 10 166 €/an).',
+      description: 'Mutuelle gratuite si vos revenus ont fortement baissé (moins de 10 421 €/an pour une personne seule en métropole).',
       telephone: '3646',
       site: 'https://www.complementaire-sante-solidaire.gouv.fr',
       badge: 'Gratuit',
     },
     {
       nom: 'Aide juridictionnelle',
-      description: 'Avocat et frais de justice pris en charge si revenus < 12 957 €/an. Pour vos procédures personnelles.',
-      site: 'https://www.service-public.fr',
+      description: 'Avocat et frais de justice pris en charge : en totalité si votre revenu fiscal de référence est d\'au plus 12 957 €, en partie jusqu\'à 19 433 € (personne seule, barème 2026). Pour vos procédures personnelles.',
+      site: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F18074',
       badge: 'Sous conditions',
     },
     {
@@ -223,15 +222,21 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
   sections.push({ titre: 'Pour vous personnellement', aides: personnelles });
 
   // Aides locales
-  const chambreLabel = s.chambre === 'CMA' ? 'Chambre de Métiers' : s.chambre === 'CA' ? 'Chambre d\'agriculture' : 'CCI';
-  const regionales: Aide[] = [
-    {
-      nom: `${chambreLabel}${dep ? ` (${dep})` : ''}`,
-      description: `Accompagnement gratuit et confidentiel pour les entreprises en difficulté${ville ? ` dans la région de ${ville}` : ''}.`,
-      site: s.chambre === 'CMA' ? 'https://www.artisanat.fr' : s.chambre === 'CA' ? 'https://chambres-agriculture.fr' : 'https://www.cci.fr',
-      badge: 'Gratuit · local',
-    },
-  ];
+  // Pas de chambre consulaire pour les professions libérales, la santé et
+  // les associations : le CIP (aides nationales) est leur interlocuteur.
+  const sansChambre =
+    s.secteur === 'liberal' || s.secteur === 'sante' || s.secteur === 'ess' || /association|fondation/i.test(c.formeJuridique || '');
+  const chambreLabel = s.chambre === 'CMA' ? 'Chambre de métiers et de l\'artisanat' : s.chambre === 'CA' ? 'Chambre d\'agriculture' : 'CCI';
+  const regionales: Aide[] = sansChambre
+    ? []
+    : [
+        {
+          nom: `${chambreLabel}${dep ? ` (${dep})` : ''}`,
+          description: `Accompagnement gratuit et confidentiel pour les entreprises en difficulté${ville ? ` dans la région de ${ville}` : ''}.`,
+          site: s.chambre === 'CMA' ? 'https://www.artisanat.fr' : s.chambre === 'CA' ? 'https://chambres-agriculture.fr' : 'https://www.cci.fr',
+          badge: 'Gratuit · local',
+        },
+      ];
   if (r.probleme === 'urssaf' || r.probleme === 'impots') {
     regionales.push({
       nom: 'Médiateur national de l\'énergie',
@@ -240,7 +245,9 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
       badge: 'TPE uniquement',
     });
   }
-  sections.push({ titre: `Aides locales${dep ? ` · département ${dep}` : ''}`, aides: regionales });
+  if (regionales.length > 0) {
+    sections.push({ titre: `Aides locales${dep ? ` · département ${dep}` : ''}`, aides: regionales });
+  }
 
   // Aides régionales ciblées
   const regionInfo = getAidesRegionales(dep);

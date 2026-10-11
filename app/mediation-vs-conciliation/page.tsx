@@ -35,17 +35,17 @@ export default function MediationVsConciliationPage() {
             sur un litige précis. <strong>Aucune intervention du tribunal</strong>.
           </p>
           <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
-            <div className="rounded-xl bg-vert/5 p-3"><dt className="text-navy/55">Durée</dt><dd className="font-medium text-navy">5 jours en moyenne</dd></div>
+            <div className="rounded-xl bg-vert/5 p-3"><dt className="text-navy/55">Durée</dt><dd className="font-medium text-navy">Médiation du crédit : contact sous 48 h, puis 5 jours ouvrés pour les banques</dd></div>
             <div className="rounded-xl bg-vert/5 p-3"><dt className="text-navy/55">Coût</dt><dd className="font-medium text-navy">Gratuit</dd></div>
             <div className="rounded-xl bg-vert/5 p-3"><dt className="text-navy/55">Confidentielle</dt><dd className="font-medium text-navy">Oui (totalement)</dd></div>
-            <div className="rounded-xl bg-vert/5 p-3"><dt className="text-navy/55">Taux de succès</dt><dd className="font-medium text-navy">60-75 %</dd></div>
+            <div className="rounded-xl bg-vert/5 p-3"><dt className="text-navy/55">Taux de succès</dt><dd className="font-medium text-navy">Médiation du crédit : 64 % des dossiers éligibles en 2025 (Banque de France)</dd></div>
           </dl>
           <p className="mt-4 text-sm text-navy/80">
             <strong>Quand l&apos;utiliser</strong> : litige bancaire (refus de prêt, PGE), différend fournisseur ou client, désaccord sur un contrat commercial.
           </p>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
             <li><strong>Médiation du crédit</strong> (Banque de France, 34 14) — pour les litiges bancaires</li>
-            <li><strong>Médiation des entreprises</strong> (Bercy, 01 53 17 87 40) — pour les litiges entre entreprises</li>
+            <li><strong>Médiation des entreprises</strong> (saisine en ligne sur economie.gouv.fr) — pour les litiges entre entreprises</li>
             <li><strong>ARPE</strong> — pour les travailleurs des plateformes</li>
           </ul>
         </article>
@@ -58,7 +58,7 @@ export default function MediationVsConciliationPage() {
           </p>
           <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
             <div className="rounded-xl bg-bleu/5 p-3"><dt className="text-navy/55">Durée</dt><dd className="font-medium text-navy">Fixée par le président du tribunal (pas de durée légale)</dd></div>
-            <div className="rounded-xl bg-bleu/5 p-3"><dt className="text-navy/55">Coût</dt><dd className="font-medium text-navy">1 500 à 5 000 €</dd></div>
+            <div className="rounded-xl bg-bleu/5 p-3"><dt className="text-navy/55">Coût</dt><dd className="font-medium text-navy">Fixé par le président du tribunal, avec votre accord (art. L611-14)</dd></div>
             <div className="rounded-xl bg-bleu/5 p-3"><dt className="text-navy/55">Confidentielle</dt><dd className="font-medium text-navy">Oui (pas de publication BODACC)</dd></div>
             <div className="rounded-xl bg-bleu/5 p-3"><dt className="text-navy/55">Référence</dt><dd className="font-medium text-navy">C. com. art. L611-3</dd></div>
           </dl>
@@ -73,12 +73,12 @@ export default function MediationVsConciliationPage() {
         <article className="glass card-top-line p-6">
           <h2 className="font-display text-xl text-navy">⚖️ La conciliation</h2>
           <p className="mt-3 text-sm text-navy/80">
-            Procédure <strong>judiciaire confidentielle</strong>, plus encadrée que le mandat ad hoc. Le conciliateur est nommé par le tribunal.
+            Procédure <strong>judiciaire confidentielle</strong>, plus encadrée que le mandat ad hoc. Le conciliateur est désigné par le président du tribunal.
             Possible <strong>même en cessation des paiements de moins de 45 jours</strong>.
           </p>
           <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
             <div className="rounded-xl bg-bleu/5 p-3"><dt className="text-navy/55">Durée</dt><dd className="font-medium text-navy">4 mois + 1 mois</dd></div>
-            <div className="rounded-xl bg-bleu/5 p-3"><dt className="text-navy/55">Coût</dt><dd className="font-medium text-navy">3 000 à 10 000 €</dd></div>
+            <div className="rounded-xl bg-bleu/5 p-3"><dt className="text-navy/55">Coût</dt><dd className="font-medium text-navy">Fixé par le président du tribunal, avec votre accord (art. L611-14)</dd></div>
             <div className="rounded-xl bg-bleu/5 p-3"><dt className="text-navy/55">Confidentielle</dt><dd className="font-medium text-navy">Oui (sauf homologation)</dd></div>
             <div className="rounded-xl bg-bleu/5 p-3"><dt className="text-navy/55">Référence</dt><dd className="font-medium text-navy">C. com. art. L611-4 à L611-15</dd></div>
           </dl>
@@ -95,7 +95,7 @@ export default function MediationVsConciliationPage() {
       <div className="mt-10 rounded-2xl border border-bleu/30 bg-bleu/5 p-5">
         <h2 className="font-display text-lg text-bleu-fonce">Comment choisir en 30 secondes</h2>
         <ul className="mt-3 space-y-2 text-sm text-navy/80">
-          <li><strong>UN litige précis avec UN créancier</strong> → médiation (gratuit, 5 jours)</li>
+          <li><strong>UN litige précis avec UN créancier</strong> → médiation (gratuite et rapide)</li>
           <li><strong>PLUSIEURS créanciers à restructurer + pas en cessation</strong> → mandat ad hoc</li>
           <li><strong>Situation tendue + cessation possible ou récente</strong> → conciliation</li>
           <li><strong>Cessation depuis &gt; 45 j</strong> → redressement ou liquidation judiciaire (la sauvegarde est fermée en cas de cessation des paiements)</li>

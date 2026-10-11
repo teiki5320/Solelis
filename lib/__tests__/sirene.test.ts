@@ -6,6 +6,7 @@ import {
   departementDepuisCodePostal,
   determinerDepartement,
   choisirNom,
+  nettoyerNomComplet,
   DELAIS_REESSAI,
 } from '../sirene';
 import { getDepartement } from '../organismes';
@@ -131,6 +132,11 @@ describe('département depuis le code commune INSEE', () => {
 
 describe('département depuis le code postal', () => {
   it('Corse-du-Sud (200xx, 201xx) et Haute-Corse (202xx à 206xx)', () => {
+    expect(departementDepuisCodePostal('98800')).toBe('988'); // Nouméa
+    expect(departementDepuisCodePostal('98714')).toBe('987'); // Papeete
+    expect(departementDepuisCodePostal('97133')).toBe('977'); // Saint-Barthélemy
+    expect(departementDepuisCodePostal('97150')).toBe('978'); // Saint-Martin
+    expect(departementDepuisCodePostal('97110')).toBe('971'); // Pointe-à-Pitre
     expect(departementDepuisCodePostal('20000')).toBe('2A'); // Ajaccio
     expect(departementDepuisCodePostal('20137')).toBe('2A'); // Porto-Vecchio
     expect(departementDepuisCodePostal('20200')).toBe('2B'); // Bastia
@@ -151,13 +157,17 @@ describe('département depuis le code postal', () => {
   });
   it('le code commune prime sur le code postal (Saint-Barthélemy 97133)', () => {
     expect(determinerDepartement('97701', '97133')).toBe('977');
-    expect(determinerDepartement(undefined, '97133')).toBe('971');
+    expect(determinerDepartement(undefined, '97133')).toBe('977');
   });
   it('les clés produites existent dans data/organismes.json et lib/aidesRegionales.ts', () => {
     for (const cp of ['20000', '20200', '97100', '97200', '97300', '97400', '97600', '75001']) {
       const dep = departementDepuisCodePostal(cp);
       expect(getDepartement(dep), dep).not.toBeNull();
       expect(getRegionFromDepartement(dep), dep).not.toBeNull();
+    }
+    // Collectivités d'outre-mer : organismes connus (pas de région).
+    for (const cp of ['97133', '97150', '98800']) {
+      expect(getDepartement(departementDepuisCodePostal(cp)), cp).not.toBeNull();
     }
   });
 });
@@ -167,6 +177,22 @@ describe('choisirNom', () => {
     expect(choisirNom('', '  ', 'Jean DUPONT')).toBe('Jean DUPONT');
     expect(choisirNom(undefined, null, [].join(' '))).toBe('Votre entreprise');
     expect(choisirNom('  ACME  ')).toBe('ACME');
+  });
+});
+
+describe('nettoyerNomComplet', () => {
+  it('retire la parenthèse qui répète le nom', () => {
+    expect(nettoyerNomComplet('AMP ETANCHEITE (AMP ETANCHEITE)')).toBe('AMP ETANCHEITE');
+    expect(nettoyerNomComplet('Amp  Etancheite (AMP ETANCHEITE)')).toBe('Amp  Etancheite');
+    expect(nettoyerNomComplet('MICHEL MILON MENUISERIE (MICHEL MILON MENUISERIE) (M.M.M)')).toBe(
+      'MICHEL MILON MENUISERIE (M.M.M)',
+    );
+  });
+
+  it('garde un sigle ou un nom commercial différent', () => {
+    expect(nettoyerNomComplet('SOCIETE NATIONALE SNCF (SNCF)')).toBe('SOCIETE NATIONALE SNCF (SNCF)');
+    expect(nettoyerNomComplet('ACME')).toBe('ACME');
+    expect(nettoyerNomComplet(undefined)).toBe('');
   });
 });
 
@@ -206,12 +232,51 @@ describe('fetchSirene (API recherche-entreprises simulée)', () => {
     expect(c.formeJuridique).toBe('Société anonyme (SA)');
   });
 
+  it('établissement secondaire : siège conservé pour le tribunal (R600-1 C. com.)', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(
+        new Response(
+          JSON.stringify({
+            results: [
+              {
+                nom_complet: 'ACME',
+                nature_juridique: '5710',
+                siege: { siret: '34963839500021', code_postal: '22100', commune: '22050', libelle_commune: 'DINAN', departement: '22' },
+                matching_etablissements: [{ siret: '34963839500039', code_postal: '35000', commune: '35238', libelle_commune: 'RENNES' }],
+              },
+            ],
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } },
+        ),
+      ),
+    );
+    const c = await fetchSirene('34963839500039');
+    expect(c.departement).toBe('35');
+    expect(c.siege).toEqual({ codePostal: '22100', ville: 'DINAN', departement: '22' });
+  });
+
+  it('siège consulté : pas de champ « siege »', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(reponse({ code_postal: '20090', commune: '2A004', libelle_commune: 'AJACCIO' })));
+    expect((await fetchSirene('34963839500021')).siege).toBeUndefined();
+  });
+
   it('La Réunion : département 974 (et non « 97 »)', async () => {
     vi.stubGlobal(
       'fetch',
       vi.fn().mockResolvedValue(reponse({ code_postal: '97400', commune: '97411', libelle_commune: 'SAINT-DENIS' })),
     );
     expect((await fetchSirene('34963839500021')).departement).toBe('974');
+  });
+
+  it('nom complet doublé « X (X) » → « X »', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(
+        reponse({ code_postal: '85100' }, { nom_complet: 'AMP ETANCHEITE (AMP ETANCHEITE)' }),
+      ),
+    );
+    expect((await fetchSirene('34963839500021')).nom).toBe('AMP ETANCHEITE');
   });
 
   it('nom vide (diffusion partielle) → « Votre entreprise »', async () => {

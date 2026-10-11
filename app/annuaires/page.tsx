@@ -12,8 +12,8 @@ const ANNUAIRES = [
   {
     href: '/annuaires/ags',
     icone: '👥',
-    titre: 'AGS — Délégations régionales',
-    description: '13 délégations couvrant tout le territoire. Garantie des salaires en cas de procédure collective.',
+    titre: 'AGS — Centres de gestion (CGEA)',
+    description: '15 centres (dont 2 outre-mer) couvrant tout le territoire. Garantie des salaires en cas de procédure collective.',
     source: 'ags-garantie-salaires.org',
   },
   {
@@ -21,7 +21,7 @@ const ANNUAIRES = [
     icone: '🏛️',
     titre: 'Tribunaux des Activités Économiques (TAE)',
     description: '12 tribunaux expérimentent depuis le 1er janvier 2025 le traitement unifié des entreprises en difficulté (réforme).',
-    source: 'Loi 2023-1059, arrêté du 5 juillet 2024',
+    source: 'Loi 2023-1059, décret 2024-674, arrêté du 5 juillet 2024',
   },
   {
     href: '/annuaires/mandataires',
@@ -34,7 +34,7 @@ const ANNUAIRES = [
     href: '/annuaires/cip',
     icone: '🤝',
     titre: 'CIP territoriaux (Centres d\'Information sur la Prévention)',
-    description: 'Antennes proposant un RDV gratuit et confidentiel avec d\'anciens chefs d\'entreprise et professionnels bénévoles.',
+    description: 'Une soixantaine de CIP proposent un entretien gratuit et confidentiel, sur rendez-vous, avec des bénévoles : expert-comptable, avocat et ancien juge du tribunal de commerce.',
     source: 'cip-national.fr',
   },
 ];

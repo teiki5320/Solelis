@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Questionnaire from '@/components/Questionnaire';
 import { redirect } from 'next/navigation';
+import { siretValide } from '@/lib/siret';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/questionnaire' },
@@ -18,7 +19,8 @@ interface Props {
 export default async function QuestionnairePage({ searchParams }: Props) {
   const { siret: siretBrut } = await searchParams;
   const siret = (siretBrut ?? '').replace(/\D/g, '');
-  if (!/^\d{14}$/.test(siret)) {
+  // 14 chiffres et clé de contrôle (Luhn, exception La Poste) : sinon retour à l'accueil.
+  if (!siretValide(siret)) {
     redirect('/');
   }
 

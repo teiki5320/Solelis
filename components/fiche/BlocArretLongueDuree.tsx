@@ -41,8 +41,10 @@ export default function BlocArretLongueDuree() {
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
             <strong>Indemnités journalières Sécu (CPAM)</strong> : 50 %
-            du salaire journalier de base (plafond 1,8 SMIC) à partir
-            du 4e jour. Versées directement au salarié.
+            du salaire journalier de base (salaire pris en compte
+            plafonné à 1,4 SMIC pour les arrêts débutant depuis le 1er
+            avril 2025 — décret n° 2025-160, ameli.fr) à partir du 4e
+            jour. Versées directement au salarié.
           </li>
           <li>
             <strong>Complément employeur</strong> (loi de mensualisation,
@@ -82,8 +84,8 @@ export default function BlocArretLongueDuree() {
             à 2 ans), 96 120 € (2 ans et plus).
           </li>
           <li>
-            <strong>Délai de versement</strong> : l&apos;AGS verse sous
-            15 jours après transmission par le mandataire — un salarié
+            <strong>Délai de versement</strong> : l&apos;AGS verse les fonds
+            au mandataire 5 à 8 jours après réception des relevés de créances — un salarié
             en arrêt long peut donc rester sans complément pendant
             plusieurs semaines.
           </li>
@@ -113,17 +115,25 @@ export default function BlocArretLongueDuree() {
             CSP, indemnité de licenciement.
           </li>
           <li>
-            <strong>Préavis</strong> : suspendu pendant l&apos;arrêt
-            (Cass. soc. 1995). Si le salarié reprend en cours de préavis,
-            il termine ; sinon, il est payé en indemnité compensatrice.
+            <strong>Préavis</strong> : un arrêt maladie ne le suspend
+            pas et ne le prolonge pas (sauf accident du travail ou
+            maladie professionnelle survenus pendant le préavis). Le
+            salarié qui ne peut pas l&apos;exécuter pour cause de maladie
+            n&apos;a en principe pas droit à l&apos;indemnité
+            compensatrice, sauf convention collective plus favorable
+            (service-public.gouv.fr).
           </li>
           <li>
             <strong>Inaptitude post-arrêt</strong> : si la médecine du
             travail constate une inaptitude à l&apos;issue de l&apos;arrêt,
             une procédure d&apos;inaptitude doit être suivie
-            (reclassement préalable, sauf dispense pour inaptitude
-            d&apos;origine non-professionnelle ouvrant droit à indemnité
-            spéciale doublée).
+            (recherche de reclassement préalable, sauf dispense
+            expresse du médecin du travail). Inaptitude d&apos;origine
+            non professionnelle : préavis ni exécuté ni payé, mais pris
+            en compte pour l&apos;indemnité de licenciement (art. L1226-4).
+            L&apos;indemnité spéciale doublée ne concerne que
+            l&apos;inaptitude d&apos;origine professionnelle (art.
+            L1226-14).
           </li>
         </ul>
       </div>
@@ -149,8 +159,9 @@ export default function BlocArretLongueDuree() {
         </ul>
         <p className="mt-2 text-sm text-navy/80">
           <strong>Indemnité spéciale doublée</strong> en cas de
-          licenciement post-AT/MP (art. L1226-14). À budgéter dans le
-          coût de la procédure.
+          licenciement pour inaptitude d&apos;origine professionnelle
+          (art. L1226-14) ; elle ne s&apos;applique pas à un licenciement
+          économique. À budgéter dans le coût de la procédure.
         </p>
       </div>
 
@@ -161,7 +172,6 @@ export default function BlocArretLongueDuree() {
           <div>
             <p className="text-xs font-medium text-navy">AGS — garantie salaires</p>
             <div className="mt-1 flex flex-wrap gap-2 text-sm">
-              <a href="tel:0155902700" className="rounded-full bg-white/80 px-3 py-1 text-navy/80 hover:bg-white"><span aria-hidden>☎</span> 01 55 90 27 00</a>
               <a
                 href="https://www.ags-garantie-salaires.org"
                 target="_blank"
@@ -176,7 +186,7 @@ export default function BlocArretLongueDuree() {
             <p className="text-xs font-medium text-navy">Médecine du travail — pour avis d&apos;inaptitude</p>
             <div className="mt-1 flex flex-wrap gap-2 text-sm">
               <a
-                href="https://www.presanse.fr/annuaire-services-de-prevention/"
+                href="https://www.presanse.fr/annuaire-des-spsti/"
                 target="_blank"
                 rel="noreferrer"
                 className="rounded-full bg-white/80 px-3 py-1 text-bleu-fonce hover:bg-white"
@@ -190,10 +200,11 @@ export default function BlocArretLongueDuree() {
 
       <p className="mt-5 text-xs text-navy/50">
         Sources : C. trav. art. L1132-1 (non-discrimination), L1226-1
-        (complément mensualisation), L1226-9 à L1226-15 (AT/MP) ;
-        décret-loi 19 janv. 1978 sur la mensualisation ; ags-garantie-
-        salaires.org (plafonds 2026) ; jurisprudence Cass. soc. sur la
-        suspension du préavis.
+        (complément mensualisation), L1226-4 (inaptitude non
+        professionnelle), L1226-9 à L1226-15 (AT/MP) ; CSS art. R323-4
+        (décret n° 2025-160, plafond 1,4 SMIC) ; loi de mensualisation
+        du 19 janv. 1978 ; ags-garantie-salaires.org (plafonds 2026) ;
+        service-public.gouv.fr (arrêt maladie pendant le préavis).
       </p>
     </BlocAccordeon>
   );

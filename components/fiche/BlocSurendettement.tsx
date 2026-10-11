@@ -29,12 +29,16 @@ export default function BlocSurendettement() {
     >
       <p className="text-sm text-navy/80">
         Réservée aux personnes physiques, la commission de surendettement
-        de la Banque de France traite les dettes non professionnelles
+        de la Banque de France traite les dettes de la vie personnelle
         (crédit conso, loyer du logement, découvert bancaire, impôts
-        personnels, énergie, télécom…). Pour un entrepreneur individuel
-        ou un indépendant, elle peut compléter — voire remplacer — la
-        procédure collective lorsque la difficulté est essentiellement
-        d&apos;ordre personnel.
+        personnels, énergie, télécom…). Attention : tant que vous relevez
+        des procédures collectives du Code de commerce (entrepreneur·e
+        individuel·le commerçant·e, artisan·e, libéral·e ou
+        agriculteur·rice), vous ne pouvez pas la saisir directement
+        (art. L711-3 C. conso.). Depuis le 15 mai 2022, c&apos;est le
+        tribunal qui ouvre la procédure collective qui peut, avec votre
+        accord, lui transmettre vos dettes personnelles (art. L681-2 C.
+        com. ; art. L711-9 C. conso.).
       </p>
 
       {/* Conditions d'éligibilité */}
@@ -44,21 +48,24 @@ export default function BlocSurendettement() {
         </p>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
-            Être une <strong>personne physique de bonne foi</strong>
+            Être une <strong>personne physique de bonne foi</strong>{' '}
             (résident français ou français résidant à l&apos;étranger
             avec des dettes contractées en France).
           </li>
           <li>
-            Se trouver dans l&apos;<strong>impossibilité manifeste</strong>
-            de faire face à l&apos;ensemble de ses dettes non
-            professionnelles exigibles ou à échoir.
+            Se trouver dans l&apos;<strong>impossibilité manifeste</strong>{' '}
+            de faire face à l&apos;ensemble de ses dettes exigibles et à
+            échoir (art. L711-1 C. conso.).
           </li>
           <li>
-            Les <strong>dettes professionnelles</strong> sont en principe
-            exclues — sauf pour un EI, où des <strong>dettes mixtes</strong>
-            (caution personnelle, prêt étudiant, dettes fiscales
-            personnelles) peuvent être prises en compte si elles sont
-            liées à la vie privée.
+            Pour un <strong>entrepreneur individuel</strong> : saisine
+            uniquement sur renvoi du tribunal de la procédure collective,
+            si vos patrimoines professionnel et personnel ont été
+            strictement séparés ; seul le{' '}
+            <strong>patrimoine personnel</strong> est alors concerné.
+            Une <strong>caution</strong> donnée pour la dette d&apos;une
+            entreprise individuelle ou d&apos;une société peut aussi
+            caractériser le surendettement (art. L711-1 C. conso.).
           </li>
         </ul>
       </div>
@@ -86,9 +93,10 @@ export default function BlocSurendettement() {
             Rétablissement personnel sans liquidation
           </p>
           <p className="mt-2 text-sm text-navy/75">
-            En l&apos;absence de patrimoine saisissable, la commission peut
-            recommander l&apos;<strong>effacement total</strong> des dettes
-            (homologué par le juge).
+            En l&apos;absence de biens ayant une valeur marchande, la
+            commission peut imposer l&apos;<strong>effacement total</strong>{' '}
+            des dettes (le juge n&apos;intervient qu&apos;en cas de
+            contestation).
           </p>
         </div>
         <div className="rounded-2xl border border-jaune/30 bg-jaune/5 p-4">
@@ -96,9 +104,10 @@ export default function BlocSurendettement() {
             Rétablissement personnel avec liquidation
           </p>
           <p className="mt-2 text-sm text-navy/75">
-            En présence de patrimoine, le juge prononce une liquidation
-            judiciaire des biens (sauf biens nécessaires à la vie courante)
-            puis l&apos;effacement des dettes résiduelles.
+            En présence de biens, la commission peut, avec votre accord,
+            saisir le juge, qui prononce une liquidation judiciaire des
+            biens (sauf biens nécessaires à la vie courante) puis
+            l&apos;effacement des dettes résiduelles.
           </p>
         </div>
       </div>
@@ -137,9 +146,9 @@ export default function BlocSurendettement() {
           <li>
             La <strong>commission de surendettement</strong> traite les
             <strong> dettes personnelles</strong> du dirigeant — vie
-            privée, logement, conso. Elle peut être ouverte
-            <strong> en parallèle</strong> d&apos;une procédure collective
-            si la situation l&apos;exige.
+            privée, logement, conso. Pour un entrepreneur individuel, elle
+            intervient<strong> en parallèle</strong> d&apos;une procédure
+            collective, sur renvoi du tribunal (art. L681-2 C. com.).
           </li>
           <li>
             Pour un entrepreneur individuel, la coordination des deux
@@ -150,9 +159,10 @@ export default function BlocSurendettement() {
       </div>
 
       <p className="mt-5 text-xs text-navy/50">
-        Sources : Code de la consommation, articles L711-1 et suivants ;
-        Banque de France, dossier de surendettement (formulaire Cerfa
-        13594*02) ; loi n° 2022-172 du 14 février 2022 sur le statut de
+        Sources : Code de la consommation, articles L711-1 et suivants
+        (dont L711-3 et L711-9) ; Code de commerce, art. L681-2 ; Banque
+        de France, dossier de surendettement (formulaire Cerfa 13594*02) ;
+        loi n° 2022-172 du 14 février 2022 sur le statut de
         l&apos;entrepreneur individuel.
       </p>
     </BlocAccordeon>

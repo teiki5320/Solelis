@@ -34,7 +34,7 @@ const sections: Section[] = [
       {
         nom: 'Bpifrance — prêts aux TPE/PME',
         description:
-          'Prêt sans garantie de 10 K à 300 K€ pour TPE/PME en difficulté',
+          'Prêts et garanties pour TPE/PME, certains proposés avec votre Région. Montants et conditions selon le dispositif : renseignez-vous auprès de la direction régionale Bpifrance.',
         url: 'https://www.bpifrance.fr',
         urlLabel: 'www.bpifrance.fr',
       },
@@ -68,23 +68,23 @@ const sections: Section[] = [
     colorDot: 'bg-vert',
     aides: [
       {
-        nom: 'CPAM / SSI Action sociale',
+        nom: 'Urssaf · Action sociale du CPSTI',
         description:
-          'Aide financière d’urgence pour indépendants (jusqu’à 3 000 €)',
-        url: 'https://www.secu-independants.fr',
-        urlLabel: 'secu-independants.fr',
-        tel: '36 46',
+          'Aide financière exceptionnelle ou prise en charge de cotisations pour les indépendants en difficulté (attribution au cas par cas)',
+        url: 'https://www.urssaf.fr/accueil/services/services-independants/solliciter-action-sociale-cpsti.html',
+        urlLabel: 'urssaf.fr',
+        tel: '36 98',
       },
       {
-        nom: 'Fonds d’action sociale URSSAF',
-        description: 'Prise en charge partielle de cotisations',
-        url: 'https://www.urssaf.fr',
-        urlLabel: 'urssaf.fr',
+        nom: 'Délais de paiement Urssaf',
+        description: 'Échéancier pour payer vos cotisations sociales personnelles en retard, à demander à l’Urssaf (accord au cas par cas)',
+        url: 'https://entreprendre.service-public.gouv.fr/vosdroits/F38672',
+        urlLabel: 'entreprendre.service-public.gouv.fr',
       },
       {
         nom: 'RSA / ASS',
         description:
-          'Si votre revenu d’activité est nul ou très faible',
+          'RSA (CAF ou MSA) si les ressources de votre foyer sont faibles ; ASS (France Travail) si vous avez épuisé vos droits au chômage d’ancien·ne salarié·e',
         url: 'https://www.caf.fr',
         urlLabel: 'caf.fr',
       },
@@ -99,8 +99,8 @@ const sections: Section[] = [
         nom: 'Activité partielle',
         description:
           'Indemnisation des salariés si baisse d’activité',
-        url: 'https://www.asp-public.fr',
-        urlLabel: 'asp-public.fr',
+        url: 'https://www.asp.gouv.fr',
+        urlLabel: 'asp.gouv.fr',
       },
       {
         nom: 'AGS',
@@ -126,23 +126,23 @@ const sections: Section[] = [
       {
         nom: 'CODEFI',
         description:
-          "Comité départemental d’examen des problèmes de financement. Audit gratuit + prêts restructuration. Entreprises < 400 salariés. Contact via la DDFiP (Direction départementale des finances publiques).",
-        url: 'https://www.economie.gouv.fr',
-        urlLabel: 'economie.gouv.fr',
+          "Comité départemental d’examen des problèmes de financement des entreprises. Peut faire réaliser un audit (sous conditions) et accorder des prêts du FDES pour une restructuration. Entreprises < 400 salariés. Contact : secrétaire permanent du CODEFI à la DDFiP (Direction départementale des finances publiques).",
+        url: 'https://www.impots.gouv.fr/professionnel/accompagnement-individualise-en-cas-de-difficultes-economiques-et-financieres',
+        urlLabel: 'impots.gouv.fr',
         gratuit: true,
       },
       {
         nom: 'CIRI',
         description:
           "Comité interministériel de restructuration industrielle. Entreprises > 400 salariés.",
-        url: 'https://www.economie.gouv.fr',
-        urlLabel: 'economie.gouv.fr',
+        url: 'https://www.tresor.economie.gouv.fr/services-aux-entreprises/comite-interministeriel-de-restructuration-industrielle',
+        urlLabel: 'tresor.economie.gouv.fr',
         tel: '01 44 87 72 58',
       },
       {
         nom: 'CRP',
         description:
-          "Commissaire aux Restructurations et à la Prévention des difficultés. Nommé par le préfet régional. Diagnostic + négociation avec créanciers. Contact via la préfecture.",
+          "Commissaire aux restructurations et à la prévention des difficultés des entreprises, présent dans chaque région. Diagnostic + négociation avec créanciers. Contact via la préfecture de région.",
         url: 'https://www.economie.gouv.fr',
         urlLabel: 'economie.gouv.fr',
         gratuit: true,
@@ -158,7 +158,7 @@ const sections: Section[] = [
       {
         nom: 'MAPi (Infogreffe)',
         description:
-          "Moteur de recherche d’aides publiques. Toutes les aides disponibles selon votre situation.",
+          "Moteur de recherche d’aides publiques selon votre situation.",
         url: 'https://mesaidespubliques.infogreffe.fr',
         urlLabel: 'mesaidespubliques.infogreffe.fr',
         gratuit: true,

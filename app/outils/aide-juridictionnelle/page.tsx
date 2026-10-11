@@ -177,7 +177,7 @@ export default function AidejuridictionnellePage() {
             className="mt-1 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2"
           />
           <span className="mt-1 block text-[11px] text-navy/55">
-            Conjoint sans revenus, enfants, ascendants à charge. Majoration de {formatEuros(MAJORATION_2_PREMIERES)} pour les 2 premières, {formatEuros(MAJORATION_SUIVANTES)} ensuite.
+            Autres personnes de votre foyer fiscal (conjoint ou partenaire de Pacs, enfants, autres personnes à charge). Majoration de {formatEuros(MAJORATION_2_PREMIERES)} pour les 2 premières, {formatEuros(MAJORATION_SUIVANTES)} ensuite.
           </span>
         </label>
 
@@ -238,8 +238,8 @@ export default function AidejuridictionnellePage() {
         <p className="font-display text-base text-navy">Comment la demander</p>
         <ol className="mt-2 space-y-1.5 pl-5">
           <li>
-            <strong>1.</strong> Téléchargez le formulaire CERFA n°16146*03 sur{' '}
-            <a href="https://www.service-public.fr/particuliers/vosdroits/F18074" target="_blank" rel="noreferrer" className="text-bleu-fonce underline">
+            <strong>1.</strong> Faites la demande en ligne ou avec le formulaire cerfa (n°16146) disponible sur{' '}
+            <a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F18074" target="_blank" rel="noreferrer" className="text-bleu-fonce underline">
               service-public.fr
             </a>
             .
@@ -250,9 +250,12 @@ export default function AidejuridictionnellePage() {
             procédure concernée.
           </li>
           <li>
-            <strong>3.</strong> Déposez au Bureau de l&apos;Aide
-            Juridictionnelle (BAJ) du tribunal judiciaire le plus proche.
-            Décision en 2 à 6 semaines.
+            <strong>3.</strong> Déposez-la au Bureau de l&apos;Aide
+            Juridictionnelle (BAJ) du tribunal judiciaire de votre domicile
+            (ou de celui où l&apos;affaire est déjà engagée).
+            Aucun délai n&apos;est fixé : la décision est notifiée « dans les
+            meilleurs délais ». Si une audience approche avant la décision,
+            demandez l&apos;aide juridictionnelle provisoire.
           </li>
           <li>
             <strong>4.</strong> Vous pouvez choisir votre avocat (s&apos;il

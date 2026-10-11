@@ -2,6 +2,8 @@
 import { useState, useMemo } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import data from '@/data/organismes.json';
+import { departementDepuisCodePostal } from '@/lib/sirene';
+import { getDepartement, tribunalSelonCodePostal } from '@/lib/organismes';
 
 interface OrganismeLocal {
   nom: string;
@@ -34,17 +36,9 @@ interface DepartementData {
 
 const ORGANISMES = data as Record<string, DepartementData>;
 
+/** Département (ou collectivité d'outre-mer) d'un code postal : même règle que la fiche. */
 function codePostalVersDepartement(cp: string): string | null {
-  if (!/^\d{5}$/.test(cp)) return null;
-  const prefix = cp.substring(0, 2);
-  // Corse : 20000-20190 = 2A, 20200+ = 2B
-  if (prefix === '20') {
-    const num = parseInt(cp, 10);
-    return num < 20200 ? '2A' : '2B';
-  }
-  // DOM-TOM : 97x
-  if (prefix === '97') return cp.substring(0, 3);
-  return prefix;
+  return departementDepuisCodePostal(cp) || null;
 }
 
 type Lien = 'conjoint' | 'associe' | 'ami' | 'comptable' | 'autre';
@@ -79,6 +73,12 @@ const BESOINS: Choice<Besoin>[] = [
   { value: 'proteger', label: 'Protéger votre famille / patrimoine', hint: 'Anticiper l\'impact sur votre foyer' },
 ];
 
+/** Libellé lisible d'une réponse (jamais le code technique « en-colere »). */
+function libelleChoix<T extends string>(choix: Choice<T>[], valeur?: T): string {
+  const label = choix.find((c) => c.value === valeur)?.label ?? '';
+  return label ? label.charAt(0).toLowerCase() + label.slice(1) : '';
+}
+
 interface Answers {
   lien?: Lien;
   etat?: EtatPercu;
@@ -103,7 +103,7 @@ function buildConseils(a: Answers) {
     });
     conseils.push({
       titre: 'Alertez un professionnel',
-      texte: 'Si vous êtes inquiet·e pour sa santé mentale, vous pouvez appeler le 3114 vous-même — il vous conseillera sur la marche à suivre, même si ce n\'est pas vous qui dirigez l\'entreprise. Pour un soutien psychologique de la personne dirigeante, orientez-la vers le numéro vert 0 805 65 50 50 (association APESA).',
+      texte: 'Si vous êtes inquiet·e pour sa santé mentale, vous pouvez appeler le 3114 vous-même — il vous conseillera sur la marche à suivre, même si ce n\'est pas vous qui dirigez l\'entreprise. Pour un soutien psychologique de la personne dirigeante, parlez-lui de l’association APESA (apesa-france.com), qui propose un soutien psychologique gratuit aux entrepreneur·e·s en souffrance.',
       lien: 'tel:3114',
       lienLabel: 'Appeler le 3114',
     });
@@ -171,16 +171,16 @@ function buildConseils(a: Answers) {
   if (a.lien === 'comptable') {
     conseils.push({
       titre: 'Votre rôle est clé',
-      texte: 'En tant que professionnel du chiffre, vous pouvez orienter votre client vers un mandat ad hoc ou une conciliation avant qu\'il ne soit trop tard. Un CIP (Centre d\'Information sur la Prévention) peut vous accompagner.',
-      lien: 'https://www.ciprofessionnels.com',
-      lienLabel: 'CIP',
+      texte: 'En tant que professionnel du chiffre, vous pouvez orienter votre client vers un mandat ad hoc ou une conciliation avant qu\'il ne soit trop tard. Un CIP (Centre d\'information sur la prévention des difficultés des entreprises) peut vous accompagner.',
+      lien: 'https://www.cip-national.fr',
+      lienLabel: 'cip-national.fr',
     });
   }
 
   // Always: aides financières
   conseils.push({
     titre: 'Des aides existent — beaucoup sont méconnues',
-    texte: 'Bpifrance, médiation du crédit, action sociale CPAM… Parcourez la liste ensemble.',
+    texte: 'Bpifrance, médiation du crédit, action sociale de l\'Urssaf pour les indépendants… Parcourez la liste ensemble.',
     lien: '/aides',
     lienLabel: 'Voir les aides',
   });
@@ -198,6 +198,13 @@ export default function AccompagnantQuestionnaire() {
     if (!dep) return null;
     return ORGANISMES[dep] ?? null;
   }, [codePostal]);
+
+  // Département à plusieurs juridictions commerciales : celle du code postal,
+  // ou une carte générique si le ressort ne peut pas être déterminé.
+  const tribunal = useMemo(() => {
+    const dep = departement ? getDepartement(departement.code) : null;
+    return dep ? tribunalSelonCodePostal(dep, codePostal) : null;
+  }, [departement, codePostal]);
 
   const slides = [
     { title: 'Quel est votre lien avec le dirigeant ?', key: 'lien' as const, choices: LIENS },
@@ -289,7 +296,7 @@ export default function AccompagnantQuestionnaire() {
               Ce que nous vous conseillons
             </h2>
             <p className="mt-2 text-sm text-navy/60">
-              Basé sur vos réponses — {answers.lien}, état perçu : {answers.etat}, besoin : {answers.besoin}.
+              Basé sur vos réponses : {[libelleChoix(LIENS, answers.lien), libelleChoix(ETATS, answers.etat), libelleChoix(BESOINS, answers.besoin)].filter(Boolean).join(' · ')}.
             </p>
           </div>
 
@@ -385,24 +392,24 @@ export default function AccompagnantQuestionnaire() {
                 )}
 
                 {/* Tribunal compétent (commerce, activités économiques ou chambre commerciale) */}
-                {departement.tribunal && (
+                {tribunal && (
                   <div className="glass-soft flex items-start gap-3 rounded-2xl p-4">
                     <span className="mt-0.5 text-lg" aria-hidden="true">🏛️</span>
                     <div>
-                      <p className="font-display text-base text-navy">{departement.tribunal.nom}</p>
+                      <p className="font-display text-base text-navy">{tribunal.nom}</p>
                       <p className="mt-0.5 text-xs text-navy/60">
                         Procédures collectives, conciliation, mandat ad hoc
                       </p>
-                      {departement.tribunal.telephone && (
+                      {tribunal.telephone && (
                         <a
-                          href={`tel:${departement.tribunal.telephone.replace(/\s/g, '')}`}
+                          href={`tel:${tribunal.telephone.replace(/\s/g, '')}`}
                           className="mt-1 inline-block text-sm font-medium text-bleu-fonce"
                         >
-                          {departement.tribunal.telephone}
+                          {tribunal.telephone}
                         </a>
                       )}
-                      {departement.tribunal.telephoneNote && (
-                        <span className="block text-[11px] text-navy/55">{departement.tribunal.telephoneNote}</span>
+                      {tribunal.telephoneNote && (
+                        <span className="block text-[11px] text-navy/55">{tribunal.telephoneNote}</span>
                       )}
                     </div>
                   </div>
@@ -416,7 +423,7 @@ export default function AccompagnantQuestionnaire() {
                       CIP — Prévention des difficultés
                     </p>
                     <p className="mt-0.5 text-xs text-navy/60">
-                      Permanence gratuite, confidentielle, sans rendez-vous
+                      Entretien gratuit et confidentiel, sur rendez-vous
                     </p>
                     <a
                       href="/annuaires/cip"

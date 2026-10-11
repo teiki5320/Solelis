@@ -17,7 +17,7 @@ export function caisseFromNaf(
   const find = (sigle: string) =>
     caisses.find((c) => c.caisse.toUpperCase() === sigle) ?? null;
 
-  // 69.10Z regroupe avocats (CNBF), notaires (CRPCEN) et commissaires de
+  // 69.10Z regroupe avocats (CNBF), notaires (CPRN) et commissaires de
   // justice (CAVOM) : le code NAF ne permet pas de choisir, on ne devine pas.
   if (code.startsWith('6910')) return null;
   // Expertise comptable
@@ -28,8 +28,11 @@ export function caisseFromNaf(
   if (code.startsWith('4773')) return find('CAVP');
   // Vétérinaire
   if (code.startsWith('7500')) return find('CARPV');
-  // Auxiliaires médicaux (kiné, infirmier, orthophoniste…)
-  if (code.startsWith('8690')) return find('CARPIMKO');
+  // 86.90 mêle des professions de caisses différentes : infirmier·e·s et
+  // kinés (CARPIMKO), sages-femmes (CARCDSF), ostéopathes, psychologues,
+  // ergothérapeutes, diététicien·ne·s (Cipav, lacipav.fr « Qui est assuré à
+  // la Cipav ») : le code NAF ne permet pas de choisir, on ne devine pas.
+  if (code.startsWith('8690')) return null;
   // Médecins, dentistes, sages-femmes…
   if (code.startsWith('862')) {
     // Dentaire (86.23Z)
@@ -87,7 +90,7 @@ export default function BlocSoutien() {
         >
           <p className="font-display text-lg text-navy">APESA</p>
           <p className="mt-1 text-xs text-navy/60">
-            Soutien psychologique gratuit pour dirigeant·e·s en détresse · numéro vert 0 805 65 50 50 (7 j/7, 8 h – 20 h)
+            Soutien psychologique gratuit et confidentiel pour les entrepreneur·e·s en souffrance, déclenché avec votre accord par une « sentinelle » (greffe, mandataire, expert-comptable…) · pas un service d’urgence : en cas de crise, 3114
           </p>
           <p className="mt-3 text-sm text-bleu-fonce">www.apesa-france.com →</p>
         </a>

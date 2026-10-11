@@ -81,7 +81,7 @@ export default function SaveBanner({ token }: Props) {
           </span>
         </div>
       ) : (
-        <form onSubmit={onSubmit} noValidate className="dashed-band p-4 sm:p-5">
+        <form onSubmit={onSubmit} noValidate className="no-print dashed-band p-4 sm:p-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
             <div className="flex-1">
               <p className="text-sm font-medium text-navy">

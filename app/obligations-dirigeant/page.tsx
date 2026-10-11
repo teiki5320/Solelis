@@ -27,23 +27,23 @@ const OBLIGATIONS_FAIRE: Obligation[] = [
     titre: 'Déclarer la cessation des paiements dans les 45 jours',
     description: 'Dès que vous constatez l\'impossibilité de payer vos dettes échues avec votre actif disponible, vous avez 45 jours pour le déclarer au greffe du tribunal (Cerfa 10530).',
     reference: 'C. com. art. L631-4',
-    sanction: 'Interdiction de gérer (L653-8) jusqu\'à 15 ans + action en responsabilité pour insuffisance d\'actif (L651-2).',
+    sanction: 'Si l\'omission est volontaire (« sciemment ») et qu\'aucune conciliation n\'a été demandée : interdiction de gérer jusqu\'à 15 ans (L653-8, L653-11). Le retard peut aussi être retenu comme faute de gestion dans une action en responsabilité pour insuffisance d\'actif (L651-2).',
     delai: '45 jours',
-    conseil: 'Le délai court à partir de l\'état objectif, pas de votre prise de conscience. Si vous hésitez, consultez un avocat — son délai d\'action peut être votre meilleur allié.',
+    conseil: 'Le délai court à partir de la cessation des paiements elle-même, pas de votre prise de conscience. Dans ce délai, vous pouvez aussi demander une conciliation au tribunal (L631-4). Si vous hésitez, consultez rapidement un avocat.',
   },
   {
     titre: 'Tenir une comptabilité sincère et à jour',
     description: 'L\'obligation comptable demeure pendant toute la procédure. Comptes annuels, factures, contrats, relevés bancaires : tout doit être documenté.',
     reference: 'C. com. art. L123-12 à L123-28',
-    sanction: 'Banqueroute (L654-2) : 5 ans de prison + 75 000 € amende en cas de comptabilité fictive ou de destruction.',
+    sanction: 'Banqueroute (L654-2, 4° et 5°) en cas de comptabilité fictive, de documents comptables disparus ou de comptabilité manifestement incomplète ou irrégulière : 5 ans de prison + 75 000 € d\'amende (L654-3).',
     conseil: 'Conservez les pièces 10 ans. En cas de difficulté, prévenez votre expert-comptable et le mandataire — la transparence est votre meilleure protection.',
   },
   {
     titre: 'Coopérer pleinement avec le mandataire et le juge',
     description: 'En sauvegarde, redressement ou liquidation, vous devez répondre aux convocations, remettre les documents, ne pas dissimuler d\'actif.',
     reference: 'C. com. art. L622-6 et s.',
-    sanction: 'Interdiction de gérer (L653-8) en cas de défaut de coopération. Banqueroute en cas de dissimulation d\'actif.',
-    conseil: 'Le mandataire n\'est pas votre ennemi : il représente les créanciers mais il a aussi pour mission de chercher des solutions. Soyez transparent et proactif.',
+    sanction: 'Interdiction de gérer (L653-8) si, de mauvaise foi, vous ne remettez pas au mandataire, à l\'administrateur ou au liquidateur les renseignements dus dans le mois suivant le jugement d\'ouverture. Banqueroute en cas de dissimulation d\'actif (L654-2).',
+    conseil: 'Le mandataire n\'est pas votre ennemi : il représente l\'intérêt collectif des créanciers, et la transparence joue en votre faveur. Soyez transparent et proactif.',
   },
   {
     titre: 'Traiter tous les créanciers à égalité',
@@ -61,10 +61,10 @@ const OBLIGATIONS_FAIRE: Obligation[] = [
   },
   {
     titre: 'Maintenir les cotisations sociales et fiscales courantes',
-    description: 'Pendant un échéancier (URSSAF, CCSF, fiscal), vous devez impérativement payer les cotisations courantes. À défaut, le plan est dénoncé.',
-    reference: 'CSS art. R243-21, LPF L247',
-    sanction: 'Dénonciation du plan d\'apurement + reprise des poursuites + risque de SATD (saisie administrative à tiers détenteur).',
-    conseil: 'Adaptez votre prélèvement libératoire ou votre régime de TVA si nécessaire (passage en TVA mensuelle, etc.) pour maintenir le flux courant.',
+    description: 'Pendant un échéancier (URSSAF, CCSF, impôts), respectez les échéances du plan et restez en règle avec vos déclarations et paiements fiscaux et sociaux. À défaut, le plan peut prendre fin.',
+    reference: 'CSS art. R243-21 (délais Urssaf) ; décret n° 2007-686 du 4 mai 2007 (CCSF)',
+    sanction: 'Fin du plan de règlement et reprise des poursuites pour les dettes qu\'il couvrait (saisies possibles).',
+    conseil: 'Prévoyez dans votre trésorerie les cotisations, impôts et TVA courants en plus des échéances du plan.',
   },
 ];
 
@@ -72,30 +72,30 @@ const OBLIGATIONS_NE_PAS_FAIRE: Obligation[] = [
   {
     titre: 'Ne pas dissimuler d\'actifs',
     description: 'Ne sortez aucun bien du patrimoine de l\'entreprise (vente sous-évaluée, transfert à une autre société, déménagement à l\'étranger). Tout est traçable et tout sera trouvé.',
-    reference: 'C. com. art. L654-9 (banqueroute frauduleuse)',
-    sanction: 'Banqueroute frauduleuse : 5 ans de prison + 75 000 € amende. Faillite personnelle + interdiction de gérer 15 ans.',
-    conseil: 'Pendant la procédure, demandez systématiquement l\'autorisation du juge-commissaire avant toute opération sur les biens de la société.',
+    reference: 'C. com. art. L654-2, 2° (banqueroute par détournement ou dissimulation d\'actif)',
+    sanction: 'Banqueroute : 5 ans de prison + 75 000 € d\'amende (L654-3). Le tribunal de la procédure peut aussi prononcer la faillite personnelle ou une interdiction de gérer, jusqu\'à 15 ans (L653-4, L653-8, L653-11).',
+    conseil: 'Pendant la procédure, demandez l\'autorisation du juge-commissaire avant tout acte qui sort de la gestion courante (vente d\'un bien, garantie…).',
   },
   {
     titre: 'Ne pas faire de donation ou de vente à un proche',
-    description: 'Donations à un enfant/conjoint, vente d\'un immeuble à prix anormalement bas à un proche, changement de régime matrimonial : tout cela est annulable rétroactivement.',
+    description: 'Donations à un enfant/conjoint, vente d\'un immeuble à prix anormalement bas à un proche, changement de régime matrimonial fait pour échapper aux créanciers : ces actes peuvent être annulés ou rendus inopposables aux créanciers.',
     reference: 'C. com. art. L632-1 ; C. civ. art. 1341-2 (action paulienne)',
-    sanction: 'En procédure collective : nullité de droit des actes à titre gratuit faits pendant la période suspecte, ou dans les 6 mois qui la précèdent (L632-1). Hors de ces délais : action paulienne d\'un créancier, qui doit prouver la fraude (prescription 5 ans).',
+    sanction: 'En procédure collective : nullité de droit des actes à titre gratuit faits pendant la période suspecte ; ceux des 6 mois qui la précèdent peuvent aussi être annulés par le tribunal (L632-1). Hors de ces délais : action paulienne d\'un créancier, qui doit prouver la fraude (prescription 5 ans).',
     conseil: 'Avant tout acte significatif (mariage, divorce, donation, succession), consultez un avocat ET un notaire pour analyser l\'impact procédure.',
   },
   {
     titre: 'Ne pas poursuivre l\'activité à perte de manière déloyale',
     description: 'Continuer à acheter à crédit en sachant que vous ne pourrez pas payer = comportement frauduleux. Aggraver volontairement le passif est une faute caractérisée.',
-    reference: 'C. com. art. L654-2 (banqueroute par augmentation frauduleuse du passif)',
-    sanction: '5 ans de prison + 75 000 € amende. Action en comblement de passif (L651-2).',
+    reference: 'C. com. art. L654-2, 1° et 3° (moyens ruineux pour retarder la procédure, augmentation frauduleuse du passif)',
+    sanction: 'Banqueroute : 5 ans de prison + 75 000 € d\'amende (L654-3). Action en responsabilité pour insuffisance d\'actif (L651-2).',
     conseil: 'Si la situation est désespérée, ARRÊTEZ et déclarez. Continuer "pour gagner du temps" expose le dirigeant personnellement.',
   },
   {
     titre: 'Ne pas signer de nouvelles cautions personnelles',
-    description: 'Pendant la période difficile, refusez toute nouvelle caution personnelle, surtout si elle dépasse vos biens. Vérifiez la proportionnalité.',
+    description: 'Pendant la période difficile, refusez toute nouvelle caution personnelle, surtout si elle dépasse vos revenus et vos biens.',
     reference: 'C. civ. art. 2300 (disproportion)',
     sanction: 'Pour vous : ruine patrimoniale personnelle, jusqu\'à la résidence si pas insaisissable.',
-    conseil: 'Les cautions disproportionnées sont contestables (charge de preuve sur la banque). Mais mieux vaut ne pas en signer du tout.',
+    conseil: 'Une caution manifestement disproportionnée à vos revenus et à votre patrimoine au jour de la signature est réduite au montant que vous pouviez garantir (art. 2300) — mais c\'est à vous de prouver la disproportion. Mieux vaut ne pas en signer du tout.',
   },
   {
     titre: 'Ne pas mélanger patrimoine perso et pro',
@@ -106,9 +106,9 @@ const OBLIGATIONS_NE_PAS_FAIRE: Obligation[] = [
   },
   {
     titre: 'Ne pas négliger les obligations sociales',
-    description: 'Cotisations salariales prélevées et non reversées à l\'URSSAF = délit. Travail dissimulé = délit aggravé.',
-    reference: 'CSS art. L243-6-2 ; C. trav. L8221-1',
-    sanction: 'Responsabilité personnelle solidaire pour les cotisations (CSS L243-6-2). Délit de travail dissimulé : 3 ans de prison + 45 000 € amende.',
+    description: 'Cotisations salariales prélevées sur les salaires et non reversées à l\'URSSAF : infraction pénale (délit en cas de récidive). Travail dissimulé : délit.',
+    reference: 'CSS art. L244-6, L243-3-2 ; C. trav. L8221-1, L8224-1',
+    sanction: 'Retenue indue des cotisations salariales, en récidive dans les 3 ans : 2 ans de prison + 3 750 € d\'amende (CSS L244-6). Délit de travail dissimulé : 3 ans de prison + 45 000 € d\'amende (C. trav. L8224-1). Après un travail dissimulé, le dirigeant auteur de manœuvres frauduleuses ou de manquements graves et répétés peut être déclaré solidairement responsable des cotisations de la société (CSS L243-3-2).',
     conseil: 'Si vous devez choisir où ne PAS payer, ce ne sont pas les salaires nets ni les cotisations salariales. Mieux : préventif → CCSF.',
   },
 ];
@@ -193,8 +193,8 @@ export default function ObligationsDirigeantPage() {
         </p>
         <p className="mt-3 text-sm text-navy/80">
           La règle d&apos;or : <strong>transparence + déclaration rapide + accompagnement professionnel</strong>.
-          Un dirigeant de bonne foi qui agit dans les délais est rarement sanctionné, même si l&apos;entreprise
-          est liquidée.
+          Les sanctions personnelles visent des fautes précises : agir de bonne foi et dans les délais
+          vous protège, même si l&apos;entreprise est liquidée.
         </p>
       </div>
 

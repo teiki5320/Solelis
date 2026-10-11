@@ -2,7 +2,7 @@
 import type { Reponses, CompanyData } from '@/lib/types';
 import type { SectorInfo } from '@/lib/secteur';
 import { getEffectifSeuils } from '@/lib/secteur';
-import { isEI } from '@/lib/strategie';
+import { prpEnvisageable, estEnCessation, resolveStrategie } from '@/lib/strategie';
 import { useFiche } from '@/lib/FicheContext';
 import BlocAccordeon from './BlocAccordeon';
 
@@ -16,8 +16,6 @@ interface Procedure {
 
 function buildProcedures(r: Reponses, c: CompanyData, s: SectorInfo): Procedure[] {
   const procs: Procedure[] = [];
-  // getFormeDetail (via isEI) : une forme inconnue (« Non renseignée ») n'est pas une EI.
-  const ei = isEI(c.formeJuridique);
   const seuils = getEffectifSeuils(c.effectif);
 
   if (r.situation === 'prevention') {
@@ -54,23 +52,18 @@ function buildProcedures(r: Reponses, c: CompanyData, s: SectorInfo): Procedure[
     });
   }
 
+  // Cap « Liquider proprement » (stratégie) : la liquidation doit figurer
+  // parmi les procédures, et le redressement n'est plus qu'une option.
+  const capLiquidation = estEnCessation(r) && resolveStrategie(r, c)?.main.axe === 'liquider';
+
   if (r.situation === 'redressement') {
     procs.push({
       nom: 'Redressement judiciaire',
-      pertinence: 'recommandee',
+      pertinence: capLiquidation ? 'possible' : 'recommandee',
       description: "Vous êtes en cessation. Le tribunal tente de sauver l’entreprise via un plan. Un administrateur est nommé.",
       conditions: "Cessation des paiements. Déclaration dans les 45 jours obligatoire.",
       lien: '/glossaire',
     });
-    if (ei) {
-      procs.push({
-        nom: 'Rétablissement professionnel (PRP)',
-        pertinence: 'possible',
-        description: "Efface vos dettes professionnelles en 4 mois, sans liquidation complète. Réservé aux entrepreneurs individuels sans salariés et avec peu d’actifs.",
-        conditions: 'EI, aucun salarié, actifs < 15 000 €.',
-        lien: '/rebond',
-      });
-    }
   }
 
   if (r.situation === 'assignation') {
@@ -86,6 +79,28 @@ function buildProcedures(r: Reponses, c: CompanyData, s: SectorInfo): Procedure[
       description: "Si l’entreprise peut encore être sauvée. Le tribunal peut ordonner un plan de continuation ou un plan de cession.",
       conditions: 'Cessation des paiements.',
       lien: '/glossaire',
+    });
+  }
+
+  if (estEnCessation(r)) {
+    procs.push({
+      nom: 'Liquidation judiciaire',
+      pertinence: capLiquidation ? 'recommandee' : 'possible',
+      description: "Si l’entreprise ne peut pas être sauvée : l’activité s’arrête, un liquidateur vend les actifs et règle les créanciers. Procédure simplifiée et plus rapide pour les petites entreprises sans immeuble.",
+      conditions: 'Cessation des paiements et redressement manifestement impossible (art. L640-1 C. com.).',
+      lien: '/glossaire',
+    });
+  }
+
+  // Rétablissement professionnel : débiteur personne physique en cessation
+  // des paiements, sans salarié (art. L645-1 C. com.).
+  if (prpEnvisageable(r, c)) {
+    procs.push({
+      nom: 'Rétablissement professionnel (PRP)',
+      pertinence: 'possible',
+      description: "Efface vos dettes professionnelles en 4 mois, sans liquidation complète. Réservé aux entrepreneur·e·s individuel·le·s en cessation des paiements, sans salarié et avec peu d’actif.",
+      conditions: 'Personne physique en cessation des paiements, redressement manifestement impossible, aucun salarié au cours des 6 derniers mois, aucune instance prud’homale en cours, actif déclaré inférieur à 15 000 € (art. L645-1 et R645-1 C. com.).',
+      lien: '/rebond',
     });
   }
 
@@ -107,7 +122,7 @@ function buildProcedures(r: Reponses, c: CompanyData, s: SectorInfo): Procedure[
   procs.push({
     nom: 'Aides personnelles',
     pertinence: 'info',
-    description: "Indépendamment de l’entreprise, vous avez peut-être droit à l’ATI (chômage indépendant), la CSS (mutuelle gratuite), l’aide juridictionnelle, ou le RSA.",
+    description: "Indépendamment de l’entreprise, vous avez peut-être droit à l’ATI (chômage indépendant), la CSS (complémentaire santé solidaire, gratuite ou avec une participation de 8 à 30 € par mois et par personne selon vos ressources et votre âge), l’aide juridictionnelle, ou le RSA.",
     lien: '/aides-personnelles',
   });
 
@@ -160,7 +175,7 @@ export default function BlocProcedureRecommandee() {
         ))}
       </div>
       <p className="mt-5 text-xs text-navy/50">
-        Ces recommandations sont indicatives. Un avocat ou le tribunal de commerce peuvent confirmer la procédure la plus adaptée.
+        Ces recommandations sont indicatives. Un avocat (ou le CIP, gratuitement) peut confirmer la procédure la plus adaptée.
       </p>
     </BlocAccordeon>
   );

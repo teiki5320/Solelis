@@ -56,7 +56,7 @@ function analyseRisque(c: CautionDetail): Risque {
     niveau = 'eleve';
     label = 'Risque élevé — caution solidaire importante';
     recos.push(
-      "La caution solidaire permet au créancier de vous poursuivre directement, sans passer par l'entreprise. Action recommandée : audit juridique."
+      "La caution solidaire permet au créancier de vous poursuivre directement, sans poursuivre d'abord l'entreprise (sauf suspension des poursuites contre les cautions personnes physiques pendant une sauvegarde ou un redressement judiciaire, art. L622-28 et L631-14 C. com.). Action recommandée : audit juridique."
     );
   } else if (c.type === 'personnelle' && c.montant >= 50000) {
     niveau = 'eleve';
@@ -83,12 +83,12 @@ function analyseRisque(c: CautionDetail): Risque {
 
   if (anciennete >= 10) {
     recos.push(
-      `Cette caution a ${anciennete} ans. Vérifiez sa durée contractuelle — beaucoup de cautions sont limitées à 10 ans au-delà de toute mention expresse.`
+      `Cette caution a ${anciennete} ans. Vérifiez sa durée dans l'acte : si elle garantit des dettes futures sans durée fixée, vous pouvez la résilier pour l'avenir avec un préavis (art. 2315 C. civ.), en restant tenu·e des dettes nées avant (art. 2316).`
     );
   }
 
   recos.push(
-    "Demandez au créancier copie de l'acte de cautionnement et de la fiche d'information patrimoniale signée à l'époque. En l'absence, la caution peut être contestée."
+    "Demandez au créancier copie de l'acte de cautionnement et de la fiche d'information patrimoniale éventuellement remplie à l'époque : elle sert à apprécier si votre engagement était disproportionné."
   );
 
   return { niveau, label, recos: Array.from(new Set(recos)) };
@@ -178,16 +178,16 @@ export default function BlocAuditCaution() {
           <p className="font-medium text-navy">Première étape : vérifier</p>
           <p className="mt-1 text-navy/80">
             Demandez à votre banque la copie de votre acte de caution et la
-            fiche d&apos;information patrimoniale. C&apos;est votre droit. Un
+            fiche d&apos;information patrimoniale éventuellement remplie. Un
             notaire peut aussi vérifier vos engagements hypothécaires.
           </p>
         </div>
       )}
 
       <p className="mb-4 text-sm text-navy/80">
-        Les cautions personnelles sont <strong>la principale source de ruine
-        patrimoniale</strong> des dirigeants. Mais beaucoup peuvent être
-        contestées ou négociées. Ajoutez les vôtres pour obtenir une
+        Les cautions personnelles <strong>exposent directement votre
+        patrimoine personnel</strong> aux dettes de l&apos;entreprise. Mais
+        certaines peuvent être contestées ou négociées. Ajoutez les vôtres pour obtenir une
         première analyse.
       </p>
 

@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import ModePerdu from '../fiche/ModePerdu';
+import ModePerdu, { ID_TITRE_FICHE } from '../fiche/ModePerdu';
 import { FicheProvider, type FicheContextType } from '@/lib/FicheContext';
 import type { Reponses, CompanyData } from '@/lib/types';
 
@@ -56,9 +56,37 @@ describe('ModePerdu', () => {
   it('contient un bouton « Voir tout » qui masque le composant', () => {
     const ctx = makeContext({ moral: 'perdu' });
     render(<FicheProvider value={ctx}><ModePerdu /></FicheProvider>);
-    const button = screen.getByRole('button', { name: /masquer/i });
+    const button = screen.getByRole('button', { name: 'Voir tout' });
     fireEvent.click(button);
     expect(screen.queryByText(/3 choses/i)).toBeNull();
+  });
+
+  it('« Voir tout » : nom accessible = texte visible, masqué à l\'impression, focus conservé', () => {
+    const ctx = makeContext({ moral: 'perdu' });
+    render(
+      <FicheProvider value={ctx}>
+        <h1 id={ID_TITRE_FICHE} tabIndex={-1}>Titre</h1>
+        <ModePerdu />
+      </FicheProvider>,
+    );
+    const button = screen.getByRole('button', { name: 'Voir tout' });
+    expect(button).toHaveClass('no-print');
+    expect(button).not.toHaveAttribute('aria-label');
+    fireEvent.click(button);
+    expect(document.activeElement?.id).toBe(ID_TITRE_FICHE);
+  });
+
+  it('URSSAF : 36 98 pour un·e indépendant·e, CGSS outre-mer au 39 57 pour un employeur', () => {
+    const indep = makeContext({ moral: 'perdu', situation: 'prevention', probleme: 'urssaf', effectif: 'independant' });
+    const { unmount } = render(<FicheProvider value={indep}><ModePerdu /></FicheProvider>);
+    expect(screen.getByText(/3698/)).toBeInTheDocument();
+    expect(screen.queryByText(/3957/)).toBeNull();
+    unmount();
+    const dom = makeContext({ moral: 'perdu', situation: 'prevention', probleme: 'urssaf', effectif: 'salaries' });
+    dom.company = { ...dom.company, departement: '974', codePostal: '97400' };
+    render(<FicheProvider value={dom}><ModePerdu /></FicheProvider>);
+    expect(screen.getAllByText(/CGSS La Réunion/).length).toBeGreaterThan(0);
+    expect(screen.queryByText(/0 820 000/)).toBeNull();
   });
 
   it('priorise l\'avocat en assignation', () => {

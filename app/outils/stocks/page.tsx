@@ -4,9 +4,8 @@ import Link from 'next/link';
 
 /**
  * Calculateur de valorisation des stocks en cas de cession ou
- * liquidation. Les taux de réfaction sont indicatifs et issus de la
- * pratique des mandataires liquidateurs (CNAJMJ) et des commissaires-
- * priseurs judiciaires (CSCPJ).
+ * liquidation. Les taux de réfaction sont des ordres de grandeur
+ * indicatifs, sans source officielle publiée.
  *
  * Objectif : donner au dirigeant une fourchette réaliste de ce qu'il
  * peut espérer tirer de ses stocks selon la voie (cession amiable,
@@ -21,8 +20,7 @@ interface RefactionRange {
   haut: number;
 }
 
-// Sources : pratique CNAJMJ + commissaires-priseurs judiciaires (CSCPJ)
-// Fourchettes typiques observées sur dossiers TPE/PME 2022-2024.
+// Ordres de grandeur indicatifs (pas de barème officiel publié)
 const REFACTIONS: Record<NatureStock, Record<Voie, RefactionRange>> = {
   'matieres-premieres': {
     'amiable-rapide':       { bas: 60, haut: 80 },
@@ -149,8 +147,8 @@ export default function ValorisationStocksPage() {
       <p className="mt-3 text-base text-navy/70">
         Estimez la valeur réelle que vous pouvez tirer de vos stocks
         selon la nature du stock et la voie de cession envisagée. Les
-        taux de réfaction sont issus de la pratique des mandataires
-        judiciaires et commissaires-priseurs.
+        taux de réfaction sont des ordres de grandeur indicatifs, sans
+        valeur officielle.
       </p>
 
       <div className="glass mt-8 p-6 sm:p-8">
@@ -173,6 +171,7 @@ export default function ValorisationStocksPage() {
           <div className="block text-sm text-navy/80">
             Nature dominante du stock
             <select
+              aria-label="Nature dominante du stock"
               value={nature}
               onChange={(e) => setNature(e.target.value as NatureStock)}
               className="mt-2 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2 text-base"
@@ -189,6 +188,7 @@ export default function ValorisationStocksPage() {
           <div className="sm:col-span-2 block text-sm text-navy/80">
             Voie de réalisation envisagée
             <select
+              aria-label="Voie de réalisation envisagée"
               value={voie}
               onChange={(e) => setVoie(e.target.value as Voie)}
               className="mt-2 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2 text-base"
@@ -246,17 +246,16 @@ export default function ValorisationStocksPage() {
           </li>
           <li>
             <strong>Plan de cession en RJ</strong> : le repreneur fixe son
-            prix en intégrant le stock à un prix décoté (souvent 40-60 %
-            du prix de revient pour des produits courants).
+            prix en intégrant le stock à un prix décoté.
           </li>
           <li>
-            <strong>Liquidation à la cuve</strong> : le mandataire vend en
+            <strong>Liquidation à la cuve</strong> : le liquidateur vend en
             gros à un revendeur (broker) qui paie cash et écoule en
             soldeurs / web marketplaces. Décote forte.
           </li>
           <li>
             <strong>Enchères judiciaires</strong> : ventes publiques en lots
-            par commissaire-priseur (CSCPJ). Valeurs les plus basses,
+            par un commissaire de justice. Valeurs les plus basses,
             mais transparence totale et rapidité.
           </li>
           <li>
@@ -265,16 +264,16 @@ export default function ValorisationStocksPage() {
             avec le temps. À traiter en priorité absolue.
           </li>
           <li>
-            <strong>Stocks taxables CRD</strong> (alcool, tabac, parfumerie) :
+            <strong>Stocks soumis à accises</strong> (alcools, tabacs) :
             attention aux droits indirects à régler à la sortie.
           </li>
         </ul>
       </div>
 
       <p className="mt-6 text-xs text-navy/50">
-        Sources : pratique CNAJMJ (mandataires judiciaires), CSCPJ
-        (commissaires-priseurs judiciaires) ; fourchettes observées sur
-        dossiers TPE/PME 2022-2024. Indications non opposables : la
+        Ordres de grandeur indicatifs, sans source officielle publiée :
+        ils ne remplacent pas l&apos;inventaire et l&apos;estimation faits
+        par un commissaire de justice ou par le mandataire. La
         valeur réelle dépend de l&apos;état des stocks, de la conjoncture
         sectorielle et de la qualité du repreneur ou de l&apos;acheteur en gros.
       </p>

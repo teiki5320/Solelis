@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/temoignages' },
-  title: 'Témoignages — Solelis',
-  description: 'Des dirigeants racontent comment ils ont traversé la difficulté.',
+  title: 'Exemples de parcours (fictifs) — Solelis',
+  description: 'Exemples fictifs, inspirés de situations courantes, de dirigeant·e·s qui traversent des difficultés : prévention, redressement, cession, liquidation puis rebond.',
 };
 
 interface Temoignage {
@@ -26,13 +26,13 @@ const TEMOIGNAGES: Temoignage[] = [
     situation: 'Cessation de paiements',
     secteur: 'Restauration',
     region: 'Lyon (69)',
-    annee: '2023',
+    annee: 'Exemple fictif',
     citation:
-      "J’ai mis trois mois à accepter que mon restaurant ne s’en sortirait pas seul. Quand j’ai enfin appelé le tribunal de commerce, on m’a orienté vers un mandataire qui m’a expliqué calmement les options. Le redressement judiciaire m’a permis de geler les dettes, renégocier le bail, et restructurer l’équipe. Aujourd’hui le restaurant tourne, pas comme avant, mais il tourne. Le plus dur, c’est de demander de l’aide. Après, ça va.",
+      "J’ai mis trois mois à accepter que mon restaurant ne s’en sortirait pas seul. Quand j’ai enfin pris rendez-vous au CIP, on m’a expliqué calmement les options. Le redressement judiciaire a gelé les dettes antérieures, et l’administrateur m’a aidé à renégocier le bail et à réorganiser l’équipe. Aujourd’hui le restaurant tourne, pas comme avant, mais il tourne. Le plus dur, c’est de demander de l’aide. Après, ça va.",
     contexte:
-      'Gérant d’un restaurant de 8 salariés. Après le Covid et la hausse des matières premières, les impayés fournisseurs et URSSAF se sont accumulés. Accompagné par le CIP de sa CCI et un administrateur judiciaire.',
+      'Gérant d’un restaurant de 8 salariés. Après le Covid et la hausse des matières premières, les impayés fournisseurs et URSSAF se sont accumulés. Accompagné par un CIP (centre d’information sur la prévention), puis par un administrateur judiciaire désigné par le tribunal.',
     aidePar: ['CIP (Centre d’information sur la prévention)', 'Administrateur judiciaire', 'CCI'],
-    issue: 'Redressement judiciaire abouti, plan d’apurement sur 8 ans adopté',
+    issue: 'Plan de redressement sur 8 ans arrêté par le tribunal, activité poursuivie',
     issueCouleur: 'vert',
   },
   {
@@ -40,13 +40,13 @@ const TEMOIGNAGES: Temoignage[] = [
     situation: 'Liquidation puis rebond',
     secteur: 'Commerce de détail',
     region: 'Bordeaux (33)',
-    annee: '2022',
+    annee: 'Exemple fictif',
     citation:
-      "La liquidation, c’est un deuil. J’ai pleuré, j’ai eu honte, je me suis isolée. C’est une psychologue d’APESA, contactée par le greffe du tribunal, qui m’a aidée à remonter. Six mois après la clôture, j’ai commencé à réfléchir à un nouveau projet. Aujourd’hui je suis consultante en merchandising, en auto-entreprise. Je ne regrette pas d’avoir essayé. Je regrette d’avoir attendu si longtemps avant de parler.",
+      "La liquidation, c’est un deuil. J’ai pleuré, j’ai eu honte, je me suis isolée. C’est une psychologue d’APESA, alertée par le greffe du tribunal, qui m’a aidée à remonter. Quelques mois plus tard, j’ai commencé à réfléchir à un nouveau projet. Aujourd’hui je suis consultante en merchandising, en auto-entreprise. Je ne regrette pas d’avoir essayé. Je regrette d’avoir attendu si longtemps avant de parler.",
     contexte:
       'Gérante d’une boutique de prêt-à-porter, 3 salariées. Baisse continue du chiffre d’affaires face au e-commerce. Dépôt de bilan après 18 mois de difficultés de trésorerie. Soutenue par APESA et 60 000 Rebonds.',
     aidePar: ['APESA (soutien psychologique)', '60 000 Rebonds', 'France Travail (ATI)'],
-    issue: 'Liquidation judiciaire, puis création d’une activité de conseil 8 mois après',
+    issue: 'Liquidation judiciaire, puis création d’une activité de conseil quelques mois plus tard',
     issueCouleur: 'bleu',
   },
   {
@@ -54,9 +54,9 @@ const TEMOIGNAGES: Temoignage[] = [
     situation: 'Prévention réussie (mandat ad hoc)',
     secteur: 'BTP',
     region: 'Lille (59)',
-    annee: '2024',
+    annee: 'Exemple fictif',
     citation:
-      "Mon expert-comptable m’a dit : « Thierry, dans six mois vous ne pourrez plus payer les salaires. » Ça m’a fait l’effet d’une gifle. Il m’a parlé du mandat ad hoc, une procédure confidentielle devant le président du tribunal. Un mandataire a négocié avec ma banque et deux fournisseurs clés. Personne n’a rien su, ni les salariés, ni les clients. En quatre mois, c’était réglé. Si j’avais attendu la cessation de paiements, j’aurais tout perdu.",
+      "Mon expert-comptable m’a dit : « Thierry, dans six mois vous ne pourrez plus payer les salaires. » Ça m’a fait l’effet d’une gifle. Il m’a parlé du mandat ad hoc, une procédure confidentielle que l’on demande au président du tribunal. Le mandataire ad hoc a négocié avec ma banque et deux fournisseurs clés. Tout est resté confidentiel, vis-à-vis des salariés comme des clients. En quatre mois, un accord était trouvé. Si j’avais attendu la cessation des paiements, les solutions auraient été bien plus lourdes.",
     contexte:
       'Dirigeant d’une entreprise de maçonnerie, 12 salariés. Impayé majeur d’un promoteur (120 000 euros) ayant déséquilibré la trésorerie. Le mandat ad hoc a permis un rééchelonnement bancaire et un accord amiable avec les fournisseurs.',
     aidePar: ['Expert-comptable', 'Mandataire ad hoc', 'Tribunal de commerce (président)'],
@@ -68,13 +68,13 @@ const TEMOIGNAGES: Temoignage[] = [
     situation: 'Redressement puis cession',
     secteur: 'Artisanat (boulangerie)',
     region: 'Montpellier (34)',
-    annee: '2023',
+    annee: 'Exemple fictif',
     citation:
-      "Quand le tribunal a ouvert le redressement, j’ai cru que c’était fini. En fait, c’est le contraire qui s’est passé : l’administrateur a trouvé un repreneur en trois mois. Un boulanger de la région qui cherchait un deuxième point de vente. Mes quatre salariés ont tous gardé leur poste. Moi, j’ai pu repartir sans dette, et surtout sans culpabilité. Le plus important, c’est que l’équipe a été protégée.",
+      "Quand le tribunal a ouvert le redressement, j’ai cru que c’était fini. En fait, c’est le contraire qui s’est passé : l’administrateur a trouvé un repreneur en trois mois. Un boulanger de la région qui cherchait un deuxième point de vente. Mes quatre salariés ont tous gardé leur poste. Moi, j’ai pu tourner la page, et surtout sans culpabilité. Le plus important, c’est que l’équipe a été protégée.",
     contexte:
-      'Artisane boulangère, 4 salariés. Travaux de voirie devant la boutique pendant 8 mois ayant fait chuter le chiffre d’affaires de 60 %. Endettement progressif auprès du meunier et de l’URSSAF. Cession de l’activité dans le cadre d’un plan de cession.',
+      'Artisane boulangère, 4 salariés. Travaux de voirie devant la boutique pendant 8 mois ayant fait chuter le chiffre d’affaires de 60 %. Endettement progressif auprès du meunier et de l’URSSAF. Cession de l’activité dans le cadre d’un plan de cession arrêté par le tribunal.',
     aidePar: ['Administrateur judiciaire', 'Chambre de métiers et de l’artisanat', 'URSSAF (plan d’apurement)'],
-    issue: 'Plan de cession adopté, 4 emplois sauvegardés, dirigeante libérée de ses dettes',
+    issue: 'Plan de cession arrêté par le tribunal, les 4 emplois repris par le repreneur',
     issueCouleur: 'jaune',
   },
 ];
@@ -90,14 +90,16 @@ export default function TemoignagesPage() {
     <section className="mx-auto max-w-3xl px-5 pb-24">
       <div className="mb-10 text-center">
         <p className="text-xs uppercase tracking-[0.2em] text-bleu-fonce/70">
-          Histoires vraies
+          Exemples fictifs · inspirés de situations courantes
         </p>
         <h1 className="mt-2 font-display text-3xl text-navy sm:text-5xl">
-          Ils sont passés par là
+          Des parcours possibles
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-navy/70">
-          Ces dirigeants ont traversé la difficulté. Leur parcours montre
-          qu&apos;il y a toujours un chemin — même quand on ne le voit plus.
+          Ces quatre histoires sont des exemples fictifs : les personnes,
+          prénoms, lieux et chiffres sont inventés. Elles illustrent des
+          parcours possibles et montrent qu&apos;il existe souvent un
+          chemin — même quand on ne le voit plus.
         </p>
       </div>
 
@@ -137,17 +139,17 @@ export default function TemoignagesPage() {
 
       {/* Disclaimer */}
       <div className="mt-8 rounded-2xl border border-navy/10 bg-navy/5 px-6 py-4 text-center text-xs text-navy/60 leading-relaxed">
-        Témoignages anonymisés et reconstitués à partir de situations réelles.
-        Aucune donnée personnelle n&apos;est utilisée. Les prénoms, lieux et
-        détails ont été modifiés pour garantir l&apos;anonymat. Ces récits
+        Exemples fictifs, rédigés par Solelis à partir de situations
+        courantes : ce ne sont pas des témoignages de personnes réelles.
+        Les prénoms, lieux, dates et chiffres sont inventés. Ces récits
         illustrent des parcours types et ne constituent pas des conseils
-        juridiques.
+        juridiques ; chaque situation est différente.
       </div>
 
       <div className="dashed-band mt-10 p-5 text-center text-sm text-navy/70">
         <p>
           Vous êtes passé·e par là et vous voulez aider d&apos;autres
-          dirigeants ? Votre témoignage compte — même quelques phrases.
+          dirigeant·e·s ? Votre expérience compte — même quelques phrases.
         </p>
         <a
           href="mailto:solelis@toakeur.com?subject=Témoignage Solelis"

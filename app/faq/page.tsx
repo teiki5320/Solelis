@@ -44,12 +44,12 @@ const SECTIONS: SectionFAQ[] = [
       {
         question: 'Que se passe-t-il si je ne la déclare pas à temps ?',
         reponse:
-          "Le non-respect du délai de 45 jours expose le dirigeant à une interdiction de gérer (article L653-8 du Code de commerce), pouvant aller jusqu'à 15 ans. Le tribunal peut aussi remonter la date de cessation des paiements jusqu'à 18 mois en arrière (période suspecte), ce qui annule certains paiements et garanties consentis pendant cette période. En cas de faute de gestion avérée, une action en responsabilité pour insuffisance d'actif est possible (article L651-2).",
+          "Ne pas déclarer sciemment la cessation des paiements dans les 45 jours expose le dirigeant à une interdiction de gérer (article L653-8 du Code de commerce), pouvant aller jusqu'à 15 ans. Le tribunal peut aussi remonter la date de cessation des paiements jusqu'à 18 mois en arrière (période suspecte), ce qui annule certains paiements et garanties consentis pendant cette période. En cas de faute de gestion avérée, une action en responsabilité pour insuffisance d'actif est possible (article L651-2).",
       },
       {
         question: 'Puis-je continuer à diriger mon entreprise ?',
         reponse:
-          "Cela dépend de la procédure ouverte. En sauvegarde, vous restez aux commandes avec l'assistance d'un administrateur. En redressement judiciaire, le tribunal détermine si vous administrez seul ou avec un administrateur (article L631-12). En liquidation judiciaire, vous perdez la gestion : un liquidateur est nommé pour réaliser les actifs et payer les créanciers (article L641-9).",
+          "Cela dépend de la procédure ouverte. En sauvegarde, vous restez aux commandes, le cas échéant avec un administrateur chargé de vous surveiller ou de vous assister (il n'est obligatoire qu'au-delà de seuils de salariés et de chiffre d'affaires fixés par décret, article L621-4). En redressement judiciaire, le tribunal détermine si vous administrez seul ou avec un administrateur (article L631-12). En liquidation judiciaire, vous perdez la gestion : un liquidateur est nommé pour réaliser les actifs et payer les créanciers (article L641-9).",
         liens: [
           { href: '/procedures', label: 'Comparer les procédures' },
         ],
@@ -71,17 +71,17 @@ const SECTIONS: SectionFAQ[] = [
       {
         question: 'Combien coûte une procédure collective ?',
         reponse:
-          "Les frais de justice (greffe) sont modestes : quelques centaines d'euros pour le dépôt. Le coût principal vient des honoraires des mandataires de justice (administrateur, mandataire judiciaire), fixés par décret (R663-1 et suivants du Code de commerce) selon un barème proportionnel au chiffre d'affaires et au nombre de salariés. Comptez environ 3 000 à 10 000 euros pour une petite entreprise. L'aide juridictionnelle est possible si vos revenus personnels sont faibles.",
+          "Les frais de greffe suivent un tarif réglementé. Le coût principal vient de la rémunération des mandataires de justice (administrateur, mandataire judiciaire), fixée par un tarif réglementé (art. R663-1 et suivants du Code de commerce) qui dépend notamment du chiffre d'affaires et du nombre de salariés ; elle est payée sur les fonds de la procédure. Demandez une estimation au mandataire. Si vous êtes entrepreneur individuel (personne physique), l'aide juridictionnelle est possible lorsque vos ressources sont faibles.",
       },
       {
         question: 'Combien de temps dure un redressement judiciaire ?',
         reponse:
-          "La période d'observation initiale est de 6 mois, renouvelable une fois (article L631-7). En tout, elle ne peut excéder 18 mois. Pendant cette période, le tribunal évalue si l'entreprise est viable. Si oui, un plan de redressement est adopté (apurement des dettes sur 10 ans maximum). Si non, la liquidation judiciaire est prononcée.",
+          "La période d'observation initiale est de 6 mois au plus, renouvelable une fois pour 6 mois (article L621-3), et exceptionnellement prolongeable de 6 mois à la demande du procureur de la République (article L631-7) : 18 mois au maximum. Pendant cette période, le tribunal évalue si l'entreprise est viable. Si oui, un plan de redressement est adopté (apurement des dettes sur 10 ans maximum). Si non, la liquidation judiciaire est prononcée.",
       },
       {
         question: 'Puis-je choisir mon mandataire judiciaire ?',
         reponse:
-          "Non, c'est le tribunal qui désigne le mandataire judiciaire et l'administrateur judiciaire (articles L621-4 et L631-9 du Code de commerce). Cependant, vous pouvez suggérer un nom au tribunal, qui reste libre de sa décision. Vous pouvez aussi demander le remplacement d'un mandataire en cas de difficulté (article L621-7).",
+          "Non, c'est le tribunal qui désigne le mandataire judiciaire et l'administrateur judiciaire (articles L621-4 et L631-9 du Code de commerce). Cependant, vous pouvez proposer le nom d'un ou plusieurs administrateurs judiciaires (article L621-4), le tribunal restant libre de sa décision. Vous pouvez aussi demander au juge-commissaire de saisir le tribunal pour remplacer l'administrateur ou le mandataire judiciaire (article L621-7).",
         liens: [
           { href: '/annuaires/mandataires', label: 'Annuaire des mandataires' },
         ],
@@ -95,7 +95,7 @@ const SECTIONS: SectionFAQ[] = [
       {
         question: "Puis-je négocier directement avec l'URSSAF ?",
         reponse:
-          "Oui. Vous pouvez demander des délais de paiement directement à l'URSSAF (numéro 3957) ou via la Commission des chefs des services financiers (CCSF) de votre département, qui regroupe tous les créanciers publics (URSSAF, impôts, douanes). La CCSF peut accorder un plan d'échelonnement sur 12 à 36 mois. L'URSSAF peut aussi accorder une remise partielle des majorations de retard (article L243-5 du Code de la sécurité sociale).",
+          "Oui. Vous pouvez demander des délais de paiement directement à l'URSSAF (36 98 pour les travailleurs indépendants, 39 57 pour les employeurs ; MSA pour les exploitants agricoles, CGSS outre-mer) ou via la Commission des chefs des services financiers (CCSF) de votre département, qui regroupe tous les créanciers publics (URSSAF, impôts, douanes). La CCSF peut accorder un plan d'échelonnement dont elle fixe la durée. L'URSSAF peut aussi accorder une remise partielle des majorations de retard (article R243-20 du Code de la sécurité sociale).",
         liens: [
           { href: '/courriers/echelonnement-urssaf', label: 'Modèle courrier URSSAF' },
           { href: '/courriers/saisine-ccsf', label: 'Courrier de saisine CCSF' },
@@ -104,7 +104,7 @@ const SECTIONS: SectionFAQ[] = [
       {
         question: 'Mes dettes personnelles sont-elles concernées ?',
         reponse:
-          "Si vous êtes en société (SARL, SAS, SA), vos dettes personnelles sont en principe séparées de celles de l'entreprise — c'est le principe de la personnalité morale. Exceptions : les cautions personnelles que vous avez signées, les comptes courants d'associé, et les cas de faute de gestion (action en comblement de passif, article L651-2). Si vous êtes entrepreneur individuel, la loi du 14 février 2022 protège désormais votre patrimoine personnel de plein droit (article L526-22 du Code de commerce).",
+          "Si vous êtes en société (SARL, SAS, SA), vos dettes personnelles sont en principe séparées de celles de l'entreprise — c'est le principe de la personnalité morale. Exceptions : les cautions personnelles que vous avez signées et, en liquidation, la faute de gestion ayant contribué à l'insuffisance d'actif (action en responsabilité pour insuffisance d'actif, article L651-2). Les sommes que vous avez prêtées à la société en compte courant d'associé risquent, elles, de ne pas vous être remboursées. Si vous êtes entrepreneur individuel, la loi du 14 février 2022 protège désormais votre patrimoine personnel de plein droit (article L526-22 du Code de commerce).",
         liens: [
           { href: '/proteger-famille', label: 'Protéger famille et patrimoine' },
         ],
@@ -127,7 +127,7 @@ const SECTIONS: SectionFAQ[] = [
       {
         question: 'Ma résidence principale est-elle saisissable ?',
         reponse:
-          "Depuis la loi Macron du 6 août 2015 (article L526-1 du Code de commerce), la résidence principale de l'entrepreneur individuel est insaisissable de plein droit pour les dettes professionnelles — aucune déclaration notariée n'est nécessaire. Pour les dirigeants de société, la résidence est protégée sauf si vous avez consenti une hypothèque ou un cautionnement réel. Attention : cette protection ne joue pas pour les dettes fiscales et sociales en cas de fraude.",
+          "Depuis la loi Macron du 6 août 2015 (article L526-1 du Code de commerce), la résidence principale de l'entrepreneur individuel est insaisissable de plein droit par les créanciers professionnels — aucune déclaration notariée n'est nécessaire. Pour les dirigeants de société, les créanciers de la société ne peuvent pas saisir vos biens personnels, mais votre résidence n'est pas protégée contre une banque à qui vous avez donné une caution personnelle ou une hypothèque. Attention : l'insaisissabilité ne joue pas face à l'administration fiscale en cas de manœuvres frauduleuses ou d'inobservation grave et répétée de vos obligations fiscales (article L526-1).",
         liens: [
           { href: '/proteger-famille', label: 'Protection du patrimoine' },
         ],
@@ -143,7 +143,7 @@ const SECTIONS: SectionFAQ[] = [
       {
         question: 'Quelles sont mes aides personnelles (ATI, RSA) ?',
         reponse:
-          "L'ATI (Allocation des travailleurs indépendants) est versée par France Travail aux indépendants après une liquidation judiciaire, un redressement judiciaire avec remplacement du dirigeant, ou l'arrêt d'une activité non viable attesté par un tiers de confiance. Conditions : 2 ans d'activité, au moins 10 000 euros de revenus par an sur les 2 dernières années, ressources personnelles inférieures au RSA. Elle va d'environ 600 à 800 euros par mois selon les revenus antérieurs, pendant 6 mois (décret n° 2022-450 du 30 mars 2022). Le RSA est accessible sous conditions de ressources. La CSS (Complémentaire santé solidaire) couvre vos frais de santé. APESA propose un soutien psychologique gratuit et confidentiel.",
+          "L'ATI (Allocation des travailleurs indépendants) est versée par France Travail aux indépendants après une liquidation judiciaire, un redressement judiciaire avec remplacement du dirigeant, ou l'arrêt d'une activité non viable attesté par un tiers de confiance. Conditions : 2 ans d'activité, au moins 10 000 euros de revenus sur l'une des 2 dernières années, ressources personnelles inférieures au RSA. Elle va d'environ 600 à 800 euros par mois selon les revenus antérieurs, pendant 6 mois (décrets n° 2022-450 et 2022-451 du 30 mars 2022). Le RSA est accessible sous conditions de ressources. La CSS (Complémentaire santé solidaire) couvre vos frais de santé. APESA propose un soutien psychologique gratuit et confidentiel.",
         liens: [
           { href: '/aides-personnelles', label: 'Toutes les aides personnelles' },
           { href: '/outils/ati', label: 'Simulateur ATI' },
@@ -159,7 +159,7 @@ const SECTIONS: SectionFAQ[] = [
       {
         question: 'Puis-je recréer une entreprise après une liquidation ?',
         reponse:
-          "Oui, sauf si le tribunal a prononcé une interdiction de gérer (article L653-8 du Code de commerce), ce qui est réservé aux cas de faute de gestion grave. Après clôture de la liquidation, vous êtes libre de recréer une entreprise immédiatement. La loi du 14 février 2022 a renforcé le droit au rebond : les dettes professionnelles de l'entrepreneur individuel sont effacées à la clôture pour insuffisance d'actif. Pour les dirigeants de société, la clôture met fin à la procédure mais pas nécessairement aux cautions personnelles.",
+          "Oui, sauf si le tribunal a prononcé une interdiction de gérer (article L653-8 du Code de commerce), ce qui est réservé aux cas de faute de gestion grave. Après clôture de la liquidation, vous êtes libre de recréer une entreprise immédiatement. À la clôture pour insuffisance d'actif, les créanciers ne retrouvent pas, sauf exceptions (fraude, faillite personnelle, banqueroute…), le droit de vous poursuivre (article L643-11) ; mais les cautions et coobligés qui ont payé à votre place peuvent, eux, agir contre vous. Pour les dirigeants de société, la clôture met fin à la procédure mais pas aux cautions personnelles.",
         liens: [
           { href: '/rebond', label: 'Guide du rebond' },
         ],
@@ -167,7 +167,7 @@ const SECTIONS: SectionFAQ[] = [
       {
         question: 'Quelles aides existent pour repartir (ACRE, ARCE) ?',
         reponse:
-          "L'ACRE (Aide aux créateurs et repreneurs d'entreprise) offre une exonération partielle de cotisations sociales pendant 12 mois. L'ARCE (Aide à la reprise ou à la création d'entreprise) permet de percevoir 60 % de ses droits ARE restants en deux versements pour capitaliser le projet. Le prêt d'honneur (Initiative France, Réseau Entreprendre) est un prêt personnel à taux zéro et sans garantie, dont le montant dépend du réseau et du projet. 60 000 Rebonds accompagne gratuitement les entrepreneurs après une liquidation. Bpifrance et les Régions proposent aussi des prêts de développement : renseignez-vous auprès de votre direction régionale Bpifrance.",
+          "L'ACRE (Aide aux créateurs et repreneurs d'entreprise) offre une exonération partielle de cotisations sociales pendant environ 12 mois, réservée à certains publics (demandeurs d'emploi, bénéficiaires du RSA ou de l'ASS, jeunes de 18 à 25 ans, création en quartier prioritaire…), à demander à l'Urssaf dans les 60 jours. L'ARCE (Aide à la reprise ou à la création d'entreprise) permet de percevoir 60 % de ses droits ARE restants en deux versements pour capitaliser le projet. Le prêt d'honneur (Initiative France, Réseau Entreprendre) est un prêt personnel à taux zéro et sans garantie, dont le montant dépend du réseau et du projet. 60 000 Rebonds accompagne gratuitement les entrepreneurs après une liquidation. Bpifrance et les Régions proposent aussi des prêts de développement : renseignez-vous auprès de votre direction régionale Bpifrance.",
         liens: [
           { href: '/rebond', label: 'Guide complet du rebond' },
           { href: '/aides', label: 'Toutes les aides entreprise' },

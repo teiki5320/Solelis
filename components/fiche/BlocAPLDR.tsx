@@ -90,8 +90,8 @@ export default function BlocAPLDR() {
           <p className="font-display text-base text-vert">Pour les salariés</p>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-xs text-navy/80">
             <li>Indemnité : <strong>70 % du salaire brut</strong> (≈ 84 % du net) versée par l&apos;employeur, qui se fait rembourser.</li>
-            <li>Baisse d&apos;horaire <strong>plafonnée à 40 %</strong> de la durée légale (jusqu&apos;à 50 % sur autorisation préfectorale).</li>
-            <li>Maintien des cotisations retraite et chômage sur la base de l&apos;activité antérieure.</li>
+            <li>Baisse d&apos;horaire <strong>plafonnée à 40 %</strong> de la durée légale (jusqu&apos;à 50 % sur décision de la DDETS en cas de situation économique particulière).</li>
+            <li>Heures chômées indemnisées prises en compte pour la retraite de base (un trimestre par tranche de 220 heures, 4 par an au plus) ; l&apos;indemnité n&apos;est pas soumise aux cotisations sociales.</li>
             <li>Accès renforcé à la formation pendant les heures chômées.</li>
           </ul>
         </div>
@@ -121,12 +121,15 @@ export default function BlocAPLDR() {
         <ol className="mt-2 list-decimal space-y-1.5 pl-5">
           <li>
             Négociation d&apos;un <strong>accord collectif</strong> avec les
-            organisations syndicales représentatives (ou consultation CSE
-            si moins de 50 salariés sans délégué syndical).
+            organisations syndicales représentatives ou, à défaut, document
+            unilatéral fondé sur un accord de branche étendu, après
+            consultation du CSE s&apos;il existe.
           </li>
           <li>
             <strong>Dépôt de l&apos;accord</strong> ou du document
-            unilatéral à la <strong>DREETS</strong> (téléprocédure dédiée).
+            unilatéral à la <strong>DDETS</strong> (ou DDETSPP) via la
+            téléprocédure activité partielle ; l&apos;accord est aussi déposé
+            sur TéléAccords.
           </li>
           <li>
             <strong>Validation</strong> de l&apos;accord (15 jours) ou{' '}
@@ -143,16 +146,16 @@ export default function BlocAPLDR() {
       {/* Contacts */}
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
         <div className="rounded-2xl border border-navy/15 bg-white/60 p-4">
-          <p className="font-display text-base text-navy">DREETS — Direction du Travail</p>
+          <p className="font-display text-base text-navy">DDETS — services de l&apos;État dans le département</p>
           <p className="mt-1 text-xs text-navy/60">Validation / homologation de l&apos;accord, suivi des engagements</p>
           <div className="mt-3 flex flex-wrap gap-2 text-sm">
             <a
-              href="https://www.travail-emploi.gouv.fr/le-ministere-en-action/dreets"
+              href="https://lannuaire.service-public.gouv.fr/navigation/ddets"
               target="_blank"
               rel="noreferrer"
               className="rounded-full bg-white/80 px-3 py-1.5 text-bleu-fonce hover:bg-white"
             >
-              <span aria-hidden>🌐</span> Trouver ma DREETS
+              <span aria-hidden>🌐</span> Trouver ma DDETS
             </a>
           </div>
         </div>
@@ -177,7 +180,8 @@ export default function BlocAPLDR() {
         (art. 193) ; décret n° 2025-338 du 14 avril 2025 relatif à
         l&apos;APLD-R ; Code du travail art. L5122-1 et s. ;
         www.service-public.gouv.fr (fiche F38004, fin du dispositif au
-        1er mars 2026).
+        1er mars 2026 ; validation par la DDETS) ; lassuranceretraite.fr
+        (périodes d&apos;activité partielle).
       </p>
     </BlocAccordeon>
   );

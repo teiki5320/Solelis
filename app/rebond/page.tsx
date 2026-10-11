@@ -23,23 +23,22 @@ const financements: Financement[] = [
   {
     nom: 'ADIE (micro-crédit)',
     description:
-      'Jusqu’à 17 000 € sur 5 ans. Accessible même si interdit bancaire ou fiché FICP.',
-    tel: '0 969 328 110',
+      'Jusqu’à 15 000 € remboursables sur 48 mois au plus (adie.org). Pour les personnes sans accès au crédit bancaire : une demande reste possible en cas d’interdit bancaire ou de fichage (étude au cas par cas).',
     url: 'https://adie.org',
     urlLabel: 'adie.org',
-    badge: 'Même interdit bancaire',
+    badge: 'Sans accès au crédit bancaire',
   },
   {
     nom: 'France Active',
     description:
-      'Garanties de prêts (jusqu’à 65 % du prêt bancaire). Accompagnement.',
+      'Garanties de prêts bancaires. Accompagnement.',
     url: 'https://franceactive.org',
     urlLabel: 'franceactive.org',
   },
   {
     nom: 'Prêts d’honneur (Initiative France)',
     description:
-      '2 000 à 50 000 € à taux zéro, sans garantie. Avec mentorat.',
+      'Prêt personnel à taux zéro, sans garantie, dont le montant dépend du réseau et du projet. Avec mentorat.',
     url: 'https://initiative-france.fr',
     urlLabel: 'initiative-france.fr',
     badge: 'Taux zéro',
@@ -73,15 +72,15 @@ const associations: Association[] = [
   {
     nom: '60 000 Rebonds',
     description:
-      'Accompagnement post-dépôt de bilan. Gratuit. 18 mois.',
+      'Accompagnement des entrepreneur·e·s ayant perdu leur entreprise depuis moins de 24 mois (coaching, parrainage, groupes). Gratuit, hors participation annuelle de 30 € aux frais.',
     url: 'https://60000rebonds.com',
     urlLabel: '60000rebonds.com',
-    badge: 'Gratuit · 18 mois',
+    badge: 'Jusqu’à 24 mois',
   },
   {
     nom: 'Second Souffle',
     description:
-      'Accompagnement pour entrepreneurs après échec.',
+      'Accompagnement gratuit et confidentiel d’entrepreneur·e·s en difficulté, par d’autres chef·fe·s d’entreprise.',
     url: 'https://secondsouffle.org',
     urlLabel: 'secondsouffle.org',
   },
@@ -107,9 +106,9 @@ export default function RebondPage() {
           Rebondir
         </h1>
         <p className="mx-auto mt-6 max-w-xl text-base text-navy/70 sm:text-lg">
-          La fin d’une entreprise n’est pas la fin de tout. Des
-          milliers de dirigeants recréent chaque année — et
-          beaucoup réussissent mieux la deuxième fois.
+          La fin d’une entreprise n’est pas la fin de tout. Une
+          liquidation n’empêche pas, en principe, de créer à nouveau
+          une entreprise.
         </p>
       </div>
 
@@ -135,8 +134,11 @@ export default function RebondPage() {
               Interdiction de gérer
             </dt>
             <dd className="mt-0.5 leading-relaxed text-navy/65">
-              Jusqu’à 15 ans si faute de gestion prouvée.
-              Très rare.
+              Jusqu’à 15 ans (art. L653-11 Code de commerce), prononcée
+              par le tribunal pour des faits précis prévus par la loi
+              (art. L653-3 à L653-8 : par exemple, avoir sciemment omis
+              de déclarer la cessation des paiements dans les 45 jours
+              sans avoir demandé de conciliation).
             </dd>
           </div>
           <div>
@@ -144,7 +146,8 @@ export default function RebondPage() {
               Faillite personnelle
             </dt>
             <dd className="mt-0.5 leading-relaxed text-navy/65">
-              Déchéance commerciale. Encore plus rare.
+              Sanction plus lourde que l’interdiction de gérer, pour des
+              faits graves (art. L653-3 à L653-6) : jusqu’à 15 ans.
             </dd>
           </div>
           <div>
@@ -153,8 +156,11 @@ export default function RebondPage() {
             </dt>
             <dd className="mt-0.5 leading-relaxed text-navy/65">
               L’issue la plus fréquente d’une liquidation. N’efface PAS les
-              cautions personnelles. Le liquidateur peut engager votre
-              responsabilité dans les 3 ans si fautes de gestion.
+              cautions personnelles. Dirigeant·e de société : si une faute
+              de gestion (au-delà de la simple négligence) a contribué à
+              l’insuffisance d’actif, votre responsabilité peut être
+              recherchée dans les 3 ans suivant le jugement de
+              liquidation (art. L651-2).
             </dd>
           </div>
         </dl>
@@ -184,34 +190,38 @@ export default function RebondPage() {
             <dt className="font-semibold text-navy/80">Qui</dt>
             <dd className="mt-0.5 leading-relaxed text-navy/65">
               Entrepreneurs individuels uniquement (pas les sociétés).
-              Conditions : cessation des paiements, aucun salarié,
-              actifs &lt; 15 000 € (hors résidence si
-              protégée), pas de procédure dans les
-              5 dernières années.
+              Conditions : cessation des paiements, aucun salarié au
+              cours des 6 derniers mois, actif (professionnel et
+              personnel) &lt; 15 000 € hors résidence principale, pas de
+              liquidation judiciaire clôturée pour insuffisance d’actif
+              ni de rétablissement professionnel clos au cours des 5
+              dernières années (art. L645-2).
             </dd>
           </div>
           <div>
             <dt className="font-semibold text-navy/80">Durée</dt>
             <dd className="mt-0.5 leading-relaxed text-navy/65">
-              4 mois maximum.
+              4 mois, sans prolongation possible.
             </dd>
           </div>
           <div>
             <dt className="font-semibold text-navy/80">Résultat</dt>
             <dd className="mt-0.5 leading-relaxed text-navy/65">
-              Effacement des dettes. Fresh start.
+              Effacement des dettes antérieures signalées au juge, sauf
+              exceptions (salaires dus, pensions alimentaires, sommes
+              payées à votre place par une caution…).
             </dd>
           </div>
         </dl>
 
         <div className="mt-5 flex flex-wrap items-center gap-3 text-sm">
           <a
-            href="https://www.service-public.fr"
+            href="https://entreprendre.service-public.gouv.fr/vosdroits/F32095"
             target="_blank"
             rel="noreferrer"
             className="text-bleu-fonce underline underline-offset-4"
           >
-            service-public.fr
+            entreprendre.service-public.gouv.fr
           </a>
           <span className="pastille text-vert">
             Entrepreneur individuel uniquement
@@ -291,8 +301,11 @@ export default function RebondPage() {
               FICP (crédits)
             </dt>
             <dd className="mt-0.5 leading-relaxed text-navy/65">
-              Inscription 5 ans (incidents) ou 7 ans (surendettement). Radiation
-              anticipée si plan terminé.
+              Inscription jusqu’à 5 ans (incident de remboursement), 7 ans
+              (plan de surendettement) ou 5 ans (rétablissement
+              personnel). Radiation anticipée si vous régularisez
+              l’incident, ou après 5 ans sans incident d’un plan de
+              surendettement.
             </dd>
           </div>
           <div>

@@ -1,53 +1,19 @@
 'use client';
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { dureeEnAnnees } from '@/lib/format';
 
-// Plafonds AGS — valeurs 2026 (art. D3253-5 C. trav.) :
-// garantie = 4, 5 ou 6 × le plafond mensuel des contributions d'assurance
-// chômage (lui-même = 4 × PMSS ; PMSS 2026 = 4 005 €/mois, arrêté du
-// 22 décembre 2025). 4 × 4 × 4 005 = 64 080 € · 5 × → 80 100 € · 6 × → 96 120 €.
-const PLAFOND_AGS_HAUT = 96120;
-const PLAFOND_AGS_INTER = 80100;
-const PLAFOND_AGS_BAS = 64080;
-
-interface Salarie {
-  id: string;
-  ancienneteMois: number;
-  salaireBrut: number;
-}
+import {
+  PLAFOND_AGS_BAS,
+  PLAFOND_AGS_HAUT,
+  PLAFOND_AGS_INTER,
+  ANCIENNETE_MIN_MOIS,
+  calculEquipe,
+  type Salarie,
+} from './calcul';
 
 function formatEuros(n: number): string {
   return Math.round(n).toLocaleString('fr-FR') + ' €';
-}
-
-function calculIndemnite(ancienneteMois: number, salaireBrutMensuel: number): {
-  montant: number;
-  detail: string;
-  jusqua10ans: number;
-  apres10ans: number;
-} {
-  const ans = ancienneteMois / 12;
-  const jusqua10 = Math.min(ans, 10);
-  const apres10 = Math.max(0, ans - 10);
-  const partA = (1 / 4) * salaireBrutMensuel * jusqua10;
-  const partB = (1 / 3) * salaireBrutMensuel * apres10;
-  const montant = partA + partB;
-  return {
-    montant,
-    detail: `${(jusqua10).toFixed(2)} années × ¼ + ${(apres10).toFixed(2)} années × ⅓ × ${formatEuros(salaireBrutMensuel)}`,
-    jusqua10ans: partA,
-    apres10ans: partB,
-  };
-}
-
-function plafondAgs(ancienneteMois: number): number {
-  // Source : art. D3253-5 C. trav. — ancienneté du CONTRAT au jour du jugement
-  // Plafond 4 : contrat conclu moins de 6 mois avant le jugement d'ouverture
-  // Plafond 5 : contrat conclu entre 6 mois et 2 ans avant
-  // Plafond 6 : contrat conclu au moins 2 ans avant
-  if (ancienneteMois < 6) return PLAFOND_AGS_BAS;
-  if (ancienneteMois < 24) return PLAFOND_AGS_INTER;
-  return PLAFOND_AGS_HAUT;
 }
 
 export default function LicenciementPage() {
@@ -76,22 +42,7 @@ export default function LicenciementPage() {
     setSalaries((prev) => prev.filter((s) => s.id !== id));
   }
 
-  const total = useMemo(() => {
-    let totalIndem = 0;
-    let totalAgs = 0;
-    let totalDepasse = 0;
-    const lignes = salaries.map((s) => {
-      const calc = calculIndemnite(s.ancienneteMois, s.salaireBrut);
-      const plaf = plafondAgs(s.ancienneteMois);
-      const couvert = Math.min(calc.montant, plaf);
-      const depasse = Math.max(0, calc.montant - plaf);
-      totalIndem += calc.montant;
-      totalAgs += couvert;
-      totalDepasse += depasse;
-      return { s, calc, plafond: plaf, couvert, depasse };
-    });
-    return { lignes, totalIndem, totalAgs, totalDepasse };
-  }, [salaries]);
+  const total = useMemo(() => calculEquipe(salaries), [salaries]);
 
   const jsonLdHowTo = {
     '@context': 'https://schema.org',
@@ -118,7 +69,7 @@ export default function LicenciementPage() {
       {
         '@type': 'HowToStep',
         name: 'Lire les résultats',
-        text: 'L\'outil affiche l\'indemnité due, la part couverte par l\'AGS (plafonds 2024) et le reste à votre charge.',
+        text: 'L\'outil affiche l\'indemnité due, la part couverte par l\'AGS (plafonds 2026) et le reste à votre charge.',
       },
     ],
   };
@@ -155,8 +106,8 @@ export default function LicenciementPage() {
       </h1>
       <p className="mt-3 text-base text-navy/70">
         Estimez le coût d&apos;un licenciement économique selon les
-        barèmes légaux. Le calcul applique la formule de l&apos;article
-        L1234-9 et L1234-1 du Code du travail. Les plafonds AGS 2024
+        barèmes légaux. Le calcul applique les articles L1234-9 et
+        R1234-2 du Code du travail. Les plafonds AGS 2026
         permettent de voir ce qui est couvert en cas de procédure.
       </p>
 
@@ -191,7 +142,7 @@ export default function LicenciementPage() {
                       className="mt-1 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2 text-sm"
                     />
                     <span className="mt-1 block text-[11px] text-navy/55">
-                      = {(s.ancienneteMois / 12).toFixed(1)} années. Indemnité due à partir de 8 mois (L1234-9).
+                      = {dureeEnAnnees(s.ancienneteMois)}. Indemnité due à partir de 8 mois (L1234-9).
                     </span>
                   </label>
                   <label className="block text-xs text-navy/70">
@@ -209,7 +160,7 @@ export default function LicenciementPage() {
                   </label>
                 </div>
 
-                {ligne && s.ancienneteMois >= 8 && (
+                {ligne && s.ancienneteMois >= ANCIENNETE_MIN_MOIS && (
                   <div className="mt-3 grid gap-2 text-sm sm:grid-cols-3">
                     <div className="rounded-xl bg-bleu/5 p-3">
                       <p className="text-[11px] uppercase text-navy/55">Indemnité due</p>
@@ -230,7 +181,7 @@ export default function LicenciementPage() {
                     )}
                   </div>
                 )}
-                {s.ancienneteMois < 8 && (
+                {s.ancienneteMois < ANCIENNETE_MIN_MOIS && (
                   <p className="mt-3 rounded-xl bg-jaune/10 p-3 text-xs text-navy/70">
                     Pas d&apos;indemnité légale de licenciement (ancienneté &lt; 8 mois requise par L1234-9).
                     Une convention collective peut prévoir un seuil inférieur.
@@ -276,13 +227,13 @@ export default function LicenciementPage() {
         <p className="font-display text-base text-navy">À savoir</p>
         <ul className="mt-2 list-disc space-y-1.5 pl-5">
           <li>
-            <strong>Préavis</strong> : 1 mois (6 mois à 2 ans d&apos;ancienneté), 2 mois (&gt; 2 ans). Indemnisé en plus si dispense.
+            <strong>Préavis</strong> : 1 mois (de 6 mois à moins de 2 ans d&apos;ancienneté), 2 mois (2 ans et plus). Indemnisé en plus si dispense.
           </li>
           <li>
             <strong>Congés payés non pris</strong> : à indemniser en plus.
           </li>
           <li>
-            <strong>Plafonds AGS 2026</strong> : 4, 5 ou 6 fois le plafond mensuel d&apos;assurance chômage (4 × le plafond mensuel de la Sécurité sociale), selon l&apos;ancienneté du contrat de travail au jugement d&apos;ouverture — moins de 6 mois : {formatEuros(PLAFOND_AGS_BAS)} ; 6 mois à 2 ans : {formatEuros(PLAFOND_AGS_INTER)} ; 2 ans et plus : {formatEuros(PLAFOND_AGS_HAUT)}.
+            <strong>Plafonds AGS 2026</strong> : 4, 5 ou 6 fois le plafond mensuel d&apos;assurance chômage (4 × le plafond mensuel de la Sécurité sociale), selon l&apos;ancienneté du contrat de travail au jugement d&apos;ouverture, toutes créances du salarié confondues (salaires, préavis, congés, indemnités) — moins de 6 mois : {formatEuros(PLAFOND_AGS_BAS)} ; 6 mois à 2 ans : {formatEuros(PLAFOND_AGS_INTER)} ; 2 ans et plus : {formatEuros(PLAFOND_AGS_HAUT)}.
           </li>
           <li>
             <strong>PSE</strong> obligatoire si licenciement de 10+ salariés sur 30 jours dans une entreprise de 50+ salariés (L1233-61).

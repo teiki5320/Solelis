@@ -1,6 +1,7 @@
 'use client';
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { nombreFr } from '@/lib/format';
 
 type SecteurVal =
   | 'commerce-detail'
@@ -22,27 +23,27 @@ interface Multiples {
   note: string;
 }
 
-// Source : Bpifrance Création — « Valoriser son entreprise »,
-// CRA, fiches BDO / PwC « Argos Mid-Market » pour les TPE/PME non cotées.
-// Multiples indicatifs 2024-2025.
+// Méthode des multiples présentée par Bpifrance Création (« Valoriser son
+// entreprise »). Les multiples ci-dessous sont des ordres de grandeur
+// indicatifs, sans source officielle publiée.
 const MULTIPLES: Record<SecteurVal, Multiples> = {
   'commerce-detail': {
     label: 'Commerce de détail',
     ebeBas: 2.5, ebeHaut: 4.5,
     caBas: 0.3, caHaut: 0.7,
-    note: 'Forte pondération sur l\'emplacement et le bail. Les murs peuvent ajouter 20-40 % à la valeur.',
+    note: 'Forte pondération sur l\'emplacement et le bail. Les murs, s\'ils appartiennent à l\'entreprise, s\'évaluent à part.',
   },
   'hcr': {
     label: 'Hôtellerie-restauration',
     ebeBas: 3, ebeHaut: 5.5,
     caBas: 0.7, caHaut: 1.2,
-    note: "Hôtellerie : multiples plus élevés (5-7× EBE). Restauration traditionnelle : 3-5× EBE. Les murs souvent valorisés séparément.",
+    note: "Les multiples diffèrent entre hôtellerie et restauration. Les murs sont souvent valorisés séparément.",
   },
   'btp': {
     label: 'BTP / Construction',
     ebeBas: 2.5, ebeHaut: 4.5,
     caBas: 0.15, caHaut: 0.35,
-    note: "Décote récente liée à la crise du secteur. Carnet de commandes sécurisé valorisé.",
+    note: "Le carnet de commandes sécurisé est un élément clé de la valeur.",
   },
   'industrie': {
     label: 'Industrie / PMI',
@@ -60,19 +61,19 @@ const MULTIPLES: Record<SecteurVal, Multiples> = {
     label: 'Numérique / SaaS',
     ebeBas: 5, ebeHaut: 10,
     caBas: 1.0, caHaut: 3.0,
-    note: "Multiple ARR (Annual Recurring Revenue) pour SaaS : 3-7× ARR. Taux de churn clé.",
+    note: "Pour le SaaS, la valeur s'apprécie souvent sur le revenu récurrent annuel (ARR) ; le taux d'attrition (churn) est clé.",
   },
   'sante-libe': {
     label: 'Santé / libéral',
     ebeBas: 3.5, ebeHaut: 6,
     caBas: 0.4, caHaut: 0.8,
-    note: "Patientèle transférable, compatibilité ordinale. Valorisation souvent cadrée par l\'Ordre.",
+    note: "Patientèle transférable, compatibilité ordinale.",
   },
   'transport': {
     label: 'Transport routier',
     ebeBas: 3, ebeHaut: 5,
     caBas: 0.3, caHaut: 0.6,
-    note: "Flotte en propriété valorisée séparément. Marges tendues récemment.",
+    note: "Flotte en propriété valorisée séparément.",
   },
   'autre': {
     label: 'Autre',
@@ -83,7 +84,7 @@ const MULTIPLES: Record<SecteurVal, Multiples> = {
 };
 
 function formatEuros(n: number): string {
-  if (n >= 1000000) return (n / 1000000).toFixed(2) + ' M€';
+  if (n >= 1000000) return nombreFr(n / 1000000, 2) + ' M€';
   if (n >= 1000) return (n / 1000).toFixed(0) + ' k€';
   return Math.round(n).toLocaleString('fr-FR') + ' €';
 }
@@ -191,8 +192,8 @@ export default function ValorisationPage() {
       </h1>
       <p className="mt-3 text-base text-navy/70">
         Estimation par méthode des multiples sectoriels (EBE et CA).
-        Fourchettes indicatives issues des données Bpifrance Création et
-        CRA pour des TPE/PME. Un expert-comptable affinera selon vos
+        Ordres de grandeur de marché pour des TPE/PME, sans valeur
+        officielle. Un expert-comptable affinera selon vos
         spécificités.
       </p>
 
@@ -209,7 +210,7 @@ export default function ValorisationPage() {
             ))}
           </select>
           <span className="mt-1 block text-[11px] text-navy/55">
-            Multiples : {m.ebeBas}× à {m.ebeHaut}× EBE · {(m.caBas * 100).toFixed(0)} % à {(m.caHaut * 100).toFixed(0)} % CA
+            Multiples : {nombreFr(m.ebeBas)}× à {nombreFr(m.ebeHaut)}× EBE · {(m.caBas * 100).toFixed(0)} % à {(m.caHaut * 100).toFixed(0)} % CA
           </span>
         </label>
 
@@ -307,18 +308,18 @@ export default function ValorisationPage() {
       <div className="mt-6 rounded-2xl border border-jaune/30 bg-jaune/5 p-5 text-sm text-navy/80">
         <p className="font-display text-base text-navy">⚠️ Limites de l&apos;outil</p>
         <ul className="mt-2 list-disc space-y-1 pl-5">
-          <li>Les multiples varient selon la taille (les TPE subissent une décote de 20-40 % vs PME/ETI).</li>
-          <li>Une cession en procédure collective subit souvent 30-50 % de décote supplémentaire.</li>
+          <li>Les multiples varient selon la taille (les TPE subissent en général une décote par rapport aux PME/ETI).</li>
+          <li>Une cession en procédure collective subit en général une décote supplémentaire importante.</li>
           <li>Cette méthode ignore la trésorerie nette (à ajouter/déduire selon le cas).</li>
           <li>La valeur réelle se matérialise en négociation — préparez une data room solide (voir outil dédié).</li>
         </ul>
       </div>
 
       <p className="mt-6 text-xs text-navy/50">
-        Sources : Bpifrance Création — « Valoriser son entreprise » ;
-        CRA (Cédants et Repreneurs d&apos;Affaires) — observatoire
-        annuel ; rapports Argos Index Mid-Market pour multiples M&A
-        PME. Cet outil ne remplace pas un expert-comptable.
+        Méthode des multiples (présentée notamment par Bpifrance
+        Création, « Valoriser son entreprise ») ; les multiples et
+        décotes affichés sont des ordres de grandeur, sans source
+        officielle. Cet outil ne remplace pas un expert-comptable.
       </p>
     </section>
   );

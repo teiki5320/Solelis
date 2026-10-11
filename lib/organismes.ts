@@ -13,11 +13,35 @@ interface OrganismeLocal {
   site?: string;
 }
 
+/**
+ * Juridiction commerciale avec son ressort, quand le département en compte
+ * plusieurs : codes postaux propres aux communes du ressort (`codesPostaux`)
+ * et, pour un code postal partagé entre plusieurs communes, clés
+ * « code postal|COMMUNE » (`communes`, noms normalisés par normaliserCommune).
+ */
+type TribunalAvecRessort = OrganismeLocal & { codesPostaux?: string[]; communes?: string[] };
+
 export interface DepartementData {
   code: string;
   nom: string;
   chefLieu: string;
-  tribunal: OrganismeLocal;
+  /**
+   * Juridiction du chef-lieu. Si elle porte `codesPostaux`, le département
+   * compte plusieurs juridictions commerciales et elle ne couvre que ce
+   * ressort ; sinon elle couvre tout le département hors tribunaux secondaires.
+   */
+  tribunal: TribunalAvecRessort;
+  /**
+   * Autres juridictions commerciales du département, avec leur ressort
+   * (ex. tribunal mixte de commerce de Saint-Pierre, 974 ; tribunal de
+   * commerce de Bayonne, 64 ; tribunal de commerce de Saint-Malo pour Dinan, 22).
+   * Sources : « Données géocodées des structures de la Justice » et « Liste des
+   * juridictions compétentes pour les communes » (ministère de la Justice,
+   * data.gouv.fr, 2026), communes rattachées à chaque tribunal de commerce ou
+   * TAE dans l'annuaire officiel (lannuaire.service-public.gouv.fr), base
+   * officielle des codes postaux (La Poste).
+   */
+  tribunauxSecondaires?: (TribunalAvecRessort & { codesPostaux: string[] })[];
   cci: OrganismeLocal;
   urssaf: OrganismeLocal;
   sie: OrganismeLocal;
@@ -37,6 +61,154 @@ const DATA = data as Record<string, DepartementData>;
 
 export function getDepartement(code: string): DepartementData | null {
   return DATA[code] ?? null;
+}
+
+export interface ContactCotisations {
+  /** Organisme, ex. « URSSAF », « CGSS La Réunion », « MSA (Mutualité Sociale Agricole) ». */
+  org: string;
+  /** Avec son article : « l'URSSAF », « la CGSS La Réunion », « votre caisse de MSA »… */
+  orgAvecArticle: string;
+  /** Numéro à composer, ou null (MSA : pas de numéro national). */
+  tel: string | null;
+  /** Ce qu'on affiche à la place du numéro : le numéro, ou « numéro de votre caisse sur msa.fr ». */
+  telLibelle: string;
+  telephoneNote?: string;
+  site: string;
+  /** « URSSAF (3698) », « CGSS La Réunion (3957) », « MSA (numéro de votre caisse sur msa.fr) ». */
+  libelle: string;
+}
+
+/**
+ * Organisme de recouvrement des cotisations et numéro à appeler, seule
+ * source pour toute la fiche (plan d'action, checklist, mode perdu, aides…) :
+ * - outre-mer : la caisse locale (CGSS, CSSM Mayotte, CPS, CAFAT…) ;
+ * - exploitant·e agricole : la MSA (pas de numéro national : msa.fr) ;
+ * - marin-pêcheur : l'ENIM ;
+ * - sinon l'Urssaf : 36 98 pour les travailleurs indépendants, 39 57 pour
+ *   les employeurs (urssaf.fr, « Contacter l'Urssaf »).
+ */
+export function contactCotisations(
+  sector: Pick<SectorInfo, 'secteur' | 'cotisationOrg' | 'cotisationTel' | 'cotisationSite'>,
+  effectif: Reponses['effectif'],
+  departement?: string,
+): ContactCotisations {
+  const fabrique = (org: string, tel: string | null, telLibelle: string, site: string, telephoneNote?: string): ContactCotisations => ({
+    org,
+    orgAvecArticle: /^(URSSAF|ENIM)/.test(org) ? `l'${org}` : /^MSA/.test(org) ? 'votre caisse de MSA' : `la ${org}`,
+    tel,
+    telLibelle,
+    telephoneNote,
+    site,
+    libelle: `${org} (${telLibelle})`,
+  });
+  if (sector.secteur === 'peche') {
+    return fabrique(sector.cotisationOrg, sector.cotisationTel, sector.cotisationTel, sector.cotisationSite);
+  }
+  const dep = departement ? DATA[departement] : undefined;
+  if (dep?.urssaf && /^9[78]/.test(departement ?? '')) {
+    // CGSS : 39 57 pour les employeurs, 36 98 pour les indépendant·e·s
+    // (cgss-martinique.fr, « Urssaf employeurs » / « Urssaf indépendants »).
+    const brut = dep.urssaf.telephone ?? null;
+    const tel = effectif === 'independant' && brut?.replace(/\s/g, '') === '3957' ? '3698' : brut;
+    return fabrique(dep.urssaf.nom, tel, tel ?? 'coordonnées sur le site de la caisse', dep.urssaf.site ?? 'https://www.urssaf.fr', dep.urssaf.telephoneNote);
+  }
+  if (sector.secteur === 'agriculture') {
+    return fabrique('MSA (Mutualité Sociale Agricole)', null, 'numéro de votre caisse sur msa.fr', 'https://www.msa.fr');
+  }
+  // Le numéro et l'échelonnement concernent l'Urssaf seule : les caisses du
+  // secteur (BTP, retraite des libéraux…) ne se joignent pas au 39 57.
+  const tel = effectif === 'independant' ? '3698' : '3957';
+  return fabrique('URSSAF', tel, tel, 'https://www.urssaf.fr');
+}
+
+/**
+ * Institution qui assure la médiation du crédit et le correspondant TPE-PME :
+ * la Banque de France en métropole, l'IEDOM dans les départements d'outre-mer,
+ * à Saint-Pierre-et-Miquelon, Saint-Barthélemy et Saint-Martin, l'IEOM dans
+ * le Pacifique (iedom.fr, ieom.fr). Téléphone : 34 14 (annuaire service-public,
+ * y compris pour les agences de l'IEOM). Le « correspondant TPE-PME » est un
+ * dispositif de la Banque de France et de l'IEDOM ; l'IEOM présente son offre
+ * comme un « accompagnement des entreprises » (ieom.fr/Entreprises).
+ */
+export function institutionEmission(departement?: string): {
+  nom: 'Banque de France' | 'IEDOM' | 'IEOM';
+  /** « la Banque de France », « l'IEDOM », « l'IEOM ». */
+  avecArticle: string;
+  telephone: string;
+  /** Site de l'institution (accompagnement des entreprises). */
+  site: string;
+  /** « Correspondant TPE-PME » (Banque de France, IEDOM) ou « Accompagnement des entreprises » (IEOM). */
+  accompagnement: string;
+} {
+  const code = departement ?? '';
+  const tel = DATA[code]?.banqueDeFrance?.telephone;
+  if (/^97[1-8]$/.test(code)) return { nom: 'IEDOM', avecArticle: "l'IEDOM", telephone: tel ?? '34 14', site: 'https://www.iedom.fr', accompagnement: 'Correspondant TPE-PME' };
+  if (/^98[678]$/.test(code)) return { nom: 'IEOM', avecArticle: "l'IEOM", telephone: tel ?? '34 14', site: 'https://www.ieom.fr/Entreprises', accompagnement: 'Accompagnement des entreprises' };
+  return { nom: 'Banque de France', avecArticle: 'la Banque de France', telephone: '34 14', site: 'https://entreprises.banque-france.fr', accompagnement: 'Correspondant TPE-PME' };
+}
+
+/** Nom de commune comparable à la base officielle des codes postaux (« ST QUENTIN »). */
+export function normaliserCommune(ville: string): string {
+  return ville
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toUpperCase()
+    .replace(/[^A-Z0-9]+/g, ' ')
+    .trim()
+    .replace(/\bSAINTE\b/g, 'STE')
+    .replace(/\bSAINT\b/g, 'ST');
+}
+
+function sansRessort(t: OrganismeLocal): OrganismeLocal {
+  return {
+    nom: t.nom,
+    type: t.type,
+    telephone: t.telephone,
+    telephoneNote: t.telephoneNote,
+    adresse: t.adresse,
+    site: t.site,
+  };
+}
+
+/**
+ * Tribunal du département dont dépend l'entreprise, d'après son code postal
+ * (et sa commune quand le code postal est partagé) :
+ * - tribunal secondaire si l'adresse est dans son ressort ;
+ * - département à une seule juridiction : le tribunal principal ;
+ * - département à plusieurs juridictions et ressort non déterminé : carte
+ *   générique « … dont dépend votre siège », avec la liste des juridictions
+ *   du département (jamais un tribunal possiblement faux).
+ */
+export function tribunalSelonCodePostal(dep: DepartementData, codePostal?: string, ville?: string): OrganismeLocal {
+  const cp = (codePostal ?? '').trim();
+  const cle = cp && ville ? `${cp}|${normaliserCommune(ville)}` : '';
+  const couvre = (t: TribunalAvecRessort) =>
+    !!cp && ((t.codesPostaux ?? []).includes(cp) || (!!cle && (t.communes ?? []).includes(cle)));
+  const secondaire = dep.tribunauxSecondaires?.find(couvre);
+  if (secondaire) return sansRessort(secondaire);
+  if (!dep.tribunal.codesPostaux || couvre(dep.tribunal)) return sansRessort(dep.tribunal);
+  const tous = [dep.tribunal, ...(dep.tribunauxSecondaires ?? [])];
+  const alsaceMoselle = tous.every((t) => /chambre commerciale/i.test(t.type));
+  const avecTae = tous.some((t) => /activit[ée]s [ée]conomiques/i.test(t.type));
+  const liste = tous
+    .map((t) => t.nom.replace(/\s+-\s+Chambre commerciale$/i, ''))
+    .join(', ');
+  if (alsaceMoselle) {
+    return {
+      nom: 'Chambre commerciale du tribunal judiciaire dont dépend votre siège',
+      type: 'Chambre commerciale du tribunal judiciaire',
+      adresse: `Dans le département : ${liste}`,
+      site: 'https://www.justice.fr/recherche/annuaires',
+    };
+  }
+  return {
+    nom: avecTae
+      ? 'Tribunal de commerce ou des activités économiques dont dépend votre siège'
+      : 'Tribunal de commerce dont dépend votre siège',
+    type: avecTae ? 'Tribunal de commerce ou tribunal des activités économiques' : 'Tribunal de commerce',
+    adresse: `Dans le département : ${liste}`,
+    site: 'https://www.justice.fr/recherche/annuaires',
+  };
 }
 
 export interface OrganismeCard {
@@ -101,10 +273,30 @@ export function carteTribunal(
     site: tribunal.site,
   };
   if (juridiction !== 'TJ') return carteLocale;
+  // Département à TAE et tribunaux de commerce, ressort non déterminé : TAE
+  // (compétent pour tous les débiteurs) ou tribunal judiciaire.
+  if (/ ou tribunal des activit/i.test(tribunal.type)) {
+    return {
+      nom: 'Tribunal judiciaire ou tribunal des activités économiques dont dépend votre siège',
+      type: 'Tribunal judiciaire ou tribunal des activités économiques',
+      adresse: tribunal.adresse,
+      site: 'https://www.justice.fr/recherche/annuaires',
+      badge: 'Art. L621-2 C. com.',
+    };
+  }
   if (/activit[ée]s [ée]conomiques/i.test(tribunal.type)) {
     return { ...carteLocale, badge: 'Sauf professions du droit (tribunal judiciaire)' };
   }
   if (/tribunal judiciaire/i.test(tribunal.type)) return carteLocale;
+  // Saint-Pierre-et-Miquelon (C. com. L910-2) et Wallis-et-Futuna : pas de
+  // tribunal judiciaire, le tribunal de première instance en tient lieu.
+  if (/premi[èe]re instance/i.test(tribunal.type)) {
+    return {
+      ...carteLocale,
+      nom: tribunal.nom.replace(/\s*\(comp[ée]tence commerciale\)\s*$/i, ''),
+      type: 'Tribunal de première instance',
+    };
+  }
   return {
     nom: 'Tribunal judiciaire de votre ressort',
     type: 'Tribunal judiciaire · activité ni commerciale ni artisanale',
@@ -133,12 +325,15 @@ export function buildOrganismes(
   };
 
   // Conseil juridique (violet)
-  const juridique: OrganismeCard[] = [...avocats];
+  // La recherche d'avocats (Google Places, à proximité) ne garantit pas la
+  // spécialité « entreprises en difficulté » : étiquette neutre.
+  const juridique: OrganismeCard[] = avocats.map((a) =>
+    /^avocat/i.test(a.type) ? { ...a, type: 'Avocat à proximité' } : a,
+  );
   juridique.push({
-    nom: 'Expert-comptable CIP',
-    type: 'CIP National',
-    telephone: 'ciprofessionnels.com',
-    site: 'https://www.ciprofessionnels.com',
+    nom: 'CIP · Centre d\'information sur la prévention',
+    type: 'Entretien avec un ancien juge, un avocat et un expert-comptable',
+    site: 'https://www.cip-national.fr',
     badge: 'Gratuit · confidentiel',
   });
   if (reponses.probleme === 'banque' || reponses.probleme === 'fournisseurs') {
@@ -240,10 +435,29 @@ export function buildOrganismes(
 
   // Financier (bleu marine)
   const fin: OrganismeCard[] = [];
-  if (reponses.probleme === 'urssaf' && dep?.urssaf) {
+  const outreMer = /^9[78]/.test(dep?.code ?? '');
+  if (reponses.probleme === 'urssaf' && sectorKey === 'agriculture' && !outreMer) {
+    // Exploitant·e agricole : cotisations recouvrées par la MSA, pas l'Urssaf.
+    fin.push({
+      nom: 'MSA · caisse de votre département',
+      type: 'MSA (Mutualité Sociale Agricole)',
+      site: 'https://www.msa.fr',
+      badge: 'Échelonnement possible',
+    });
+  } else if (reponses.probleme === 'urssaf' && sectorKey === 'peche') {
+    fin.push({
+      nom: 'ENIM',
+      type: 'Cotisations des marins (ENIM)',
+      // lannuaire.service-public.gouv.fr (« service gratuit + prix d'un appel »).
+      telephone: '08 09 54 00 64',
+      site: 'https://www.enim.eu',
+      badge: 'Échelonnement possible',
+    });
+  } else if (reponses.probleme === 'urssaf' && dep?.urssaf) {
     fin.push({
       nom: dep.urssaf.nom,
-      type: 'URSSAF',
+      // Outre-mer : caisse locale (CGSS, CSSM, CPS, CAFAT…), pas l'Urssaf.
+      type: outreMer ? 'Caisse de sécurité sociale · cotisations' : 'URSSAF',
       telephone: telUrssaf(dep.urssaf.telephone),
       telephoneNote: dep.urssaf.telephoneNote,
       site: dep.urssaf.site ?? 'https://www.urssaf.fr',
@@ -265,12 +479,13 @@ export function buildOrganismes(
     site: 'https://www.bpifrance.fr',
     badge: 'Entretien gratuit',
   });
-  // Correspondant TPE-PME Banque de France — diagnostic gratuit et confidentiel
+  // Correspondant TPE-PME Banque de France (IEDOM / IEOM outre-mer) — diagnostic gratuit et confidentiel
+  const emission = institutionEmission(dep?.code);
   fin.push({
-    nom: 'Correspondant TPE-PME Banque de France',
+    nom: emission.nom === 'IEOM' ? `${emission.accompagnement} de ${emission.avecArticle}` : `${emission.accompagnement} ${emission.nom}`,
     type: 'Diagnostic financier confidentiel',
-    telephone: '34 14',
-    site: 'https://entreprises.banque-france.fr',
+    telephone: emission.telephone || undefined,
+    site: emission.site,
     badge: 'Gratuit · confidentiel',
   });
   if (reponses.probleme === 'banque' && dep?.banqueDeFrance) {
@@ -284,9 +499,10 @@ export function buildOrganismes(
   }
   if (reponses.probleme === 'fournisseurs') {
     fin.push({
+      // Saisine en ligne uniquement : aucun numéro public sur le site du
+      // Médiateur des entreprises.
       nom: 'Médiateur des entreprises',
-      type: 'Différends fournisseurs',
-      telephone: '01 53 17 87 40',
+      type: 'Différends fournisseurs · saisine en ligne',
       site: 'https://www.economie.gouv.fr/mediateur-des-entreprises',
       badge: 'Gratuit',
     });
@@ -303,16 +519,17 @@ export function buildOrganismes(
   const soc: OrganismeCard[] = [];
   if (reponses.effectif === 'salaries') {
     soc.push({
+      // Pas de numéro national publié (ags-garantie-salaires.org : formulaire
+      // de contact et CGEA régionaux).
       nom: 'AGS',
       type: 'Garantie des salaires',
-      telephone: '01 55 90 27 00',
       site: 'https://www.ags-garantie-salaires.org',
       badge: 'Si salariés',
     });
     if (dep?.dreets) {
       soc.push({
         nom: dep.dreets.nom,
-        type: 'DREETS',
+        type: dep.dreets.type || 'Services de l\'État · travail et emploi',
         telephone: dep.dreets.telephone,
         site: dep.dreets.site ?? 'https://dreets.gouv.fr',
       });
@@ -325,17 +542,21 @@ export function buildOrganismes(
     }
   }
   if (reponses.effectif === 'independant') {
+    // La « Sécurité sociale des indépendants » (SSI) a disparu le 1er janvier
+    // 2020 : l'action sociale des indépendant·e·s est celle du CPSTI, demandée
+    // à l'Urssaf (urssaf.fr, « Comment solliciter l'action sanitaire et sociale
+    // du CPSTI ? »).
     soc.push({
-      nom: 'SSI · Sécurité Sociale des Indépendants',
-      type: 'Action sociale dirigeants',
+      nom: 'Urssaf · Action sociale du CPSTI',
+      type: 'Aides aux indépendant·e·s en difficulté (cotisations, aide financière exceptionnelle)',
       telephone: '3698',
-      site: 'https://www.secu-independants.fr',
-      badge: 'Aides dédiées indépendants',
+      site: 'https://www.urssaf.fr/accueil/services/services-independants/solliciter-action-sociale-cpsti.html',
+      badge: 'Sur demande · au cas par cas',
     });
     soc.push({
       nom: 'France Travail Indépendants',
       type: 'ATI · Allocation Travailleurs Indépendants',
-      telephone: '39 95',
+      telephone: '39 49',
       site: 'https://chomage-independant.francetravail.fr',
       badge: '19,73 à 26,30 €/jour · 182 jours',
     });
@@ -364,7 +585,7 @@ export function buildAidesPersonnelles(reponses: Reponses): GroupeOrganismes {
     cartes.push({
       nom: 'ATI · Allocation Travailleurs Indépendants',
       type: 'France Travail',
-      telephone: '39 95',
+      telephone: '39 49',
       site: 'https://chomage-independant.francetravail.fr',
       badge: '19,73 à 26,30 €/jour · 182 jours',
     });
@@ -393,7 +614,8 @@ export function buildAidesPersonnelles(reponses: Reponses): GroupeOrganismes {
   cartes.push({
     nom: 'CSS · Complémentaire Santé Solidaire',
     type: 'Assurance Maladie',
-    telephone: '0 800 17 13 23',
+    // 3646 : numéro de l'Assurance Maladie (lannuaire.service-public.gouv.fr).
+    telephone: '3646',
     site: 'https://www.complementaire-sante-solidaire.gouv.fr',
     badge: 'Gratuit ou < 1€/jour',
   });
@@ -412,7 +634,7 @@ export function buildAidesPersonnelles(reponses: Reponses): GroupeOrganismes {
     type: 'France Travail',
     telephone: '39 49',
     site: 'https://www.francetravail.fr',
-    badge: '18,17€/jour · fin de droits chômage',
+    badge: '19,48 €/jour · fin de droits chômage',
   });
 
   // APL logement
@@ -462,45 +684,28 @@ export function buildOrdresProfessionnels(
     });
   }
 
+  // Une même caisse couvre parfois plusieurs professions (CARCDSF : dentistes
+  // et sages-femmes ; CAVOM : commissaires de justice, commissaires-priseurs…) : une
+  // seule carte, professions regroupées.
+  const parCaisse = new Map<string, { caisse: NonNullable<SectorInfo['caissesRetraite']>[number]; professions: string[] }>();
   for (const caisse of sector.caissesRetraite ?? []) {
+    const deja = parCaisse.get(caisse.caisse);
+    if (deja) {
+      if (!deja.professions.includes(caisse.profession)) deja.professions.push(caisse.profession);
+    } else {
+      parCaisse.set(caisse.caisse, { caisse, professions: [caisse.profession] });
+    }
+  }
+  for (const { caisse, professions } of parCaisse.values()) {
     cartes.push({
       nom: `${caisse.caisse} · Action sociale`,
-      type: `Caisse de retraite · ${caisse.profession}`,
+      type: `Caisse de retraite · ${professions.join(', ')}`,
       telephone: caisse.telephone,
       site: caisse.site,
       badge: 'Aide d\'urgence possible',
     });
   }
 
-  // URPS supplémentaires (Pharmaciens, Sage-femmes, Auxiliaires médicaux,
-  // Chirurgiens-dentistes) — sites nationaux fédérateurs. Les URPS Médecins
-  // régionales sont déjà gérées dans data/organismes.json par département.
-  if (sector.secteur === 'sante') {
-    cartes.push({
-      nom: 'URPS Pharmaciens',
-      type: 'Union régionale des professionnels de santé',
-      site: 'https://urps-pharmaciens.org',
-      badge: 'Trouver l\'antenne régionale',
-    });
-    cartes.push({
-      nom: 'URPS Sage-femmes',
-      type: 'Union régionale des professionnels de santé',
-      site: 'https://www.urpssagefemmes.fr',
-      badge: 'Trouver l\'antenne régionale',
-    });
-    cartes.push({
-      nom: 'URPS Chirurgiens-dentistes',
-      type: 'Union régionale des professionnels de santé',
-      site: 'https://www.lesurps.fr/chirurgiens-dentistes',
-      badge: 'Trouver l\'antenne régionale',
-    });
-    cartes.push({
-      nom: 'URPS Auxiliaires médicaux (kinés, infirmiers, orthophonistes)',
-      type: 'Union régionale des professionnels de santé',
-      site: 'https://www.lesurps.fr',
-      badge: 'Trouver l\'antenne régionale',
-    });
-  }
 
   if (cartes.length === 0) return null;
 
@@ -522,8 +727,8 @@ export function buildSoutien(reponses: Reponses): GroupeOrganismes {
 
   cartes.push({
     nom: 'BGE · Boutiques de Gestion',
+    // Pas de numéro national : chaque BGE a ses coordonnées (bge.asso.fr).
     type: 'Accompagnement créateurs/repreneurs',
-    telephone: '01 43 55 03 03',
     site: 'https://www.bge.asso.fr',
     badge: 'Rebond et reconversion',
   });
@@ -590,7 +795,7 @@ export function buildReseauxSpecifiques(
     {
       nom: "Action'elles",
       type: 'Réseau · femmes entrepreneures',
-      site: 'https://www.action-elles.fr',
+      site: 'https://actionelles.fr',
       badge: 'Accompagnement gratuit',
     },
     {
@@ -609,14 +814,15 @@ export function buildReseauxSpecifiques(
       nom: 'Garantie Égalité Femmes (ex-FGIF)',
       type: 'France Active · garantie de prêt',
       site: 'https://www.franceactive.org',
-      badge: 'Garantie jusqu\'à 80 % du prêt',
+      badge: 'Garantie de prêt bancaire',
     },
   ];
   if (age === 'plus-60' || age === '50-60') {
     femmes.push({
       nom: 'Force Femmes',
       type: 'Femmes > 45 ans · accompagnement emploi/création',
-      telephone: '01 44 51 03 53',
+      // forcefemmes.com/nous-contacter : siège et Île-de-France.
+      telephone: '01 42 63 59 49',
       site: 'https://www.forcefemmes.com',
       badge: 'Gratuit · > 45 ans',
     });
@@ -640,9 +846,8 @@ export function buildReseauxSpecifiques(
         {
           nom: '1 jeune 1 mentor',
           type: 'Mentorat · 16-30 ans',
-          telephone: '0 800 712 712',
           site: 'https://www.1jeune1mentor.fr',
-          badge: 'Gratuit · numéro vert',
+          badge: 'Gratuit',
         },
         {
           nom: 'Mission Locale',
@@ -659,7 +864,6 @@ export function buildReseauxSpecifiques(
         {
           nom: 'Adie Créajeunes',
           type: 'Microcrédit + accompagnement',
-          telephone: '0 969 328 110',
           site: 'https://www.adie.org',
           badge: 'Spécial < 32 ans',
         },
@@ -684,14 +888,13 @@ export function buildReseauxSpecifiques(
         {
           nom: "EGEE · Entente des Générations pour l'Emploi",
           type: 'Anciens dirigeants bénévoles',
-          telephone: '01 47 05 57 71',
           site: 'https://www.egee.asso.fr',
           badge: 'Conseil gratuit · présentiel',
         },
         {
           nom: 'ECTI · Experts retraités',
           type: 'Échanges et Consultations Techniques Internationaux',
-          telephone: '01 53 41 80 80',
+          telephone: '01 41 40 36 00',
           site: 'https://www.ecti.org',
           badge: 'Mission de conseil',
         },
@@ -729,7 +932,7 @@ export function buildReseauxSpecifiques(
       {
         nom: 'Cap Emploi',
         type: 'Réseau spécialisé handicap',
-        site: 'https://www.capemploi.com',
+        site: 'https://www.capemploi.info',
         badge: rqthDeclaree ? 'RDV gratuit recommandé' : 'Accompagnement gratuit',
       },
       {
@@ -741,7 +944,7 @@ export function buildReseauxSpecifiques(
       {
         nom: 'MDPH',
         type: 'Maison Départementale des Personnes Handicapées',
-        site: 'https://www.mdph.fr',
+        site: 'https://www.monparcourshandicap.gouv.fr/annuaire',
         badge: 'RQTH, AAH, PCH',
       },
       ...(rqthDeclaree
@@ -766,7 +969,7 @@ export function buildReseauxSpecifiques(
         {
           nom: 'CMP · Centre Médico-Psychologique',
           type: 'Suivi gratuit · par département',
-          site: 'https://www.service-public.fr/particuliers/vosdroits/F12368',
+          site: 'https://www.sante.fr/centre-medico-psychologique-cmp',
           badge: 'Secteur public · sans avance',
         },
         {
@@ -787,7 +990,7 @@ export function buildReseauxSpecifiques(
           type: 'Écoute · prévention suicide',
           telephone: '01 40 44 46 45',
           site: 'https://www.sos-suicide-phenix.org',
-          badge: 'Tous les jours · gratuit',
+          badge: 'Tous les jours, 13 h – 23 h · prix d\'un appel local',
         },
         {
           nom: 'Suicide Écoute',
@@ -830,14 +1033,8 @@ export function buildReseauxSpecifiques(
       {
         nom: 'Second Souffle',
         type: 'Entraide dirigeants en rebond',
-        site: 'https://second-souffle.com',
+        site: 'https://secondsouffle.org',
         badge: 'Communauté + ateliers',
-      },
-      {
-        nom: 'Re-Création',
-        type: 'Rebond entrepreneurial',
-        site: 'https://www.re-creation.org',
-        badge: 'Accompagnement gratuit',
       },
     ],
   });
@@ -850,18 +1047,17 @@ export function buildReseauxSpecifiques(
       titre: 'Entraide marins-pêcheurs',
       couleur: 'bleu-fonce',
       icone: '⚓',
+      // La SNSM (sauvetage en mer) n'aide que les familles de ses propres
+      // sauveteurs ; la carte « SSM » retirée (organisme introuvable).
+      // L'aide aux marins et à leurs familles relève de l'action sanitaire et
+      // sociale de l'ENIM (règlement d'action sanitaire et sociale, enim.eu).
       cartes: [
         {
-          nom: 'Solidarité Marins',
-          type: 'Société Nationale de Sauvetage en Mer · volet social',
-          site: 'https://www.snsm.org',
-          badge: 'Aide aux familles de marins',
-        },
-        {
-          nom: 'Société de Secours des Marins (SSM)',
-          type: 'Action sociale · ENIM',
+          nom: 'ENIM · Action sanitaire et sociale',
+          type: 'Aides aux marins et à leurs familles',
+          telephone: '08 09 54 00 64',
           site: 'https://www.enim.eu',
-          badge: 'Aides d\'urgence',
+          badge: 'Sur demande · souvent sous conditions de ressources',
         },
       ],
     });

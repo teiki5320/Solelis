@@ -4,6 +4,7 @@ import {
   buildOrganismes,
   orientationRestructuration,
   carteTribunal,
+  institutionEmission,
   type DepartementData,
 } from '../organismes';
 import type { Reponses } from '../types';
@@ -153,10 +154,12 @@ describe('buildOrganismes', () => {
     expect(financier.cartes.some((c) => c.nom === 'Bpifrance')).toBe(true);
   });
 
-  it('inclut SSI pour les indépendants dans le groupe social', () => {
+  it('inclut l\'action sociale du CPSTI (Urssaf) pour les indépendants dans le groupe social', () => {
     const groupes = buildOrganismes(null, makeReponses({ effectif: 'independant' }), []);
     const social = groupes.find((g) => g.cle === 'social')!;
-    expect(social.cartes.some((c) => c.nom.includes('SSI'))).toBe(true);
+    expect(social.cartes.some((c) => c.nom.includes('CPSTI'))).toBe(true);
+    // La SSI n'existe plus depuis le 1er janvier 2020.
+    expect(social.cartes.some((c) => /\bSSI\b|Sécurité Sociale des Indépendants/.test(c.nom))).toBe(false);
   });
 
   it('inclut AGS pour les salariés dans le groupe social', () => {
@@ -254,8 +257,31 @@ describe('carte tribunal et numéros', () => {
   it('indépendant·e : Urssaf au 3698 ; employeur : 3957', () => {
     const indep = tous(buildOrganismes(getDepartement('75'), makeReponses({ effectif: 'independant' }), []));
     expect(indep.find((c) => c.type === 'URSSAF')!.telephone).toBe('3698');
-    expect(indep.find((c) => c.nom.startsWith('SSI'))!.telephone).toBe('3698');
+    expect(indep.find((c) => c.nom.includes('CPSTI'))!.telephone).toBe('3698');
     const empl = tous(buildOrganismes(getDepartement('75'), makeReponses({ effectif: 'salaries' }), []));
     expect(empl.find((c) => c.type === 'URSSAF')!.telephone).toBe('3957');
+  });
+});
+
+describe('institutionEmission : Banque de France, IEDOM, IEOM (tour 5)', () => {
+  it('métropole : Banque de France, 34 14', () => {
+    expect(institutionEmission('75')).toMatchObject({ nom: 'Banque de France', telephone: '34 14' });
+  });
+  it('outre-mer : IEDOM / IEOM, 34 14 (annuaire service-public)', () => {
+    // IEDOM : 34 14 (annuaire service-public, fiches des agences IEDOM).
+    expect(institutionEmission('971')).toMatchObject({ nom: 'IEDOM', avecArticle: "l'IEDOM", telephone: '34 14' });
+    expect(institutionEmission('974').telephone).toBe('34 14');
+    expect(institutionEmission('988')).toMatchObject({ nom: 'IEOM', telephone: '34 14' });
+  });
+  it('« correspondant TPE-PME » : Banque de France et IEDOM seulement (ieom.fr : accompagnement des entreprises)', () => {
+    expect(institutionEmission('75').accompagnement).toBe('Correspondant TPE-PME');
+    expect(institutionEmission('972').accompagnement).toBe('Correspondant TPE-PME');
+    for (const d of ['986', '987', '988']) {
+      expect(institutionEmission(d).accompagnement).toBe('Accompagnement des entreprises');
+    }
+    const r = makeReponses({ probleme: 'banque' });
+    const noms = buildOrganismes(getDepartement('988'), r, [], 'autre', '', 'TC').flatMap((g) => g.cartes.map((c) => c.nom));
+    expect(noms).toContain("Accompagnement des entreprises de l'IEOM");
+    expect(noms.some((n) => /Correspondant TPE-PME/.test(n))).toBe(false);
   });
 });

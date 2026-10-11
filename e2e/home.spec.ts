@@ -18,11 +18,18 @@ test.describe('Page d\'accueil', () => {
     await expect(page.getByText(/14 chiffres/i)).toBeVisible();
   });
 
+  test('refuse un SIRET dont la clé de contrôle est fausse', async ({ page }) => {
+    await page.goto('/');
+    await page.getByLabel(/SIRET/i).fill('12345678901234');
+    await page.getByRole('button', { name: /Lancer|Démarrer|Commencer|Continuer/i }).first().click();
+    await expect(page.getByText(/chiffre semble mal saisi/i)).toBeVisible();
+  });
+
   test('redirige vers le questionnaire avec un SIRET valide', async ({ page }) => {
     await page.goto('/');
     const siretInput = page.getByLabel(/SIRET/i);
-    // SIRET d'INSEE volontairement fictif pour les tests
-    await siretInput.fill('12345678901234');
+    // SIRET réel et public (siège de La Poste) : la clé de contrôle est vérifiée.
+    await siretInput.fill('35600000000048');
     await page.getByRole('button', { name: /Lancer|Démarrer|Commencer|Continuer/i }).first().click();
     await page.waitForURL(/\/questionnaire/, { timeout: 5000 });
     expect(page.url()).toContain('/questionnaire');

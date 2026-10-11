@@ -57,6 +57,8 @@ interface InseeUniteLegale {
 }
 
 interface InseeEtablissement {
+  /** true si l'établissement est le siège de l'unité légale. */
+  etablissementSiege?: boolean;
   uniteLegale?: InseeUniteLegale;
   adresseEtablissement?: InseeAdresse;
   activitePrincipaleEtablissement?: string;
@@ -208,12 +210,14 @@ export function departementDepuisCommune(code: string | undefined): string {
  * Département à partir du code postal, à défaut de code commune :
  * - 97xxx / 98xxx → 3 chiffres (971 Guadeloupe … 988 Nouvelle-Calédonie) ;
  * - Corse : 200xx et 201xx → 2A (Corse-du-Sud), 202xx à 206xx → 2B (Haute-Corse).
- * Limite : Saint-Barthélemy (97133) et Saint-Martin (97150) ont un code
- * postal en 971 — seul le code commune (977xx / 978xx) les distingue.
+ * - Saint-Barthélemy (97133) et Saint-Martin (97150) : codes postaux en 971,
+ *   mais collectivités 977 et 978.
  */
 export function departementDepuisCodePostal(codePostal: string | undefined): string {
   const c = (codePostal ?? '').trim();
   if (!/^\d{5}$/.test(c)) return '';
+  if (c === '97133') return '977';
+  if (c === '97150') return '978';
   if (/^9[78]/.test(c)) return c.slice(0, 3);
   if (c.startsWith('20')) return c[2] === '0' || c[2] === '1' ? '2A' : '2B';
   return c.slice(0, 2);
@@ -242,6 +246,22 @@ export function choisirNom(...candidats: (string | null | undefined)[]): string 
     if (nom) return nom;
   }
   return 'Votre entreprise';
+}
+
+/**
+ * L'API recherche-entreprises renvoie dans `nom_complet` le nom commercial
+ * entre parenthèses, même quand il est identique à la dénomination :
+ * « AMP ETANCHEITE (AMP ETANCHEITE) ». On retire la parenthèse quand elle
+ * répète le nom (casse et espaces ignorés) ; sinon on la garde.
+ */
+export function nettoyerNomComplet(nom: string | null | undefined): string {
+  const brut = (nom ?? '').trim();
+  // « NOM (NOM) » ou « NOM (NOM) (SIGLE) » : la 1re parenthèse répète le nom.
+  const m = brut.match(/^(.*?\S)\s*\(([^()]*)\)(\s*\([^()]*\))?$/);
+  if (!m) return brut;
+  const normaliser = (s: string) => s.replace(/\s+/g, ' ').trim().toLocaleUpperCase('fr-FR');
+  if (normaliser(m[1]) !== normaliser(m[2])) return brut;
+  return m[1].trim() + (m[3] ? ' ' + m[3].trim() : '');
 }
 
 function fallbackFor(siret: string): CompanyData {
@@ -294,7 +314,7 @@ async function fetchFromRechercheEntreprises(
       ? determinerDepartement(matching.commune, matching.code_postal, matching.departement)
       : determinerDepartement(result.siege?.commune, codePostal, result.siege?.departement);
     const nom = choisirNom(
-      result.nom_complet,
+      nettoyerNomComplet(result.nom_complet),
       result.nom_raison_sociale,
       [result.prenom_usuel, result.nom].filter(Boolean).join(' '),
     );
@@ -312,6 +332,16 @@ async function fetchFromRechercheEntreprises(
       codePostal,
       ville,
       departement,
+      // Établissement secondaire : le tribunal est celui du siège (R600-1).
+      ...(matching?.siret && result.siege?.siret && matching.siret !== result.siege.siret
+        ? {
+            siege: {
+              codePostal: result.siege.code_postal ?? '',
+              ville: result.siege.libelle_commune ?? '',
+              departement: determinerDepartement(result.siege.commune, result.siege.code_postal, result.siege.departement),
+            },
+          }
+        : {}),
       fetched: true,
     };
   } catch (e) {
@@ -374,6 +404,9 @@ async function fetchFromInseeSirene(
       codePostal,
       ville: addr.libelleCommuneEtablissement ?? '',
       departement,
+      // Établissement secondaire : adresse du siège inconnue ici, le tribunal
+      // (celui du siège, R600-1) reste générique.
+      ...(etab.etablissementSiege === false ? { siege: { codePostal: '', ville: '', departement: '' } } : {}),
       fetched: true,
     };
   } catch (e) {

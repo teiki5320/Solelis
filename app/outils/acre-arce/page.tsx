@@ -7,11 +7,12 @@ import Link from 'next/link';
 // Exonération partielle des cotisations de sécurité sociale pendant 12 mois.
 // Conditions d'éligibilité (au moins l'une) :
 // - Demandeur d'emploi indemnisé ou non indemnisé (inscrit depuis ≥ 6 mois dans les 18 derniers mois)
-// - Bénéficiaire de l'ARE / RSA / ASS
-// - 18-25 ans (ou < 30 si handicap)
-// - Licencié d'une entreprise en RJ / LJ
+// - Bénéficiaire du RSA / ASS / PreParE
+// - 18-25 ans, < 30 ans non indemnisé (durée d'activité insuffisante) ou < 30 ans handicapé
+// - Salarié ou licencié d'une entreprise en sauvegarde / RJ / LJ qui la reprend
 // - Contrat d'appui au projet d'entreprise (CAPE)
-// - Création en QPV
+// - Création en QPV ou en ZFRR / ZFRR+
+// - Ne pas avoir bénéficié de l'Acre dans les 3 années précédentes (urssaf.fr)
 // Exonération (LFSS 2026, art. 23 ; décret n° 2026-69 du 6 février 2026) :
 // - Hors micro (créations depuis le 1er janvier 2026) : exonération du QUART des
 //   cotisations maladie-maternité, allocations familiales, retraite de base et
@@ -29,7 +30,13 @@ import Link from 'next/link';
 // - Avoir obtenu l'ACRE
 // - Créer ou reprendre une entreprise
 // Montant : 60 % des droits restants (fins de contrat depuis le 1er juillet 2023),
-// moins 3 % pour le financement des retraites complémentaires.
+// puis déduction de la participation de 3 % au financement des retraites
+// complémentaires, calculée sur ce capital. Exemple Unédic : 40 € × 518 j ×
+// 60 % = 12 432 € ; 12 432 € − 373 € (3 %) = 12 059 €.
+// Source : unedic.org, fiche thématique « Aide à la reprise ou à la création
+// d'entreprise (ARCE) ».
+const TAUX_ARCE = 0.6;
+const PARTICIPATION_RETRAITE_COMPLEMENTAIRE = 0.03;
 
 // PASS 2026 (arrêté du 22 décembre 2025) : 48 060 €.
 const PASS_2026 = 48060;
@@ -52,14 +59,18 @@ function formatEuros(n: number): string {
 }
 
 export default function AcreArcePage() {
-  const [statut, setStatut] = useState<Statut>('aucun');
+  // Aucune situation choisie au départ : pas de verdict avant la première réponse.
+  const [statut, setStatut] = useState<Statut | null>(null);
   const [microEntreprise, setMicroEntreprise] = useState(false);
   const [aAre, setAAre] = useState(false);
-  const [areReliquatMensuel, setAreReliquatMensuel] = useState(0);
-  const [areMoisRestants, setAreMoisRestants] = useState(0);
+  // Champs vides au départ (pas de « 0 » pré-rempli) : le capital ARCE
+  // n'est estimé qu'une fois les deux montants saisis.
+  const [areReliquatMensuel, setAreReliquatMensuel] = useState('');
+  const [areMoisRestants, setAreMoisRestants] = useState('');
   const [revenuPrevisionnel, setRevenuPrevisionnel] = useState(20000);
 
-  const acreEligible = statut !== 'aucun';
+  const statutChoisi = statut !== null;
+  const acreEligible = statutChoisi && statut !== 'aucun';
 
   const exoneration = useMemo(() => {
     if (!acreEligible) return { montant: 0, detail: '' };
@@ -85,20 +96,26 @@ export default function AcreArcePage() {
     };
   }, [acreEligible, microEntreprise, revenuPrevisionnel]);
 
+  const areMensuel = Number(areReliquatMensuel);
+  const areMois = Number(areMoisRestants);
+  const arceRenseigne =
+    areReliquatMensuel.trim() !== '' && areMoisRestants.trim() !== '' && areMensuel > 0 && areMois > 0;
+
   const arceMontant = useMemo(() => {
-    if (!aAre || !acreEligible) return 0;
-    const reliquatTotal = areReliquatMensuel * areMoisRestants;
-    return Math.round(reliquatTotal * 0.6);
-  }, [aAre, acreEligible, areReliquatMensuel, areMoisRestants]);
+    if (!aAre || !acreEligible || !arceRenseigne) return 0;
+    const reliquatTotal = areMensuel * areMois;
+    const capital = reliquatTotal * TAUX_ARCE;
+    return Math.round(capital * (1 - PARTICIPATION_RETRAITE_COMPLEMENTAIRE));
+  }, [aAre, acreEligible, arceRenseigne, areMensuel, areMois]);
 
   const STATUTS: { value: Statut; label: string; description: string }[] = [
     { value: 'demandeur-indemnise', label: 'Demandeur d\'emploi indemnisé (ARE)', description: 'Inscrit à France Travail, indemnisé' },
     { value: 'demandeur-6mois', label: 'Demandeur d\'emploi inscrit ≥ 6 mois', description: 'Non indemnisé mais inscrit sur les 18 derniers mois' },
-    { value: 'rsa-ass', label: 'Bénéficiaire du RSA ou ASS', description: 'Ou CSS, PPA' },
-    { value: 'jeune-25', label: 'Jeune de 18 à 25 ans (ou < 30 ans si handicap)', description: '' },
-    { value: 'licencie-rjlj', label: 'Licencié d\'une entreprise en RJ ou LJ', description: 'Repreneur de la même entreprise' },
+    { value: 'rsa-ass', label: 'Bénéficiaire du RSA, de l\'ASS ou de la PreParE', description: 'PreParE : prestation partagée d\'éducation de l\'enfant' },
+    { value: 'jeune-25', label: 'Jeune de 18 à 25 ans (ou < 30 ans si handicap)', description: 'Ou moins de 30 ans sans ARE faute de durée d\'activité suffisante' },
+    { value: 'licencie-rjlj', label: 'Salarié ou licencié d\'une entreprise en sauvegarde, RJ ou LJ', description: 'Qui reprend l\'activité de cette entreprise' },
     { value: 'cape', label: 'Contrat d\'Appui au Projet d\'Entreprise (CAPE)', description: '' },
-    { value: 'qpv', label: 'Création dans un Quartier Prioritaire de la Ville (QPV)', description: '' },
+    { value: 'qpv', label: 'Création dans un Quartier Prioritaire de la Ville (QPV) ou en zone France ruralités revitalisation (ZFRR, ZFRR+)', description: '' },
     { value: 'aucun', label: 'Aucun de ces cas', description: '' },
   ];
 
@@ -112,7 +129,7 @@ export default function AcreArcePage() {
       {
         '@type': 'HowToStep',
         name: 'Identifier votre situation d\'éligibilité ACRE',
-        text: 'Sélectionnez votre situation parmi les cas d\'éligibilité : demandeur d\'emploi, bénéficiaire RSA/ASS, jeune de 18-25 ans, licencié d\'une entreprise en RJ/LJ, CAPE ou création en QPV.',
+        text: 'Sélectionnez votre situation parmi les cas d\'éligibilité : demandeur d\'emploi, bénéficiaire RSA/ASS/PreParE, jeune de 18-25 ans, salarié repreneur d\'une entreprise en sauvegarde/RJ/LJ, CAPE, création en QPV ou ZFRR.',
       },
       {
         '@type': 'HowToStep',
@@ -241,7 +258,7 @@ export default function AcreArcePage() {
                   type="number"
                   min={0}
                   value={areReliquatMensuel}
-                  onChange={(e) => setAreReliquatMensuel(Number(e.target.value))}
+                  onChange={(e) => setAreReliquatMensuel(e.target.value)}
                   className="mt-1 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2"
                 />
               </label>
@@ -251,7 +268,7 @@ export default function AcreArcePage() {
                   type="number"
                   min={0}
                   value={areMoisRestants}
-                  onChange={(e) => setAreMoisRestants(Number(e.target.value))}
+                  onChange={(e) => setAreMoisRestants(e.target.value)}
                   className="mt-1 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2"
                 />
               </label>
@@ -266,9 +283,13 @@ export default function AcreArcePage() {
             }`}
           >
             <p className="font-display text-lg text-navy">
-              ACRE — {acreEligible ? 'éligible ✓' : 'non éligible'}
+              {statutChoisi ? `ACRE — ${acreEligible ? 'éligible ✓' : 'non éligible'}` : 'ACRE'}
             </p>
-            {acreEligible ? (
+            {!statutChoisi ? (
+              <p className="mt-2 text-sm text-navy/70">
+                Choisissez votre situation ci-dessus pour connaître votre éligibilité.
+              </p>
+            ) : acreEligible ? (
               <>
                 <p className="mt-2 text-sm text-navy/80">{exoneration.detail}</p>
                 <p className="mt-3 text-2xl font-display text-vert">
@@ -291,12 +312,20 @@ export default function AcreArcePage() {
             }`}
           >
             <p className="font-display text-lg text-navy">
-              ARCE — {aAre && acreEligible ? 'éligible ✓' : 'non éligible'}
+              {statutChoisi ? `ARCE — ${aAre && acreEligible ? 'éligible ✓' : 'non éligible'}` : 'ARCE'}
             </p>
-            {aAre && acreEligible ? (
+            {!statutChoisi ? (
+              <p className="mt-2 text-sm text-navy/70">
+                Choisissez votre situation ci-dessus pour connaître votre éligibilité.
+              </p>
+            ) : aAre && acreEligible && !arceRenseigne ? (
+              <p className="mt-2 text-sm text-navy/70">
+                Renseignez le montant mensuel de l&apos;ARE et les mois de droits restants pour estimer le capital.
+              </p>
+            ) : aAre && acreEligible ? (
               <>
                 <p className="mt-2 text-sm text-navy/80">
-                  60 % du reliquat ARE (moins 3 % pour la retraite complémentaire), versé en capital en 2 fois : la moitié au démarrage, l&apos;autre moitié 6 mois après si l&apos;activité se poursuit.
+                  60 % du reliquat ARE, moins la participation de 3 % au financement des retraites complémentaires (déjà déduite ci-dessous), versé en capital en 2 fois : la moitié au démarrage, l&apos;autre moitié 6 mois après si l&apos;activité se poursuit.
                 </p>
                 <p className="mt-3 text-2xl font-display text-vert">
                   ~ {formatEuros(arceMontant)}
@@ -338,8 +367,8 @@ export default function AcreArcePage() {
       <p className="mt-6 text-xs text-navy/50">
         Sources : Code de la sécurité sociale art. L131-6-4 et D131-6-1 ;
         décret n° 2026-69 du 6 février 2026 (ACRE) ; Code du travail
-        art. R5141-2 (ARCE) ; www.service-public.gouv.fr, www.urssaf.fr et
-        www.francetravail.fr. PASS 2026 : 48 060 € (arrêté du 22 décembre 2025).
+        art. R5141-2 (ARCE) ; www.service-public.gouv.fr, www.urssaf.fr,
+        www.francetravail.fr et www.unedic.org. PASS 2026 : 48 060 € (arrêté du 22 décembre 2025).
       </p>
     </section>
   );

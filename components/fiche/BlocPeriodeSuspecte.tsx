@@ -32,8 +32,8 @@ export default function BlocPeriodeSuspecte() {
         antérieure de plusieurs mois au jugement. Les actes accomplis
         entre cette date et le jugement (jusqu&apos;à <strong>18 mois en
         arrière</strong>) sont scrutés et peuvent être{' '}
-        <strong>annulés rétroactivement</strong> par le mandataire pour
-        reconstituer l&apos;actif. Comprendre ce mécanisme est crucial
+        <strong>annulés rétroactivement</strong> par le tribunal, à la
+        demande notamment du mandataire, pour reconstituer l&apos;actif. Comprendre ce mécanisme est crucial
         pour éviter des erreurs lourdes pendant cette période sensible.
       </p>
 
@@ -61,13 +61,13 @@ export default function BlocPeriodeSuspecte() {
             <strong>Paiement par moyen anormal</strong> : dation en paiement (céder une voiture ou un bien à la place d&apos;un règlement bancaire), compensation non autorisée.
           </li>
           <li>
-            <strong>Hypothèque ou nantissement</strong> consenti pour garantir une dette antérieure non échue (la banque qui se fait inscrire au dernier moment).
+            <strong>Hypothèque, nantissement ou autre sûreté</strong> consenti pour garantir une dette contractée antérieurement (la banque qui se fait inscrire au dernier moment), sauf remplacement d&apos;une sûreté équivalente.
           </li>
           <li>
-            <strong>Mesure conservatoire</strong> ou avis à tiers détenteur (sauf condition fiscale particulière).
+            <strong>Mesure conservatoire</strong> (saisie conservatoire, inscription provisoire), sauf si elle a été inscrite ou pratiquée avant la date de cessation des paiements.
           </li>
           <li>
-            <strong>Levée d&apos;option</strong> par un crédit-bailleur en cours d&apos;exécution.
+            <strong>Attribution ou levée d&apos;options</strong> de souscription ou d&apos;achat d&apos;actions (stock-options).
           </li>
         </ul>
       </div>
@@ -82,16 +82,23 @@ export default function BlocPeriodeSuspecte() {
           <strong>l&apos;autre partie avait connaissance</strong> de la
           cessation des paiements. Le mandataire enquête : SMS, mails,
           comptes, témoignages — la preuve est souvent reconstruite.
+          Une saisie (saisie-attribution, saisie administrative,
+          opposition) pratiquée par un créancier après la date de
+          cessation des paiements, en connaissance de celle-ci, peut
+          aussi être annulée. Pour les procédures ouvertes à partir du
+          1er janvier 2027, ces nullités ne visent plus les paiements et
+          saisies de certaines cotisations sociales et dettes fiscales
+          (loi n° 2025-1403 du 30 décembre 2025).
         </p>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
             <strong>Paiement d&apos;une dette échue</strong> par un mode normal (virement, chèque) — annulable si le créancier savait votre situation.
           </li>
           <li>
-            <strong>Vente à un proche</strong> (conjoint, enfant, ami) même au juste prix — la connaissance est présumée.
+            <strong>Vente à un proche</strong> (conjoint, enfant, ami), même au juste prix — la loi ne présume pas sa connaissance de la cessation des paiements : elle doit être prouvée, mais le juge peut la déduire d&apos;indices (lien familial, informations partagées).
           </li>
           <li>
-            <strong>Cession de fonds de commerce</strong> à prix anormalement bas.
+            <strong>Cession de fonds de commerce</strong> ou d&apos;un autre actif (si le prix est notablement trop bas, la nullité est même de droit).
           </li>
           <li>
             <strong>Transfert d&apos;actif</strong> à une société écran ou nouvellement créée.
@@ -154,9 +161,7 @@ export default function BlocPeriodeSuspecte() {
       <p className="mt-5 text-xs text-navy/50">
         Sources : C. com. art. L631-8, L632-1 à L632-4 (période suspecte
         et nullités) ; C. com. art. L631-4 (délai de 45 j) ; Code civil
-        art. 1341-2 (action paulienne) ; jurisprudence Cass. com.
-        notamment Cass. com. 17 mai 2017 n° 15-17.520 sur la preuve de
-        connaissance.
+        art. 1341-2 (action paulienne).
       </p>
     </BlocAccordeon>
   );

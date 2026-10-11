@@ -2,6 +2,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useFiche, useFicheStorageKey } from '@/lib/FicheContext';
 import BlocAccordeon from './BlocAccordeon';
+import { nombreFr } from '@/lib/format';
 
 interface Inputs {
   soldeInitial: number;
@@ -21,7 +22,7 @@ const EMPTY: Inputs = {
 
 function formatEuros(n: number): string {
   if (Math.abs(n) >= 1000) {
-    return `${(n / 1000).toFixed(1)} k€`;
+    return `${nombreFr(n / 1000, 1)} k€`;
   }
   return `${Math.round(n).toLocaleString('fr-FR')} €`;
 }
@@ -85,7 +86,7 @@ function verdict(inputs: Inputs, proj: Projection[]): {
     message: `À charges constantes, votre trésorerie passe en négatif au mois ${premierNegatif.mois}. Il vous reste ${premierNegatif.mois} mois pour agir — c'est jouable.`,
     actions: [
       'Obtenez un moratoire URSSAF / SIE (courriers Solelis)',
-      'Saisissez la médiation du crédit (Banque de France, gratuit, 5 j)',
+      'Saisissez la médiation du crédit (Banque de France, gratuit, contact sous 48 h)',
       'Réduisez les charges fixes non vitales (abonnements, loyers renégociables)',
       "Accélérez les encaissements clients (relances, affacturage, escompte)",
       'Si l\'écart reste négatif après ces actions : mandat ad hoc pour négocier globalement',

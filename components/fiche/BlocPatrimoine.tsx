@@ -1,7 +1,7 @@
 'use client';
 import type { Reponses, CompanyData } from '@/lib/types';
 import { useFiche } from '@/lib/FicheContext';
-import { isEI } from '@/lib/strategie';
+import { isEI, getResponsabiliteAssocies } from '@/lib/strategie';
 import BlocAccordeon from './BlocAccordeon';
 
 type Niveau = 'protege' | 'mixte' | 'expose';
@@ -15,8 +15,9 @@ interface Poche {
   action: string;
 }
 
-function buildPoches(r: Reponses, c: CompanyData): Poche[] {
+export function buildPoches(r: Reponses, c: CompanyData): Poche[] {
   const ei = isEI(c.formeJuridique);
+  const resp = getResponsabiliteAssocies(c.formeJuridique);
   const aCaution = r.caution === 'oui';
   const cautionInconnue = r.caution === 'ne-sais-pas';
   const proprietaire = r.patrimoine === 'proprietaire';
@@ -35,7 +36,7 @@ function buildPoches(r: Reponses, c: CompanyData): Poche[] {
         titre: 'Résidence principale',
         niveau: 'protege',
         analyse:
-          "En tant qu'entrepreneur individuel (loi Macron 2015), votre résidence est insaisissable par les créanciers professionnels, sans démarche.",
+          "En tant qu'entrepreneur·e individuel·le, votre résidence principale est insaisissable de droit par les créanciers professionnels, sans démarche (art. L526-1 C. com., loi Macron 2015).",
         action: "Vérifiez qu'aucune caution hypothécaire ne vise cette résidence — elle annulerait la protection.",
       });
     } else if (ei && aCaution) {
@@ -46,19 +47,38 @@ function buildPoches(r: Reponses, c: CompanyData): Poche[] {
         niveau: 'mixte',
         analyse:
           "L'insaisissabilité de droit des EI ne joue pas contre un créancier pour lequel vous avez signé une caution personnelle ou hypothécaire.",
-        action: "Faites vérifier par un avocat chacune de vos cautions — certaines sont annulables (disproportion).",
+        action: "Faites vérifier par un avocat chacune de vos cautions — une caution disproportionnée peut être réduite (art. 2300 C. civ.).",
+      });
+    } else if (resp.illimitee) {
+      poches.push({
+        cle: 'residence',
+        icone: '🏠',
+        titre: 'Résidence principale',
+        niveau: 'expose',
+        analyse: `Même sans caution, ${resp.texte} Votre résidence peut donc être saisie par un créancier de la société.`,
+        action: "Faites le point avec un avocat ou un notaire sur votre exposition personnelle avant toute décision.",
+      });
+    } else if (resp.regime === 'limitee') {
+      poches.push({
+        cle: 'residence',
+        icone: '🏠',
+        titre: 'Résidence principale',
+        niveau: aCaution ? 'expose' : cautionInconnue ? 'mixte' : 'protege',
+        analyse:
+          "Les dettes de la société ne sont pas les vôtres : votre résidence n'en répond que si vous avez signé une caution (personnelle ou hypothécaire) ou si le tribunal vous condamne pour faute de gestion (insuffisance d'actif, art. L651-2 C. com.). La déclaration notariée d'insaisissabilité est réservée aux entrepreneur·e·s individuel·le·s (art. L526-1 C. com.).",
+        action: aCaution
+          ? "Faites vérifier par un avocat chacune de vos cautions — une caution disproportionnée peut être réduite (art. 2300 C. civ.)."
+          : "Ne signez aucune nouvelle caution ni hypothèque sur ce bien sans l'avis d'un avocat.",
       });
     } else {
       poches.push({
         cle: 'residence',
         icone: '🏠',
         titre: 'Résidence principale',
-        niveau: aCaution ? 'expose' : 'mixte',
+        niveau: 'mixte',
         analyse:
-          "En tant que dirigeant de société, la protection n'est PAS automatique. Elle peut être déclarée chez un notaire (déclaration d'insaisissabilité) — mais pas rétroactivement.",
-        action: aCaution
-          ? "Consultez urgemment un notaire + avocat. Une déclaration d'insaisissabilité peut être possible pour les dettes futures."
-          : "Consultez un notaire pour une déclaration d'insaisissabilité préventive (300-500 €).",
+          "Sa protection dépend de votre forme juridique (entreprise individuelle ou société) et des cautions que vous avez signées.",
+        action: "Faites vérifier votre situation par un avocat ou un notaire.",
       });
     }
   } else {
@@ -79,10 +99,16 @@ function buildPoches(r: Reponses, c: CompanyData): Poche[] {
     cle: 'epargne',
     icone: '💰',
     titre: 'Épargne bancaire (comptes, livrets)',
-    niveau: aCaution ? 'expose' : 'mixte',
+    niveau: aCaution || resp.illimitee ? 'expose' : 'mixte',
     analyse: aCaution
-      ? "Les créanciers munis d'un titre exécutoire peuvent faire saisir vos comptes. Une fraction reste toujours insaisissable (solde bancaire insaisissable ~ 600 €)."
-      : "Sans caution signée, le risque est limité à l'entreprise — sauf action en comblement de passif.",
+      ? "Les créanciers munis d'un titre exécutoire peuvent faire saisir vos comptes. Une somme reste toujours insaisissable : le solde bancaire insaisissable, égal au RSA d'une personne seule (651,69 € depuis le 1er avril 2026)."
+      : resp.illimitee
+        ? `Même sans caution, ${resp.texte}`
+        : resp.regime === 'ei'
+          ? "Depuis le 15 mai 2022, votre patrimoine personnel est séparé de plein droit de votre patrimoine professionnel : vos créanciers professionnels ne peuvent pas saisir vos comptes personnels pour des dettes nées après cette date (art. L526-22 C. com.), sauf renonciation signée au profit d'un créancier, fraude, ou certaines dettes fiscales et sociales."
+          : resp.regime === 'limitee'
+            ? "Sans caution signée, vos comptes personnels ne répondent pas des dettes de la société — sauf condamnation pour faute de gestion (insuffisance d'actif, art. L651-2 C. com.)."
+            : "Leur exposition dépend de votre forme juridique et des cautions signées : faites-la vérifier.",
     action:
       "Ne videz pas vos comptes vers des proches : en procédure collective, ces transferts peuvent être annulés s'ils tombent dans la période suspecte (jusqu'à 18 mois avant le jugement), et un créancier peut agir en action paulienne s'il prouve la fraude.",
   });
@@ -105,9 +131,14 @@ function buildPoches(r: Reponses, c: CompanyData): Poche[] {
       cle: 'autres-immo',
       icone: '🏘️',
       titre: 'Autres biens immobiliers (locatif, SCI)',
-      niveau: aCaution || separation === false ? 'expose' : 'mixte',
-      analyse:
-        "Les biens immobiliers hors résidence principale ne bénéficient pas de l'insaisissabilité de droit. Ils sont les premières cibles des créanciers.",
+      niveau: aCaution || resp.illimitee ? 'expose' : 'mixte',
+      analyse: resp.illimitee
+        ? `Même sans caution, ${resp.texte}`
+        : resp.regime === 'ei'
+          ? "Ces biens ne bénéficient pas de l'insaisissabilité de droit de la résidence principale (art. L526-1 C. com.). Mais depuis le 15 mai 2022, tout votre patrimoine personnel est séparé de plein droit : vos créanciers professionnels ne peuvent pas les saisir pour des dettes nées après cette date (art. L526-22 C. com.), sauf renonciation, fraude ou certaines dettes fiscales et sociales. Les dettes plus anciennes et les cautions signées restent un risque."
+          : resp.regime === 'limitee'
+            ? "Ils ne répondent pas des dettes de la société, sauf caution, hypothèque consentie sur ces biens ou condamnation pour faute de gestion (art. L651-2 C. com.)."
+            : "Leur exposition dépend de votre forme juridique et des cautions signées : faites-la vérifier.",
       action:
         "Un notaire peut examiner un démembrement ou une donation antérieure. Attention : en procédure collective, une donation faite pendant la période suspecte ou dans les 6 mois qui précèdent la cessation des paiements est annulable (art. L632-1 C. com.), et un créancier peut agir en action paulienne s'il prouve la fraude.",
     });
@@ -124,7 +155,7 @@ function buildPoches(r: Reponses, c: CompanyData): Poche[] {
         analyse:
           "En régime de communauté, les biens communs (salaires, comptes joints, immobilier commun) répondent des dettes de l'entreprise.",
         action:
-          "Un changement de régime (séparation de biens) est possible — 1 500 à 3 000 € chez le notaire — mais n'est opposable aux créanciers que pour les dettes FUTURES. Ne tardez pas.",
+          "Un changement de régime (séparation de biens) est possible par acte notarié — demandez le coût au notaire — mais n'est opposable aux créanciers que pour les dettes FUTURES. Ne tardez pas.",
       });
     } else if (separation) {
       poches.push({
@@ -161,9 +192,9 @@ function buildPoches(r: Reponses, c: CompanyData): Poche[] {
     titre: 'Véhicule personnel',
     niveau: 'mixte',
     analyse:
-      "Les véhicules peuvent être saisis sauf s'ils sont nécessaires à une activité professionnelle salariée (pas à l'entreprise en difficulté).",
+      "Un véhicule personnel peut être saisi par un créancier muni d'un titre exécutoire. Certains biens nécessaires au travail échappent à la saisie : faites vérifier votre cas.",
     action:
-      "Un véhicule financé en LOA/LLD reste propriété du loueur — il est protégé de la saisie.",
+      "Un véhicule financé en LOA/LLD appartient au loueur : vos créanciers ne peuvent pas le saisir, mais le loueur peut le reprendre en cas d'impayés.",
   });
 
   // Cautions (rappel si pertinent)

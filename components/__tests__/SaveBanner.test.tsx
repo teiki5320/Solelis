@@ -18,6 +18,11 @@ function saisirEtEnvoyer(email = 'moi@exemple.fr') {
 }
 
 describe('SaveBanner', () => {
+  it('le formulaire n’est pas imprimé (classe no-print)', () => {
+    render(<SaveBanner token="tok" />);
+    expect(screen.getByLabelText('Votre adresse e-mail').closest('form')).toHaveClass('no-print');
+  });
+
   it('le champ e-mail a un vrai libellé', () => {
     render(<SaveBanner token="tok" />);
     const champ = screen.getByLabelText('Votre adresse e-mail');

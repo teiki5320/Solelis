@@ -16,10 +16,10 @@ const procedures = [
     quand:
       'Vous sentez que ça se dégrade, mais vous n’êtes pas encore en cessation',
     quiDecide: 'Vous — c’est volontaire',
-    confidentialite: 'Totale — personne ne sait',
-    duree: '3 mois renouvelables',
+    confidentialite: 'Oui — toutes les personnes appelées à la procédure sont tenues à la confidentialité (art. L611-15 C. com.)',
+    duree: 'Pas de durée légale : fixée par le président du tribunal',
     controle: 'Oui, totalement',
-    cout: 'Honoraires du mandataire (négociables)',
+    cout: 'Rémunération du mandataire fixée par le président du tribunal, avec votre accord (art. L611-14 C. com.)',
     ideal:
       'Vous voulez négocier discrètement avec un créancier',
   },
@@ -46,7 +46,7 @@ const procedures = [
     quiDecide: 'Vous — demande au tribunal',
     confidentialite: 'Non — la procédure est publique',
     duree: '6 mois (renouvelable 6 mois)',
-    controle: 'Oui, avec un administrateur',
+    controle: 'Oui, avec un administrateur le cas échéant',
     cout: 'Frais de justice + honoraires administrateur',
     ideal:
       'L’entreprise est viable mais les dettes l’étouffent',
@@ -58,9 +58,9 @@ const procedures = [
     quand: 'Vous êtes en cessation des paiements',
     quiDecide: 'Vous, un créancier ou le procureur',
     confidentialite: 'Non — publication au BODACC',
-    duree: '6 mois (renouvelable 6 mois)',
+    duree: '6 mois, renouvelable 6 mois, et exceptionnellement 6 mois de plus à la demande du procureur : 18 mois max (art. L631-7)',
     controle:
-      'Partiellement — un administrateur est nommé',
+      'Partiellement — un administrateur peut vous assister, voire vous remplacer',
     cout: 'Frais de justice',
     ideal:
       'L’entreprise peut être sauvée avec un plan de restructuration',
@@ -152,8 +152,8 @@ export default function ProceduresPage() {
       {/* Disclaimer */}
       <div className="dashed-band mt-12 p-6 text-center text-sm leading-relaxed text-navy/70">
         Ce tableau est une simplification. Chaque situation est unique —
-        un avocat ou le tribunal de commerce peuvent vous conseiller gratuitement
-        sur la procédure la plus adaptée.
+        un CIP (entretien gratuit et confidentiel) ou un avocat (première consultation
+        gratuite possible dans un point-justice, 3039) peuvent vous orienter vers la procédure la plus adaptée.
       </div>
 
       {/* CTA */}

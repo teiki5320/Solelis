@@ -33,12 +33,13 @@ export default function BlocCSP() {
     >
       <p className="text-sm text-navy/80">
         Le <strong>CSP</strong> est un contrat proposé aux salariés
-        licenciés pour motif économique. Il offre <strong>75 % du
-        salaire brut antérieur pendant 12 mois</strong> (Allocation de
+        licenciés pour motif économique. Il offre <strong>jusqu&apos;à 12 mois une allocation
+        de 75 % du salaire journalier de référence</strong> (avec au moins 1 an d&apos;ancienneté ; sinon le montant de l&apos;allocation chômage) (Allocation de
         Sécurisation Professionnelle, ASP), versée par France Travail,
         et un accompagnement renforcé. Il est <strong>obligatoire</strong>{' '}
-        — son omission entraîne une contribution de 2 mois de salaire
-        à France Travail par salarié.
+        — s&apos;il n&apos;est pas proposé, France Travail le propose
+        à la place de l&apos;employeur, qui doit alors une contribution
+        de 2 mois de salaire (3 mois si le salarié adhère).
       </p>
 
       {/* Conditions */}
@@ -57,8 +58,10 @@ export default function BlocCSP() {
           </li>
           <li>
             <strong>Tout salarié</strong> totalisant au moins 88 jours ou
-            610 heures de travail dans les 28 derniers mois (Cdte du
-            travail) — soit la majorité.
+            610 heures de travail (4 mois) sur les 24 derniers mois (36
+            mois à partir de 55 ans, pour un licenciement engagé depuis le
+            1er avril 2025 ; avenant n° 10 du 20 mars 2025) — soit la majorité (Unédic, France
+            Travail).
           </li>
         </ul>
       </div>
@@ -68,30 +71,28 @@ export default function BlocCSP() {
         <p className="font-display text-base text-navy">Procédure pas-à-pas</p>
         <ol className="mt-2 list-decimal space-y-1.5 pl-5 text-sm text-navy/80">
           <li>
-            <strong>Remise en main propre</strong> du document CSP
-            (Cerfa 14953) lors de l&apos;entretien préalable au
+            <strong>Remise en main propre</strong> du document
+            d&apos;information CSP lors de l&apos;entretien préalable au
             licenciement, contre signature. Si refus de signer : remise
             en LRAR.
           </li>
           <li>
             <strong>Délai de 21 jours calendaires</strong> pour le salarié
-            pour accepter ou refuser. Le délai court à compter de la
-            remise du document.
+            pour accepter ou refuser. Le délai court à compter du
+            lendemain de la remise du document.
           </li>
           <li>
             Si le salarié <strong>accepte</strong> : le contrat prend fin
-            au lendemain du 21e jour, sans préavis. L&apos;employeur paie
-            l&apos;indemnité légale de licenciement + verse à France
-            Travail un montant équivalent à l&apos;indemnité de préavis
-            (2 mois max).
+            à l&apos;issue du délai de réflexion, sans préavis.
+            L&apos;employeur paie l&apos;indemnité de licenciement et,
+            pour un salarié d&apos;au moins 1 an d&apos;ancienneté, verse
+            à France Travail l&apos;équivalent de l&apos;indemnité de
+            préavis dans la limite de 3 mois de salaire (le surplus
+            éventuel revient au salarié).
           </li>
           <li>
             Si le salarié <strong>refuse</strong> ou ne répond pas : le
             licenciement suit la procédure classique (préavis, indemnité).
-          </li>
-          <li>
-            <strong>Inscription</strong> du salarié auprès de France
-            Travail dans les 7 jours suivant la fin du contrat.
           </li>
         </ol>
       </div>
@@ -101,27 +102,27 @@ export default function BlocCSP() {
         <p className="font-display text-base text-vert">Ce que le salarié reçoit</p>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
-            <strong>ASP</strong> : 75 % du salaire brut moyen des 12
-            derniers mois pendant 12 mois (plafonné à 4 PASS).
+            <strong>ASP</strong> : 75 % du salaire journalier de
+            référence pendant 12 mois au plus (avec au moins 1 an
+            d&apos;ancienneté ; sinon le montant de l&apos;allocation chômage).
           </li>
           <li>
             <strong>Accompagnement renforcé</strong> par un conseiller
-            référent (entretiens hebdomadaires les 3 premiers mois,
-            puis bimensuels).
+            référent France Travail.
           </li>
           <li>
             <strong>Aide à la reprise/création</strong> d&apos;entreprise
             (ARCE).
           </li>
           <li>
-            <strong>Primes</strong> : reclassement (50 % du reliquat
-            d&apos;ASP si retour à l&apos;emploi avant la fin) ;
-            différentielles de rémunération (si nouveau salaire inférieur
-            à l&apos;ancien).
+            <strong>Primes</strong> possibles en cas de reprise
+            d&apos;emploi (prime au reclassement, indemnité
+            différentielle si le nouveau salaire est plus bas) :
+            conditions auprès de France Travail.
           </li>
           <li>
             <strong>Maintien des droits</strong> mutuelle, prévoyance
-            (loi Évin, art. L911-8 CSS) — souvent oublié, à rappeler.
+            (portabilité, art. L911-8 CSS) — souvent oublié, à rappeler.
           </li>
         </ul>
       </div>
@@ -134,20 +135,20 @@ export default function BlocCSP() {
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
             <strong>Contribution à France Travail</strong> équivalente à
-            2 mois de salaire brut moyen par salarié non informé (art.
-            L1233-66 C. trav.).
+            2 mois de salaire brut par salarié à qui le CSP n&apos;a pas
+            été proposé, portée à 3 mois si le salarié adhère au CSP
+            que France Travail lui propose alors (art. L1233-66 C.
+            trav.).
           </li>
           <li>
-            <strong>Risque prud&apos;homal</strong> : la jurisprudence
-            assimile l&apos;absence de proposition du CSP à un manquement
-            qui n&apos;entraîne pas la nullité du licenciement mais
-            ouvre droit à dommages-intérêts (Cass. soc. 2014).
+            <strong>Risque prud&apos;homal</strong> : le salarié peut
+            demander réparation du préjudice subi devant le conseil de
+            prud&apos;hommes.
           </li>
           <li>
             En <strong>RJ/LJ</strong> : la contribution due à France
-            Travail est une créance de la procédure (à déclarer au passif
-            par France Travail) — pas une dette personnelle du
-            mandataire.
+            Travail est une dette de l&apos;entreprise en procédure — pas
+            une dette personnelle du mandataire.
           </li>
         </ul>
       </div>
@@ -167,15 +168,15 @@ export default function BlocCSP() {
             <span aria-hidden>☎</span> 39 95
           </a>
           <a
-            href="https://www.francetravail.fr/employeur"
+            href="https://www.francetravail.fr/employeur/vos-declarations-et-cotisations/la-fin-de-vos-contrats-de-travai/le-contrat-de-securisation-profe.html"
             target="_blank"
             rel="noreferrer"
             className="rounded-full bg-white/80 px-3 py-1.5 text-bleu-fonce hover:bg-white"
           >
-            <span aria-hidden>🌐</span> francetravail.fr/employeur
+            <span aria-hidden>🌐</span> francetravail.fr — CSP employeur
           </a>
           <a
-            href="https://www.service-public.fr/professionnels-entreprises/vosdroits/F31432"
+            href="https://entreprendre.service-public.gouv.fr/vosdroits/F13819"
             target="_blank"
             rel="noreferrer"
             className="rounded-full bg-white/80 px-3 py-1.5 text-bleu-fonce hover:bg-white"
@@ -187,8 +188,10 @@ export default function BlocCSP() {
 
       <p className="mt-5 text-xs text-navy/50">
         Sources : C. trav. art. L1233-65 à L1233-70 (CSP) ; Convention
-        Unédic relative au CSP du 26 janv. 2015 (avenants 2018, 2021,
-        2024) ; circulaire DGEFP n° 2015-09 ; Cerfa 14953*02.
+        Unédic relative au CSP du 26 janv. 2015 (avenant n° 10 du 20 mars
+        2025, période de référence alignée sur l&apos;assurance chômage ;
+        avenant n° 11 du 25 nov. 2025, prorogation jusqu&apos;au 31 déc.
+        2026) ; circulaire Unédic n° 2022-04 ; service-public (fiche F13819).
       </p>
     </BlocAccordeon>
   );
