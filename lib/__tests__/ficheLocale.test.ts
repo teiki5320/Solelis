@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { lireCookieFicheLocale, lireParametreD, validerFicheLocale } from '../ficheLocaleServeur';
+import { valeurCookieFicheLocale, TAILLE_MAX_COOKIE_FICHE_LOCALE } from '../ficheLocale';
+import type { Reponses } from '../types';
 
 const reponses = { situation: 'prevention', probleme: 'urssaf', effectif: 'independant', moral: 'combatif' };
 
@@ -47,5 +49,30 @@ describe('lireParametreD (anciens liens ?d=)', () => {
   it('valide les réponses avec le schéma', () => {
     const d = Buffer.from(JSON.stringify({ siret: '12345678901234', reponses: { situation: 'x' } })).toString('base64');
     expect(lireParametreD(d)).toBeNull();
+  });
+});
+
+describe('entreprise trouvée par le navigateur (fiche locale)', () => {
+  const entreprise = { nom_complet: 'ACME', siege: { siret: '12345678901234', code_postal: '75001', libelle_commune: 'PARIS' } };
+
+  it('conservée si valide, ignorée si mal formée (la fiche reste lisible)', () => {
+    expect(validerFicheLocale({ siret: '12345678901234', reponses, entreprise })?.entreprise).toEqual(entreprise);
+    const malFormee = validerFicheLocale({ siret: '12345678901234', reponses, entreprise: { ...entreprise, dirigeants: [] } });
+    expect(malFormee?.siret).toBe('12345678901234');
+    expect(malFormee).not.toHaveProperty('entreprise');
+  });
+
+  it('passe par le cookie', () => {
+    const valeur = valeurCookieFicheLocale({ siret: '12345678901234', reponses: reponses as Reponses, entreprise });
+    expect(lireCookieFicheLocale(valeur)?.entreprise?.siege?.libelle_commune).toBe('PARIS');
+  });
+
+  it('cookie trop gros : l’entreprise est retirée, les réponses restent', () => {
+    const grosse = { ...entreprise, nom_complet: 'É'.repeat(250), nom_raison_sociale: 'É'.repeat(250), libelle_activite_principale: 'É'.repeat(200) };
+    const valeur = valeurCookieFicheLocale({ siret: '12345678901234', reponses: reponses as Reponses, entreprise: grosse });
+    expect(valeur.length).toBeLessThanOrEqual(TAILLE_MAX_COOKIE_FICHE_LOCALE);
+    const lu = lireCookieFicheLocale(valeur);
+    expect(lu?.reponses.situation).toBe('prevention');
+    expect(lu?.entreprise).toBeUndefined();
   });
 });

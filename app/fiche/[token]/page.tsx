@@ -7,7 +7,7 @@ import SaveBanner from '@/components/fiche/SaveBanner';
 import ExportPDF from '@/components/fiche/ExportPDF';
 import StoreCompanyData from '@/components/fiche/StoreCompanyData';
 import LayoutDashboard from '@/components/fiche/layouts/LayoutDashboard';
-import { getFicheByTokenMemo } from '@/lib/db';
+import { getFicheByTokenMemo, updateFicheCompanyData } from '@/lib/db';
 import { fetchSirene } from '@/lib/sirene';
 import { fetchBodaccResultat, fetchProceduresResultat, computeAlertes } from '@/lib/bodacc';
 import { searchAvocats } from '@/lib/googlePlaces';
@@ -80,7 +80,8 @@ async function loadFiche(
     // navigateur (voir lib/ficheLocale.ts) : les réponses ne passent plus par l'URL.
     const locale = await lireFicheLocale(d);
     if (!locale) return null;
-    const company_data = await fetchSirene(locale.siret);
+    // Repli sur l'entreprise trouvée par le navigateur si la recherche serveur échoue.
+    const company_data = await fetchSirene(locale.siret, locale.entreprise);
     return {
       token: 'local',
       siret: locale.siret,
@@ -96,9 +97,11 @@ async function loadFiche(
   const rec = await getFicheByTokenMemo(token);
   if (!rec) return null;
   let company_data = rec.company_data as CompanyData;
-  // Entreprise introuvable à la création (API indisponible) : on retente à l'affichage.
+  // Entreprise introuvable à la création (API indisponible) : on retente à
+  // l'affichage, et on enregistre le résultat pour ne plus retenter ensuite.
   if (!company_data?.siret || !company_data.fetched) {
     company_data = await fetchSirene(rec.siret);
+    if (company_data.fetched) await updateFicheCompanyData(token, company_data);
   }
   return {
     token,

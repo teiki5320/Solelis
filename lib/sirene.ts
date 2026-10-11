@@ -1,37 +1,17 @@
 import { fetchWithTimeout } from './fetchTimeout';
 import type { CompanyData } from './types';
 import { libelleTrancheEffectif } from './secteur';
+import {
+  URL_RECHERCHE_ENTREPRISES,
+  etablissementExact,
+  type EtablissementRecherche,
+  type ResultatRechercheEntreprise,
+} from './rechercheEntreprises';
 
 /* ---------- Interfaces API ---------- */
 
-interface SireneEtablissement {
-  siret?: string;
-  code_postal?: string;
-  /** Code commune INSEE (ex. « 2A004 », « 97411 »). */
-  commune?: string;
-  /** Code département (présent sur le siège, ex. « 2A », « 974 »). */
-  departement?: string;
-  libelle_commune?: string;
-  adresse?: string;
-}
-
-interface SireneResult {
-  nom_complet?: string;
-  nom_raison_sociale?: string;
-  prenom_usuel?: string;
-  nom?: string;
-  nature_juridique?: string;
-  activite_principale?: string;
-  libelle_activite_principale?: string;
-  section_activite_principale?: string;
-  date_creation?: string;
-  tranche_effectif_salarie?: string;
-  siege?: SireneEtablissement;
-  matching_etablissements?: SireneEtablissement[];
-}
-
 interface SireneApiResponse {
-  results?: SireneResult[];
+  results?: ResultatRechercheEntreprise[];
   total_results?: number;
   page?: number;
   per_page?: number;
@@ -70,7 +50,7 @@ interface InseeSireneApiResponse {
 }
 
 // Free, no-key government API. Backed by Sirene data.
-const RECHERCHE_BASE = 'https://recherche-entreprises.api.gouv.fr/search';
+const RECHERCHE_BASE = URL_RECHERCHE_ENTREPRISES;
 // Repli : API Sirene de l'INSEE (portail-api.insee.fr), clé « X-INSEE-Api-Key-Integration ».
 // L'ancienne adresse /entreprises/sirene/V3 (jeton Bearer) ne répond plus.
 const SIRENE_BASE = 'https://api.insee.fr/api-sirene/3.11';
@@ -80,8 +60,16 @@ const SIRENE_BASE = 'https://api.insee.fr/api-sirene/3.11';
  * Cloudflare, l'adresse de sortie est partagée avec d'autres sites : elle
  * répond souvent 429 (trop de requêtes). On réessaie après une courte pause.
  * Délais en millisecondes avant chaque nouvel essai.
+ * Si tous les essais échouent, le résultat trouvé par le navigateur du
+ * visiteur (sa propre adresse IP) prend le relais : voir fetchSirene().
  */
-export const DELAIS_REESSAI = [250, 600, 1200];
+export const DELAIS_REESSAI = [300, 800, 1500, 2500];
+
+/** Durée maximale de la recherche serveur, réessais compris (ms). */
+export const BUDGET_RECHERCHE_MS = 6000;
+
+/** Délai maximal d'un appel isolé (ms). */
+const TIMEOUT_APPEL_MS = 3000;
 
 const attendre = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -282,17 +270,92 @@ function fallbackFor(siret: string): CompanyData {
   };
 }
 
+/**
+ * Conversion commune « résultat recherche-entreprises → CompanyData », pour
+ * la recherche serveur comme pour le résultat transmis par le navigateur.
+ * `etab` : établissement consulté (celui du SIRET saisi, sinon le siège).
+ */
+export function convertirResultatRecherche(
+  result: ResultatRechercheEntreprise,
+  siret: string,
+  etab: EtablissementRecherche | null | undefined,
+  source: NonNullable<CompanyData['source']>,
+): CompanyData {
+  const siege = result.siege ?? undefined;
+  const codePostal: string = etab?.code_postal ?? siege?.code_postal ?? '';
+  const ville: string = etab?.libelle_commune ?? siege?.libelle_commune ?? '';
+  // Département de l'établissement consulté (et non du siège s'il diffère)
+  const departement = etab?.commune || etab?.code_postal
+    ? determinerDepartement(etab.commune ?? undefined, etab.code_postal ?? undefined, etab.departement ?? undefined)
+    : determinerDepartement(siege?.commune ?? undefined, codePostal, siege?.departement ?? undefined);
+  const nom = choisirNom(
+    nettoyerNomComplet(result.nom_complet),
+    result.nom_raison_sociale,
+    [result.prenom_usuel, result.nom].filter(Boolean).join(' '),
+  );
+
+  return {
+    siret,
+    nom,
+    formeJuridique: formatForme(result.nature_juridique ?? undefined),
+    naf: result.activite_principale ?? '',
+    nafLabel: result.libelle_activite_principale ?? undefined,
+    nafSection: result.section_activite_principale ?? undefined,
+    dateCreation: result.date_creation ?? '',
+    effectif: formatEffectif(result.tranche_effectif_salarie ?? undefined),
+    adresse: etab?.adresse ?? siege?.adresse ?? '',
+    codePostal,
+    ville,
+    departement,
+    // Établissement secondaire : le tribunal est celui du siège (R600-1).
+    ...(etab?.siret && siege?.siret && etab.siret !== siege.siret
+      ? {
+          siege: {
+            codePostal: siege.code_postal ?? '',
+            ville: siege.libelle_commune ?? '',
+            departement: determinerDepartement(siege.commune ?? undefined, siege.code_postal ?? undefined, siege.departement ?? undefined),
+          },
+        }
+      : {}),
+    fetched: true,
+    source,
+  };
+}
+
+/**
+ * Résultat trouvé par le navigateur du visiteur : utilisé seulement si
+ * l'établissement porte exactement le SIRET de la fiche (siège ou
+ * établissement secondaire). Le contenu a déjà été validé par
+ * `entrepriseRechercheSchema` (lib/schemas.ts) ; il ne sert qu'à la fiche
+ * de ce même visiteur.
+ */
+export function companyDepuisNavigateur(
+  resultat: ResultatRechercheEntreprise | null | undefined,
+  siret: string,
+): CompanyData | null {
+  if (!resultat) return null;
+  const etab = etablissementExact(resultat, siret);
+  if (!etab) return null;
+  return convertirResultatRecherche(resultat, siret, etab, 'navigateur');
+}
+
 async function fetchFromRechercheEntreprises(
   siret: string
 ): Promise<CompanyData | null> {
   try {
     const url = `${RECHERCHE_BASE}?q=${siret}&page=1&per_page=1`;
-    let res = await fetchWithTimeout(url, { cache: 'no-store' });
-    // 429 (limite d'appels) ou erreur passagère du serveur : on réessaie.
+    const debut = Date.now();
+    const restant = () => BUDGET_RECHERCHE_MS - (Date.now() - debut);
+    const appeler = () =>
+      fetchWithTimeout(url, { cache: 'no-store' }, Math.max(500, Math.min(TIMEOUT_APPEL_MS, restant())));
+    let res = await appeler();
+    // 429 (limite d'appels) ou erreur passagère du serveur : on réessaie,
+    // sans dépasser le budget total (BUDGET_RECHERCHE_MS).
     for (const delai of DELAIS_REESSAI) {
       if (res.status !== 429 && res.status < 500) break;
+      if (restant() < delai + 500) break;
       await attendre(delai);
-      res = await fetchWithTimeout(url, { cache: 'no-store' });
+      res = await appeler();
     }
     if (!res.ok) {
       console.warn('[sirene] recherche-entreprises :', res.status);
@@ -302,48 +365,11 @@ async function fetchFromRechercheEntreprises(
     const result = json?.results?.[0];
     if (!result) return null;
 
-    const matching =
+    const etab =
       result.matching_etablissements?.find((e) => e.siret === siret) ??
       result.matching_etablissements?.[0] ??
       result.siege;
-
-    const codePostal: string = matching?.code_postal ?? result.siege?.code_postal ?? '';
-    const ville: string = matching?.libelle_commune ?? result.siege?.libelle_commune ?? '';
-    // Département de l'établissement consulté (et non du siège s'il diffère)
-    const departement = matching?.commune || matching?.code_postal
-      ? determinerDepartement(matching.commune, matching.code_postal, matching.departement)
-      : determinerDepartement(result.siege?.commune, codePostal, result.siege?.departement);
-    const nom = choisirNom(
-      nettoyerNomComplet(result.nom_complet),
-      result.nom_raison_sociale,
-      [result.prenom_usuel, result.nom].filter(Boolean).join(' '),
-    );
-
-    return {
-      siret,
-      nom,
-      formeJuridique: formatForme(result.nature_juridique),
-      naf: result.activite_principale ?? '',
-      nafLabel: result.libelle_activite_principale ?? undefined,
-      nafSection: result.section_activite_principale ?? undefined,
-      dateCreation: result.date_creation ?? '',
-      effectif: formatEffectif(result.tranche_effectif_salarie),
-      adresse: matching?.adresse ?? result.siege?.adresse ?? '',
-      codePostal,
-      ville,
-      departement,
-      // Établissement secondaire : le tribunal est celui du siège (R600-1).
-      ...(matching?.siret && result.siege?.siret && matching.siret !== result.siege.siret
-        ? {
-            siege: {
-              codePostal: result.siege.code_postal ?? '',
-              ville: result.siege.libelle_commune ?? '',
-              departement: determinerDepartement(result.siege.commune, result.siege.code_postal, result.siege.departement),
-            },
-          }
-        : {}),
-      fetched: true,
-    };
+    return convertirResultatRecherche(result, siret, etab, 'recherche-entreprises');
   } catch (e) {
     console.warn('[sirene] recherche-entreprises : échec', e instanceof Error ? e.name : '');
     return null;
@@ -408,6 +434,7 @@ async function fetchFromInseeSirene(
       // (celui du siège, R600-1) reste générique.
       ...(etab.etablissementSiege === false ? { siege: { codePostal: '', ville: '', departement: '' } } : {}),
       fetched: true,
+      source: 'insee',
     };
   } catch (e) {
     console.warn('[sirene] INSEE : échec', e instanceof Error ? e.name : '');
@@ -415,11 +442,25 @@ async function fetchFromInseeSirene(
   }
 }
 
-export async function fetchSirene(siret: string): Promise<CompanyData> {
+/**
+ * Données de l'entreprise, par ordre de priorité :
+ * 1. recherche serveur (recherche-entreprises, avec réessais) ;
+ * 2. résultat trouvé par le navigateur du visiteur, si son SIRET correspond
+ *    exactement (la recherche serveur est souvent limitée depuis Cloudflare) ;
+ * 3. API Sirene de l'INSEE (clé) ;
+ * 4. fiche générique (« Votre entreprise », fetched: false).
+ */
+export async function fetchSirene(
+  siret: string,
+  resultatNavigateur?: ResultatRechercheEntreprise | null,
+): Promise<CompanyData> {
   const cleanSiret = siret.replace(/\s/g, '');
   // Primary: free public API — works without any key.
   const primary = await fetchFromRechercheEntreprises(cleanSiret);
   if (primary) return primary;
+  // Recherche faite par le navigateur du visiteur (son adresse IP).
+  const navigateur = companyDepuisNavigateur(resultatNavigateur, cleanSiret);
+  if (navigateur) return navigateur;
   // Secondary: INSEE Sirene with user-provided key.
   const secondary = await fetchFromInseeSirene(cleanSiret);
   if (secondary) return secondary;

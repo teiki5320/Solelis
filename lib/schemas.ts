@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { FORMATS_RECHERCHE, LONGUEURS_RECHERCHE, MAX_ETABLISSEMENTS_RECHERCHE } from './rechercheEntreprises';
 
 /**
  * Réponses au questionnaire. Chaque champ correspond à `Reponses` (lib/types.ts)
@@ -30,9 +31,55 @@ export const reponsesSchema = z.object({
 
 const siretSchema = z.string().regex(/^\d{14}$/, 'Le SIRET doit contenir exactement 14 chiffres');
 
+/* ---------- Entreprise trouvée par le navigateur (recherche-entreprises) ---------- */
+
+const F = FORMATS_RECHERCHE;
+const L = LONGUEURS_RECHERCHE;
+/** Texte libre borné, sans balise ni caractère de contrôle. */
+const texteRecherche = (max: number) => z.string().max(max).regex(F.texte).nullish();
+const codeRecherche = (format: RegExp) => z.string().regex(format).nullish();
+
+const etablissementRechercheSchema = z.object({
+  siret: z.string().regex(F.siret),
+  code_postal: codeRecherche(F.codePostal),
+  commune: codeRecherche(F.commune),
+  departement: codeRecherche(F.departement),
+  libelle_commune: texteRecherche(L.libelleCommune),
+  adresse: texteRecherche(L.adresse),
+}).strict();
+
+/**
+ * Résultat (réduit) de l'API recherche-entreprises, obtenu dans le navigateur
+ * du visiteur (voir lib/rechercheEntreprises.ts). `.strict()` et bornes de
+ * longueur : aucun champ en plus (dirigeants, finances…), pas de HTML.
+ */
+export const entrepriseRechercheSchema = z.object({
+  nom_complet: texteRecherche(L.nom),
+  nom_raison_sociale: texteRecherche(L.nom),
+  prenom_usuel: texteRecherche(L.prenomOuNom),
+  nom: texteRecherche(L.prenomOuNom),
+  nature_juridique: codeRecherche(F.natureJuridique),
+  activite_principale: codeRecherche(F.activite),
+  libelle_activite_principale: texteRecherche(L.libelleActivite),
+  section_activite_principale: codeRecherche(F.section),
+  date_creation: codeRecherche(F.date),
+  tranche_effectif_salarie: codeRecherche(F.tranche),
+  siege: etablissementRechercheSchema.nullish(),
+  matching_etablissements: z.array(etablissementRechercheSchema).max(MAX_ETABLISSEMENTS_RECHERCHE).nullish(),
+}).strict();
+
+/** Taille maximale acceptée du corps de POST /api/fiche (caractères). */
+export const TAILLE_MAX_CORPS_FICHE = 16_000;
+
 export const fichePayloadSchema = z.object({
   siret: siretSchema,
   reponses: reponsesSchema,
+  /**
+   * Facultatif. Un résultat mal formé est simplement ignoré (`.catch`) : il
+   * ne doit jamais empêcher la création de la fiche, qui se replie alors sur
+   * la recherche serveur puis l'INSEE.
+   */
+  entreprise: entrepriseRechercheSchema.optional().catch(undefined),
 }).strict();
 
 /** Fiche « locale » (non enregistrée en base) : mêmes règles que la création. */

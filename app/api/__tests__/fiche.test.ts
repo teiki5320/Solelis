@@ -137,4 +137,36 @@ describe('POST /api/fiche', () => {
     expect(res.status).toBe(500);
     err.mockRestore();
   });
+
+  it('transmet à fetchSirene l’entreprise trouvée par le navigateur (repli)', async () => {
+    const { fetchSirene } = await import('@/lib/sirene');
+    const entreprise = { nom_complet: 'ACME', siege: { siret: '12345678901234', code_postal: '75001' } };
+    const res = await POST(makeRequest({
+      siret: '12345678901234',
+      reponses: { situation: 'prevention', probleme: 'urssaf', effectif: 'independant', moral: 'combatif' },
+      entreprise,
+    }));
+    expect(res.status).toBe(200);
+    expect(vi.mocked(fetchSirene)).toHaveBeenCalledWith('12345678901234', entreprise);
+  });
+
+  it('entreprise mal formée (champ en plus, HTML) : ignorée, la fiche est quand même créée', async () => {
+    const { fetchSirene } = await import('@/lib/sirene');
+    const res = await POST(makeRequest({
+      siret: '12345678901234',
+      reponses: { situation: 'prevention', probleme: 'urssaf', effectif: 'independant', moral: 'combatif' },
+      entreprise: { nom_complet: '<img src=x onerror=alert(1)>', dirigeants: [{ nom: 'X' }] },
+    }));
+    expect(res.status).toBe(200);
+    expect(vi.mocked(fetchSirene)).toHaveBeenCalledWith('12345678901234', undefined);
+  });
+
+  it('corps trop volumineux : 413', async () => {
+    const res = await POST(makeRequest({
+      siret: '12345678901234',
+      reponses: { situation: 'prevention', probleme: 'urssaf', effectif: 'independant', moral: 'combatif' },
+      entreprise: { nom_complet: 'x'.repeat(20_000) },
+    }));
+    expect(res.status).toBe(413);
+  });
 });

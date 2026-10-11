@@ -1,4 +1,5 @@
 import type { Reponses } from './types';
+import type { ResultatRechercheEntreprise } from './rechercheEntreprises';
 
 /**
  * Fiche « locale » : quand l'enregistrement en base échoue, les réponses ne sont
@@ -18,15 +19,30 @@ export const CLE_FICHE_LOCALE = 'solelis_fiche_locale';
 /** Durée de vie du cookie (secondes). */
 export const DUREE_COOKIE_FICHE_LOCALE = 60 * 60;
 
+/** Taille maximale de la valeur du cookie (les navigateurs refusent au-delà de ~4 Ko). */
+export const TAILLE_MAX_COOKIE_FICHE_LOCALE = 3800;
+
 export interface FicheLocaleData {
   siret: string;
   reponses: Reponses;
+  /**
+   * Entreprise trouvée par le navigateur (lib/rechercheEntreprises.ts) :
+   * repli si la recherche serveur échoue. Facultatif.
+   */
+  entreprise?: ResultatRechercheEntreprise;
+}
+
+/** Valeur encodée du cookie ; sans `entreprise` si elle ferait dépasser la taille permise. */
+export function valeurCookieFicheLocale(data: FicheLocaleData): string {
+  const complete = encodeURIComponent(JSON.stringify(data));
+  if (complete.length <= TAILLE_MAX_COOKIE_FICHE_LOCALE || !data.entreprise) return complete;
+  return encodeURIComponent(JSON.stringify({ siret: data.siret, reponses: data.reponses }));
 }
 
 /** Côté navigateur : pose le cookie lu par le rendu serveur de /fiche/local. */
 export function poserCookieFicheLocale(data: FicheLocaleData): void {
   const securise = typeof location !== 'undefined' && location.protocol === 'https:' ? '; Secure' : '';
-  document.cookie = `${CLE_FICHE_LOCALE}=${encodeURIComponent(JSON.stringify(data))}; Path=/fiche/local; Max-Age=${DUREE_COOKIE_FICHE_LOCALE}; SameSite=Strict${securise}`;
+  document.cookie = `${CLE_FICHE_LOCALE}=${valeurCookieFicheLocale(data)}; Path=/fiche/local; Max-Age=${DUREE_COOKIE_FICHE_LOCALE}; SameSite=Strict${securise}`;
 }
 
 /** Côté navigateur : mémorise la fiche locale (sessionStorage + cookie). */

@@ -64,6 +64,24 @@ describe('page /fiche/[token]', () => {
     const rendu = (await FichePage(props('local'))) as { props: { children: { props: { token: string } } } };
     expect(rendu.props.children.props.token).toBe('local');
   });
+
+  it('/fiche/local : l’entreprise trouvée par le navigateur est transmise en repli à fetchSirene', async () => {
+    const entreprise = { nom_complet: 'ACME', siege: { siret: '80186721900025', code_postal: '75001' } };
+    valeurCookie = encodeURIComponent(
+      JSON.stringify({
+        siret: '80186721900025',
+        reponses: { situation: 'tresorie', probleme: 'urssaf', effectif: 'independant', moral: 'combatif' },
+        entreprise,
+      }),
+    );
+    const rendu = (await FichePage(props('local'))) as {
+      props: { children: { type: (p: unknown) => Promise<unknown>; props: unknown } };
+    };
+    const contenu = rendu.props.children;
+    await contenu.type(contenu.props).catch(() => {});
+    const { fetchSirene } = await import('@/lib/sirene');
+    expect(fetchSirene).toHaveBeenCalledWith('80186721900025', entreprise);
+  });
 });
 
 describe('layout /fiche/[token] (avant la frontière de chargement)', () => {

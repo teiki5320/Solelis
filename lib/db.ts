@@ -100,6 +100,26 @@ export async function updateFicheEmail(token: string, email: string): Promise<bo
   }
 }
 
+/**
+ * Enregistre les données d'entreprise retrouvées après coup (recherche
+ * indisponible à la création) : la fiche n'interroge plus l'API à chaque
+ * affichage. N'écrit que des données trouvées (fetched) pour ce même SIRET.
+ */
+export async function updateFicheCompanyData(token: string, company: CompanyData): Promise<boolean> {
+  if (!company?.fetched || !/^\d{14}$/.test(company.siret ?? '')) return false;
+  const db = getDb();
+  if (!db) return false;
+  try {
+    const res = await db
+      .prepare('UPDATE fiches SET company_data = ? WHERE token = ? AND siret = ?')
+      .bind(JSON.stringify(company), token, company.siret)
+      .run();
+    return (res.meta?.changes ?? 1) > 0;
+  } catch {
+    return false;
+  }
+}
+
 /** Rappels d'une fiche ([] si aucun), ou null si la fiche n'existe pas. */
 export async function getRappels(token: string): Promise<Rappel[] | null> {
   const db = getDb();
