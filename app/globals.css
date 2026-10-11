@@ -354,6 +354,16 @@ input, button, textarea {
   .glass-soft, [class*="bg-"] {
     background: white !important;
   }
+  /* Les fonds colorés deviennent blancs : un texte blanc (boutons « ☎ 3114 »,
+     pastilles numérotées, avatar…) deviendrait invisible → texte foncé. */
+  .text-white, [class*="text-white/"] {
+    color: #0A1628 !important;
+  }
+  /* Décor flou en position fixe : répété et pixellisé sur chaque page du PDF
+     (≈ 10 Mo pour une fiche). Purement décoratif → masqué. */
+  [data-bg-blobs] {
+    display: none !important;
+  }
   .no-print, header, footer, .pill-nav, nav[aria-label="Sommaire FAQ"] {
     display: none !important;
   }
@@ -445,6 +455,11 @@ input, button, textarea {
   .courrier-preview::before {
     display: none !important;
   }
+  /* .courrier-preview porte aussi .glass (break-inside: avoid) : une lettre
+     longue partait entière en page 2, laissant la page 1 avec l'en-tête seul. */
+  .courrier-preview {
+    break-inside: auto !important;
+  }
   .courrier-print-header {
     display: block !important;
     text-align: center;
@@ -485,6 +500,7 @@ input, button, textarea {
   }
   .courrier-signature {
     display: block !important;
+    break-inside: avoid;
     margin-top: 28pt;
     font-size: 10pt;
     color: #333;
