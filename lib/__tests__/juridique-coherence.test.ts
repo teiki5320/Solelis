@@ -217,6 +217,13 @@ describe('Cotisations : bon organisme, bon numéro', () => {
     expect(contactCotisations(generique, 'independant', '33').tel).toBe('3698');
     expect(contactCotisations(generique, 'salaries', '33').tel).toBe('3957');
   });
+  it('employeur du BTP ou libéral : « l’URSSAF (3957) », sans y mêler les caisses du secteur', () => {
+    for (const naf of ['43.99A', '69.10Z', '86.21Z']) {
+      const c = contactCotisations(getSectorInfo(co({ naf })), 'salaries', '85');
+      expect(c.org).toBe('URSSAF');
+      expect(c.libelle).toBe('URSSAF (3957)');
+    }
+  });
   it('outre-mer : la CGSS / CSSM, jamais 3957', () => {
     for (const dep of ['971', '972', '973', '974']) {
       const c = contactCotisations(generique, 'salaries', dep);

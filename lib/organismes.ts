@@ -94,9 +94,10 @@ export function contactCotisations(
   if (sector.secteur === 'agriculture') {
     return fabrique('MSA (Mutualité Sociale Agricole)', null, 'numéro de votre caisse sur msa.fr', 'https://www.msa.fr');
   }
+  // Le numéro et l'échelonnement concernent l'Urssaf seule : les caisses du
+  // secteur (BTP, retraite des libéraux…) ne se joignent pas au 39 57.
   const tel = effectif === 'independant' ? '3698' : '3957';
-  const org = effectif === 'independant' ? 'URSSAF' : sector.cotisationOrg || 'URSSAF';
-  return fabrique(org, tel, tel, 'https://www.urssaf.fr');
+  return fabrique('URSSAF', tel, tel, 'https://www.urssaf.fr');
 }
 
 /**
