@@ -253,4 +253,8 @@ describe('Identité', () => {
     const separateurs = screen.queryAllByText('·');
     expect(separateurs).toHaveLength(0);
   });
+  it('SIRET affiché par groupes « 123 456 789 01234 »', () => {
+    render(<FicheProvider value={ctx()}><IdentiteHero /></FicheProvider>);
+    expect(screen.getByText('SIRET · 123 456 789 01234')).toBeInTheDocument();
+  });
 });

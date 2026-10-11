@@ -1,5 +1,6 @@
 'use client';
 import { yearFromDate } from '@/lib/sirene';
+import { formaterSiret } from '@/lib/siret';
 import { useFiche } from '@/lib/FicheContext';
 import { ID_TITRE_FICHE } from '@/components/fiche/ModePerdu';
 
@@ -33,7 +34,7 @@ export default function IdentiteHero() {
           </h1>
 
           <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-navy/60 sm:text-sm">
-            {company.siret && <span>SIRET · {company.siret}</span>}
+            {company.siret && <span>SIRET · {formaterSiret(company.siret)}</span>}
             {(company.codePostal || company.ville) && (
               <>
                 <span>
