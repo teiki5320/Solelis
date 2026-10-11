@@ -52,14 +52,18 @@ function formatEuros(n: number): string {
 }
 
 export default function AcreArcePage() {
-  const [statut, setStatut] = useState<Statut>('aucun');
+  // Aucune situation choisie au départ : pas de verdict avant la première réponse.
+  const [statut, setStatut] = useState<Statut | null>(null);
   const [microEntreprise, setMicroEntreprise] = useState(false);
   const [aAre, setAAre] = useState(false);
-  const [areReliquatMensuel, setAreReliquatMensuel] = useState(0);
-  const [areMoisRestants, setAreMoisRestants] = useState(0);
+  // Champs vides au départ (pas de « 0 » pré-rempli) : le capital ARCE
+  // n'est estimé qu'une fois les deux montants saisis.
+  const [areReliquatMensuel, setAreReliquatMensuel] = useState('');
+  const [areMoisRestants, setAreMoisRestants] = useState('');
   const [revenuPrevisionnel, setRevenuPrevisionnel] = useState(20000);
 
-  const acreEligible = statut !== 'aucun';
+  const statutChoisi = statut !== null;
+  const acreEligible = statutChoisi && statut !== 'aucun';
 
   const exoneration = useMemo(() => {
     if (!acreEligible) return { montant: 0, detail: '' };
@@ -85,11 +89,16 @@ export default function AcreArcePage() {
     };
   }, [acreEligible, microEntreprise, revenuPrevisionnel]);
 
+  const areMensuel = Number(areReliquatMensuel);
+  const areMois = Number(areMoisRestants);
+  const arceRenseigne =
+    areReliquatMensuel.trim() !== '' && areMoisRestants.trim() !== '' && areMensuel > 0 && areMois > 0;
+
   const arceMontant = useMemo(() => {
-    if (!aAre || !acreEligible) return 0;
-    const reliquatTotal = areReliquatMensuel * areMoisRestants;
+    if (!aAre || !acreEligible || !arceRenseigne) return 0;
+    const reliquatTotal = areMensuel * areMois;
     return Math.round(reliquatTotal * 0.6);
-  }, [aAre, acreEligible, areReliquatMensuel, areMoisRestants]);
+  }, [aAre, acreEligible, arceRenseigne, areMensuel, areMois]);
 
   const STATUTS: { value: Statut; label: string; description: string }[] = [
     { value: 'demandeur-indemnise', label: 'Demandeur d\'emploi indemnisé (ARE)', description: 'Inscrit à France Travail, indemnisé' },
@@ -241,7 +250,7 @@ export default function AcreArcePage() {
                   type="number"
                   min={0}
                   value={areReliquatMensuel}
-                  onChange={(e) => setAreReliquatMensuel(Number(e.target.value))}
+                  onChange={(e) => setAreReliquatMensuel(e.target.value)}
                   className="mt-1 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2"
                 />
               </label>
@@ -251,7 +260,7 @@ export default function AcreArcePage() {
                   type="number"
                   min={0}
                   value={areMoisRestants}
-                  onChange={(e) => setAreMoisRestants(Number(e.target.value))}
+                  onChange={(e) => setAreMoisRestants(e.target.value)}
                   className="mt-1 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2"
                 />
               </label>
@@ -266,9 +275,13 @@ export default function AcreArcePage() {
             }`}
           >
             <p className="font-display text-lg text-navy">
-              ACRE — {acreEligible ? 'éligible ✓' : 'non éligible'}
+              {statutChoisi ? `ACRE — ${acreEligible ? 'éligible ✓' : 'non éligible'}` : 'ACRE'}
             </p>
-            {acreEligible ? (
+            {!statutChoisi ? (
+              <p className="mt-2 text-sm text-navy/70">
+                Choisissez votre situation ci-dessus pour connaître votre éligibilité.
+              </p>
+            ) : acreEligible ? (
               <>
                 <p className="mt-2 text-sm text-navy/80">{exoneration.detail}</p>
                 <p className="mt-3 text-2xl font-display text-vert">
@@ -291,9 +304,17 @@ export default function AcreArcePage() {
             }`}
           >
             <p className="font-display text-lg text-navy">
-              ARCE — {aAre && acreEligible ? 'éligible ✓' : 'non éligible'}
+              {statutChoisi ? `ARCE — ${aAre && acreEligible ? 'éligible ✓' : 'non éligible'}` : 'ARCE'}
             </p>
-            {aAre && acreEligible ? (
+            {!statutChoisi ? (
+              <p className="mt-2 text-sm text-navy/70">
+                Choisissez votre situation ci-dessus pour connaître votre éligibilité.
+              </p>
+            ) : aAre && acreEligible && !arceRenseigne ? (
+              <p className="mt-2 text-sm text-navy/70">
+                Renseignez le montant mensuel de l&apos;ARE et les mois de droits restants pour estimer le capital.
+              </p>
+            ) : aAre && acreEligible ? (
               <>
                 <p className="mt-2 text-sm text-navy/80">
                   60 % du reliquat ARE (moins 3 % pour la retraite complémentaire), versé en capital en 2 fois : la moitié au démarrage, l&apos;autre moitié 6 mois après si l&apos;activité se poursuit.
