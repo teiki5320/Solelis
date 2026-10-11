@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildIcs } from '../ics';
+import { buildIcs, plierLigne } from '../ics';
 import type { IcsEvent } from '../ics';
 
 /* ─── buildIcs ─── */
@@ -91,5 +91,38 @@ describe('buildIcs', () => {
     const ics = buildIcs([event]);
     expect(ics).toContain('SUMMARY:Test\\, avec\\; des\\\\caractères');
     expect(ics).toContain('DESCRIPTION:Desc\\navec retour');
+  });
+});
+
+/* ─── Pliage des lignes (RFC 5545 §3.1) ─── */
+
+describe('plierLigne / pliage des lignes ICS', () => {
+  const octets = (l: string) => new TextEncoder().encode(l).length;
+
+  it('laisse intactes les lignes courtes', () => {
+    expect(plierLigne('SUMMARY:court')).toBe('SUMMARY:court');
+  });
+
+  it('aucune ligne ne dépasse 75 octets, et le dépliage redonne le texte', () => {
+    const description =
+      'Article L631-4 du Code de commerce : obligation de déclarer la cessation des paiements dans les 45 jours. Échéance à ne pas manquer — prévenez votre avocat ou le mandataire judiciaire désigné.';
+    const ics = buildIcs([
+      { uid: 'long', title: 'Déclaration de cessation des paiements — dernier jour', description, date: new Date('2026-12-01T09:00:00Z') },
+    ]);
+    for (const ligne of ics.split('\r\n')) {
+      expect(octets(ligne)).toBeLessThanOrEqual(75);
+    }
+    const deplie = ics.replace(/\r\n /g, '');
+    expect(deplie).toContain(`DESCRIPTION:${description.replace(/,/g, '\\,')}`);
+  });
+
+  it('ne coupe pas un caractère accentué en deux', () => {
+    const ligne = 'DESCRIPTION:' + 'é'.repeat(100);
+    const plie = plierLigne(ligne);
+    for (const morceau of plie.split('\r\n')) {
+      expect(octets(morceau)).toBeLessThanOrEqual(75);
+      expect(morceau).not.toContain('\uFFFD');
+    }
+    expect(plie.replace(/\r\n /g, '')).toBe(ligne);
   });
 });

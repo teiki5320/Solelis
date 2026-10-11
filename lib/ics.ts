@@ -28,6 +28,40 @@ function escapeText(s: string): string {
   return s.replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/,/g, '\\,').replace(/;/g, '\\;');
 }
 
+/** Nombre d'octets UTF-8 d'un caractère (point de code). */
+function octetsUtf8(c: string): number {
+  const cp = c.codePointAt(0) ?? 0;
+  if (cp < 0x80) return 1;
+  if (cp < 0x800) return 2;
+  if (cp < 0x10000) return 3;
+  return 4;
+}
+
+/**
+ * Pliage des lignes (RFC 5545 §3.1) : au plus 75 octets par ligne, saut de
+ * ligne CRLF suivi d'une espace pour la suite. On ne coupe jamais au milieu
+ * d'un caractère accentué (plusieurs octets en UTF-8).
+ */
+export function plierLigne(ligne: string): string {
+  const morceaux: string[] = [];
+  let courant = '';
+  let octets = 0;
+  for (const c of ligne) {
+    const n = octetsUtf8(c);
+    // Ligne de suite : l'espace initiale compte dans les 75 octets.
+    const limite = morceaux.length === 0 ? 75 : 74;
+    if (octets + n > limite) {
+      morceaux.push(courant);
+      courant = '';
+      octets = 0;
+    }
+    courant += c;
+    octets += n;
+  }
+  morceaux.push(courant);
+  return morceaux.join('\r\n ');
+}
+
 export function buildIcs(events: IcsEvent[]): string {
   const lines: string[] = [];
   lines.push('BEGIN:VCALENDAR');
@@ -56,7 +90,7 @@ export function buildIcs(events: IcsEvent[]): string {
   }
 
   lines.push('END:VCALENDAR');
-  return lines.join('\r\n');
+  return lines.map(plierLigne).join('\r\n');
 }
 
 export function downloadIcs(events: IcsEvent[], filename = 'solelis-rappels.ics') {
