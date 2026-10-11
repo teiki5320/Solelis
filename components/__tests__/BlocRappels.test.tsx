@@ -98,6 +98,8 @@ describe('BlocRappels — texte des sanctions et copie', () => {
     expect(texte).toContain('interdiction de gérer (L653-8)');
     expect(texte).toMatch(/banqueroute \(L654-2\) vise, elle, des actes frauduleux/i);
     expect(texte).not.toMatch(/faillite personnelle/i);
+    expect(texte).toContain('faute de gestion (L651-2)');
+    expect(texte).not.toMatch(/L653-1|L654-1\b/);
   });
 
   it('« Copier l’ICS » affiche « Copié ! »', async () => {

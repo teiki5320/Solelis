@@ -253,8 +253,8 @@ export default function BlocRappels() {
           cle: 'cessation-45j',
           titre: 'Déclaration de cessation des paiements — dernier jour',
           joursAvantAjd: daysBetween(new Date(), jLimit),
-          description: "Article L631-4 du Code de commerce : demander l'ouverture d'une procédure dans les 45 jours suivant la cessation des paiements (sauf conciliation demandée). L'omettre sciemment expose à une interdiction de gérer (L653-8). La banqueroute (L654-2) vise, elle, des actes frauduleux (détournement d'actif, comptabilité fictive…).",
-          source: 'C. com. L631-4, L653-8, L654-2',
+          description: "Article L631-4 du Code de commerce : demander l'ouverture d'une procédure dans les 45 jours suivant la cessation des paiements (sauf conciliation demandée). L'omettre sciemment expose à une interdiction de gérer (L653-8) et, si la société est mise en liquidation, à une action pour faute de gestion (L651-2). La banqueroute (L654-2) vise, elle, des actes frauduleux (détournement d'actif, comptabilité fictive…).",
+          source: 'C. com. L631-4, L651-2, L653-8, L654-2',
           baseDate: jLimit,
         });
         const jAlerte10 = addDays(d, 35);
@@ -498,7 +498,7 @@ export default function BlocRappels() {
       <p className="mt-5 text-xs text-navy/50">
         Les dates saisies restent uniquement dans votre navigateur, sauf si
         vous programmez un rappel par e-mail (échéance et intitulé seulement).
-        Sources légales : C. com. L631-4, L653-8, L654-2, R661-3 ; CSS R142-1.
+        Sources légales : C. com. L631-4, L651-2, L653-8, L654-2, R661-3 ; CSS R142-1.
       </p>
     </BlocAccordeon>
   );
