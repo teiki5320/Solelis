@@ -129,6 +129,7 @@ export default function PolitiqueDonneesPage() {
             <li><strong>Resend</strong> (Plus Five Five, Inc., États-Unis) : envoi du lien magique et des rappels par email — vos données d&apos;email sont traitées aux États-Unis ; transfert encadré par le Data Privacy Framework UE–États-Unis, auquel Resend est certifiée, et par les clauses contractuelles types (décision 2021/914 de la Commission européenne)</li>
             <li><strong>Plausible Analytics</strong> (UE) : statistiques d&apos;usage agrégées</li>
             <li><strong>INSEE / API Sirene</strong> : récupération des données publiques d&apos;entreprise (en lecture uniquement)</li>
+            <li><strong>API Recherche d&apos;entreprises</strong> (État, api.gouv.fr) : même recherche des données publiques d&apos;entreprise, faite par notre serveur et aussi directement par votre navigateur pendant le questionnaire — l&apos;API reçoit alors le SIRET saisi et l&apos;adresse IP de votre connexion, sans cookie ni autre donnée</li>
             <li><strong>Google LLC</strong> (États-Unis, API Google Places) : recherche d&apos;avocats à proximité — la requête, envoyée par notre serveur, contient seulement une zone géographique, sans donnée personnelle directe ; Google est certifiée au Data Privacy Framework UE–États-Unis et recourt aux clauses contractuelles types</li>
           </ul>
           <p className="mt-3">
