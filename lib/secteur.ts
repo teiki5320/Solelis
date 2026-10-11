@@ -854,9 +854,10 @@ export function getSectorInfo(company: CompanyData): SectorInfo {
     secteur = 'peche';
   }
 
-  // Formes réservées à l'exploitation agricole (EARL, GAEC, SCEA : Code rural,
-  // livre III) : régime agricole (MSA) même si le code NAF est absent ou
-  // classé ailleurs. La pêche (NAF 03) garde son secteur (ENIM).
+  // Formes propres à l'exploitation agricole (EARL et GAEC : Code rural,
+  // livre III ; SCEA : société civile à objet agricole) : régime agricole
+  // (MSA) même si le code NAF est absent ou classé ailleurs. La pêche
+  // (NAF 03) garde son secteur (ENIM).
   if (secteur !== 'peche' && estFormeAgricole(company.formeJuridique)) {
     secteur = 'agriculture';
   }

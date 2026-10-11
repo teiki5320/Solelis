@@ -244,11 +244,14 @@ describe('prefixePostal / adresseDansDepartement', () => {
     expect(prefixePostal({ codePostal: '20200', departement: '2B' })).toBe('20');
   });
 
-  it('outre-mer : 3 chiffres (Saint-Barthélemy / Saint-Martin en 971)', () => {
+  it('outre-mer : 3 chiffres ; Saint-Barthélemy / Saint-Martin : code postal entier', () => {
     expect(prefixePostal({ codePostal: '97400', departement: '974' })).toBe('974');
     expect(prefixePostal({ departement: '972' })).toBe('972');
-    expect(prefixePostal({ departement: '977' })).toBe('971');
-    expect(prefixePostal({ departement: '978' })).toBe('971');
+    expect(prefixePostal({ departement: '977' })).toBe('97133');
+    expect(prefixePostal({ codePostal: '97150', departement: '978' })).toBe('97150');
+    // Un cabinet de Pointe-à-Pitre n'est pas « à proximité » de Saint-Martin.
+    expect(adresseDansDepartement('Rue X, 97110 Pointe-à-Pitre', '97150')).toBe(false);
+    expect(adresseDansDepartement('Rue X, 97150 Marigot', '97150')).toBe(true);
   });
 
   it('ignore les boîtes postales (CS) et repère le code postal de la commune', () => {

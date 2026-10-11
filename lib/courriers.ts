@@ -313,7 +313,7 @@ Fait à {{VILLE}}, le {{DATE}}`,
   {
     slug: 'rdv-cci',
     titre: 'Demande de rendez-vous CCI',
-    destinataire: 'CCI de votre département',
+    destinataire: 'CCI dont dépend votre commune',
     categorie: 'cci',
     icone: '📅',
     description: 'Solliciter un rendez-vous d\'accompagnement auprès de votre CCI (artisan·e : votre chambre de métiers et de l\'artisanat).',

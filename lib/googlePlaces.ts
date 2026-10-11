@@ -99,16 +99,18 @@ export interface LieuAvocats {
 
 /**
  * Préfixe des codes postaux du département de l'entreprise : 2 chiffres en
- * métropole (Corse 2A / 2B → « 20 »), 3 chiffres outre-mer (97x, 98x ;
- * Saint-Barthélemy 977 et Saint-Martin 978 ont des codes postaux en 971).
- * Chaîne vide si on ne sait pas.
+ * métropole (Corse 2A / 2B → « 20 »), 3 chiffres outre-mer (97x, 98x).
+ * Saint-Barthélemy (977) et Saint-Martin (978) ont un code postal unique en
+ * 971 (97133, 97150) : on exige ce code entier, pour ne pas proposer un
+ * cabinet de Guadeloupe. Chaîne vide si on ne sait pas.
  */
 export function prefixePostal(lieu: Pick<LieuAvocats, 'codePostal' | 'departement'>): string {
   const cp = (lieu.codePostal ?? '').trim();
-  if (/^\d{5}$/.test(cp)) return /^9[78]/.test(cp) ? cp.slice(0, 3) : cp.slice(0, 2);
   const dep = (lieu.departement ?? '').trim().toUpperCase();
+  if (cp === '97133' || dep === '977') return '97133';
+  if (cp === '97150' || dep === '978') return '97150';
+  if (/^\d{5}$/.test(cp)) return /^9[78]/.test(cp) ? cp.slice(0, 3) : cp.slice(0, 2);
   if (dep === '2A' || dep === '2B') return '20';
-  if (dep === '977' || dep === '978') return '971';
   if (/^9[78]\d$/.test(dep)) return dep;
   if (/^\d{2}$/.test(dep)) return dep;
   return '';

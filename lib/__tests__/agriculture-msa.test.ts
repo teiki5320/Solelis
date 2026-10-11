@@ -24,6 +24,7 @@ import {
 import { getJuridiction, harmoniserCarteTribunal } from '@/lib/strategie';
 import { computeAlertes } from '@/lib/bodacc';
 import { buildAides } from '@/components/fiche/BlocAides';
+import { scorePriorityCards } from '@/lib/priorites';
 import LayoutDashboard from '@/components/fiche/layouts/LayoutDashboard';
 
 const EARL_VERT: CompanyData = {
@@ -164,6 +165,13 @@ describe('EARL à Vert (40420) : aucune orientation CPSTI / Urssaf indépendants
       expect(m ? sansAcre.slice(Math.max(0, m.index - 120), m.index + 80) : null).toBeNull();
       expect(html).toContain('msa.fr');
     }
+  });
+
+  it('carte prioritaire « Aides » : MSA + CCSF + BPI (pas URSSAF)', () => {
+    const sector = getSectorInfo(EARL_VERT);
+    const cartes = scorePriorityCards({ reponses: INDEP_URSSAF, company: EARL_VERT, sector, seuils: getEffectifSeuils(EARL_VERT.effectif) });
+    const aides = cartes.find((c) => c.id === 'aides');
+    expect(aides?.detail).toBe('MSA + CCSF + BPI');
   });
 
   it('témoin : un commerçant indépendant garde l’action sociale du CPSTI', () => {
