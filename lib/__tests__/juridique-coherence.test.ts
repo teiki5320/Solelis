@@ -146,25 +146,52 @@ describe('Tribunal : une seule source (getJuridiction + data/organismes.json)', 
 
   it('départements à plusieurs juridictions : celle du ressort, sinon une carte générique (jamais un tribunal faux)', () => {
     // Juridictions : « Données géocodées des structures de la Justice » (2026) ;
+    // ressort des TC/TAE : communes rattachées à chaque juridiction dans
+    // l'annuaire officiel (lannuaire.service-public.gouv.fr), identique au
+    // ressort fixé par l'arrêté du 5 juillet 2024 pour les 12 TAE ;
     // Alsace-Moselle : ressort du tribunal judiciaire (compétences territoriales 2026).
     const t = (departement: string, codePostal: string, ville: string) =>
       getTribunalCompetent(co({ departement, codePostal, ville })).nom;
     expect(t('76', '76600', 'LE HAVRE')).toBe('Tribunal des activités économiques du Havre');
     expect(t('76', '76000', 'ROUEN')).toBe('Tribunal de commerce de Rouen');
-    expect(t('76', '76190', 'YVETOT')).toBe('Tribunal de commerce ou des activités économiques dont dépend votre siège');
+    expect(t('76', '76190', 'YVETOT')).toBe('Tribunal de commerce de Rouen');
+    expect(t('76', '76400', 'FECAMP')).toBe('Tribunal des activités économiques du Havre');
+    expect(t('76', '76999', 'INCONNUE')).toBe('Tribunal de commerce ou des activités économiques dont dépend votre siège');
     expect(t('64', '64100', 'BAYONNE')).toBe('Tribunal de commerce de Bayonne');
     expect(t('59', '59140', 'DUNKERQUE')).toBe('Tribunal de commerce de Dunkerque');
     expect(t('02', '02100', 'Saint-Quentin')).toBe('Tribunal de commerce de Saint-Quentin');
-    expect(t('02', '02100', 'Harly')).toBe('Tribunal de commerce dont dépend votre siège');
+    expect(t('02', '02100', 'Harly')).toBe('Tribunal de commerce de Saint-Quentin');
+    expect(t('02', '02999', 'Inconnue')).toBe('Tribunal de commerce dont dépend votre siège');
+    // Ressorts qui débordent du département (annuaire officiel, cours d’appel de Rennes et Besançon) : Dinan
+    // relève du TC de Saint-Malo, Montbéliard du TC de Belfort.
+    expect(t('22', '22100', 'DINAN')).toBe('Tribunal de commerce de Saint-Malo');
+    expect(t('22', '22300', 'LANNION')).toBe('Tribunal des activités économiques de Saint-Brieuc');
+    expect(t('25', '25200', 'MONTBELIARD')).toBe('Tribunal de commerce de Belfort');
+    expect(t('25', '25300', 'PONTARLIER')).toBe('Tribunal de commerce de Besançon');
     expect(t('57', '57100', 'THIONVILLE')).toBe('Tribunal judiciaire de Thionville - Chambre commerciale');
     expect(t('67', '67600', 'SELESTAT')).toBe('Tribunal judiciaire de Colmar - Chambre commerciale');
     expect(t('68', '68100', 'MULHOUSE')).toBe('Tribunal judiciaire de Mulhouse - Chambre commerciale');
     // Courrier : champ laissé à compléter quand le ressort est inconnu.
-    expect(nomTribunalPourCourrier(co({ departement: '76', codePostal: '76190', ville: 'YVETOT' }))).toBe('');
+    expect(nomTribunalPourCourrier(co({ departement: '76', codePostal: '76999', ville: 'INCONNUE' }))).toBe('');
     // Agriculteur·rice d'un département à TAE, ressort inconnu : TAE ou tribunal judiciaire.
-    const agri = getTribunalCompetent(co({ departement: '13', codePostal: '13140', ville: 'MIRAMAS', formeJuridique: EI, naf: '01.11Z' }));
+    const agri = getTribunalCompetent(co({ departement: '13', codePostal: '13999', ville: 'INCONNUE', formeJuridique: EI, naf: '01.11Z' }));
     expect(agri.nom).toMatch(/^Tribunal judiciaire ou tribunal des activités économiques/);
     expect(agri.leGenerique).toBe('le tribunal compétent');
+  });
+
+  it('établissement secondaire : tribunal du siège (C. com. art. R600-1)', () => {
+    const etab = co({ departement: '35', codePostal: '35000', ville: 'RENNES', siege: { codePostal: '22100', ville: 'DINAN', departement: '22' } });
+    expect(getTribunalCompetent(etab).nom).toBe('Tribunal de commerce de Saint-Malo');
+    expect(nomTribunalPourCourrier(etab)).toBe('Tribunal de commerce de Saint-Malo');
+    // Siège inconnu (API INSEE) : carte générique, champ du courrier à compléter.
+    const inconnu = co({ departement: '35', codePostal: '35000', ville: 'RENNES', siege: { codePostal: '', ville: '', departement: '' } });
+    expect(getTribunalCompetent(inconnu).nom).toMatch(/dont dépend votre siège/);
+    expect(nomTribunalPourCourrier(inconnu)).toBe('');
+  });
+
+  it('Saint-Pierre-et-Miquelon : profession libérale → tribunal de première instance (C. com. L910-2)', () => {
+    const t = getTribunalCompetent(co({ departement: '975', codePostal: '97500', ville: 'SAINT-PIERRE', formeJuridique: EI, naf: '71.11Z' }));
+    expect(t.nom).toBe('Tribunal de première instance de Saint-Pierre');
   });
 
   it('agriculteur, libéral, association, société civile → tribunal judiciaire', () => {
@@ -365,6 +392,7 @@ describe('BODACC', () => {
   });
   it('dates au format « 7 mai 2026 »', () => {
     expect(dateFr('2026-05-07')).toBe('7 mai 2026');
+    expect(dateFr('2026-05-01')).toBe('1er mai 2026');
     expect(dateFr('')).toBe('');
     expect(dateFr('pas-une-date')).toBe('');
   });

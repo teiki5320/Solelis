@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import type { Reponses, CompanyData } from '@/lib/types';
 import { libelleActionSoutien, libelleContactSyndicat, libelleChambre, type SectorInfo } from '@/lib/secteur';
-import { contactCotisations } from '@/lib/organismes';
+import { contactCotisations, institutionEmission } from '@/lib/organismes';
 import { getTribunalCompetent } from '@/lib/strategie';
 import { getTonePreset } from '@/lib/tone';
 import { useFiche, useFicheStorageKey } from '@/lib/FicheContext';
@@ -49,7 +49,7 @@ export function buildDefaultActions(r: Reponses, c: CompanyData, s: SectorInfo):
     actions.push({ id: 'impots-sie', texte: 'Contacter mon service des impôts des entreprises (SIE), via la messagerie de mon espace professionnel impots.gouv.fr, pour demander un délai de paiement', done: false });
   }
   if (r.probleme === 'banque') {
-    actions.push({ id: 'mediation-credit', texte: `Saisir la médiation du crédit (Banque de France${dep ? `, dép. ${dep}` : ''})`, done: false });
+    actions.push({ id: 'mediation-credit', texte: `Saisir la médiation du crédit (${institutionEmission(dep).nom}${dep ? `, dép. ${dep}` : ''})`, done: false });
   }
   if (r.probleme === 'fournisseurs') {
     actions.push({ id: 'fournisseur-lettre', texte: 'Écrire une lettre de demande de délai au fournisseur principal', done: false });

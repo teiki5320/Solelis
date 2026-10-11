@@ -87,6 +87,8 @@ describe('getSectorInfo', () => {
     const info = getSectorInfo(makeCompany({ naf: '03.11Z' }));
     expect(info.secteur).toBe('peche');
     expect(info.cotisationOrg).toContain('ENIM');
+    // Numéro de l'ENIM publié par lannuaire.service-public.gouv.fr.
+    expect(info.cotisationTel).toBe('08 09 54 00 64');
   });
 
   it('injecte le CSP dans obligationsLicenciement de tout secteur', () => {

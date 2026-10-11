@@ -72,6 +72,12 @@ const INTERDITS: { re: RegExp; pourquoi: string }[] = [
   { re: /[Ss]aisir directement APESA|directement par téléphone\. La saisine/, pourquoi: 'APESA : alerte déclenchée par une sentinelle formée, avec l’accord de l’entrepreneur (apesa-france.com, « Le dispositif »)' },
   { re: /cellule dédiée|dispositif de résolution organisée/, pourquoi: 'ACPR : pas de « cellule » d’accompagnement ; la résolution vise les banques et assureurs défaillants (acpr.banque-france.fr)' },
   { re: /traitée en 2 à 4 semaines|premier rendez-vous sous 7 jours|la plupart proposent un premier échange/, pourquoi: 'délais et gratuité sans source officielle (courriers)' },
+  // Tour 5
+  { re: /36\s+mois à partir de 53 ans|dès 53 ans/, pourquoi: 'période de référence de 36 mois à partir de 55 ans depuis le 1er avril 2025 (unedic.org, « Ce qui change au 1er avril »)' },
+  { re: /02 40 41 39 39|Société de Secours des Marins/, pourquoi: 'ENIM : 08 09 54 00 64 (annuaire service-public) ; « SSM » introuvable' },
+  { re: /moins de 250 salarié[^.]{0,80}informez|informez[^.]{0,80}moins de 250 salarié/, pourquoi: 'information des salarié·e·s (vente) : plus de seuil de 250 depuis la loi n° 2026-403 (C. com. L141-23, L23-10-1)' },
+  { re: /Daniel-Martin|DIECCTE/, pourquoi: 'IEDOM Guadeloupe : boulevard Daniel-Marsin (iedom.fr) ; DIECCTE supprimée (DEETS / DGCOPOP)' },
+  { re: /même si interdit bancaire/, pourquoi: 'Adie : rien sur les interdits bancaires (adie.org)' },
 ];
 
 describe('contre-audit : affirmations retirées', () => {

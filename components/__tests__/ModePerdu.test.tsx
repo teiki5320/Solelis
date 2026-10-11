@@ -85,7 +85,7 @@ describe('ModePerdu', () => {
     const dom = makeContext({ moral: 'perdu', situation: 'prevention', probleme: 'urssaf', effectif: 'salaries' });
     dom.company = { ...dom.company, departement: '974', codePostal: '97400' };
     render(<FicheProvider value={dom}><ModePerdu /></FicheProvider>);
-    expect(screen.getAllByText(/CGSS Réunion/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/CGSS La Réunion/).length).toBeGreaterThan(0);
     expect(screen.queryByText(/0 820 000/)).toBeNull();
   });
 

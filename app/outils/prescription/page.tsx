@@ -217,7 +217,8 @@ export default function PrescriptionPage() {
       <p className="mt-6 text-xs text-navy/50">
         Sources officielles : Code civil (art. 2219 à 2254), Code de la
         Sécurité sociale (L244-3), Livre des procédures fiscales (L169,
-        L176, L274), Code du travail (L3245-1), Code de commerce (L110-4).
+        L176, L274), Code du travail (L3245-1), Code de commerce (L110-4),
+        Code pénal (133-4).
       </p>
     </section>
   );

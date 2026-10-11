@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { m } from 'framer-motion';
 import { useFiche } from '@/lib/FicheContext';
-import { contactCotisations } from '@/lib/organismes';
+import { contactCotisations, institutionEmission } from '@/lib/organismes';
 
 /** Cible du focus quand on quitte le mode perdu (titre de la fiche, IdentiteHero). */
 export const ID_TITRE_FICHE = 'fiche-titre';
@@ -30,6 +30,8 @@ export default function ModePerdu() {
 
   const ville = company.ville;
   const dep = company.departement || '';
+  // Banque de France en métropole, IEDOM / IEOM outre-mer.
+  const emission = institutionEmission(dep);
 
   // 1 contact prioritaire selon la situation
   const contact = (() => {
@@ -49,6 +51,15 @@ export default function ModePerdu() {
         tel: null as string | null,
         site: 'https://www.cip-national.fr',
         labelSite: 'cip-national.fr',
+      };
+    }
+    if (emission.nom !== 'Banque de France') {
+      return {
+        nom: `${emission.nom} · Correspondant TPE-PME`,
+        action: 'Échange gratuit pour faire le point et vous orienter',
+        tel: emission.telephone || null,
+        site: emission.nom === 'IEDOM' ? 'https://www.iedom.fr' : 'https://www.ieom.fr',
+        labelSite: emission.nom === 'IEDOM' ? 'iedom.fr' : 'ieom.fr',
       };
     }
     return {
@@ -74,6 +85,9 @@ export default function ModePerdu() {
       }
       const cot = contactCotisations(sector, reponses.effectif, dep);
       return `Cette semaine : 1 coup de fil à ${cot.orgAvecArticle} (${cot.telLibelle}) pour demander un délai. Rien d'autre.`;
+    }
+    if (emission.nom !== 'Banque de France') {
+      return `Cette semaine : appelez ${emission.avecArticle}${emission.telephone ? ` (${emission.telephone})` : ''}. 10 minutes au téléphone suffisent pour commencer.`;
     }
     return 'Cette semaine : appelez le 34 14 (Banque de France). 10 minutes au téléphone suffisent pour commencer.';
   })();

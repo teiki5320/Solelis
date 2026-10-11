@@ -232,6 +232,35 @@ describe('fetchSirene (API recherche-entreprises simulée)', () => {
     expect(c.formeJuridique).toBe('Société anonyme (SA)');
   });
 
+  it('établissement secondaire : siège conservé pour le tribunal (R600-1 C. com.)', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(
+        new Response(
+          JSON.stringify({
+            results: [
+              {
+                nom_complet: 'ACME',
+                nature_juridique: '5710',
+                siege: { siret: '34963839500021', code_postal: '22100', commune: '22050', libelle_commune: 'DINAN', departement: '22' },
+                matching_etablissements: [{ siret: '34963839500039', code_postal: '35000', commune: '35238', libelle_commune: 'RENNES' }],
+              },
+            ],
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } },
+        ),
+      ),
+    );
+    const c = await fetchSirene('34963839500039');
+    expect(c.departement).toBe('35');
+    expect(c.siege).toEqual({ codePostal: '22100', ville: 'DINAN', departement: '22' });
+  });
+
+  it('siège consulté : pas de champ « siege »', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(reponse({ code_postal: '20090', commune: '2A004', libelle_commune: 'AJACCIO' })));
+    expect((await fetchSirene('34963839500021')).siege).toBeUndefined();
+  });
+
   it('La Réunion : département 974 (et non « 97 »)', async () => {
     vi.stubGlobal(
       'fetch',

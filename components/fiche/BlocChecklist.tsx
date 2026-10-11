@@ -1,7 +1,7 @@
 'use client';
 import type { Reponses, CompanyData } from '@/lib/types';
 import { libelleActionSoutien, libelleContactSyndicat, libelleChambre, type SectorInfo } from '@/lib/secteur';
-import { contactCotisations } from '@/lib/organismes';
+import { contactCotisations, institutionEmission } from '@/lib/organismes';
 import { getTonePreset } from '@/lib/tone';
 import { useLocalStorage } from '@/lib/hooks';
 import { useFiche, useFicheStorageKey } from '@/lib/FicheContext';
@@ -34,7 +34,7 @@ export function buildItems(r: Reponses, c: CompanyData, s: SectorInfo): { id: st
   if (r.probleme === 'banque') {
     items.push({
       id: 'banque',
-      texte: `Contacter la Banque de France${dep ? ` (${dep})` : ''} — médiation du crédit`,
+      texte: `Contacter ${institutionEmission(dep).avecArticle}${dep ? ` (${dep})` : ''} — médiation du crédit`,
     });
   }
   if (r.probleme === 'impots') {

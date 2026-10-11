@@ -26,7 +26,7 @@ const TEMOIGNAGES: Temoignage[] = [
     situation: 'Cessation de paiements',
     secteur: 'Restauration',
     region: 'Lyon (69)',
-    annee: '2023',
+    annee: 'Exemple fictif',
     citation:
       "J’ai mis trois mois à accepter que mon restaurant ne s’en sortirait pas seul. Quand j’ai enfin pris rendez-vous au CIP, on m’a expliqué calmement les options. Le redressement judiciaire a gelé les dettes antérieures, et l’administrateur m’a aidé à renégocier le bail et à réorganiser l’équipe. Aujourd’hui le restaurant tourne, pas comme avant, mais il tourne. Le plus dur, c’est de demander de l’aide. Après, ça va.",
     contexte:
@@ -40,7 +40,7 @@ const TEMOIGNAGES: Temoignage[] = [
     situation: 'Liquidation puis rebond',
     secteur: 'Commerce de détail',
     region: 'Bordeaux (33)',
-    annee: '2022',
+    annee: 'Exemple fictif',
     citation:
       "La liquidation, c’est un deuil. J’ai pleuré, j’ai eu honte, je me suis isolée. C’est une psychologue d’APESA, alertée par le greffe du tribunal, qui m’a aidée à remonter. Quelques mois plus tard, j’ai commencé à réfléchir à un nouveau projet. Aujourd’hui je suis consultante en merchandising, en auto-entreprise. Je ne regrette pas d’avoir essayé. Je regrette d’avoir attendu si longtemps avant de parler.",
     contexte:
@@ -54,7 +54,7 @@ const TEMOIGNAGES: Temoignage[] = [
     situation: 'Prévention réussie (mandat ad hoc)',
     secteur: 'BTP',
     region: 'Lille (59)',
-    annee: '2024',
+    annee: 'Exemple fictif',
     citation:
       "Mon expert-comptable m’a dit : « Thierry, dans six mois vous ne pourrez plus payer les salaires. » Ça m’a fait l’effet d’une gifle. Il m’a parlé du mandat ad hoc, une procédure confidentielle que l’on demande au président du tribunal. Le mandataire ad hoc a négocié avec ma banque et deux fournisseurs clés. Tout est resté confidentiel, vis-à-vis des salariés comme des clients. En quatre mois, un accord était trouvé. Si j’avais attendu la cessation des paiements, les solutions auraient été bien plus lourdes.",
     contexte:
@@ -68,7 +68,7 @@ const TEMOIGNAGES: Temoignage[] = [
     situation: 'Redressement puis cession',
     secteur: 'Artisanat (boulangerie)',
     region: 'Montpellier (34)',
-    annee: '2023',
+    annee: 'Exemple fictif',
     citation:
       "Quand le tribunal a ouvert le redressement, j’ai cru que c’était fini. En fait, c’est le contraire qui s’est passé : l’administrateur a trouvé un repreneur en trois mois. Un boulanger de la région qui cherchait un deuxième point de vente. Mes quatre salariés ont tous gardé leur poste. Moi, j’ai pu tourner la page, et surtout sans culpabilité. Le plus important, c’est que l’équipe a été protégée.",
     contexte:

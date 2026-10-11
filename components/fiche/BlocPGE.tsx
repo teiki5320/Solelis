@@ -51,12 +51,15 @@ export default function BlocPGE() {
       {/* Accord-cadre & restructuration */}
       <div className="mt-4 rounded-2xl border border-vert/30 bg-vert/5 p-4">
         <p className="font-display text-base text-vert">
-          Accord de place du 19 janvier 2022 (État, BdF, IEDOM, FBF)
+          Accord de place du 19 janvier 2022 (État, BdF, IEDOM, IEOM, FBF)
         </p>
         <p className="mt-2 text-sm text-navy/80">
           Un accord de place signé par l&apos;État, la Banque de France,
-          l&apos;IEDOM et la Fédération bancaire française, prolongé
-          jusqu&apos;au 31 décembre 2026, permet aux TPE et PME de{' '}
+          l&apos;IEDOM, l&apos;IEOM et la Fédération bancaire française,
+          prolongé jusqu&apos;au 31 décembre 2026, permet aux TPE et PME
+          dont les PGE totalisent au plus 50 000 € à l&apos;octroi (au-delà,
+          seulement par exception) et qui ne sont pas en cessation des
+          paiements de{' '}
           <strong>allonger le PGE de 2 ans au plus</strong> par rapport à
           l&apos;échéancier initial (4 ans au plus si c&apos;est
           particulièrement justifié, soit 10 ans au total au maximum) dans le cadre de la Médiation du
@@ -78,6 +81,9 @@ export default function BlocPGE() {
             Elle peut s&apos;accompagner, si c&apos;est particulièrement
             justifié, d&apos;un différé en capital de 6 mois au plus,
             compris dans la durée d&apos;allongement.
+          </li>
+          <li>
+            Ce recours n&apos;est possible qu&apos;une seule fois.
           </li>
         </ul>
       </div>
@@ -194,7 +200,7 @@ export default function BlocPGE() {
 
       <p className="mt-5 text-xs text-navy/50">
         Sources : accord de place du 19 janvier 2022 sur les
-        restructurations de PGE (État, Banque de France, IEDOM, FBF),
+        restructurations de PGE (État, Banque de France, IEDOM, IEOM, FBF),
         prolongé jusqu&apos;au 31 décembre 2026 ; fiche « Restructuration
         de PGE » de la Médiation du crédit (banque-france.fr) ; loi
         n° 2020-289 du 23 mars 2020 de finances rectificative, art. 6.

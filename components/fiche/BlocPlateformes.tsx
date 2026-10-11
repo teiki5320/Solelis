@@ -203,7 +203,8 @@ export default function BlocPlateformes() {
           </li>
           <li>
             <strong>Adie</strong> — Micro-crédit jusqu&apos;à 15 000 €
-            même si interdit bancaire (changement véhicule, équipement).
+            sur 48 mois au plus, pour les personnes sans accès au crédit
+            bancaire (changement de véhicule, équipement).
           </li>
         </ul>
       </div>

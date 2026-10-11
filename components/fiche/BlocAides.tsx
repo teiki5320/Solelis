@@ -3,7 +3,7 @@ import type { Reponses, CompanyData } from '@/lib/types';
 import type { SectorInfo } from '@/lib/secteur';
 import { getAidesRegionales } from '@/lib/aidesRegionales';
 import { isEI } from '@/lib/strategie';
-import { contactCotisations } from '@/lib/organismes';
+import { contactCotisations, institutionEmission } from '@/lib/organismes';
 import { useFiche } from '@/lib/FicheContext';
 import BlocAccordeon from './BlocAccordeon';
 
@@ -55,9 +55,9 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
   }
   if (r.probleme === 'banque') {
     specifiques.push({
-      nom: `Médiation du crédit${dep ? ` · Banque de France (${dep})` : ''}`,
+      nom: `Médiation du crédit${dep ? ` · ${institutionEmission(dep).nom} (${dep})` : ''}`,
       description: 'Gratuit et confidentiel. Le médiateur contacte votre banque et négocie pour vous.',
-      telephone: '34 14',
+      telephone: institutionEmission(dep).telephone || undefined,
       site: 'https://mediateur-credit.banque-france.fr',
       badge: 'Prioritaire pour vous',
     });

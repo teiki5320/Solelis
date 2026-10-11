@@ -8,8 +8,9 @@ import BlocAccordeon from './BlocAccordeon';
  * (sauf 'sans-conjoint' ou champ non rempli).
  *
  * Couvre les 3 statuts légaux (salarié, collaborateur, associé) plus
- * le cas « aucun rôle » (où on alerte sur le risque de requalification
- * en collaborateur de fait si participation effective).
+ * le cas « aucun rôle » (où on rappelle qu'à défaut de déclaration, le
+ * conjoint qui travaille régulièrement est réputé conjoint salarié —
+ * art. L121-4 C. com.).
  */
 export default function BlocConjointCollaborateur() {
   const { reponses } = useFiche();

@@ -205,11 +205,14 @@ function generiqueDepuisType(type: string, juridiction: 'TC' | 'TJ'): string {
  * le plan d'action, la checklist, les courriers et la carte « Organismes ».
  */
 export function getTribunalCompetent(
-  company: Pick<CompanyData, 'formeJuridique' | 'naf' | 'departement'> & Partial<Pick<CompanyData, 'codePostal' | 'ville'>>,
+  company: Pick<CompanyData, 'formeJuridique' | 'naf' | 'departement'> & Partial<Pick<CompanyData, 'codePostal' | 'ville' | 'siege'>>,
 ): TribunalCompetent {
   const juridiction = getJuridiction(company as CompanyData);
-  const dep = getDepartement(company.departement);
-  const local = dep?.tribunal ? tribunalSelonCodePostal(dep, company.codePostal, company.ville) : null;
+  // Tribunal du siège (C. com. art. R600-1), même si le SIRET saisi est celui
+  // d'un établissement secondaire situé ailleurs.
+  const lieu = company.siege ?? company;
+  const dep = getDepartement(lieu.departement);
+  const local = dep?.tribunal ? tribunalSelonCodePostal(dep, lieu.codePostal, lieu.ville) : null;
   let carte: OrganismeCard =
     (local && carteTribunal(local, juridiction)) ??
     (juridiction === 'TJ'
@@ -239,7 +242,7 @@ export function getTribunalCompetent(
  * ressort ») : le champ reste alors à compléter par le dirigeant.
  */
 export function nomTribunalPourCourrier(
-  company: Pick<CompanyData, 'formeJuridique' | 'naf' | 'departement'> & Partial<Pick<CompanyData, 'codePostal' | 'ville'>>,
+  company: Pick<CompanyData, 'formeJuridique' | 'naf' | 'departement'> & Partial<Pick<CompanyData, 'codePostal' | 'ville' | 'siege'>>,
 ): string {
   const { nom } = getTribunalCompetent(company);
   if (/dont dépend|de votre ressort/.test(nom)) return '';
@@ -390,7 +393,9 @@ export function buildStrategie(axe: Axe, r: Reponses, c: CompanyData, score: num
           'Prévisionnel de trésorerie à 6 mois avec votre expert-comptable',
           'Demandes de délais : URSSAF, SIE, bailleur, fournisseurs (courriers Solelis)',
           r.pgeEnCours === 'oui'
-            ? 'PGE en cours : demande de réaménagement auprès de votre banque, puis Médiation du crédit (renseignements au 3414) — l\'accord de place, prolongé jusqu\'au 31 décembre 2026, permet d\'allonger le PGE de 2 ans au plus (4 ans au plus si c\'est particulièrement justifié) en gardant la garantie de l\'État'
+            ? enCessation
+              ? 'PGE en cours : en cessation des paiements, la Médiation du crédit n\'est plus ouverte pour le restructurer ; son étalement se négocie dans le plan de redressement'
+              : 'PGE en cours : demande de réaménagement auprès de votre banque, puis Médiation du crédit (renseignements au 3414) — l\'accord de place, prolongé jusqu\'au 31 décembre 2026, permet (PGE de 50 000 € au plus, sauf exception, et hors cessation des paiements) d\'allonger le PGE de 2 ans au plus (4 ans au plus si c\'est particulièrement justifié) en gardant la garantie de l\'État ; l\'entreprise est alors classée en défaut par ses banques'
             : 'Saisine médiation du crédit si tension bancaire',
           'Audit des coûts fixes — éliminer le non-essentiel',
           'RDV avec le CIP (Centre d\'information sur la prévention des difficultés des entreprises) : entretien gratuit et confidentiel pour faire le point',

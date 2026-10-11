@@ -57,6 +57,8 @@ interface InseeUniteLegale {
 }
 
 interface InseeEtablissement {
+  /** true si l'établissement est le siège de l'unité légale. */
+  etablissementSiege?: boolean;
   uniteLegale?: InseeUniteLegale;
   adresseEtablissement?: InseeAdresse;
   activitePrincipaleEtablissement?: string;
@@ -330,6 +332,16 @@ async function fetchFromRechercheEntreprises(
       codePostal,
       ville,
       departement,
+      // Établissement secondaire : le tribunal est celui du siège (R600-1).
+      ...(matching?.siret && result.siege?.siret && matching.siret !== result.siege.siret
+        ? {
+            siege: {
+              codePostal: result.siege.code_postal ?? '',
+              ville: result.siege.libelle_commune ?? '',
+              departement: determinerDepartement(result.siege.commune, result.siege.code_postal, result.siege.departement),
+            },
+          }
+        : {}),
       fetched: true,
     };
   } catch (e) {
@@ -392,6 +404,9 @@ async function fetchFromInseeSirene(
       codePostal,
       ville: addr.libelleCommuneEtablissement ?? '',
       departement,
+      // Établissement secondaire : adresse du siège inconnue ici, le tribunal
+      // (celui du siège, R600-1) reste générique.
+      ...(etab.etablissementSiege === false ? { siege: { codePostal: '', ville: '', departement: '' } } : {}),
       fetched: true,
     };
   } catch (e) {

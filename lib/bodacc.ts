@@ -198,10 +198,12 @@ export function dateFr(date: string | undefined): string {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(date);
   const d = m ? new Date(Date.UTC(+m[1], +m[2] - 1, +m[3])) : new Date(date);
   if (isNaN(d.getTime())) return '';
-  return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+  const texte = d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+  // Usage typographique : « 1er mai 2026 », pas « 1 mai 2026 ».
+  return d.getUTCDate() === 1 ? texte.replace(/^1(?=\s)/, '1er') : texte;
 }
 
-/** « (le 7 mai 2026) » ou rien si la date manque. */
+/** « (publiée le 7 mai 2026) » ou rien si la date manque. */
 function entreParentheses(date: string | undefined): string {
   const f = dateFr(date);
   return f ? ` (publiée le ${f})` : '';

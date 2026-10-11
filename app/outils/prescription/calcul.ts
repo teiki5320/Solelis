@@ -109,7 +109,7 @@ export const REGLES: Regle[] = [
     reference: 'C. civ. art. 2224 (jurisprudence Cass. 3e civ.)',
     point: "Date d'échéance de chaque terme de loyer.",
     interruption:
-      "Commandement de payer visant la clause résolutoire, action en justice.",
+      "Demande en justice, acte d'exécution forcée, reconnaissance de la dette par le locataire (art. 2240 et s. C. civ.).",
   },
   {
     cle: 'salaire',

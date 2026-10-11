@@ -52,6 +52,12 @@ export interface CompanyData {
   codePostal: string;
   ville: string;
   departement: string;
+  /**
+   * Siège de l'entreprise, quand le SIRET saisi est celui d'un établissement
+   * secondaire : le tribunal compétent est celui du siège (C. com. art. R600-1).
+   * Champs vides si le siège n'est pas connu.
+   */
+  siege?: { codePostal: string; ville: string; departement: string };
   fetched: boolean;
 }
 

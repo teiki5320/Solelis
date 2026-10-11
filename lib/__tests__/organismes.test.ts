@@ -4,6 +4,7 @@ import {
   buildOrganismes,
   orientationRestructuration,
   carteTribunal,
+  institutionEmission,
   type DepartementData,
 } from '../organismes';
 import type { Reponses } from '../types';
@@ -259,5 +260,17 @@ describe('carte tribunal et numéros', () => {
     expect(indep.find((c) => c.nom.includes('CPSTI'))!.telephone).toBe('3698');
     const empl = tous(buildOrganismes(getDepartement('75'), makeReponses({ effectif: 'salaries' }), []));
     expect(empl.find((c) => c.type === 'URSSAF')!.telephone).toBe('3957');
+  });
+});
+
+describe('institutionEmission : Banque de France, IEDOM, IEOM (tour 5)', () => {
+  it('métropole : Banque de France, 34 14', () => {
+    expect(institutionEmission('75')).toMatchObject({ nom: 'Banque de France', telephone: '34 14' });
+  });
+  it('outre-mer : IEDOM / IEOM, 34 14 (annuaire service-public)', () => {
+    // IEDOM : 34 14 (annuaire service-public, fiches des agences IEDOM).
+    expect(institutionEmission('971')).toMatchObject({ nom: 'IEDOM', avecArticle: "l'IEDOM", telephone: '34 14' });
+    expect(institutionEmission('974').telephone).toBe('34 14');
+    expect(institutionEmission('988')).toMatchObject({ nom: 'IEOM', telephone: '34 14' });
   });
 });

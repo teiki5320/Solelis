@@ -155,9 +155,11 @@ export default function BlocNationaliteSejour() {
         <p className="mt-2 text-sm text-navy/80">
           L&apos;OFII propose une <strong>aide au retour volontaire</strong>{' '}
           (voyage pris en charge, allocation forfaitaire dont le montant
-          dépend de la situation, accompagnement), principalement aux
-          personnes en situation irrégulière ou visées par une obligation
-          de quitter le territoire (service-public.gouv.fr, fiche F33974).
+          dépend de la situation, accompagnement), en règle générale aux
+          personnes en situation irrégulière faisant l&apos;objet d&apos;une
+          obligation de quitter le territoire, ou ressortissantes d&apos;un
+          pays lié à la France par un accord de réinsertion
+          (service-public.gouv.fr, fiche F33974).
           Une <strong>aide à la réinsertion</strong> peut compléter, y
           compris pour un projet de création d&apos;entreprise dans le
           pays d&apos;origine (projets sélectionnés).

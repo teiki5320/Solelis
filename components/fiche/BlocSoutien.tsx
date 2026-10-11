@@ -28,8 +28,11 @@ export function caisseFromNaf(
   if (code.startsWith('4773')) return find('CAVP');
   // Vétérinaire
   if (code.startsWith('7500')) return find('CARPV');
-  // Auxiliaires médicaux (kiné, infirmier, orthophoniste…)
-  if (code.startsWith('8690')) return find('CARPIMKO');
+  // 86.90 mêle des professions de caisses différentes : infirmier·e·s et
+  // kinés (CARPIMKO), sages-femmes (CARCDSF), ostéopathes, psychologues,
+  // ergothérapeutes, diététicien·ne·s (Cipav, lacipav.fr « Qui est assuré à
+  // la Cipav ») : le code NAF ne permet pas de choisir, on ne devine pas.
+  if (code.startsWith('8690')) return null;
   // Médecins, dentistes, sages-femmes…
   if (code.startsWith('862')) {
     // Dentaire (86.23Z)

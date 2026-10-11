@@ -34,10 +34,12 @@ export interface DepartementData {
   /**
    * Autres juridictions commerciales du département, avec leur ressort
    * (ex. tribunal mixte de commerce de Saint-Pierre, 974 ; tribunal de
-   * commerce de Bayonne, 64). Sources : « Données géocodées des structures de
-   * la Justice » et « Liste des juridictions compétentes pour les communes »
-   * (ministère de la Justice, data.gouv.fr, 2026), base officielle des codes
-   * postaux (La Poste).
+   * commerce de Bayonne, 64 ; tribunal de commerce de Saint-Malo pour Dinan, 22).
+   * Sources : « Données géocodées des structures de la Justice » et « Liste des
+   * juridictions compétentes pour les communes » (ministère de la Justice,
+   * data.gouv.fr, 2026), communes rattachées à chaque tribunal de commerce ou
+   * TAE dans l'annuaire officiel (lannuaire.service-public.gouv.fr), base
+   * officielle des codes postaux (La Poste).
    */
   tribunauxSecondaires?: (TribunalAvecRessort & { codesPostaux: string[] })[];
   cci: OrganismeLocal;
@@ -62,9 +64,9 @@ export function getDepartement(code: string): DepartementData | null {
 }
 
 export interface ContactCotisations {
-  /** Organisme, ex. « URSSAF », « CGSS Réunion », « MSA (Mutualité Sociale Agricole) ». */
+  /** Organisme, ex. « URSSAF », « CGSS La Réunion », « MSA (Mutualité Sociale Agricole) ». */
   org: string;
-  /** Avec son article : « l'URSSAF », « la CGSS Réunion », « votre caisse de MSA »… */
+  /** Avec son article : « l'URSSAF », « la CGSS La Réunion », « votre caisse de MSA »… */
   orgAvecArticle: string;
   /** Numéro à composer, ou null (MSA : pas de numéro national). */
   tel: string | null;
@@ -72,7 +74,7 @@ export interface ContactCotisations {
   telLibelle: string;
   telephoneNote?: string;
   site: string;
-  /** « URSSAF (3698) », « CGSS Réunion (3957) », « MSA (numéro de votre caisse sur msa.fr) ». */
+  /** « URSSAF (3698) », « CGSS La Réunion (3957) », « MSA (numéro de votre caisse sur msa.fr) ». */
   libelle: string;
 }
 
@@ -117,6 +119,25 @@ export function contactCotisations(
   // secteur (BTP, retraite des libéraux…) ne se joignent pas au 39 57.
   const tel = effectif === 'independant' ? '3698' : '3957';
   return fabrique('URSSAF', tel, tel, 'https://www.urssaf.fr');
+}
+
+/**
+ * Institution qui assure la médiation du crédit et le correspondant TPE-PME :
+ * la Banque de France en métropole, l'IEDOM dans les départements d'outre-mer,
+ * à Saint-Pierre-et-Miquelon, Saint-Barthélemy et Saint-Martin, l'IEOM dans
+ * le Pacifique (iedom.fr, ieom.fr). Téléphone : 34 14 (annuaire service-public).
+ */
+export function institutionEmission(departement?: string): {
+  nom: 'Banque de France' | 'IEDOM' | 'IEOM';
+  /** « la Banque de France », « l'IEDOM », « l'IEOM ». */
+  avecArticle: string;
+  telephone: string;
+} {
+  const code = departement ?? '';
+  const tel = DATA[code]?.banqueDeFrance?.telephone;
+  if (/^97[1-8]$/.test(code)) return { nom: 'IEDOM', avecArticle: "l'IEDOM", telephone: tel ?? '34 14' };
+  if (/^98[678]$/.test(code)) return { nom: 'IEOM', avecArticle: "l'IEOM", telephone: tel ?? '34 14' };
+  return { nom: 'Banque de France', avecArticle: 'la Banque de France', telephone: '34 14' };
 }
 
 /** Nom de commune comparable à la base officielle des codes postaux (« ST QUENTIN »). */
@@ -260,6 +281,15 @@ export function carteTribunal(
     return { ...carteLocale, badge: 'Sauf professions du droit (tribunal judiciaire)' };
   }
   if (/tribunal judiciaire/i.test(tribunal.type)) return carteLocale;
+  // Saint-Pierre-et-Miquelon (C. com. L910-2) et Wallis-et-Futuna : pas de
+  // tribunal judiciaire, le tribunal de première instance en tient lieu.
+  if (/premi[èe]re instance/i.test(tribunal.type)) {
+    return {
+      ...carteLocale,
+      nom: tribunal.nom.replace(/\s*\(comp[ée]tence commerciale\)\s*$/i, ''),
+      type: 'Tribunal de première instance',
+    };
+  }
   return {
     nom: 'Tribunal judiciaire de votre ressort',
     type: 'Tribunal judiciaire · activité ni commerciale ni artisanale',
@@ -411,7 +441,8 @@ export function buildOrganismes(
     fin.push({
       nom: 'ENIM',
       type: 'Cotisations des marins (ENIM)',
-      telephone: '02 40 41 39 39',
+      // lannuaire.service-public.gouv.fr (« service gratuit + prix d'un appel »).
+      telephone: '08 09 54 00 64',
       site: 'https://www.enim.eu',
       badge: 'Échelonnement possible',
     });
@@ -441,11 +472,12 @@ export function buildOrganismes(
     site: 'https://www.bpifrance.fr',
     badge: 'Entretien gratuit',
   });
-  // Correspondant TPE-PME Banque de France — diagnostic gratuit et confidentiel
+  // Correspondant TPE-PME Banque de France (IEDOM / IEOM outre-mer) — diagnostic gratuit et confidentiel
+  const emission = institutionEmission(dep?.code);
   fin.push({
-    nom: 'Correspondant TPE-PME Banque de France',
+    nom: `Correspondant TPE-PME ${emission.nom}`,
     type: 'Diagnostic financier confidentiel',
-    telephone: '34 14',
+    telephone: emission.telephone || undefined,
     site: 'https://entreprises.banque-france.fr',
     badge: 'Gratuit · confidentiel',
   });
@@ -646,7 +678,7 @@ export function buildOrdresProfessionnels(
   }
 
   // Une même caisse couvre parfois plusieurs professions (CARCDSF : dentistes
-  // et sages-femmes ; CAVOM : géomètres, commissaires de justice…) : une
+  // et sages-femmes ; CAVOM : commissaires de justice, commissaires-priseurs…) : une
   // seule carte, professions regroupées.
   const parCaisse = new Map<string, { caisse: NonNullable<SectorInfo['caissesRetraite']>[number]; professions: string[] }>();
   for (const caisse of sector.caissesRetraite ?? []) {
@@ -1008,18 +1040,17 @@ export function buildReseauxSpecifiques(
       titre: 'Entraide marins-pêcheurs',
       couleur: 'bleu-fonce',
       icone: '⚓',
+      // La SNSM (sauvetage en mer) n'aide que les familles de ses propres
+      // sauveteurs ; la carte « SSM » retirée (organisme introuvable).
+      // L'aide aux marins et à leurs familles relève de l'action sanitaire et
+      // sociale de l'ENIM (règlement d'action sanitaire et sociale, enim.eu).
       cartes: [
         {
-          nom: 'SNSM',
-          type: 'Société Nationale de Sauvetage en Mer',
-          site: 'https://www.snsm.org',
-          badge: 'Aide aux familles de marins',
-        },
-        {
-          nom: 'Société de Secours des Marins (SSM)',
-          type: 'Action sociale · ENIM',
+          nom: 'ENIM · Action sanitaire et sociale',
+          type: 'Aides aux marins et à leurs familles',
+          telephone: '08 09 54 00 64',
           site: 'https://www.enim.eu',
-          badge: 'Aides d\'urgence',
+          badge: 'Sur demande · souvent sous conditions de ressources',
         },
       ],
     });

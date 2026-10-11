@@ -177,7 +177,7 @@ export default function AidejuridictionnellePage() {
             className="mt-1 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2"
           />
           <span className="mt-1 block text-[11px] text-navy/55">
-            Conjoint sans revenus, enfants, ascendants à charge. Majoration de {formatEuros(MAJORATION_2_PREMIERES)} pour les 2 premières, {formatEuros(MAJORATION_SUIVANTES)} ensuite.
+            Autres personnes de votre foyer fiscal (conjoint ou partenaire de Pacs, enfants, autres personnes à charge). Majoration de {formatEuros(MAJORATION_2_PREMIERES)} pour les 2 premières, {formatEuros(MAJORATION_SUIVANTES)} ensuite.
           </span>
         </label>
 

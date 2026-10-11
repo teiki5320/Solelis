@@ -226,14 +226,15 @@ const SECTOR_DATA: Record<Secteur, Omit<SectorInfo, 'secteur'>> = {
   peche: {
     label: 'Pêche / Aquaculture',
     cotisationOrg: 'ENIM (Établissement National des Invalides de la Marine)',
-    cotisationTel: '02 40 41 39 39',
+    // ENIM : 08 09 54 00 64 (lannuaire.service-public.gouv.fr, « Établissement national des invalides de la marine »).
+    cotisationTel: '08 09 54 00 64',
     cotisationSite: 'https://www.enim.eu',
     syndicats: [
       { nom: 'CNPMEM', role: 'Comité National des Pêches Maritimes et des Élevages Marins', telephone: '01 72 71 18 00', site: 'https://www.comite-peches.fr' },
       { nom: 'CRPMEM', role: 'Comité Régional des Pêches Maritimes — par façade littorale', site: 'https://www.comite-peches.fr' },
       { nom: 'France Filière Pêche', role: 'Interprofession pêche fraîche française', site: 'https://www.francefilierepeche.fr' },
       { nom: 'CNC', role: 'Comité National de la Conchyliculture — ostréiculture, mytiliculture', },
-      { nom: 'SNSM', role: 'Société Nationale de Sauvetage en Mer — intervention urgence, soutien familles', telephone: '01 56 02 64 64', site: 'https://www.snsm.org' },
+      { nom: 'SNSM', role: 'Société Nationale de Sauvetage en Mer — sauvetage des personnes en mer', telephone: '01 56 02 64 64', site: 'https://www.snsm.org' },
       // AGISM : association active (Sirene) mais sans site ni numéro publiés.
       { nom: 'AGISM', role: 'Association pour la gestion des institutions sociales maritimes — action sociale des marins' },
     ],
@@ -258,7 +259,7 @@ const SECTOR_DATA: Record<Secteur, Omit<SectorInfo, 'secteur'>> = {
     ],
     chambre: 'CCI',
     caissesRetraite: [
-      { profession: 'Marin-pêcheur', caisse: 'ENIM', telephone: '02 40 41 39 39', site: 'https://www.enim.eu' },
+      { profession: 'Marin-pêcheur', caisse: 'ENIM', telephone: '08 09 54 00 64', site: 'https://www.enim.eu' },
     ],
     ordresProfessionnels: [
       { profession: 'Pêche maritime', nom: 'CNPMEM (Comité National des Pêches)', telephone: '01 72 71 18 00', site: 'https://www.comite-peches.fr', note: 'Organisation professionnelle obligatoire pour les pêcheurs' },
