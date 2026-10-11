@@ -168,12 +168,20 @@ async function renderFiche(data: FicheData) {
   // si le BODACC n'a pas pu être interrogé.
   let bodaccIndisponible = true;
   let avocatsRaw: Awaited<ReturnType<typeof searchAvocats>> = [];
+  const dep = getDepartement(company_data.departement);
 
   try {
     const [resBodacc, resProcedures, avocats] = await Promise.all([
       fetchBodaccResultat(siret),
       fetchProceduresResultat(siret),
-      searchAvocats(company_data.ville || company_data.departement).catch(() => []),
+      // Commune + code postal + département : une commune au nom ambigu
+      // (ex. Vert, 40420) ne doit pas renvoyer des cabinets d'autres régions.
+      searchAvocats({
+        ville: company_data.ville,
+        codePostal: company_data.codePostal,
+        departement: company_data.departement,
+        nomDepartement: dep?.nom,
+      }).catch(() => []),
     ]);
     bodacc = resBodacc.annonces;
     infogreffe = resProcedures.annonces;
@@ -185,7 +193,6 @@ async function renderFiche(data: FicheData) {
   const alertes = computeAlertes(bodacc, infogreffe, reponses.situation, {
     bodaccDisponible: !bodaccIndisponible,
   });
-  const dep = getDepartement(company_data.departement);
 
   const avocats: OrganismeCard[] = avocatsRaw.map((p) => ({
     nom: p.name,

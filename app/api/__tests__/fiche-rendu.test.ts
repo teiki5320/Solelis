@@ -15,11 +15,12 @@ vi.mock('@/lib/bodacc', async (importOriginal) => ({
   fetchBodaccResultat: async () => ({ annonces: [], statut: 'ok' }),
   fetchProceduresResultat: async () => ({ annonces: [], statut: 'ok' }),
 }));
-vi.mock('@/lib/googlePlaces', () => ({
-  searchAvocats: async () => [
+const searchAvocatsMock = vi.hoisted(() =>
+  vi.fn(async (_lieu: unknown) => [
     { name: 'Cabinet Dupont', address: '1 rue X, Paris', rating: 4.5, reviews: 10, phone: '01 02 03 04 05', mapsUrl: 'https://maps.google.com/?cid=1' },
-  ],
-}));
+  ]),
+);
+vi.mock('@/lib/googlePlaces', () => ({ searchAvocats: searchAvocatsMock }));
 vi.mock('next/headers', () => ({ cookies: async () => ({ get: () => undefined }) }));
 
 const REPONSES = { situation: 'tresorie', probleme: 'urssaf', effectif: 'independant', moral: 'combatif' };
@@ -96,5 +97,17 @@ describe('fiche : entreprise introuvable et avocats', () => {
     expect(json).toContain('Cabinet Dupont');
     expect(json).toContain('Avocat à proximité');
     expect(json).not.toContain('droit des entreprises en difficulté');
+  });
+
+  it('recherche d’avocats : commune + code postal + département (EARL à Vert, 40420)', async () => {
+    company = { ...BASE, fetched: true, departement: '40', ville: 'VERT', codePostal: '40420' };
+    searchAvocatsMock.mockClear();
+    await rendre();
+    expect(searchAvocatsMock).toHaveBeenCalledWith({
+      ville: 'VERT',
+      codePostal: '40420',
+      departement: '40',
+      nomDepartement: 'Landes',
+    });
   });
 });
