@@ -119,7 +119,7 @@ const CONJOINT: Choice<ConjointStatut>[] = [
 ];
 
 const CO_GERANTS: Choice<CoGerants>[] = [
-  { value: 'oui', label: 'Oui, il y a plusieurs gérant·e·s ou dirigeant·e·s', hint: 'Solidarité fiscale et sociale possible (art. L267 LPF, L243-6-2 CSS)' },
+  { value: 'oui', label: 'Oui, il y a plusieurs gérant·e·s ou dirigeant·e·s', hint: 'Solidarité fiscale possible (art. L267 LPF) ; sociale en cas de travail dissimulé (art. L243-3-2 CSS)' },
   { value: 'non', label: 'Non, je suis seul·e' },
   { value: 'sans-objet', label: 'Sans objet (entrepreneur individuel)' },
 ];

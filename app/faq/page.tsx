@@ -95,7 +95,7 @@ const SECTIONS: SectionFAQ[] = [
       {
         question: "Puis-je négocier directement avec l'URSSAF ?",
         reponse:
-          "Oui. Vous pouvez demander des délais de paiement directement à l'URSSAF (numéro 3957) ou via la Commission des chefs des services financiers (CCSF) de votre département, qui regroupe tous les créanciers publics (URSSAF, impôts, douanes). La CCSF peut accorder un plan d'échelonnement sur 12 à 36 mois. L'URSSAF peut aussi accorder une remise partielle des majorations de retard (article L243-5 du Code de la sécurité sociale).",
+          "Oui. Vous pouvez demander des délais de paiement directement à l'URSSAF (36 98 pour les travailleurs indépendants, 39 57 pour les employeurs ; MSA pour les exploitants agricoles, CGSS outre-mer) ou via la Commission des chefs des services financiers (CCSF) de votre département, qui regroupe tous les créanciers publics (URSSAF, impôts, douanes). La CCSF peut accorder un plan d'échelonnement sur 12 à 36 mois. L'URSSAF peut aussi accorder une remise partielle des majorations de retard (article L243-5 du Code de la sécurité sociale).",
         liens: [
           { href: '/courriers/echelonnement-urssaf', label: 'Modèle courrier URSSAF' },
           { href: '/courriers/saisine-ccsf', label: 'Courrier de saisine CCSF' },

@@ -107,8 +107,8 @@ const OBLIGATIONS_NE_PAS_FAIRE: Obligation[] = [
   {
     titre: 'Ne pas négliger les obligations sociales',
     description: 'Cotisations salariales prélevées et non reversées à l\'URSSAF = délit. Travail dissimulé = délit aggravé.',
-    reference: 'CSS art. L243-6-2 ; C. trav. L8221-1',
-    sanction: 'Responsabilité personnelle solidaire pour les cotisations (CSS L243-6-2). Délit de travail dissimulé : 3 ans de prison + 45 000 € amende.',
+    reference: 'CSS art. L243-3-2 ; C. trav. L8221-1, L8224-1',
+    sanction: 'En cas de travail dissimulé, le dirigeant peut être déclaré solidairement responsable des cotisations de la société (CSS L243-3-2). Délit de travail dissimulé : 3 ans de prison + 45 000 € amende (C. trav. L8224-1).',
     conseil: 'Si vous devez choisir où ne PAS payer, ce ne sont pas les salaires nets ni les cotisations salariales. Mieux : préventif → CCSF.',
   },
 ];
