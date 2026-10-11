@@ -3,6 +3,8 @@
  * (sources officielles en commentaire) et cohérence d'une même fiche.
  */
 import { describe, it, expect } from 'vitest';
+import { readFileSync, readdirSync } from 'node:fs';
+import path from 'node:path';
 import type { Reponses, CompanyData } from '../types';
 import {
   computeScores,
@@ -13,6 +15,7 @@ import {
   getJuridictionLabel,
   harmoniserCarteTribunal,
   getResponsabiliteAssocies,
+  nomTribunalPourCourrier,
 } from '../strategie';
 import {
   buildOrganismes,
@@ -131,6 +134,14 @@ describe('Tribunal : une seule source (getJuridiction + data/organismes.json)', 
     expect(getTribunalCompetent(co({ departement: '57' })).generique).toBe('chambre commerciale du tribunal judiciaire');
     expect(getTribunalCompetent(co({ departement: '57' })).leGenerique).toBe('la chambre commerciale du tribunal judiciaire');
     expect(getTribunalCompetent(co({ departement: '971' })).generique).toBe('tribunal mixte de commerce');
+  });
+
+  it('courriers : {{TRIBUNAL}} prérempli avec le tribunal compétent, vide s’il est inconnu', () => {
+    expect(nomTribunalPourCourrier(co({ departement: '2A' }))).toBe("Tribunal de commerce d'Ajaccio");
+    expect(nomTribunalPourCourrier(co({ departement: '67' }))).toBe('Tribunal judiciaire de Strasbourg (chambre commerciale)');
+    expect(nomTribunalPourCourrier(co({ departement: '986' }))).toBe('Tribunal de première instance de Mata-Utu');
+    expect(nomTribunalPourCourrier(co({ departement: '' }))).toBe('');
+    expect(nomTribunalPourCourrier(co({ departement: '33', formeJuridique: EI, naf: '01.11Z' }))).toBe('');
   });
 
   it('agriculteur, libéral, association, société civile → tribunal judiciaire', () => {
@@ -321,5 +332,23 @@ describe('Liens', () => {
   it('plus aucun lien mort connu dans les données', () => {
     const json = JSON.stringify(getDepartement('75')) + JSON.stringify(getDepartement('974'));
     expect(json).not.toMatch(/tribunal-de-commerce\.fr|mdph\.fr|urps-ml\.org/);
+  });
+});
+
+describe('Textes des pages : références URSSAF', () => {
+  // Lecture des sources (pages statiques, questionnaire, blocs de la fiche).
+  const racine = path.resolve(__dirname, '../..');
+  const fichiers = (dossier: string): string[] =>
+    readdirSync(path.join(racine, dossier), { recursive: true, encoding: 'utf8' })
+      .filter((f) => /\.tsx?$/.test(f) && !f.includes('__tests__'))
+      .map((f) => path.join(racine, dossier, f));
+  const sources = [...fichiers('app'), ...fichiers('components')].map((f) => ({ f, texte: readFileSync(f, 'utf8') }));
+
+  it('plus de « L243-6-2 CSS » (article sans rapport avec la responsabilité du dirigeant)', () => {
+    expect(sources.filter((s) => /L\.?\s?243-6-2/.test(s.texte)).map((s) => s.f)).toEqual([]);
+  });
+
+  it('jamais « 3957 » seul : 36 98 pour les indépendant·e·s, 39 57 pour les employeurs', () => {
+    expect(sources.filter((s) => /\b3957\b/.test(s.texte)).map((s) => s.f)).toEqual([]);
   });
 });
