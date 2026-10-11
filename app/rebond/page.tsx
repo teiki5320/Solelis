@@ -194,8 +194,8 @@ export default function RebondPage() {
               cours des 6 derniers mois, actif (professionnel et
               personnel) &lt; 15 000 € hors résidence principale, pas de
               liquidation judiciaire clôturée pour insuffisance d’actif
-              ni de rétablissement professionnel clos depuis moins de
-              5 ans (art. L645-2).
+              ni de rétablissement professionnel clos au cours des 5
+              dernières années (art. L645-2).
             </dd>
           </div>
           <div>

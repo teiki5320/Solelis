@@ -303,7 +303,7 @@ Pièces jointes (article R631-1 du Code de commerce) :
 6. État chiffré des créances et des dettes (nom et domicile des créanciers, montant global des salaires impayés)
 7. État actif et passif des sûretés et engagements hors bilan
 8. Inventaire sommaire des biens de l'entreprise
-9. Le cas échéant : liste des associés responsables solidairement des dettes sociales ; nom et adresse des représentants du CSE ; ordre professionnel dont relève l'activité (profession libérale réglementée)
+9. Le cas échéant : liste des associés responsables solidairement des dettes sociales ; nom et adresse des représentants du CSE ; ordre professionnel dont relève l'activité (profession libérale réglementée) ; copie de l'autorisation, de l'enregistrement ou de la déclaration d'une installation classée pour la protection de l'environnement (ICPE)
 10. Attestation sur l'honneur certifiant l'absence de mandat ad hoc ou de conciliation dans les 18 mois précédant la demande (sinon, date de désignation ou d'ouverture et autorité qui y a procédé)
 
 Je demande au Tribunal de bien vouloir ouvrir une procédure de redressement judiciaire (ou de liquidation judiciaire si le redressement est manifestement impossible).
@@ -662,7 +662,7 @@ SITUATION PROFESSIONNELLE
 - Stade actuel : {{STADE_DIFFICULTE}}
 
 ÉTAT PERSONNEL
-Sans entrer dans le détail clinique, je traverse actuellement {{ETAT_PERSONNEL}} qui affectent significativement ma capacité à piloter la situation et à prendre des décisions sereines.
+Sans entrer dans le détail clinique, je traverse actuellement {{ETAT_PERSONNEL}}, ce qui affecte significativement ma capacité à piloter la situation et à prendre des décisions sereines.
 
 J'accepte d'être aidé·e et je vous demande de déclencher une alerte APESA à mon nom, afin qu'un·e psychologue du dispositif me contacte. Le dispositif propose jusqu'à 5 consultations de soutien psychologique, gratuites et confidentielles.
 
@@ -676,7 +676,7 @@ Je vous remercie pour votre écoute et votre accompagnement.
 
 Bien à vous.
 
-Important : l'alerte APESA est déclenchée, avec votre accord, par une « sentinelle » formée (juge ou greffier, mandataire ou administrateur judiciaire, avocat, expert-comptable, conseiller de CCI ou de chambre de métiers…). Vous pouvez aussi trouver l'APESA de votre territoire sur www.apesa-france.com (« Trouver mon APESA ») ou joindre son secrétariat au 05 46 98 42 85. APESA n'est pas un dispositif d'urgence : en cas d'idées suicidaires, appelez le 3114 (24 h/24, 7 j/7), ou le 15.`,
+Important : l'alerte APESA est déclenchée, avec votre accord, par une « sentinelle » formée (juge ou greffier, mandataire ou administrateur judiciaire, avocat, expert-comptable, conseiller de CCI ou de chambre de métiers…). Vous pouvez aussi trouver l'APESA de votre territoire sur www.apesa-france.com (« Trouver mon APESA ») ou joindre le secrétariat d'APESA France au 05 46 98 42 85. APESA n'est pas un dispositif d'urgence : en cas d'idées suicidaires, appelez le 3114 (24 h/24, 7 j/7), ou le 15.`,
   },
   {
     slug: 'demande-aide-juridictionnelle',
