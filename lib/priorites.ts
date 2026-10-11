@@ -1,6 +1,6 @@
 import type { Reponses, CompanyData } from './types';
 import type { SectorInfo, EffectifSeuils } from './secteur';
-import { resolveStrategie, AXE_META, getJuridiction } from './strategie';
+import { resolveStrategie, AXE_META, getTribunalCompetent } from './strategie';
 
 export type Tone = 'rouge' | 'jaune' | 'bleu' | 'vert' | 'navy';
 
@@ -46,8 +46,10 @@ export interface PriorityCardMeta {
 
 export function scorePriorityCards({ reponses, company, sector, seuils }: BuildCardsProps): PriorityCardMeta[] {
   const cards: PriorityCardMeta[] = [];
-  const ville = company.ville || 'votre ville';
   const dep = company.departement;
+  // Tribunal : même source que la stratégie et la carte « Organismes »
+  // (jamais « tribunal de commerce de <commune> »).
+  const tribunal = getTribunalCompetent(company);
 
   // 1. Délai de 45 jours pour déclarer la cessation des paiements
   if (reponses.situation === 'redressement' || reponses.situation === 'assignation') {
@@ -61,19 +63,18 @@ export function scorePriorityCards({ reponses, company, sector, seuils }: BuildC
       tone: 'rouge',
       scrollTo: 'echeances',
       score,
-      extra: { ville },
+      extra: { tribunal: tribunal.enPhrase },
     });
   }
 
   // 2. Audience à préparer (si assignation)
   if (reponses.situation === 'assignation') {
-    const tribunal = getJuridiction(company) === 'TJ' ? 'Tribunal judiciaire' : 'Tribunal de commerce';
     cards.push({
       id: 'audience',
       icone: '⚖️',
       label: 'Audience',
       valeur: 'À préparer',
-      detail: `${tribunal} · ${ville}`,
+      detail: tribunal.nom,
       tone: 'rouge',
       scrollTo: 'echeances',
       score: 10,
@@ -111,19 +112,21 @@ export function scorePriorityCards({ reponses, company, sector, seuils }: BuildC
     });
   }
 
-  // 5. Trésorerie
-  if (reponses.situation === 'tresorie' || reponses.situation === 'redressement' || reponses.probleme === 'banque') {
-    cards.push({
-      id: 'tresorerie',
-      icone: '📊',
-      label: 'Trésorerie',
-      valeur: 'À projeter',
-      detail: 'Horizon 6 mois',
-      tone: 'jaune',
-      scrollTo: 'echeances',
-      score: 7,
-    });
-  }
+  // 5. Trésorerie — prioritaire si tension déclarée ; sinon carte de
+  // complément (score bas) pour que la grille garde 4 cartes : un
+  // prévisionnel à 6 mois est utile à toute entreprise en difficulté.
+  const tresoPrioritaire =
+    reponses.situation === 'tresorie' || reponses.situation === 'redressement' || reponses.probleme === 'banque';
+  cards.push({
+    id: 'tresorerie',
+    icone: '📊',
+    label: 'Trésorerie',
+    valeur: 'À projeter',
+    detail: 'Horizon 6 mois',
+    tone: 'jaune',
+    scrollTo: 'echeances',
+    score: tresoPrioritaire ? 7 : 1,
+  });
 
   // 6. Patrimoine
   if (reponses.patrimoine === 'proprietaire') {
@@ -237,7 +240,7 @@ export function scorePriorityCards({ reponses, company, sector, seuils }: BuildC
       icone: '⚖️',
       label: 'Co-gérance',
       valeur: 'Solidarité',
-      detail: 'L267 LPF + L243-6-2 CSS',
+      detail: 'Fiscale (L267 LPF) et faute de gestion (L651-2)',
       tone: 'jaune',
       scrollTo: 'patrimoine',
       score: 6,

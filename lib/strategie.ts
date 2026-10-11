@@ -1,5 +1,6 @@
 import type { Reponses, CompanyData } from './types';
 import { getCompanyAge } from './secteur';
+import { getDepartement, carteTribunal, tribunalSelonCodePostal, type OrganismeCard } from './organismes';
 
 export type Axe = 'restructurer' | 'ceder' | 'sauvegarder' | 'liquider' | 'rebondir';
 
@@ -45,6 +46,80 @@ export function getFormeDetail(forme: string): FormeJuridiqueDetail {
   return 'societe';
 }
 
+export interface ResponsabiliteAssocies {
+  /**
+   * - ei : entrepreneur individuel (patrimoine personnel séparé de plein droit
+   *   depuis le 15 mai 2022, art. L526-22 C. com.) ;
+   * - limitee : société ou personne morale dont les dettes ne sont pas celles
+   *   du dirigeant (sauf caution ou faute de gestion, art. L651-2 C. com.) ;
+   * - illimitee : SNC, sociétés civiles, GIE — les associés répondent
+   *   personnellement des dettes sociales, même sans caution ;
+   * - inconnue : forme non renseignée.
+   */
+  regime: 'ei' | 'limitee' | 'illimitee' | 'inconnue';
+  illimitee: boolean;
+  /** Phrase complète (avec sa source) pour les régimes à risque illimité. */
+  texte: string;
+  /** Libellé court de la forme, pour les phrases (« associé·e de SNC »). */
+  qui: string;
+}
+
+/**
+ * Étendue de la responsabilité personnelle selon la forme juridique.
+ * Sources : art. L221-1 C. com. (SNC), art. 1857 et 1858 C. civ. (sociétés
+ * civiles), art. L323-10 C. rur. (GAEC : deux fois la part du capital),
+ * art. L251-6 C. com. (GIE), art. L526-22 C. com. (EI).
+ */
+export function getResponsabiliteAssocies(forme: string): ResponsabiliteAssocies {
+  const f = (forme || '').toLowerCase();
+  if (!f.trim() || /non renseign|^catégorie juridique/.test(f)) {
+    return { regime: 'inconnue', illimitee: false, texte: '', qui: '' };
+  }
+  if (getFormeDetail(forme) !== 'societe') {
+    return { regime: 'ei', illimitee: false, texte: '', qui: 'entrepreneur·e individuel·le' };
+  }
+  if (/nom collectif|\bsnc\b/.test(f)) {
+    return {
+      regime: 'illimitee',
+      illimitee: true,
+      qui: 'associé·e de SNC',
+      texte:
+        "les associé·e·s d'une SNC répondent indéfiniment et solidairement des dettes de la société sur leurs biens personnels, même sans caution, après une mise en demeure de la société restée sans effet (art. L221-1 C. com.).",
+    };
+  }
+  if (/groupement d.int[ée]r[êe]t [ée]conomique|\bgie\b/.test(f)) {
+    return {
+      regime: 'illimitee',
+      illimitee: true,
+      qui: 'membre de GIE',
+      texte:
+        "les membres d'un GIE sont tenus des dettes du groupement sur leur patrimoine propre, solidairement sauf convention contraire avec le créancier (art. L251-6 C. com.).",
+    };
+  }
+  if (/placement immobilier|\bscpi\b/.test(f)) {
+    return { regime: 'limitee', illimitee: false, texte: '', qui: 'associé·e' };
+  }
+  if (/\bgaec\b|groupement agricole d.exploitation/.test(f)) {
+    return {
+      regime: 'illimitee',
+      illimitee: true,
+      qui: 'associé·e de GAEC',
+      texte:
+        "les associé·e·s d'un GAEC répondent des dettes sociales sur leurs biens personnels, dans la limite de deux fois leur part du capital, sauf si les statuts prévoient davantage (art. L323-10 C. rur.).",
+    };
+  }
+  if (/soci[ée]t[ée] civile|\bsci\b|\bscp\b|\bscm\b|\bscea\b|groupement foncier|groupement forestier/.test(f)) {
+    return {
+      regime: 'illimitee',
+      illimitee: true,
+      qui: 'associé·e de société civile',
+      texte:
+        "les associé·e·s d'une société civile répondent indéfiniment des dettes sociales, à proportion de leur part dans le capital, une fois la société poursuivie en vain (art. 1857 et 1858 C. civ.).",
+    };
+  }
+  return { regime: 'limitee', illimitee: false, texte: '', qui: 'dirigeant·e de société' };
+}
+
 /**
  * Détermine la juridiction compétente en cas de procédure collective.
  *
@@ -83,10 +158,105 @@ export function getJuridiction(company: CompanyData): 'TC' | 'TJ' {
   return 'TC';
 }
 
-export function getJuridictionLabel(company: CompanyData, ville?: string): string {
-  const j = getJuridiction(company);
-  const v = ville || company.ville || 'votre ville';
-  return j === 'TJ' ? `tribunal judiciaire de ${v}` : `tribunal de commerce de ${v}`;
+export interface TribunalCompetent {
+  juridiction: 'TC' | 'TJ';
+  /**
+   * Nom du tribunal tel qu'affiché sur la carte « Organismes » : tribunal
+   * réel du département (data/organismes.json — tribunal de commerce,
+   * tribunal des activités économiques, chambre commerciale du tribunal
+   * judiciaire en Alsace-Moselle, tribunal mixte de commerce outre-mer), ou
+   * « Tribunal judiciaire de votre ressort » pour un débiteur relevant du TJ.
+   * Jamais construit à partir de la commune de l'entreprise.
+   */
+  nom: string;
+  /** Le même nom, à insérer dans une phrase (« au … », « le … »). */
+  enPhrase: string;
+  /** Type générique en minuscules : « tribunal de commerce », « tribunal judiciaire »… */
+  generique: string;
+  /** Type générique avec son article : « le tribunal de commerce », « la chambre commerciale… ». */
+  leGenerique: string;
+  /** Carte à afficher dans le groupe « Institutionnel ». */
+  carte: OrganismeCard;
+}
+
+const CARTE_TJ_GENERIQUE: OrganismeCard = {
+  nom: 'Tribunal judiciaire de votre ressort',
+  type: 'Tribunal judiciaire · activité ni commerciale ni artisanale',
+  site: 'https://www.justice.fr',
+  badge: 'Art. L621-2 C. com.',
+};
+
+function generiqueDepuisType(type: string, juridiction: 'TC' | 'TJ'): string {
+  const t = type.toLowerCase();
+  if (/activit[ée]s [ée]conomiques/.test(t)) return 'tribunal des activités économiques';
+  if (/chambre commerciale/.test(t)) return 'chambre commerciale du tribunal judiciaire';
+  if (/mixte de commerce/.test(t)) return 'tribunal mixte de commerce';
+  if (/premi[èe]re instance/.test(t)) return 'tribunal de première instance';
+  if (/tribunal judiciaire/.test(t)) return 'tribunal judiciaire';
+  return juridiction === 'TJ' ? 'tribunal judiciaire' : 'tribunal de commerce';
+}
+
+/**
+ * Source unique du tribunal compétent pour une fiche : getJuridiction()
+ * (TC ou TJ, art. L621-2 C. com.) croisé avec le tribunal du département
+ * (data/organismes.json). Utilisé par la stratégie, les cartes prioritaires,
+ * le plan d'action, la checklist, les courriers et la carte « Organismes ».
+ */
+export function getTribunalCompetent(
+  company: Pick<CompanyData, 'formeJuridique' | 'naf' | 'departement'> & Partial<Pick<CompanyData, 'codePostal'>>,
+): TribunalCompetent {
+  const juridiction = getJuridiction(company as CompanyData);
+  const dep = getDepartement(company.departement);
+  const local = dep?.tribunal ? tribunalSelonCodePostal(dep, company.codePostal) : null;
+  let carte: OrganismeCard =
+    (local && carteTribunal(local, juridiction)) ??
+    (juridiction === 'TJ'
+      ? CARTE_TJ_GENERIQUE
+      : {
+          nom: 'Tribunal de commerce dont dépend votre siège',
+          type: 'Tribunal de commerce',
+          site: 'https://www.justice.fr',
+        });
+  // Tribunaux des activités économiques : les professions du droit (avocats,
+  // notaires, commissaires de justice… — NAF 69.10Z) restent au tribunal judiciaire.
+  const naf = (company.naf || '').replace(/\./g, '').toUpperCase();
+  if (juridiction === 'TJ' && /^6910/.test(naf) && /activit[ée]s [ée]conomiques/i.test(carte.type)) {
+    carte = CARTE_TJ_GENERIQUE;
+  }
+  const nom = carte.nom;
+  const generique = generiqueDepuisType(carte.type, juridiction);
+  const enPhrase = /dont dépend|de votre ressort/.test(nom) ? nom.charAt(0).toLowerCase() + nom.slice(1) : nom;
+  const leGenerique = `${generique.startsWith('chambre') ? 'la' : 'le'} ${generique}`;
+  return { juridiction, nom, enPhrase, generique, leGenerique, carte };
+}
+
+/**
+ * Libellé du tribunal à insérer dans une phrase. N'utilise JAMAIS la
+ * commune de l'entreprise (« tribunal de commerce de Cargèse » n'existe pas).
+ */
+export function getJuridictionLabel(company: CompanyData): string {
+  return getTribunalCompetent(company).enPhrase;
+}
+
+/**
+ * Remplace la carte « tribunal » du groupe « Institutionnel » par celle de
+ * getTribunalCompetent, pour que la carte et les textes de la fiche citent
+ * le même tribunal (ex. tribunal mixte de commerce de Saint-Pierre à La
+ * Réunion, choisi d'après le code postal).
+ */
+export function harmoniserCarteTribunal<G extends { cle: string; cartes: OrganismeCard[] }>(
+  groupes: G[],
+  company: CompanyData,
+): G[] {
+  const { carte } = getTribunalCompetent(company);
+  return groupes.map((g) => {
+    if (g.cle !== 'institutionnel') return g;
+    const i = g.cartes.findIndex((c) => /^tribunal/i.test(c.nom) || /^tribunal/i.test(c.type));
+    const cartes = [...g.cartes];
+    if (i === -1) cartes.unshift(carte);
+    else cartes[i] = carte;
+    return { ...g, cartes };
+  });
 }
 
 /**
@@ -97,10 +267,23 @@ export function estEnCessation(r: Pick<Reponses, 'situation'>): boolean {
   return r.situation === 'redressement' || r.situation === 'assignation';
 }
 
+/**
+ * Le rétablissement professionnel (PRP) peut-il être évoqué ? Conditions
+ * déclarables dans le questionnaire (art. L645-1 C. com.) : personne
+ * physique (EI, micro, EIRL), en cessation des paiements, sans salarié.
+ * Restent à vérifier avec un conseil : redressement manifestement
+ * impossible, aucun salarié au cours des 6 derniers mois, actif déclaré
+ * inférieur à 15 000 € (art. R645-1).
+ */
+export function prpEnvisageable(
+  r: Pick<Reponses, 'situation' | 'effectif'>,
+  c: Pick<CompanyData, 'formeJuridique'>,
+): boolean {
+  return isEI(c.formeJuridique) && r.effectif === 'independant' && estEnCessation(r);
+}
+
 export function computeScores(r: Reponses, c: CompanyData): Record<Axe, number> {
   const age = getCompanyAge(c.dateCreation) ?? 0;
-  const ei = isEI(c.formeJuridique);
-  const forme = getFormeDetail(c.formeJuridique);
 
   const scores: Record<Axe, number> = {
     restructurer: 0,
@@ -132,6 +315,9 @@ export function computeScores(r: Reponses, c: CompanyData): Record<Axe, number> 
   if (age >= 10) scores.ceder += 1;
   if (r.effectif === 'salaries') scores.ceder += 1;
   if (r.situation === 'redressement') scores.ceder += 1;
+  // Le dirigeant a répondu qu'il ne veut pas vendre : on ne lui propose pas
+  // la cession comme cap (le tribunal peut toujours l'envisager en procédure).
+  if (r.vente === 'non') scores.ceder = 0;
 
   if (r.situation === 'redressement' && r.moral === 'perdu') scores.liquider += 2;
   if (r.situation === 'assignation') scores.liquider += 1;
@@ -141,10 +327,13 @@ export function computeScores(r: Reponses, c: CompanyData): Record<Axe, number> 
   // Antécédents : récidive = sauvegarde / RJ déjà tentés, liquidation devient plus probable
   if (r.antecedents === 'oui') scores.liquider += 1;
 
-  // Rebondir : PRP réservé aux EI/micro/EIRL sans salariés ni gros actifs
-  const eligiblePRP = (forme === 'micro' || forme === 'ei' || forme === 'eirl') && r.effectif === 'independant';
+  // Rebondir : rétablissement professionnel (art. L645-1 C. com.) — débiteur
+  // personne physique EN CESSATION DES PAIEMENTS dont le redressement est
+  // manifestement impossible, sans salarié au cours des 6 derniers mois,
+  // actif déclaré < 15 000 € (R645-1). Jamais proposé hors cessation.
+  const eligiblePRP = prpEnvisageable(r, c);
   if (eligiblePRP) scores.rebondir += 3;
-  if (ei && r.situation === 'redressement') scores.rebondir += 2;
+  if (eligiblePRP && r.situation === 'redressement') scores.rebondir += 2;
   if (r.moral === 'perdu' && eligiblePRP) scores.rebondir += 1;
   // Antécédent : si liquidation antérieure, le rebond passe par 60 000 Rebonds plutôt que PRP
   if (r.antecedents === 'oui' && eligiblePRP) scores.rebondir += 1;
@@ -153,8 +342,8 @@ export function computeScores(r: Reponses, c: CompanyData): Record<Axe, number> 
 }
 
 export function buildStrategie(axe: Axe, r: Reponses, c: CompanyData, score: number): Strategie {
-  const ville = c.ville || 'votre ville';
-  const juridictionLabel = getJuridictionLabel(c, ville);
+  const juridictionLabel = getJuridictionLabel(c);
+  const responsabilite = getResponsabiliteAssocies(c.formeJuridique);
 
   switch (axe) {
     case 'restructurer': {
@@ -169,7 +358,9 @@ export function buildStrategie(axe: Axe, r: Reponses, c: CompanyData, score: num
         pourquoi: [
           r.situation === 'prevention' || r.situation === 'tresorie'
             ? "Vous n'êtes pas (ou pas depuis plus de 45 j) en cessation des paiements — les outils amiables restent accessibles."
-            : "Votre moral et votre volonté de continuer sont des atouts forts.",
+            : r.moral === 'combatif'
+              ? "Votre moral et votre volonté de continuer sont des atouts forts."
+              : "Un plan de redressement permet de poursuivre l'activité en étalant les dettes, jusqu'à 10 ans.",
           r.moral === 'combatif'
             ? "Vous avez l'énergie nécessaire pour piloter la restructuration."
             : 'Une restructuration ciblée préserve votre outil de travail.',
@@ -182,7 +373,7 @@ export function buildStrategie(axe: Axe, r: Reponses, c: CompanyData, score: num
             ? 'PGE en cours : demande de restructuration auprès de votre banque, puis Médiation du crédit (3414) — étalement jusqu\'à 10 ans, sans perte de la garantie d\'État'
             : 'Saisine médiation du crédit si tension bancaire',
           'Audit des coûts fixes — éliminer le non-essentiel',
-          'RDV CCI / CIP pour un diagnostic externe gratuit',
+          'RDV avec le CIP (Centre d\'information sur la prévention) pour un diagnostic externe gratuit et confidentiel',
         ],
         alternatives: enCessation
           ? [
@@ -233,7 +424,9 @@ export function buildStrategie(axe: Axe, r: Reponses, c: CompanyData, score: num
         pourquoi: [
           r.vente === 'oui'
             ? "Vous êtes prêt·e à céder — c'est l'axe qui maximise les options."
-            : "Vous y êtes ouvert·e — c'est le bon moment pour évaluer sérieusement cette piste.",
+            : r.vente === 'peut-etre'
+              ? "Vous y êtes ouvert·e — c'est le bon moment pour évaluer sérieusement cette piste."
+              : "Sans engagement de votre part : connaître la valeur de l'entreprise aide à décider, même si vous préférez la garder.",
           r.moral === 'epuise'
             ? 'Céder vous libère de la charge psychique quotidienne.'
             : "La cession préserve la valeur accumulée pendant des années.",
@@ -267,22 +460,28 @@ export function buildStrategie(axe: Axe, r: Reponses, c: CompanyData, score: num
           r.situation === 'redressement' || r.situation === 'assignation'
             ? "Vous êtes en cessation des paiements — la procédure devient inévitable si la reprise n'est pas possible."
             : "La situation rend la poursuite d'activité peu réaliste.",
-          r.caution === 'non'
-            ? "Vous n'avez pas de caution personnelle — vous évitez la ruine patrimoniale personnelle."
-            : 'Même avec cautions, une liquidation rapide peut limiter les dégâts.',
+          responsabilite.illimitee
+            ? `Attention : ${responsabilite.texte} Une liquidation rapide limite l'aggravation du passif.`
+            : r.caution === 'oui'
+              ? 'Même avec cautions, une liquidation rapide peut limiter les dégâts.'
+              : r.caution === 'non'
+                ? "Vous n'avez pas de caution personnelle — votre patrimoine personnel est en principe à l'abri des dettes professionnelles."
+                : 'Vérifiez si vous avez signé des cautions : ce sont elles qui exposent le plus votre patrimoine personnel.',
           r.moral !== 'combatif'
             ? 'Arrêter dignement préserve votre santé pour la suite.'
             : "Arrêter n'est pas renoncer — c'est choisir son moment.",
         ],
         etapes: [
-          'Déclaration de cessation des paiements au tribunal (délai 45 j)',
+          `Déclaration de cessation des paiements au ${juridictionLabel}, dans les 45 jours qui suivent la cessation`,
           "Le juge nomme un mandataire liquidateur — vous l'assistez dans l'inventaire",
           'Licenciement des éventuels salariés avec garantie AGS',
           "Réalisation de l'actif et répartition entre créanciers",
           'Clôture de la procédure — puis rebond personnel',
         ],
         alternatives: [
-          'Si vous êtes entrepreneur individuel : rétablissement professionnel (PRP, 4 mois)',
+          ...(prpEnvisageable(r, c)
+            ? ['Entrepreneur individuel sans salarié avec un actif de moins de 15 000 € : rétablissement professionnel (PRP, 4 mois — art. L645-1 C. com.)']
+            : []),
           "Si un repreneur apparaît en dernière minute : plan de cession",
         ],
       };
@@ -307,21 +506,20 @@ export function buildStrategie(axe: Axe, r: Reponses, c: CompanyData, score: num
         score,
         titre: 'Rétablissement professionnel (PRP) puis rebond',
         verdict:
-          `Vous êtes ${labelForme} sans (ou peu de) salariés ni gros actifs. Le rétablissement professionnel efface les dettes professionnelles en 4 mois, sans liquidation longue, pour vous permettre de repartir.`,
+          `Vous êtes ${labelForme}, sans salarié et en cessation des paiements. Si votre actif est faible, le rétablissement professionnel efface les dettes professionnelles en 4 mois, sans liquidation longue, pour vous permettre de repartir.`,
         pourquoi,
         etapes: [
-          "Vérifier l'éligibilité : EI/micro/EIRL, aucun salarié, actifs < 15 000 €",
-          `Dépôt de la requête au ${juridictionLabel}`,
+          "Vérifier l'éligibilité (art. L645-1 et R645-1 C. com.) : personne physique, redressement manifestement impossible, aucun salarié au cours des 6 derniers mois, aucune instance prud'homale en cours, actif déclaré inférieur à 15 000 €",
+          `Dépôt de la demande au ${juridictionLabel}`,
           "Désignation d'un mandataire qui examine votre situation",
           'Clôture : effacement des dettes professionnelles',
           'Reprise : 60 000 Rebonds + BPI Prêt rebond pour relancer',
         ],
         alternatives: [
-          'Si actifs > 15 000 € : liquidation judiciaire simplifiée',
-          'Si salariés : redressement classique',
-          forme === 'micro' || forme === 'ei'
-            ? 'Si vous êtes au régime micro : radiation simple possible si CA nul depuis 2 ans (guichet unique formalites.entreprises.gouv.fr)'
-            : 'Société personne morale : pas d\'option, la procédure collective s\'impose',
+          'Si votre actif dépasse 15 000 € ou si vous avez eu un salarié dans les 6 derniers mois : liquidation judiciaire (simplifiée selon la taille)',
+          ...(forme === 'micro' || forme === 'ei'
+            ? ['Si vous êtes au régime micro : radiation simple possible si CA nul depuis 2 ans (guichet unique formalites.entreprises.gouv.fr)']
+            : []),
         ],
       };
     }

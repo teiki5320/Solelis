@@ -44,7 +44,25 @@ import QuickLinks from '@/components/fiche/dashboard/QuickLinks';
 import StrategieHero from '@/components/fiche/dashboard/StrategieHero';
 import SectionNav from '@/components/fiche/dashboard/SectionNav';
 import SectionHeader from '@/components/fiche/dashboard/SectionHeader';
+import { harmoniserCarteTribunal } from '@/lib/strategie';
+import type { CompanyData } from '@/lib/types';
 import type { LayoutData } from './types';
+
+/**
+ * L'API recherche-entreprises renvoie « NOM (SIGLE) » ; quand le sigle est
+ * identique au nom, on obtient « AMP ETANCHEITE (AMP ETANCHEITE) ».
+ */
+export function nomSansSigleRedondant(nom: string): string {
+  const m = /^(.+?)\s*\((.+)\)$/.exec(nom.trim());
+  if (!m) return nom;
+  const normaliser = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/gi, '').toLowerCase();
+  return normaliser(m[1]) === normaliser(m[2]) ? m[1].trim() : nom;
+}
+
+function companyAffichee(company: CompanyData): CompanyData {
+  const nom = nomSansSigleRedondant(company.nom);
+  return nom === company.nom ? company : { ...company, nom };
+}
 
 /**
  * Wrapper qui rend deux colonnes indépendantes : chaque colonne grandit
@@ -62,17 +80,21 @@ function TwoCols({ left, right }: { left: React.ReactNode; right: React.ReactNod
 
 export default function LayoutDashboard({
   token,
-  company,
+  company: companyBrute,
   reponses,
   sector,
   alertes,
   bodacc,
   infogreffe,
   bodaccIndisponible,
-  groupes,
+  groupes: groupesBruts,
   companyAge,
   seuils,
 }: LayoutData) {
+  const company = companyAffichee(companyBrute);
+  // Une seule source pour le tribunal : la carte « Organismes » cite le même
+  // tribunal que la stratégie, le plan d'action et la checklist.
+  const groupes = harmoniserCarteTribunal(groupesBruts, company);
   return (
     <FicheProvider value={{ token, reponses, company, sector, alertes, bodacc, infogreffe, bodaccIndisponible, groupes, companyAge, seuils }}>
     <div className="space-y-6">
