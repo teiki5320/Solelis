@@ -145,7 +145,7 @@ function RappelEmail({ token, echeances }: { token: string; echeances: Echeance[
             Le rappel part à l&apos;adresse enregistrée avec « Sauvegardez votre fiche par
             e-mail » (en haut de la fiche) : enregistrez-la d&apos;abord si ce n&apos;est pas fait.
           </p>
-          <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+          <div className="mt-3 flex flex-col gap-2">
             <label htmlFor={idEcheance} className="sr-only">
               Échéance à rappeler
             </label>
@@ -157,7 +157,7 @@ function RappelEmail({ token, echeances }: { token: string; echeances: Echeance[
                 if (status === 'err') setStatus('idle');
               }}
               aria-describedby={status === 'err' ? `${idAide} ${idErreur}` : idAide}
-              className="min-h-[44px] flex-1 rounded-full border border-navy/10 bg-white/80 px-4 py-2 text-sm focus:border-bleu focus:outline-none"
+              className="min-h-[44px] w-full min-w-0 rounded-full border border-navy/10 bg-white/80 px-4 py-2 text-sm focus:border-bleu focus:outline-none"
             >
               {futures.map((e) => (
                 <option key={e.cle} value={e.cle}>
@@ -165,32 +165,35 @@ function RappelEmail({ token, echeances }: { token: string; echeances: Echeance[
                 </option>
               ))}
             </select>
-            <label htmlFor={idDelai} className="sr-only">
-              Quand recevoir le rappel
-            </label>
-            <select
-              id={idDelai}
-              value={joursAvant}
-              onChange={(e) => {
-                setJoursAvant(Number(e.target.value));
-                if (status === 'err') setStatus('idle');
-              }}
-              className="min-h-[44px] rounded-full border border-navy/10 bg-white/80 px-4 py-2 text-sm focus:border-bleu focus:outline-none"
-            >
-              {DELAIS_RAPPEL.map((d) => (
-                <option key={d.jours} value={d.jours}>
-                  {d.label}
-                </option>
-              ))}
-            </select>
-            <button
-              type="submit"
-              disabled={status === 'sending'}
-              aria-busy={status === 'sending'}
-              className="min-h-[44px] rounded-full bg-bleu-fonce px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
-            >
-              {status === 'sending' ? 'Envoi…' : 'Programmer'}
-            </button>
+            {/* Bloc étroit (colonne de la fiche) : échéance sur toute la largeur, puis délai + bouton. */}
+            <div className="flex flex-wrap gap-2">
+              <label htmlFor={idDelai} className="sr-only">
+                Quand recevoir le rappel
+              </label>
+              <select
+                id={idDelai}
+                value={joursAvant}
+                onChange={(e) => {
+                  setJoursAvant(Number(e.target.value));
+                  if (status === 'err') setStatus('idle');
+                }}
+                className="min-h-[44px] min-w-0 flex-1 basis-40 rounded-full border border-navy/10 bg-white/80 px-4 py-2 text-sm focus:border-bleu focus:outline-none"
+              >
+                {DELAIS_RAPPEL.map((d) => (
+                  <option key={d.jours} value={d.jours}>
+                    {d.label}
+                  </option>
+                ))}
+              </select>
+              <button
+                type="submit"
+                disabled={status === 'sending'}
+                aria-busy={status === 'sending'}
+                className="min-h-[44px] rounded-full bg-bleu-fonce px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
+              >
+                {status === 'sending' ? 'Envoi…' : 'Programmer'}
+              </button>
+            </div>
           </div>
           {status === 'err' && (
             <p id={idErreur} role="alert" className="mt-2 text-xs text-rouge">
