@@ -420,7 +420,7 @@ export default function BlocRappels() {
           </span>
         </label>
         <label className="block text-sm text-navy">
-          Date de mise en demeure {orgCotisations} reçue
+          {`Date de mise en demeure ${orgCotisations} reçue`}
           <input
             type="date"
             value={dateMiseDemeure}

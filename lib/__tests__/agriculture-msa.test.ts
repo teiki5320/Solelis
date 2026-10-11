@@ -182,6 +182,10 @@ describe('EARL à Vert (40420) : aucune orientation CPSTI / Urssaf indépendants
     expect(acre.telephone).toBeUndefined();
     expect(acre.site).toBe(MSA_CONTACT);
     expect(acre.type).toMatch(/MSA/);
+    // Agriculture outre-mer : pas de 36 98 non plus (fiche officielle de l'ACRE).
+    const acreDom = buildAidesPersonnelles(INDEP_URSSAF, 'agriculture', '974').cartes.find((c) => c.nom.startsWith('ACRE'))!;
+    expect(acreDom.telephone).toBeUndefined();
+    expect(acreDom.site).toBe('https://entreprendre.service-public.gouv.fr/vosdroits/F11677');
     // Hors agriculture : inchangé (Urssaf, 36 98).
     expect(buildAidesPersonnelles(INDEP_URSSAF, 'commerce', '33').cartes.find((c) => c.nom.startsWith('ACRE'))!.telephone).toBe('3698');
   });

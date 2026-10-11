@@ -707,6 +707,15 @@ export function buildAidesPersonnelles(
       site: MSA_CONTACT,
       badge: 'Rebond après liquidation',
     });
+  } else if (sectorKey === 'agriculture') {
+    // Exploitant·e agricole outre-mer (caisse locale : CGSS, CSSM…) : pas
+    // de numéro Urssaf ; fiche officielle de l'ACRE.
+    cartes.push({
+      nom: 'ACRE · Aide à la Création/Reprise d\'Entreprise',
+      type: 'Exonération de début d\'activité (activité agricole possible) · conditions et démarche sur service-public',
+      site: 'https://entreprendre.service-public.gouv.fr/vosdroits/F11677',
+      badge: 'Rebond après liquidation',
+    });
   } else {
     cartes.push({
       nom: 'ACRE · Aide à la Création/Reprise d\'Entreprise',
