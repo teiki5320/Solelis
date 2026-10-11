@@ -6,7 +6,7 @@ import BlocAccordeon from './BlocAccordeon';
  * Bloc dédié aux emprunts garantis par Bpifrance (ex-OSEO Garantie).
  * À ne pas confondre avec le PGE (couvert par BlocPGE).
  *
- * Concerne tout prêt bancaire dont une part (souvent 40 à 70 %) est
+ * Concerne tout prêt bancaire dont une part est
  * garantie par Bpifrance — courant en TPE/PME, notamment pour
  * création, croissance, transmission, innovation.
  *
@@ -41,12 +41,13 @@ export default function BlocGarantieBPI() {
         </p>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
-            La garantie est <strong>plafonnée</strong> (souvent 40 à
-            70 % du capital restant dû selon le dispositif).
+            La garantie est <strong>plafonnée</strong> : elle ne couvre
+            qu&apos;une partie du capital restant dû (quotité indiquée dans
+            le contrat).
           </li>
           <li>
             Elle est <strong>activée à des conditions strictes</strong> :
-            mise en demeure formelle, défaut prolongé (généralement 90 j),
+            mise en demeure formelle, défaut prolongé,
             mise en œuvre des poursuites contre les co-emprunteurs et
             cautions.
           </li>

@@ -92,7 +92,7 @@ const PROCEDURES: Fiche[] = [
     confidentiel: false,
     duree: '4 mois',
     greffe: GREFFE_TARIF,
-    mandataire: 'Rémunération prélevée sur un fonds alimenté par les intérêts versés par la Caisse des dépôts (C. com. art. L663-3-1)',
+    mandataire: 'Rémunération prélevée sur le fonds de l\'art. L663-3, géré par la Caisse des dépôts et financé par l\'État (C. com. art. L663-3-1)',
     avocat: AVOCAT_LIBRE,
     sources: ['C. com. art. L645-1 à L645-12, L663-3-1'],
   },

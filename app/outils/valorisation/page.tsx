@@ -308,8 +308,8 @@ export default function ValorisationPage() {
       <div className="mt-6 rounded-2xl border border-jaune/30 bg-jaune/5 p-5 text-sm text-navy/80">
         <p className="font-display text-base text-navy">⚠️ Limites de l&apos;outil</p>
         <ul className="mt-2 list-disc space-y-1 pl-5">
-          <li>Les multiples varient selon la taille (les TPE subissent une décote de 20-40 % vs PME/ETI).</li>
-          <li>Une cession en procédure collective subit souvent 30-50 % de décote supplémentaire.</li>
+          <li>Les multiples varient selon la taille (les TPE subissent en général une décote par rapport aux PME/ETI).</li>
+          <li>Une cession en procédure collective subit en général une décote supplémentaire importante.</li>
           <li>Cette méthode ignore la trésorerie nette (à ajouter/déduire selon le cas).</li>
           <li>La valeur réelle se matérialise en négociation — préparez une data room solide (voir outil dédié).</li>
         </ul>

@@ -34,6 +34,7 @@ function echeancesAnnee(
 ): Echeance[] {
   const items: Echeance[] = [];
   const at = (m: number, d: number) => new Date(y, m, d);
+  const cloture = MOIS_CLOTURE[fin];
 
   // TVA au réel normal : entre le 15 et le 24 du mois suivant (date propre à
   // chaque entreprise, affichée dans l'espace professionnel).
@@ -62,9 +63,11 @@ function echeancesAnnee(
     // Régime réel simplifié : CA12 début mai, acomptes de juillet (55 %) et
     // décembre (40 %).
     items.push({
-      date: at(4, 4),
+      date: cloture === 11 ? at(4, 4) : finDeMois(y, cloture + 3),
       titre: 'Déclaration annuelle de TVA (CA12)',
-      description: 'À télétransmettre au plus tard le 2e jour ouvré suivant le 1er mai, sous déduction des acomptes versés.',
+      description: cloture === 11
+        ? 'À télétransmettre au plus tard le 2e jour ouvré suivant le 1er mai, sous déduction des acomptes versés.'
+        : 'Exercice non calé sur l\'année civile : dans les 3 mois suivant la clôture, sous déduction des acomptes versés.',
       categorie: 'TVA',
       source: 'impots.gouv.fr · BOI-TVA-DECLA-20-20-30',
     });
@@ -85,7 +88,6 @@ function echeancesAnnee(
   }
 
   // IS : acomptes les 15 mars, juin, septembre et décembre (CGI art. 1668).
-  const cloture = MOIS_CLOTURE[fin];
   if (is === 'is') {
     [2, 5, 8, 11].forEach((m, i) => {
       items.push({

@@ -45,7 +45,7 @@ export default function BlocProtectionFamille() {
   if (marie && communaute) {
     items.push({
       titre: 'Régime de communauté : votre conjoint·e est exposé·e',
-      texte: "En communauté de biens, les biens communs peuvent être saisis pour payer les dettes de l’entreprise. Un changement vers la séparation de biens est possible (notaire, 1 500-3 000 €) mais doit être fait AVANT les difficultés, sous peine d’annulation par un juge.",
+      texte: "En communauté de biens, les biens communs peuvent être saisis pour payer les dettes de l’entreprise. Un changement vers la séparation de biens est possible (acte notarié) mais doit être fait AVANT les difficultés, sous peine d’annulation par un juge.",
       urgence: 'jaune',
     });
   } else if (marie && reponses.regime === 'separation') {

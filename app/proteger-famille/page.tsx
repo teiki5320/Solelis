@@ -154,8 +154,8 @@ export default function ProtegerFamillePage() {
               Changement de régime
             </h3>
             <p className="mt-2 flex-1 text-sm leading-relaxed text-navy/65">
-              Possible par acte notarié (1 500 à
-              3 000 €).
+              Possible par acte notarié (coût à
+              demander au notaire).
               <strong className="text-navy/80"> ATTENTION :</strong> doit
               être fait AVANT les difficultés — un changement
               effectué pour frauder les créanciers peut être

@@ -308,7 +308,6 @@ const SECTOR_DATA: Record<Secteur, Omit<SectorInfo, 'secteur'>> = {
       { nom: 'GNI', role: 'Groupement National des Indépendants Hôtellerie-Restauration', telephone: '01 53 04 99 03', site: 'https://www.gni-hcr.fr' },
       { nom: 'SNRTC', role: 'Syndicat National de la Restauration Thématique et Commerciale', telephone: '01 42 96 60 75', site: 'https://www.snrtc.fr' },
       { nom: 'GHR', role: 'Groupement des Hôtelleries et Restaurations de France', telephone: '01 47 04 04 06', site: 'https://www.ghr.fr' },
-      { nom: 'SYNHORCAT', role: 'Syndicat National des Hôteliers, Restaurateurs, Cafetiers et Traiteurs', telephone: '01 42 96 60 75', site: 'https://www.ghr.fr' },
     ],
     aidesSpecifiques: [
       { nom: 'Aides saisonnières', description: 'Activité partielle pendant les périodes creuses. Exonérations spécifiques HCR.', site: 'https://www.travail-emploi.gouv.fr' },
@@ -346,10 +345,9 @@ const SECTOR_DATA: Record<Secteur, Omit<SectorInfo, 'secteur'>> = {
       { nom: 'CGAD', role: 'Confédération Générale de l\'Alimentation en Détail — boulangers, bouchers…', telephone: '01 44 95 02 02', site: 'https://www.cgad.fr' },
       { nom: 'Procos', role: 'Fédération du commerce spécialisé — textile, sport, équipement', telephone: '01 44 88 95 65', site: 'https://www.procos.org' },
       { nom: 'Fevad', role: 'Fédération du e-commerce et de la vente à distance', telephone: '01 42 56 38 86', site: 'https://www.fevad.com' },
-      { nom: 'USPF', role: 'Union des Syndicats de la Pharmacie d\'Officine', telephone: '01 46 47 20 80', site: 'https://www.uspo.fr' },
+      { nom: 'USPO', role: 'Union des Syndicats de Pharmaciens d\'Officine', telephone: '01 46 47 20 80', site: 'https://www.uspo.fr' },
     ],
     aidesSpecifiques: [
-      { nom: 'FISAC', description: 'Fonds d\'intervention pour les services, l\'artisanat et le commerce. Aide à la modernisation.', badge: 'Territorial' },
       { nom: 'Aide au commerce de proximité', description: 'Aides communales et départementales pour maintenir le commerce local (centres-villes).', badge: 'Local' },
       { nom: 'Action Cœur de Ville', description: 'Plan national de revitalisation des centres-villes — aides foncières et travaux.', site: 'https://agence-cohesion-territoires.gouv.fr/action-coeur-de-ville-42' },
       { nom: 'Petites Villes de Demain', description: 'Pour communes < 20 000 hab. — accompagnement commerces.', site: 'https://agence-cohesion-territoires.gouv.fr/petites-villes-de-demain-45' },
@@ -367,7 +365,7 @@ const SECTOR_DATA: Record<Secteur, Omit<SectorInfo, 'secteur'>> = {
       niveau: 'tendu',
       titre: 'Commerce de détail sous pression',
       message:
-        'Inflation, e-commerce et baisse de pouvoir d\'achat pèsent sur le commerce physique. Vérifiez les aides territoriales (FISAC, Action Cœur de Ville) avant tout.',
+        'Inflation, e-commerce et baisse de pouvoir d\'achat pèsent sur le commerce physique. Vérifiez les aides territoriales (commune, Région, Action Cœur de Ville) avant tout.',
     },
   },
   transport: {
@@ -387,7 +385,7 @@ const SECTOR_DATA: Record<Secteur, Omit<SectorInfo, 'secteur'>> = {
     aidesSpecifiques: [
       { nom: 'Aide au gazole professionnel (TICPE)', description: 'Remboursement partiel de la TICPE pour les transporteurs routiers (gazole pro). Demande trimestrielle.', site: 'https://www.douane.gouv.fr' },
       { nom: 'Aide à la décarbonation transport', description: 'Subvention à l\'achat de véhicules électriques/hydrogène, retrofit, formation.', site: 'https://www.ademe.fr' },
-      { nom: 'Bonus écologique flotte', description: 'Subvention véhicules utilitaires propres.', site: 'https://www.service-public.fr' },
+      { nom: 'Aides à l\'achat de véhicules peu polluants', description: 'Dispositifs nationaux ou régionaux selon la période et le type de véhicule : vérifiez ceux en vigueur.', site: 'https://www.service-public.gouv.fr' },
     ],
     soutien: { nom: 'APESA', description: 'Pas de dispositif d\'écoute propre au transport : APESA est le réflexe n°1, activable via le tribunal de commerce ou directement sur apesa-france.com. Gratuit et confidentiel.', site: 'https://www.apesa-france.com' },
     conseilsSpecifiques: [
@@ -631,7 +629,6 @@ const SECTOR_DATA: Record<Secteur, Omit<SectorInfo, 'secteur'>> = {
       { nom: 'CNEC', role: 'Confédération Nationale Artisanale des Entreprises du Cadre de Vie — esthétique', telephone: '01 43 56 35 35', site: 'https://www.cnep-france.fr' },
     ],
     aidesSpecifiques: [
-      { nom: 'FISAC', description: 'Fonds d\'intervention pour les services, l\'artisanat et le commerce.', badge: 'Territorial' },
       { nom: 'CMA · Accompagnement', description: 'Diagnostic et accompagnement gratuit pour artisans en difficulté.', site: 'https://www.artisanat.fr', badge: 'Gratuit' },
       { nom: 'CMA · Cellule de prévention des difficultés', description: 'Permanence dédiée aux artisans en difficulté dans chaque CMA départementale.', site: 'https://www.artisanat.fr', badge: 'Confidentiel' },
       { nom: 'AGEFICE', description: 'Fonds d\'assurance formation dirigeant non-salarié — financements formations métier et gestion.', site: 'https://communication-agefice.fr', badge: 'Cotisant TPE' },

@@ -613,7 +613,7 @@ function controlerRendu(r: Reponses, c: CompanyData) {
       for (const x of avant.matchAll(o.re)) if (!meilleur || x.index! > meilleur.pos) meilleur = { nom: o.nom, pos: x.index! };
     }
     // Un autre organisme cité après lui (ex. DDFiP, URSSAF) : le numéro n'est pas le sien.
-    if (!meilleur || /URSSAF|DDFiP|CCI|CMA|Bpifrance|SSI|MSA|France Travail — Service Employeur/.test(avant.slice(meilleur.pos + 3))) continue;
+    if (!meilleur || /URSSAF|DDFiP|CCI|CMA|Bpifrance|SSI|MSA|OPCO|France Travail — Service Employeur/.test(avant.slice(meilleur.pos + 3))) continue;
     const set = numerosParOrganisme.get(meilleur.nom) ?? new Set<string>();
     set.add(m[1]);
     numerosParOrganisme.set(meilleur.nom, set);

@@ -101,7 +101,7 @@ export function buildPoches(r: Reponses, c: CompanyData): Poche[] {
     titre: 'Épargne bancaire (comptes, livrets)',
     niveau: aCaution || resp.illimitee ? 'expose' : 'mixte',
     analyse: aCaution
-      ? "Les créanciers munis d'un titre exécutoire peuvent faire saisir vos comptes. Une fraction reste toujours insaisissable (solde bancaire insaisissable ~ 600 €)."
+      ? "Les créanciers munis d'un titre exécutoire peuvent faire saisir vos comptes. Une somme reste toujours insaisissable : le solde bancaire insaisissable, égal au RSA d'une personne seule (651,69 € depuis le 1er avril 2026)."
       : resp.illimitee
         ? `Même sans caution, ${resp.texte}`
         : resp.regime === 'ei'

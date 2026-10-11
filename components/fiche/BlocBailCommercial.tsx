@@ -113,8 +113,8 @@ export default function BlocBailCommercial() {
       soustitre={`${leviers.length} dispositifs légaux à votre disposition`}
     >
       <p className="mb-4 text-sm text-navy/80">
-        Le loyer commercial pèse souvent 15 à 25 % des charges fixes. Le
-        statut des baux commerciaux (loi du 30 sept. 1953, codifiée
+        Le loyer commercial est souvent l&apos;une des premières charges
+        fixes. Le statut des baux commerciaux (loi du 30 sept. 1953, codifiée
         L145-1 et s. C. com.) offre plusieurs leviers méconnus pour
         renégocier, suspendre ou se libérer.
       </p>

@@ -96,159 +96,107 @@ const REGION_LABELS: Record<Region, string> = {
   'outre-mer': 'Outre-mer',
 };
 
+// Vérification du 11 octobre 2026 : beaucoup de « prêts Rebond » régionaux
+// étaient des produits de la période Covid, aujourd'hui fermés. On ne garde
+// un montant que s'il figure sur une page officielle de la Région ; sinon,
+// on oriente vers l'agence ou le service économique régional.
 const REGION_AIDES: Record<Region, AideRegionale[]> = {
   'auvergne-rhone-alpes': [
     {
       nom: 'Auvergne-Rhône-Alpes Entreprises',
-      description: "Agence régionale d'accompagnement des entreprises. Diagnostic 360° et orientation vers les dispositifs régionaux.",
+      description: "Agence régionale d'accompagnement des entreprises : diagnostic préalable et orientation vers les aides régionales (soutien de trésorerie, garantie) pour entreprises fragilisées.",
       site: 'https://www.auvergnerhonealpes-entreprises.fr',
-      badge: 'Gratuit',
-    },
-    {
-      nom: 'Prêt ARR — Aide au Rebond Régional',
-      description: 'Prêt régional à taux 0 % pour les TPE/PME en difficulté (jusqu\'à 200 000 €).',
-      site: 'https://www.auvergnerhonealpes.fr',
     },
   ],
   'bourgogne-franche-comte': [
     {
       nom: 'Agence Économique Régionale BFC',
-      description: "Accompagnement des entreprises en difficulté via un réseau de conseillers territoriaux.",
+      description: "Accompagnement des entreprises par un réseau de conseillers territoriaux ; la Région propose aussi des avances remboursables pour PME fragilisées (se renseigner auprès d'elle).",
       site: 'https://www.aer-bfc.com',
-      badge: 'Gratuit',
     },
   ],
   'bretagne': [
     {
-      nom: 'Bretagne Commerce International · Retournement',
-      description: 'Cellule régionale dédiée aux entreprises en difficulté, orientée export.',
-      site: 'https://www.bretagne.bzh',
-      badge: 'Gratuit',
-    },
-    {
-      nom: 'Prêt de sauvegarde économique',
-      description: "Prêt à taux 0 % de la Région Bretagne pour les PME fragilisées (< 50 salariés).",
+      nom: 'Région Bretagne · Développement économique',
+      description: 'Prêts et garanties régionaux pour entreprises fragilisées : se renseigner auprès de la Région ou de Bpifrance Bretagne.',
       site: 'https://www.bretagne.bzh',
     },
   ],
   'centre-val-de-loire': [
     {
       nom: 'Dev\'Up Centre-Val de Loire',
-      description: "Agence de développement régionale. Aide au diagnostic et à la recherche de repreneurs.",
+      description: "Agence de développement régionale : orientation des dirigeant·e·s et appui à la reprise d'entreprise.",
       site: 'https://devup-centrevaldeloire.fr',
-      badge: 'Gratuit',
     },
   ],
   'corse': [
     {
       nom: 'ADEC · Agence de Développement Économique de la Corse',
-      description: "Dispositifs d'aide au redressement et à la transmission adaptés à l'économie insulaire.",
+      description: "Dispositifs régionaux de soutien aux entreprises en difficulté (restructuration, aide aux procédures amiables) et à la transmission.",
       site: 'https://www.adec.corsica',
-      badge: 'Gratuit',
     },
   ],
   'grand-est': [
     {
-      nom: 'Business Act Grand Est',
-      description: "Plan régional d'accompagnement à la relance, incluant des dispositifs de retournement.",
-      site: 'https://www.grandest.fr',
-    },
-    {
       nom: 'Prêt Rebond Grand Est',
-      description: 'Prêt sans garantie jusqu\'à 300 000 € pour les entreprises en situation de fragilité.',
-      site: 'https://www.grandest.fr',
+      description: "Prêt régional sans garantie (avec Bpifrance) pour PME confrontées à une fragilité passagère, sous conditions (ancienneté, cofinancement bancaire) ; ne concerne pas les entreprises déjà « en difficulté » au sens européen ni les entreprises individuelles.",
+      site: 'https://www.grandest.fr/vos-aides-regionales/pret-rebond-grand-est/',
     },
   ],
   'hauts-de-france': [
     {
-      nom: 'Hauts-de-France Relance',
-      description: "Plan régional coordonnant BPI, Région et CCI pour les entreprises en difficulté.",
-      site: 'https://www.hautsdefrance.fr',
-      badge: 'Gratuit',
-    },
-    {
-      nom: 'Fonds Régional de Garantie HdF',
-      description: "Garantie régionale pouvant se cumuler à celle de Bpifrance pour les prêts bancaires.",
+      nom: 'Hauts-de-France Prévention',
+      description: "Dispositif de la Région et des CCI pour entreprises en tension de trésorerie (avance remboursable sous conditions) ; exclut les entreprises déjà en procédure collective : se renseigner auprès de la CCI ou de la Région.",
       site: 'https://www.hautsdefrance.fr',
     },
   ],
   'ile-de-france': [
     {
-      nom: 'PM\'up Entreprises en difficulté · Région Île-de-France',
-      description: "Accompagnement et cofinancement pour TPE/PME franciliennes en retournement.",
-      site: 'https://www.iledefrance.fr',
-      badge: 'Gratuit',
-    },
-    {
-      nom: 'Back\'up Prévention',
-      description: "Dispositif régional de prévention et retournement piloté avec le CODEFI et la CCI Paris IDF.",
-      site: 'https://www.iledefrance.fr',
+      nom: 'Chèque prévention · Région Île-de-France',
+      description: "Prise en charge d'une partie des frais d'un mandat ad hoc ou d'une conciliation ayant abouti à un accord, pour TPE/PME franciliennes (sous conditions).",
+      site: 'https://www.iledefrance.fr/aides-et-appels-a-projets/cheque-prevention',
     },
   ],
   'normandie': [
     {
-      nom: 'ADN (Agence de Développement Normandie) · Cellule retournement',
-      description: "Diagnostic rapide et mise en relation avec les dispositifs régionaux et nationaux.",
+      nom: 'AD Normandie',
+      description: "Agence de développement de la Région : aides pour entreprises fragilisées (conseil, reprise) et orientation vers les dispositifs régionaux.",
       site: 'https://www.adnormandie.fr',
-      badge: 'Gratuit',
     },
   ],
   'nouvelle-aquitaine': [
     {
-      nom: 'ADI Nouvelle-Aquitaine · Cellule Retournement',
-      description: "Cellule dédiée aux entreprises en difficulté : diagnostic, plan d'action, médiation.",
-      site: 'https://www.adi-na.fr',
-      badge: 'Gratuit',
-    },
-    {
-      nom: 'Prêt Nouvelle-Aquitaine Rebond',
-      description: "Prêt sans garantie jusqu'à 200 000 € pour les PME fragilisées (durée 7 ans, différé 2 ans).",
+      nom: 'Région Nouvelle-Aquitaine · Entreprises en difficulté',
+      description: "Service régional dédié aux entreprises en difficulté : aide au conseil et prêts de restructuration financière, sous conditions.",
       site: 'https://entreprises.nouvelle-aquitaine.fr',
     },
   ],
   'occitanie': [
     {
-      nom: 'AD\'OCC · Transformation & Retournement',
-      description: "Agence régionale. Diagnostic flash gratuit, orientation vers financements et experts.",
+      nom: 'AD\'OCC',
+      description: "Agence régionale de développement économique : conseil, orientation et accompagnement des dirigeant·e·s en difficulté.",
       site: 'https://www.agence-adocc.com',
-      badge: 'Gratuit',
-    },
-    {
-      nom: 'Occitanie Pass Rebond',
-      description: "Prêt à taux bonifié pour entreprises en retournement, pouvant atteindre 300 000 €.",
-      site: 'https://www.laregion.fr',
     },
   ],
   'pays-de-la-loire': [
     {
-      nom: 'Pays de la Loire Redéploiement',
-      description: "Dispositif régional de soutien aux entreprises en cours de restructuration.",
+      nom: 'Région Pays de la Loire',
+      description: "Prêts régionaux et groupement de prévention agréé soutenu par la Région : se renseigner auprès du service économique régional.",
       site: 'https://www.paysdelaloire.fr',
     },
   ],
   'provence-alpes-cote-dazur': [
     {
-      nom: 'Rising SUD · Cellule de retournement',
-      description: "Agence de développement économique de la Région Sud. Appui au redressement et à la cession.",
-      site: 'https://risingsud.fr',
-      badge: 'Gratuit',
-    },
-    {
-      nom: 'Prêt Région Sud Rebond',
-      description: "Prêt sans garantie jusqu'à 300 000 € pour TPE/PME en difficulté.",
+      nom: 'Région Sud · Économie',
+      description: "Aides régionales au rebond (subvention ou avance remboursable selon les dispositifs en vigueur) : se renseigner auprès de la Région.",
       site: 'https://www.maregionsud.fr',
     },
   ],
   'outre-mer': [
     {
-      nom: 'AFD Outre-mer · Soutien aux entreprises',
-      description: "Dispositifs spécifiques Outre-mer : défiscalisation, prêts, garanties.",
-      site: 'https://www.afd.fr',
-    },
-    {
-      nom: 'Bpifrance Outre-mer',
-      description: "Financements dédiés aux entreprises ultramarines en difficulté (prêt Outre-mer, garanties).",
-      site: 'https://bpifrance.fr',
+      nom: 'Bpifrance (directions ultramarines)',
+      description: "Prêts et garanties pour entreprises ultramarines (directions Antilles-Guyane et Réunion-Mayotte).",
+      site: 'https://www.bpifrance.fr',
     },
   ],
 };

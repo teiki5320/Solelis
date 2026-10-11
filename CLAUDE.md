@@ -9,7 +9,7 @@ Le dirigeant entre son SIRET, répond à un questionnaire, et reçoit une fiche 
 npm run dev      # Serveur local (port 3000)
 npm run build    # Build de production
 npm run lint     # ESLint CLI (eslint.config.mjs : next/core-web-vitals)
-npm test         # Vitest (703 tests dans lib/__tests__/, components/__tests__/, app/api/__tests__/, app/outils/__tests__/)
+npm test         # Vitest (712 tests dans lib/__tests__/, components/__tests__/, app/api/__tests__/, app/outils/__tests__/)
 npm run test:e2e # Playwright (parcours utilisateur)
 ```
 
@@ -31,7 +31,7 @@ npm run cf:deploy    # Build + mise en ligne sur Cloudflare
 - **Email** : Resend (magic link pour retrouver sa fiche + rappels cron quotidiens)
 - **APIs externes** : INSEE Sirene (gouv.fr + INSEE fallback), BODACC, Google Places (avocats locaux), Infogreffe (signaux)
 - **Validation** : Zod (schémas dans `lib/schemas.ts`)
-- **Tests** : Vitest (703 tests, 53 fichiers) + Playwright (E2E)
+- **Tests** : Vitest (712 tests, 53 fichiers) + Playwright (E2E)
 - **CI** : GitHub Actions, Node 22 (lint → tsc → build → test → `opennextjs-cloudflare build`)
 - **Rate limiting** : middleware in-memory (propre à chaque instance du Worker) — limiteur Cloudflare à venir
 - **PWA** : manifest.json + icônes 512/192/favicon
@@ -97,7 +97,7 @@ lib/
   schemas.ts                  # Schémas Zod pour validation API
   hooks.ts                    # useLocalStorage
   FicheContext.tsx            # React Context pour la fiche (utilisé par 18 blocs)
-  __tests__/                  # Tests Vitest (703 au total : lib + components + API routes + outils)
+  __tests__/                  # Tests Vitest (712 au total : lib + components + API routes + outils)
   opco.ts                     # Mapping NAF → OPCO (11 OPCO de la branche)
 
 data/
@@ -155,7 +155,7 @@ En thème clair, `text-vert` et `text-jaune` sont rendus avec les variantes fonc
 - **107 territoires** couverts (96 départements + 11 DOM-TOM) — **8 datasets enrichis** avec adresses + téléphones réels (DDFiP, Barreaux, Chambres notaires, Chambres agriculture, URSSAF, Tribunaux commerce, CCI, CMA)
 - **3 thèmes** : clair (défaut) · sombre · contraste élevé (RGAA AAA) — bascule dans la Nav, persistance localStorage
 - **18 secteurs** enrichis (incluant finance, IT, éducation, immobilier, ESS/associations, services, culture/sport) + mapping 11 OPCO par NAF
-- **703 tests Vitest** + Playwright E2E configuré
+- **712 tests Vitest** + Playwright E2E configuré
 - **11 calculateurs officiels** (ajout : valorisation stocks, seuils d'effectif)
 - **18 questions** au questionnaire
 

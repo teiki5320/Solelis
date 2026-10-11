@@ -63,7 +63,7 @@ export default function BlocConjointCollaborateur() {
             </li>
             <li>
               <strong>CSP obligatoire</strong> si licenciement éco — votre
-              conjoint y a droit comme tout salarié (75 % du salaire journalier de référence, 12 mois au plus).
+              conjoint y a droit comme tout salarié (75 % du salaire journalier de référence, 12 mois au plus, avec au moins 1 an d&apos;ancienneté ; sinon le montant de l&apos;allocation chômage).
             </li>
             <li>
               <strong>Cotisations</strong> : régime général (URSSAF + retraite

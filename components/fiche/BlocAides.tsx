@@ -79,9 +79,9 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
   const statut: Aide[] = [];
   if (r.effectif === 'independant' || ei) {
     statut.push({
-      nom: 'CPAM / SSI · Action sociale',
-      description: `Aide financière d'urgence pour indépendants (jusqu'à 3 000 €). Vous êtes ${ei ? 'entrepreneur individuel' : 'indépendant'} — vous y avez droit.`,
-      telephone: '36 46',
+      nom: 'Urssaf · Action sociale des indépendants',
+      description: `Aide financière exceptionnelle et prise en charge de cotisations pour les indépendants en difficulté. Vous êtes ${ei ? 'entrepreneur individuel' : 'indépendant'} : vous pouvez la demander (attribution au cas par cas).`,
+      telephone: '36 98',
       site: 'https://www.secu-independants.fr',
       badge: 'Gratuit',
     });

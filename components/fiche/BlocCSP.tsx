@@ -57,9 +57,9 @@ export default function BlocCSP() {
             de reclassement.
           </li>
           <li>
-            <strong>Tout salarié</strong> totalisant au moins 130 jours ou
-            910 heures de travail sur les 24 derniers mois (36 mois à
-            partir de 55 ans) — soit la majorité (Unédic, France
+            <strong>Tout salarié</strong> totalisant au moins 88 jours ou
+            610 heures de travail (4 mois) sur les 24 derniers mois (36
+            mois au-delà de 53 ans) — soit la majorité (Unédic, France
             Travail).
           </li>
         </ul>
@@ -70,15 +70,15 @@ export default function BlocCSP() {
         <p className="font-display text-base text-navy">Procédure pas-à-pas</p>
         <ol className="mt-2 list-decimal space-y-1.5 pl-5 text-sm text-navy/80">
           <li>
-            <strong>Remise en main propre</strong> du document CSP
-            (Cerfa 14953) lors de l&apos;entretien préalable au
+            <strong>Remise en main propre</strong> du document
+            d&apos;information CSP lors de l&apos;entretien préalable au
             licenciement, contre signature. Si refus de signer : remise
             en LRAR.
           </li>
           <li>
             <strong>Délai de 21 jours calendaires</strong> pour le salarié
-            pour accepter ou refuser. Le délai court à compter de la
-            remise du document.
+            pour accepter ou refuser. Le délai court à compter du
+            lendemain de la remise du document.
           </li>
           <li>
             Si le salarié <strong>accepte</strong> : le contrat prend fin
@@ -93,10 +93,6 @@ export default function BlocCSP() {
             Si le salarié <strong>refuse</strong> ou ne répond pas : le
             licenciement suit la procédure classique (préavis, indemnité).
           </li>
-          <li>
-            <strong>Inscription</strong> du salarié auprès de France
-            Travail dans les 7 jours suivant la fin du contrat.
-          </li>
         </ol>
       </div>
 
@@ -105,27 +101,27 @@ export default function BlocCSP() {
         <p className="font-display text-base text-vert">Ce que le salarié reçoit</p>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
-            <strong>ASP</strong> : 75 % du salaire brut moyen des 12
-            derniers mois pendant 12 mois (plafonné à 4 PASS).
+            <strong>ASP</strong> : 75 % du salaire journalier de
+            référence pendant 12 mois au plus (avec au moins 1 an
+            d&apos;ancienneté ; sinon le montant de l&apos;allocation chômage).
           </li>
           <li>
             <strong>Accompagnement renforcé</strong> par un conseiller
-            référent (entretiens hebdomadaires les 3 premiers mois,
-            puis bimensuels).
+            référent France Travail.
           </li>
           <li>
             <strong>Aide à la reprise/création</strong> d&apos;entreprise
             (ARCE).
           </li>
           <li>
-            <strong>Primes</strong> : reclassement (50 % du reliquat
-            d&apos;ASP si retour à l&apos;emploi avant la fin) ;
-            différentielles de rémunération (si nouveau salaire inférieur
-            à l&apos;ancien).
+            <strong>Primes</strong> possibles en cas de reprise
+            d&apos;emploi (prime au reclassement, indemnité
+            différentielle si le nouveau salaire est plus bas) :
+            conditions auprès de France Travail.
           </li>
           <li>
             <strong>Maintien des droits</strong> mutuelle, prévoyance
-            (loi Évin, art. L911-8 CSS) — souvent oublié, à rappeler.
+            (portabilité, art. L911-8 CSS) — souvent oublié, à rappeler.
           </li>
         </ul>
       </div>
@@ -144,10 +140,9 @@ export default function BlocCSP() {
             trav.).
           </li>
           <li>
-            <strong>Risque prud&apos;homal</strong> : la jurisprudence
-            assimile l&apos;absence de proposition du CSP à un manquement
-            qui n&apos;entraîne pas la nullité du licenciement mais
-            ouvre droit à dommages-intérêts (Cass. soc. 2014).
+            <strong>Risque prud&apos;homal</strong> : le salarié peut
+            demander réparation du préjudice subi devant le conseil de
+            prud&apos;hommes.
           </li>
           <li>
             En <strong>RJ/LJ</strong> : la contribution due à France
@@ -194,7 +189,7 @@ export default function BlocCSP() {
       <p className="mt-5 text-xs text-navy/50">
         Sources : C. trav. art. L1233-65 à L1233-70 (CSP) ; Convention
         Unédic relative au CSP du 26 janv. 2015 (avenants 2018, 2021,
-        2024) ; circulaire DGEFP n° 2015-09 ; Cerfa 14953*02.
+        2024) ; circulaire DGEFP n° 2015-09 ; service-public (fiche F13819).
       </p>
     </BlocAccordeon>
   );

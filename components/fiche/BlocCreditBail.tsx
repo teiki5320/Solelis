@@ -100,11 +100,11 @@ export default function BlocCreditBail() {
           Indemnité de résiliation — souvent négociable
         </p>
         <p className="mt-2 text-sm text-navy/80">
-          Les contrats prévoient généralement une indemnité égale à{' '}
+          Le contrat peut prévoir une indemnité égale à{' '}
           <strong>la totalité des loyers restant à échoir</strong>{' '}
-          (parfois actualisés), majorée de la valeur résiduelle. Cette
-          clause est <strong>jugée comminatoire</strong> par la jurisprudence :
-          le juge peut la réduire à de <strong>justes proportions</strong>{' '}
+          (parfois actualisés), majorée de la valeur résiduelle : lisez la
+          clause de résiliation. Une telle indemnité est une{' '}
+          <strong>clause pénale</strong> : le juge peut la réduire à de <strong>justes proportions</strong>{' '}
           (art. <strong>1231-5 C. civ.</strong>) si elle est manifestement
           excessive par rapport au préjudice réel du bailleur (perte
           financière nette après revente du matériel).

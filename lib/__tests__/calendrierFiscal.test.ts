@@ -56,6 +56,13 @@ describe('calendrier fiscal', () => {
     }
   });
 
+  it('CA12 : 2e jour ouvré après le 1er mai (clôture au 31/12), sinon 3 mois après la clôture', () => {
+    const ca12 = (fin: ExerciceFin) =>
+      buildEcheances('mini-reel', 'is', fin, false, false, new Date('2026-01-01T10:00:00')).find((x) => x.titre.includes('CA12'))!.date;
+    expect(ca12('dec').getMonth()).toBe(4);
+    expect([ca12('juin').getMonth(), ca12('juin').getDate()]).toEqual([8, 30]);
+  });
+
   it('solde IS au 15 du 4e mois suivant la clôture', () => {
     const m = (fin: ExerciceFin) =>
       buildEcheances('franchise', 'is', fin, false, false, new Date('2026-01-01T10:00:00')).find((x) => x.titre === 'Solde IS')!.date;

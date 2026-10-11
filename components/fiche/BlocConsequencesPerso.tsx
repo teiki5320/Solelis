@@ -220,8 +220,8 @@ export default function BlocConsequencesPerso() {
 
       <p className="mt-5 text-xs text-navy/50">
         Ces informations sont générales. L&apos;appréciation de votre
-        situation particulière par un avocat peut être utile — la
-        plupart proposent un premier RDV gratuit.
+        situation particulière par un avocat peut être utile — une
+        première consultation gratuite est possible dans un point-justice (3039).
       </p>
     </BlocAccordeon>
   );

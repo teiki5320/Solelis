@@ -99,7 +99,7 @@ function buildExpandedContent(card: PriorityCardMeta, ctx: ContexteCartes): Reac
             <li className="flex gap-2"><span className="text-navy/40">→</span>Demander copie de chaque acte + fiche d&apos;information patrimoniale signée</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Disproportion au jour de la signature : art. <strong>2300 C. civ.</strong> (anciens art. L332-1 et L343-4 C. conso pour les cautions signées avant 2022)</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Information annuelle manquante : déchéance des intérêts (art. 2302 C. civ.)</li>
-            <li className="flex gap-2"><span className="text-navy/40">→</span>Vérifier la durée : à durée indéterminée, résiliable avec préavis pour l&apos;avenir (art. 2315 C. civ.)</li>
+            <li className="flex gap-2"><span className="text-navy/40">→</span>Vérifier la durée : caution de dettes futures sans durée fixée = résiliable avec préavis pour l&apos;avenir (art. 2315 C. civ.)</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Avocat en droit bancaire — consultation gratuite possible en point-justice (3039)</li>
           </ul>
           <button type="button" onClick={() => scrollToId('patrimoine')} className="inline-flex text-sm font-medium text-jaune hover:underline">
@@ -180,7 +180,7 @@ function buildExpandedContent(card: PriorityCardMeta, ctx: ContexteCartes): Reac
             <li className="flex gap-2"><span className="text-navy/40">→</span><strong>APESA</strong> — soutien psychologique gratuit des dirigeant·e·s · 0 805 65 50 50 · apesa-france.com</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span><strong>3114</strong> — prévention suicide, 24 h/24, 7 j/7, gratuit</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span><strong>60 000 Rebonds</strong> — accompagnement post-liquidation (mentor + groupe de pairs) · 60000rebonds.com</li>
-            <li className="flex gap-2"><span className="text-navy/40">→</span><strong>CIP</strong> (antennes locales) — RDV gratuit confidentiel 1 h avec juriste + comptable + dirigeant · cip-national.fr</li>
+            <li className="flex gap-2"><span className="text-navy/40">→</span><strong>CIP</strong> (antennes locales) — RDV gratuit et confidentiel avec un expert-comptable, un avocat et un ancien juge · cip-national.fr</li>
           </ul>
         </div>
       );
@@ -212,7 +212,7 @@ function buildExpandedContent(card: PriorityCardMeta, ctx: ContexteCartes): Reac
       return (
         <div className="space-y-3 text-sm text-navy/80">
           <p>
-            Le loyer pèse souvent 15 à 25 % des charges fixes. Le statut
+            Le loyer est souvent l&apos;une des premières charges fixes. Le statut
             des baux commerciaux offre des leviers méconnus.
           </p>
           <ul className="space-y-1.5">

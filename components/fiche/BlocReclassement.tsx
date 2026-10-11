@@ -103,11 +103,11 @@ export default function BlocReclassement() {
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
             <strong>Voie majoritaire</strong> : accord collectif majoritaire{' '}
-            <strong>validé</strong> par la DREETS (15 jours ; 8 jours en redressement ou liquidation judiciaire).
+            <strong>validé</strong> par la DREETS (15 jours ; 8 jours en redressement judiciaire, 4 jours en liquidation judiciaire).
           </li>
           <li>
             <strong>Voie unilatérale</strong> : document unilatéral{' '}
-            <strong>homologué</strong> par la DREETS (21 jours ; 8 jours en redressement ou liquidation judiciaire).
+            <strong>homologué</strong> par la DREETS (21 jours ; 8 jours en redressement judiciaire, 4 jours en liquidation judiciaire).
           </li>
           <li>
             Consultation préalable du CSE obligatoire (2 réunions minimum).
@@ -155,10 +155,10 @@ export default function BlocReclassement() {
             {opco.description}
           </p>
           <p className="mt-2 text-sm text-navy/80">
+            Les documents du CSP se demandent à France Travail (service
+            employeur, ci-dessous).{' '}
             <strong>Mobilisez l&apos;OPCO en priorité</strong> pour
-            financer FNE-Formation, POE individuelle, ProA, ou pour
-            commander vos formulaires CSP. Délais de réponse souvent
-            inférieurs à 15 jours pour les dossiers urgents.
+            financer FNE-Formation, POE individuelle ou ProA.
           </p>
           <div className="mt-3 flex flex-wrap gap-2 text-sm">
             {opco.telephone && (

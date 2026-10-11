@@ -32,7 +32,7 @@ const financements: Financement[] = [
   {
     nom: 'France Active',
     description:
-      'Garanties de prêts (jusqu’à 65 % du prêt bancaire). Accompagnement.',
+      'Garanties de prêts bancaires. Accompagnement.',
     url: 'https://franceactive.org',
     urlLabel: 'franceactive.org',
   },

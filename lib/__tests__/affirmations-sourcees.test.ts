@@ -33,7 +33,8 @@ const INTERDITS: { re: RegExp; pourquoi: string }[] = [
   { re: /(Cerfa|CERFA) n?°? ?15772/, pourquoi: 'formulaire inexistant ; dossier de saisine CCSF (entreprendre.service-public F38326)' },
   { re: /CCSF[^.]{0,120}36 mois|36 mois[^.]{0,60}CCSF|jusqu.à 36 mois\. Saisine/, pourquoi: 'durée de plan CCSF non fixée par les textes' },
   { re: /10 166 €/, pourquoi: 'plafond CSS périmé (10 421 € au 1er avril 2026)' },
-  { re: /88 jours ou\s+610 heures/, pourquoi: 'affiliation chômage : 130 jours / 910 heures (unedic.org)' },
+  { re: /130 jours ou\s+910 heures/, pourquoi: 'CSP : 88 jours ou 610 heures sur 24 mois (fiche Unédic CSP)' },
+  { re: /8 jours en redressement ou liquidation/, pourquoi: 'DREETS : 8 jours en RJ, 4 jours en LJ (C. trav. L1233-58)' },
   { re: /salaire brut antérieur/, pourquoi: 'CSP : 75 % du salaire journalier de référence (service-public F13819)' },
   { re: /L244-1 CSS/, pourquoi: 'solidarité du dirigeant : L243-3-2 CSS' },
   { re: /TVA à 4 ans|4 ans pour la TVA|fiscal 4 ans|fiscal \(4 ans\)|baux 1 an|baux \(1 an\)/, pourquoi: 'reprise TVA 3 ans (LPF L176) ; loyers 5 ans' },
@@ -48,6 +49,13 @@ const INTERDITS: { re: RegExp; pourquoi: string }[] = [
   { re: /réponse sous 5 j(?!ours ouvrés)|5 jours pour répondre|5 jours en moyenne|Réponse sous 5 jours/, pourquoi: 'médiation du crédit : contact sous 48 h puis 5 jours ouvrés pour les banques (banque-france.fr)' },
   { re: /CSCPJ/, pourquoi: 'chambre supprimée (commissaires de justice depuis 2022)' },
   { re: /Forfait audience : 800/, pourquoi: 'honoraires libres, sans barème officiel' },
+  { re: /Cerfa 14953|Cass\. soc\. 2014|loi Évin, art\. L911-8|salaire brut moyen des 12/, pourquoi: 'CSP : références non vérifiables ou inexactes (service-public F13819)' },
+  { re: /juriste \+ comptable|bénévoles vous reçoit \(juriste|permanenceFrequence: '(?!sur rendez-vous)/, pourquoi: 'CIP : trio expert-comptable / avocat / ancien juge, sur rendez-vous (CCI)' },
+  { re: /15 à 25 % des charges|souvent 40 à\s+70 %|généralement 90 j|insaisissable ~ 600|plupart proposent un premier RDV/, pourquoi: 'chiffres sans source officielle ; SBI = RSA personne seule (CPCE L162-2)' },
+  { re: /CPAM \/ SSI|indépendants \(jusqu.à 3[\s ]000|vous y avez droit\./, pourquoi: 'action sociale des indépendants : Urssaf / CPSTI, au cas par cas (urssaf.fr)' },
+  { re: /Comptez environ 3 000 à 10 000|compter 5 000 à 15 000|frais de greffe environ 80|audience ne dure souvent que 15 minutes|Le juge accorde généralement 1 mois|répond généralement sous 15 jours/, pourquoi: 'chiffres sans source officielle' },
+  { re: /FISAC|Bonus écologique flotte|nom: 'USPF'|nom: 'SYNHORCAT'/, pourquoi: 'dispositifs disparus (FISAC éteint depuis 2019, Sénat PLF 2023) ou organismes fusionnés/mal nommés' },
+  { re: /souvent\s+inférieurs à 15 jours|commander vos formulaires CSP/, pourquoi: 'OPCO : délai non sourcé ; documents CSP fournis par France Travail' },
   { re: /loi 14 fév\. 2022\)|loi du 14 fév\. 2022\)|loi du 14 fév\. 2022\)\./, pourquoi: 'limite de 5 ans du conjoint collaborateur : C. com. art. L121-4 (LFSS 2022)' },
 ];
 

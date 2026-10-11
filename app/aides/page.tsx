@@ -68,12 +68,12 @@ const sections: Section[] = [
     colorDot: 'bg-vert',
     aides: [
       {
-        nom: 'CPAM / SSI Action sociale',
+        nom: 'Urssaf · Action sociale du CPSTI',
         description:
-          'Aide financière d’urgence pour indépendants (jusqu’à 3 000 €)',
-        url: 'https://www.secu-independants.fr',
-        urlLabel: 'secu-independants.fr',
-        tel: '36 46',
+          'Aide financière exceptionnelle ou prise en charge de cotisations pour les indépendants en difficulté (attribution au cas par cas)',
+        url: 'https://www.urssaf.fr/accueil/services/services-independants/solliciter-action-sociale-cpsti.html',
+        urlLabel: 'urssaf.fr',
+        tel: '36 98',
       },
       {
         nom: 'Fonds d’action sociale URSSAF',

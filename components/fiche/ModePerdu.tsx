@@ -45,7 +45,7 @@ export default function ModePerdu() {
     if (reponses.situation === 'redressement') {
       return {
         nom: 'CIP — Centre d\'Information sur la Prévention',
-        action: 'RDV gratuit, confidentiel, 1 h avec juriste + comptable + dirigeant',
+        action: 'RDV gratuit et confidentiel avec un expert-comptable, un avocat et un ancien juge',
         tel: null as string | null,
         site: 'https://www.cip-national.fr',
         labelSite: 'cip-national.fr',

@@ -245,7 +245,7 @@ const terms: Term[] = [
   {
     name: 'FSE+ (Fonds Social Européen Plus 2021-2027)',
     enClair:
-      "Cofinancement européen jusqu’à 60 % des actions de reclassement, formation et accompagnement des salariés lors de restructurations. Géré par les Régions et la DGEFP.",
+      "Cofinancement européen d’une partie des actions de reclassement, formation et accompagnement des salariés lors de restructurations. Géré par les Régions et la DGEFP.",
     pourQui:
       "Employeurs en PSE ou plan de reclassement.",
     duree: 'Programme 2021-2027.',

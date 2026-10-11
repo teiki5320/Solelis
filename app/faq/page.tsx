@@ -71,7 +71,7 @@ const SECTIONS: SectionFAQ[] = [
       {
         question: 'Combien coûte une procédure collective ?',
         reponse:
-          "Les frais de justice (greffe) sont modestes : quelques centaines d'euros pour le dépôt. Le coût principal vient des honoraires des mandataires de justice (administrateur, mandataire judiciaire), fixés par décret (R663-1 et suivants du Code de commerce) selon un barème proportionnel au chiffre d'affaires et au nombre de salariés. Comptez environ 3 000 à 10 000 euros pour une petite entreprise. L'aide juridictionnelle est possible si vos revenus personnels sont faibles.",
+          "Les frais de greffe suivent un tarif réglementé. Le coût principal vient de la rémunération des mandataires de justice (administrateur, mandataire judiciaire), fixée par un tarif réglementé (art. R663-1 et suivants du Code de commerce) qui dépend notamment du chiffre d'affaires et du nombre de salariés ; elle est payée sur les fonds de la procédure. Demandez une estimation au mandataire. L'aide juridictionnelle est possible si vos revenus personnels sont faibles.",
       },
       {
         question: 'Combien de temps dure un redressement judiciaire ?',
@@ -143,7 +143,7 @@ const SECTIONS: SectionFAQ[] = [
       {
         question: 'Quelles sont mes aides personnelles (ATI, RSA) ?',
         reponse:
-          "L'ATI (Allocation des travailleurs indépendants) est versée par France Travail aux indépendants après une liquidation judiciaire, un redressement judiciaire avec remplacement du dirigeant, ou l'arrêt d'une activité non viable attesté par un tiers de confiance. Conditions : 2 ans d'activité, au moins 10 000 euros de revenus sur l'une des 2 dernières années, ressources personnelles inférieures au RSA. Elle va d'environ 600 à 800 euros par mois selon les revenus antérieurs, pendant 6 mois (décret n° 2022-450 du 30 mars 2022). Le RSA est accessible sous conditions de ressources. La CSS (Complémentaire santé solidaire) couvre vos frais de santé. APESA propose un soutien psychologique gratuit et confidentiel.",
+          "L'ATI (Allocation des travailleurs indépendants) est versée par France Travail aux indépendants après une liquidation judiciaire, un redressement judiciaire avec remplacement du dirigeant, ou l'arrêt d'une activité non viable attesté par un tiers de confiance. Conditions : 2 ans d'activité, au moins 10 000 euros de revenus sur l'une des 2 dernières années, ressources personnelles inférieures au RSA. Elle va d'environ 600 à 800 euros par mois selon les revenus antérieurs, pendant 6 mois (décrets n° 2022-450 et 2022-451 du 30 mars 2022). Le RSA est accessible sous conditions de ressources. La CSS (Complémentaire santé solidaire) couvre vos frais de santé. APESA propose un soutien psychologique gratuit et confidentiel.",
         liens: [
           { href: '/aides-personnelles', label: 'Toutes les aides personnelles' },
           { href: '/outils/ati', label: 'Simulateur ATI' },
