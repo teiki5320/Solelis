@@ -35,7 +35,7 @@ const CHECKLIST: Section[] = [
     titre: 'Comptable et financier',
     items: [
       { id: 'bilan-3', label: 'Bilans, comptes de résultat et annexes des 3 derniers exercices', obligatoire: true },
-      { id: 'liasse', label: 'Liasses fiscales (2050-2059) des 3 dernières années', obligatoire: true },
+      { id: 'liasse', label: 'Liasses fiscales (2050-2059 ou 2033) des 3 dernières années', obligatoire: true },
       { id: 'situation', label: 'Situation comptable intermédiaire récente (< 3 mois)', obligatoire: true },
       { id: 'previsionnel', label: 'Prévisionnel d\'activité (CA, marge, résultat à 3 ans)', obligatoire: true },
       { id: 'tresorerie', label: 'Plan de trésorerie à 12 mois', obligatoire: true },
@@ -118,8 +118,8 @@ const CHECKLIST: Section[] = [
     items: [
       { id: 'attestations', label: 'Attestations URSSAF et SIE de régularité', obligatoire: true },
       { id: 'tva-detail', label: 'Détail TVA collectée/déductible des 24 derniers mois', obligatoire: false },
-      { id: 'cice-cir', label: 'Crédits d\'impôts (CIR, CICE, etc.)', obligatoire: false },
-      { id: 'impots-ag', label: 'Avis d\'imposition IS (3 dernières années)', obligatoire: true },
+      { id: 'cice-cir', label: 'Crédits d\'impôt (CIR, CII, etc.)', obligatoire: false },
+      { id: 'impots-ag', label: 'Relevés de solde d\'IS (n° 2572) des 3 dernières années', obligatoire: true },
     ],
   },
   {
@@ -212,7 +212,7 @@ export default function DataRoomPage() {
     '@type': 'HowTo',
     name: 'Préparer votre data room',
     description:
-      'Constituez la data room pour la cession de votre entreprise avec cette checklist exhaustive des pièces à rassembler, inspirée des standards Bpifrance et CRA.',
+      'Constituez la data room pour la cession de votre entreprise avec cette checklist des pièces à rassembler (liste non exhaustive).',
     step: [
       {
         '@type': 'HowToStep',
@@ -265,9 +265,8 @@ export default function DataRoomPage() {
         Préparateur de data room (cession)
       </h1>
       <p className="mt-3 text-base text-navy/70">
-        Checklist exhaustive des pièces à rassembler pour préparer la
-        cession de votre entreprise. Inspirée des standards Bpifrance
-        Création et CRA. Cochez ce que vous avez — l&apos;avancement est
+        Checklist des pièces à rassembler pour préparer la cession de
+        votre entreprise (liste non exhaustive). Cochez ce que vous avez — l&apos;avancement est
         sauvegardé dans votre navigateur.
       </p>
 
@@ -344,7 +343,7 @@ export default function DataRoomPage() {
           <li>Numérisez tous les documents en PDF avant la mise en data room.</li>
           <li>Anonymisez les noms de salariés (RGPD) avant communication large.</li>
           <li>Faites signer un NDA (accord de confidentialité) avant l&apos;ouverture de la data room.</li>
-          <li>Une bonne data room divise par 2 le temps de négociation et augmente la valeur perçue.</li>
+          <li>Une data room complète facilite l&apos;audit du repreneur et la négociation.</li>
         </ul>
       </div>
 

@@ -88,7 +88,7 @@ export default function BlocSCOP() {
           </li>
           <li>
             <strong>Réserves impartageables</strong> : au moins 16 % des
-            bénéfices (15 % de réserve légale + 1 % de fonds de
+            bénéfices (réserve légale de 15 % et fonds de
             développement) alimentent les fonds propres, et au moins 25 %
             reviennent aux salariés.
           </li>
@@ -162,7 +162,7 @@ export default function BlocSCOP() {
           Union régionale des SCOP
         </p>
         <p className="mt-1 text-xs text-navy/60">
-          9 unions régionales (dont une couvrant l&apos;outre-mer).
+          Unions régionales couvrant tout le territoire, outre-mer compris.
           Accompagnement : étude de faisabilité, montage juridique, plan de
           financement, formation des futurs associés.
         </p>

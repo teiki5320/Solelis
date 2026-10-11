@@ -390,7 +390,7 @@ export function buildStrategie(axe: Axe, r: Reponses, c: CompanyData, score: num
           'Prévisionnel de trésorerie à 6 mois avec votre expert-comptable',
           'Demandes de délais : URSSAF, SIE, bailleur, fournisseurs (courriers Solelis)',
           r.pgeEnCours === 'oui'
-            ? 'PGE en cours : demande de réaménagement auprès de votre banque, puis Médiation du crédit (renseignements au 3414) — l\'accord de place, prolongé jusqu\'au 31 décembre 2026, permet d\'allonger le PGE de 2 à 4 ans en gardant la garantie de l\'État'
+            ? 'PGE en cours : demande de réaménagement auprès de votre banque, puis Médiation du crédit (renseignements au 3414) — l\'accord de place, prolongé jusqu\'au 31 décembre 2026, permet d\'allonger le PGE de 2 ans au plus (4 ans au plus si c\'est particulièrement justifié) en gardant la garantie de l\'État'
             : 'Saisine médiation du crédit si tension bancaire',
           'Audit des coûts fixes — éliminer le non-essentiel',
           'RDV avec le CIP (Centre d\'information sur la prévention des difficultés des entreprises) : entretien gratuit et confidentiel pour faire le point',

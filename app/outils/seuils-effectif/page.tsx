@@ -77,7 +77,7 @@ export default function SeuilsEffectifPage() {
             className="mt-2 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-3 text-2xl font-display"
           />
           <span className="mt-1 block text-[11px] text-navy/55">
-            Calcul URSSAF : moyenne arithmétique des effectifs mensuels. Un seuil n&apos;est franchi qu&apos;après 5 années civiles consécutives (CSS L130-1) ; le CSE suit sa propre règle (12 mois consécutifs).
+            Calcul URSSAF : moyenne arithmétique des effectifs mensuels. Pour les seuils soumis à l&apos;art. L130-1 CSS (participation, obligation d&apos;emploi de travailleurs handicapés…), un seuil n&apos;est franchi qu&apos;après 5 années civiles consécutives ; le CSE et d&apos;autres obligations du Code du travail suivent leurs propres règles (12 mois consécutifs pour le CSE).
           </span>
         </label>
 
@@ -133,7 +133,7 @@ export default function SeuilsEffectifPage() {
             <strong>Calcul effectif</strong> : moyenne des effectifs mensuels sur 12 mois. CDD, intérimaires, mis à disposition comptés au prorata. Apprentis et contrats aidés exclus.
           </li>
           <li>
-            <strong>Franchissement</strong> : un seuil d&apos;effectif n&apos;est pris en compte que s&apos;il est atteint ou dépassé pendant 5 années civiles consécutives (loi PACTE 2019, art. L130-1 CSS ; règle reprise par exemple pour l&apos;obligation d&apos;emploi de travailleurs handicapés, L5212-1). Exceptions : le CSE, dû quand 11 salariés sont atteints pendant 12 mois consécutifs (L2311-2), et le règlement intérieur, dû 12 mois après l&apos;atteinte de 50 salariés (L1311-2).
+            <strong>Franchissement</strong> : pour les seuils qui renvoient à l&apos;art. L130-1 CSS (loi PACTE 2019), un seuil d&apos;effectif n&apos;est pris en compte que s&apos;il est atteint ou dépassé pendant 5 années civiles consécutives (règle reprise par exemple pour l&apos;obligation d&apos;emploi de travailleurs handicapés, L5212-1, et pour la participation, L3322-2). Elle ne vaut pas pour toutes les obligations listées (PSE, BDESE, bilan GES…). Exceptions : le CSE, dû quand 11 salariés sont atteints pendant 12 mois consécutifs (L2311-2), et le règlement intérieur, dû 12 mois après l&apos;atteinte de 50 salariés (L1311-2).
           </li>
           <li>
             <strong>Retour sous le seuil</strong> : une année civile sous le seuil suffit à faire recommencer le décompte des 5 années (art. L130-1, II CSS).

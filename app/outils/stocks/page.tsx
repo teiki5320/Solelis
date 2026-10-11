@@ -21,7 +21,6 @@ interface RefactionRange {
 }
 
 // Ordres de grandeur indicatifs (pas de barème officiel publié)
-// Fourchettes typiques observées sur dossiers TPE/PME 2022-2024.
 const REFACTIONS: Record<NatureStock, Record<Voie, RefactionRange>> = {
   'matieres-premieres': {
     'amiable-rapide':       { bas: 60, haut: 80 },
@@ -250,7 +249,7 @@ export default function ValorisationStocksPage() {
             prix en intégrant le stock à un prix décoté.
           </li>
           <li>
-            <strong>Liquidation à la cuve</strong> : le mandataire vend en
+            <strong>Liquidation à la cuve</strong> : le liquidateur vend en
             gros à un revendeur (broker) qui paie cash et écoule en
             soldeurs / web marketplaces. Décote forte.
           </li>
@@ -265,7 +264,7 @@ export default function ValorisationStocksPage() {
             avec le temps. À traiter en priorité absolue.
           </li>
           <li>
-            <strong>Stocks taxables CRD</strong> (alcool, tabac, parfumerie) :
+            <strong>Stocks soumis à accises</strong> (alcools, tabacs) :
             attention aux droits indirects à régler à la sortie.
           </li>
         </ul>

@@ -23,27 +23,27 @@ interface Multiples {
   note: string;
 }
 
-// Source : Bpifrance Création — « Valoriser son entreprise »,
-// CRA, fiches BDO / PwC « Argos Mid-Market » pour les TPE/PME non cotées.
-// Multiples indicatifs 2024-2025.
+// Méthode des multiples présentée par Bpifrance Création (« Valoriser son
+// entreprise »). Les multiples ci-dessous sont des ordres de grandeur
+// indicatifs, sans source officielle publiée.
 const MULTIPLES: Record<SecteurVal, Multiples> = {
   'commerce-detail': {
     label: 'Commerce de détail',
     ebeBas: 2.5, ebeHaut: 4.5,
     caBas: 0.3, caHaut: 0.7,
-    note: 'Forte pondération sur l\'emplacement et le bail. Les murs peuvent ajouter 20-40 % à la valeur.',
+    note: 'Forte pondération sur l\'emplacement et le bail. Les murs, s\'ils appartiennent à l\'entreprise, s\'évaluent à part.',
   },
   'hcr': {
     label: 'Hôtellerie-restauration',
     ebeBas: 3, ebeHaut: 5.5,
     caBas: 0.7, caHaut: 1.2,
-    note: "Hôtellerie : multiples plus élevés (5-7× EBE). Restauration traditionnelle : 3-5× EBE. Les murs souvent valorisés séparément.",
+    note: "Les multiples diffèrent entre hôtellerie et restauration. Les murs sont souvent valorisés séparément.",
   },
   'btp': {
     label: 'BTP / Construction',
     ebeBas: 2.5, ebeHaut: 4.5,
     caBas: 0.15, caHaut: 0.35,
-    note: "Décote récente liée à la crise du secteur. Carnet de commandes sécurisé valorisé.",
+    note: "Le carnet de commandes sécurisé est un élément clé de la valeur.",
   },
   'industrie': {
     label: 'Industrie / PMI',
@@ -61,7 +61,7 @@ const MULTIPLES: Record<SecteurVal, Multiples> = {
     label: 'Numérique / SaaS',
     ebeBas: 5, ebeHaut: 10,
     caBas: 1.0, caHaut: 3.0,
-    note: "Multiple ARR (Annual Recurring Revenue) pour SaaS : 3-7× ARR. Taux de churn clé.",
+    note: "Pour le SaaS, la valeur s'apprécie souvent sur le revenu récurrent annuel (ARR) ; le taux d'attrition (churn) est clé.",
   },
   'sante-libe': {
     label: 'Santé / libéral',
@@ -73,7 +73,7 @@ const MULTIPLES: Record<SecteurVal, Multiples> = {
     label: 'Transport routier',
     ebeBas: 3, ebeHaut: 5,
     caBas: 0.3, caHaut: 0.6,
-    note: "Flotte en propriété valorisée séparément. Marges tendues récemment.",
+    note: "Flotte en propriété valorisée séparément.",
   },
   'autre': {
     label: 'Autre',

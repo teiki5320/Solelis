@@ -67,7 +67,11 @@ const INTERDITS: { re: RegExp; pourquoi: string }[] = [
   { re: /Cedants-Repreneurs|BPI Prêt rebond|Allocation de Fin d.Études|FNAUT-VTC/, pourquoi: 'site, prêt ou dispositif inexistants ou fermés' },
   { re: /01 55 90 27 00|01 53 17 87 40|0 969 328 110/, pourquoi: 'numéros absents des sites officiels (AGS, Médiateur des entreprises : saisine en ligne ; Adie)' },
   { re: /règlement européen 330\/2010/, pourquoi: 'règlement expiré, remplacé par le règlement (UE) 2022/720 ; clause de non-concurrence : L341-2 C. com.' },
-  { re: /Taux d.accord supérieur à 75|réétaler jusqu.à 10 ans|[Éé]talement (possible )?jusqu.à 10 ans/, pourquoi: 'PGE : allongement de 2 à 4 ans via la Médiation du crédit (accord de place) ; taux de médiation sans source' },
+  { re: /Taux d.accord supérieur à 75|réétaler jusqu.à 10 ans|[Éé]talement (possible )?jusqu\\?.à 10 ans/, pourquoi: 'PGE : allongement de 2 à 4 ans via la Médiation du crédit (accord de place) ; taux de médiation sans source' },
+  { re: /plafond 10 ans|sans inscription défavorable|BdF, FBF, Bpifrance/, pourquoi: 'PGE : accord de place du 19/01/2022 signé par l’État, la Banque de France, l’IEDOM/IEOM et la FBF ; allongement de 2 ans (4 au plus) ; entreprise classée en défaut (banque-france.fr)' },
+  { re: /[Ss]aisir directement APESA|directement par téléphone\. La saisine/, pourquoi: 'APESA : alerte déclenchée par une sentinelle formée, avec l’accord de l’entrepreneur (apesa-france.com, « Le dispositif »)' },
+  { re: /cellule dédiée|dispositif de résolution organisée/, pourquoi: 'ACPR : pas de « cellule » d’accompagnement ; la résolution vise les banques et assureurs défaillants (acpr.banque-france.fr)' },
+  { re: /traitée en 2 à 4 semaines|premier rendez-vous sous 7 jours|la plupart proposent un premier échange/, pourquoi: 'délais et gratuité sans source officielle (courriers)' },
 ];
 
 describe('contre-audit : affirmations retirées', () => {

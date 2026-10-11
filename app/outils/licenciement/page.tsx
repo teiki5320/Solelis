@@ -106,8 +106,8 @@ export default function LicenciementPage() {
       </h1>
       <p className="mt-3 text-base text-navy/70">
         Estimez le coût d&apos;un licenciement économique selon les
-        barèmes légaux. Le calcul applique la formule de l&apos;article
-        L1234-9 et L1234-1 du Code du travail. Les plafonds AGS 2026
+        barèmes légaux. Le calcul applique les articles L1234-9 et
+        R1234-2 du Code du travail. Les plafonds AGS 2026
         permettent de voir ce qui est couvert en cas de procédure.
       </p>
 
@@ -233,7 +233,7 @@ export default function LicenciementPage() {
             <strong>Congés payés non pris</strong> : à indemniser en plus.
           </li>
           <li>
-            <strong>Plafonds AGS 2026</strong> : 4, 5 ou 6 fois le plafond mensuel d&apos;assurance chômage (4 × le plafond mensuel de la Sécurité sociale), selon l&apos;ancienneté du contrat de travail au jugement d&apos;ouverture — moins de 6 mois : {formatEuros(PLAFOND_AGS_BAS)} ; 6 mois à 2 ans : {formatEuros(PLAFOND_AGS_INTER)} ; 2 ans et plus : {formatEuros(PLAFOND_AGS_HAUT)}.
+            <strong>Plafonds AGS 2026</strong> : 4, 5 ou 6 fois le plafond mensuel d&apos;assurance chômage (4 × le plafond mensuel de la Sécurité sociale), selon l&apos;ancienneté du contrat de travail au jugement d&apos;ouverture, toutes créances du salarié confondues (salaires, préavis, congés, indemnités) — moins de 6 mois : {formatEuros(PLAFOND_AGS_BAS)} ; 6 mois à 2 ans : {formatEuros(PLAFOND_AGS_INTER)} ; 2 ans et plus : {formatEuros(PLAFOND_AGS_HAUT)}.
           </li>
           <li>
             <strong>PSE</strong> obligatoire si licenciement de 10+ salariés sur 30 jours dans une entreprise de 50+ salariés (L1233-61).

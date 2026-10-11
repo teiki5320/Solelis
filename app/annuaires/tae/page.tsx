@@ -68,7 +68,7 @@ export default function TaePage() {
             <strong>Composition :</strong> les juges élus du tribunal de commerce, rejoints par des juges exerçant la profession d&apos;exploitant agricole ; le greffe reste celui du tribunal de commerce.
           </li>
           <li>
-            <strong>Bilan :</strong> un comité d&apos;experts et de parlementaires doit remettre un rapport d&apos;évaluation au Parlement avant le 1er juillet 2028.
+            <strong>Bilan :</strong> le Gouvernement doit remettre au Parlement un rapport d&apos;évaluation au moins 6 mois avant la fin de l&apos;expérimentation (soit avant le 1er juillet 2028), en y associant notamment deux députés et deux sénateurs (loi n°2023-1059, art. 26).
           </li>
         </ul>
       </div>

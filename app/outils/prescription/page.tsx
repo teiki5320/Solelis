@@ -48,7 +48,7 @@ export default function PrescriptionPage() {
       {
         '@type': 'HowToStep',
         name: 'Choisir le type de dette',
-        text: 'Sélectionnez la catégorie de dette (URSSAF, impôt sur le revenu, TVA, civile, commerciale, loyer, salaire, amende pénale).',
+        text: 'Sélectionnez la catégorie de dette (URSSAF, impôt sur le revenu, TVA, civile, commerciale, loyer, salaire, amende pour contravention).',
       },
       {
         '@type': 'HowToStep',

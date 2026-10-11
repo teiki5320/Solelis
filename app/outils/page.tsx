@@ -131,9 +131,9 @@ export default function OutilsPage() {
         Boîte à outils
       </h1>
       <p className="mt-4 max-w-2xl text-base text-navy/70 sm:text-lg">
-        Des calculateurs et vérificateurs basés exclusivement sur les
-        textes officiels (Code de commerce, Code du travail, sites
-        gouvernementaux). Tout ce que vous saisissez reste dans votre
+        Des calculateurs et vérificateurs fondés sur les textes officiels
+        (Code de commerce, Code du travail, sites gouvernementaux) ; les
+        outils de valorisation donnent des ordres de grandeur indicatifs. Tout ce que vous saisissez reste dans votre
         navigateur.
       </p>
 

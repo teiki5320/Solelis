@@ -191,8 +191,8 @@ export default function BlocPlateformes() {
           </li>
           <li>
             <strong>ACRE</strong> — Exonération partielle de cotisations
-            sociales pendant 1 an en cas de création ou reprise
-            d&apos;entreprise (réduite depuis 2026 ; à demander à
+            sociales pendant 12 mois au plus en cas de création ou reprise
+            d&apos;entreprise (plus automatique depuis 2026 : à demander à
             l&apos;Urssaf dans les 60 jours suivant le début
             d&apos;activité).
           </li>

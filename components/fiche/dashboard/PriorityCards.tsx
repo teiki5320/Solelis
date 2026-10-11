@@ -261,7 +261,7 @@ function buildExpandedContent(card: PriorityCardMeta, ctx: ContexteCartes): Reac
           <ul className="space-y-1.5">
             <li className="flex gap-2"><span className="text-navy/40">→</span>Restructuration via la Médiation du crédit (accord de place du 19 janv. 2022, prolongé jusqu&apos;au 31 déc. 2026)</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>En cas de refus : <strong>Médiation du crédit 34 14</strong> (gratuit, confidentiel)</li>
-            <li className="flex gap-2"><span className="text-navy/40">→</span>Allongement de 2 à 4 ans (10 ans au total au maximum), sans perte de garantie d&apos;État</li>
+            <li className="flex gap-2"><span className="text-navy/40">→</span>Allongement de 2 ans au plus (4 ans si c&apos;est particulièrement justifié, 10 ans au total au maximum), sans perte de garantie d&apos;État</li>
           </ul>
           <button type="button" onClick={() => scrollToId('echeances')} className="inline-flex text-sm font-medium text-jaune hover:underline">
             Voir le détail PGE ↓

@@ -56,10 +56,10 @@ export default function BlocGarantieBPI() {
             cautions éventuelles) restez tenus de la totalité du prêt.
           </li>
           <li>
-            Les <strong>cautions personnelles</strong> demandées sur un
-            prêt garanti par Bpifrance sont en principe limitées à 50 %
-            du prêt, avec protection de la résidence principale
-            (bpifrance-creation.fr).
+            Selon Bpifrance, sa garantie <strong>limite en général la
+            demande de cautions personnelles</strong> et protège votre
+            résidence principale ; vérifiez dans votre contrat le montant
+            exact de la caution demandée (bpifrance-creation.fr).
           </li>
         </ul>
       </div>
@@ -122,8 +122,8 @@ export default function BlocGarantieBPI() {
           </li>
           <li>
             La <strong>quotité garantie</strong> varie selon le fonds et
-            l&apos;opération (jusqu&apos;à 80 % pour certaines garanties) :
-            elle figure dans votre contrat.
+            l&apos;opération (par exemple 50 % pour une reprise, 70 % avec
+            une intervention de la Région) : elle figure dans votre contrat.
           </li>
           <li>
             <strong>Prêts directs Bpifrance</strong> (développement,
@@ -201,8 +201,8 @@ export default function BlocGarantieBPI() {
 
       <p className="mt-5 text-xs text-navy/50">
         Sources : Bpifrance — conditions générales des garanties ;
-        bpifrance-creation.fr (garantie Bpifrance : quotités, cautions
-        limitées à 50 %) ; Médiation du crédit aux entreprises ; Code
+        bpifrance-creation.fr (dispositifs de garantie : quotités,
+        cautions personnelles) ; Médiation du crédit aux entreprises ; Code
         civil, art. 2300 et 2302.
       </p>
     </BlocAccordeon>

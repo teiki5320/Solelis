@@ -52,7 +52,7 @@ export default function CiriCodefiPage() {
           <p className="mt-4 text-sm text-navy/80">
             <strong>Ce que peut faire le CODEFI :</strong> faire réaliser, avec votre accord, un audit de votre
             situation, accorder un prêt du FDES (Fonds de développement économique et social) pour financer la
-            restructuration, faciliter le dialogue avec les créanciers publics et les banques. Condition : être à
+            restructuration, faciliter le dialogue avec les créanciers publics et les banques. Pour un prêt du FDES, il faut être à
             jour de vos obligations fiscales et sociales.
           </p>
           <p className="mt-3 text-xs text-navy/60">

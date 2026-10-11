@@ -100,8 +100,9 @@ export default function CourriersPage() {
       <div className="dashed-band mt-10 p-5 text-sm text-navy/70">
         <p>
           Ces modèles sont des bases de travail. Adaptez-les à votre
-          situation. En cas de doute, un avocat ou la CCI de votre
-          département peut vous aider gratuitement.
+          situation. En cas de doute, faites-vous aider : consultations
+          gratuites d&apos;avocats en point-justice, ou CCI de votre
+          département.
         </p>
       </div>
     </section>

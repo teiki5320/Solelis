@@ -114,7 +114,7 @@ const sections: Section[] = [
       {
         nom: 'AGEFIPH',
         description:
-          'Aide forfaitaire de 3 000 € pour créer ou reprendre une entreprise (personne en situation de handicap, accompagnée en amont par un expert habilité). Si votre handicap compromet la poursuite de votre activité d’indépendant·e, une aide au maintien dans l’emploi existe aussi (prescrite par Cap emploi).',
+          'Aide de 3 000 € au maximum pour créer ou reprendre une entreprise (personne en situation de handicap, accompagnée en amont par un prestataire habilité qui valide le projet). Si votre handicap compromet la poursuite de votre activité d’indépendant·e, une aide au maintien dans l’emploi existe aussi (demande faite par un conseiller Cap emploi ou Comète).',
         url: 'https://agefiph.fr',
         urlLabel: 'agefiph.fr',
       },

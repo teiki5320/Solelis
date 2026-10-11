@@ -136,9 +136,9 @@ export default function RebondPage() {
             <dd className="mt-0.5 leading-relaxed text-navy/65">
               Jusqu’à 15 ans (art. L653-11 Code de commerce), prononcée
               par le tribunal pour des faits précis prévus par la loi
-              (art. L653-3 à L653-8 : par exemple, ne pas avoir
-              volontairement déclaré la cessation des paiements dans
-              les 45 jours).
+              (art. L653-3 à L653-8 : par exemple, avoir sciemment omis
+              de déclarer la cessation des paiements dans les 45 jours
+              sans avoir demandé de conciliation).
             </dd>
           </div>
           <div>
@@ -193,9 +193,9 @@ export default function RebondPage() {
               Conditions : cessation des paiements, aucun salarié au
               cours des 6 derniers mois, actif (professionnel et
               personnel) &lt; 15 000 € hors résidence principale, pas de
-              rétablissement professionnel clos depuis moins de 5 ans
-              ni de liquidation antérieure clôturée pour insuffisance
-              d’actif.
+              liquidation judiciaire clôturée pour insuffisance d’actif
+              ni de rétablissement professionnel clos depuis moins de
+              5 ans (art. L645-2).
             </dd>
           </div>
           <div>

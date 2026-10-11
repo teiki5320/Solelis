@@ -55,7 +55,7 @@ export function buildDefaultActions(r: Reponses, c: CompanyData, s: SectorInfo):
     actions.push({ id: 'fournisseur-lettre', texte: 'Écrire une lettre de demande de délai au fournisseur principal', done: false });
   }
   if (r.pgeEnCours === 'oui') {
-    actions.push({ id: 'pge-restructure', texte: 'Demander la restructuration du PGE à ma banque, puis via la Médiation du crédit (accord de place — allongement de 2 à 4 ans, garantie maintenue)', done: false });
+    actions.push({ id: 'pge-restructure', texte: 'Demander la restructuration du PGE à ma banque, puis via la Médiation du crédit (accord de place — allongement de 2 ans au plus, 4 ans par exception, garantie maintenue)', done: false });
   }
   if (r.conjointStatut === 'aucun') {
     actions.push({ id: 'conjoint-statut', texte: 'Déclarer le statut de mon conjoint·e s\'il·elle travaille régulièrement dans l\'entreprise (à défaut, il·elle est réputé·e conjoint·e salarié·e — art. L121-4 C. com.)', done: false });

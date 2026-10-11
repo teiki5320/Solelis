@@ -49,7 +49,7 @@ export default function BlocCCSF() {
           <ul className="mt-2 space-y-1 text-sm text-navy/80">
             <li>• Entreprise à jour de ses obligations déclaratives</li>
             <li>• Part salariale des cotisations sociales payée</li>
-            <li>• Pas de procédure collective en cours (l&apos;ouverture d&apos;une procédure met fin au plan)</li>
+            <li>• Pas de procédure collective en cours (si une condition n&apos;est plus remplie, la CCSF met fin au plan et les poursuites peuvent reprendre)</li>
             <li>• Difficulté avérée mais activité viable</li>
           </ul>
         </div>

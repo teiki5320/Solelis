@@ -93,10 +93,11 @@ export default function BlocCreditBail() {
           CMF). À défaut, le bailleur ne peut pas opposer son droit de
           propriété aux créanciers (sauf s&apos;il prouve qu&apos;ils en
           avaient connaissance), et le matériel peut être vendu au profit
-          de la procédure. Même publié, le contrat ne dispense pas de
-          demander la restitution du bien dans les 3 mois suivant la
-          publication du jugement d&apos;ouverture (art. L624-9 et L624-10
-          C. com.).
+          de la procédure. Si le contrat est publié, le bailleur est
+          dispensé de faire reconnaître son droit de propriété : il
+          demande la restitution du bien par lettre recommandée à
+          l&apos;administrateur ou, à défaut, au débiteur (art. L624-10 et
+          R624-14 C. com.).
         </p>
       </div>
 
@@ -224,7 +225,7 @@ export default function BlocCreditBail() {
         Sources : Code monétaire et financier, art. L313-7 à L313-11 et
         R313-4 à R313-10 (publicité) ;
         Code de commerce, art. L622-13 et L641-11-1 (contrats en cours),
-        L624-9 et L624-10 (revendication), L626-12 et L626-18 (plan) ;
+        L624-9, L624-10 et R624-14 (revendication et restitution), L626-12 et L626-18 (plan) ;
         Code civil, art. 1231-5 (réduction des clauses pénales).
       </p>
     </BlocAccordeon>

@@ -49,4 +49,13 @@ describe('vérificateur de prescription', () => {
   it('sans date : pas de résultat', () => {
     expect(calculerPrescription(regle('urssaf'), '', null, AUJOURDHUI)).toBeNull();
   });
+
+  it('impôts et TVA : causes d’interruption de l’art. L189 LPF (pas de « jugement »)', () => {
+    for (const cle of ['fiscal-revenu', 'fiscal-tva']) {
+      expect(regle(cle).interruption).toContain('L189');
+      expect(regle(cle).interruption).not.toMatch(/jugement|assistance internationale/);
+    }
+    expect(regle('penal-amende').label).toMatch(/contravention/i);
+    expect(regle('penal-amende').label).not.toMatch(/pénales/);
+  });
 });

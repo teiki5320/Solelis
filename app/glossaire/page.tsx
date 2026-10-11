@@ -151,7 +151,7 @@ const terms: Term[] = [
     enClair:
       "Comité départemental, présidé par le préfet, qui aide les entreprises de moins de 400 salariés en difficulté de financement. Peut faire réaliser un audit et accorder un prêt du FDES (Fonds de développement économique et social).",
     pourQui:
-      "Entreprises de moins de 400 salariés, tous secteurs, à jour de leurs obligations fiscales et sociales. Saisine via le secrétariat permanent du CODEFI à la DDFiP ou le CRP de votre région (impots.gouv.fr).",
+      "Entreprises de moins de 400 salariés, tous secteurs (pour un prêt du FDES : être à jour de ses obligations fiscales et sociales). Saisine via le secrétariat permanent du CODEFI à la DDFiP ou le CRP de votre région (impots.gouv.fr).",
     duree: "Accompagnement sur mesure, pas de durée fixe.",
   },
   {
@@ -165,7 +165,7 @@ const terms: Term[] = [
   {
     name: 'PGE (Prêt Garanti par l’État)',
     enClair:
-      "Prêt distribué par votre banque pendant la crise Covid (2020-2021), garanti à 70 à 90 % par l’État. L’accord de place du 19 janvier 2022 permet, via la Médiation du crédit et sous conditions (notamment PGE de 50 000 € au plus), de l’étaler jusqu’à 10 ans au total sans perdre la garantie d’État, avec l’accord de toutes les banques concernées.",
+      "Prêt distribué par votre banque pendant la crise Covid (2020-2021), garanti à 70 à 90 % par l’État. L’accord de place du 19 janvier 2022 permet, via la Médiation du crédit et sous conditions (notamment moins de 250 salariés et PGE de 50 000 € au plus, sauf orientation par le conseiller départemental aux entreprises en difficulté), de l’étaler jusqu’à 10 ans au total sans perdre la garantie d’État, avec l’accord de toutes les banques concernées.",
     pourQui:
       "Toute entreprise ayant souscrit un PGE et qui peine aujourd’hui à le rembourser.",
     duree: 'Restructuration amiable à tenter en priorité ; en sauvegarde ou redressement, le PGE peut aussi être rééchelonné dans le plan, garantie d’État maintenue.',

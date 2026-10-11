@@ -113,8 +113,10 @@ export default function BlocNationaliteSejour() {
           </li>
           <li>
             <strong>Anticiper le renouvellement</strong> : la demande se
-            dépose dans les 2 mois qui précèdent l&apos;expiration ; un dépôt
-            tardif entraîne un droit de visa de régularisation de 180 €.
+            dépose dans les mois qui précèdent l&apos;expiration, selon le
+            calendrier propre à votre titre (fiches F16922 et F35795 de
+            service-public.gouv.fr) ; un dépôt tardif entraîne un droit de
+            visa de régularisation (montant indiqué sur la fiche F35795).
             Rester en France sans titre valide expose à une obligation de
             quitter le territoire (OQTF).
           </li>

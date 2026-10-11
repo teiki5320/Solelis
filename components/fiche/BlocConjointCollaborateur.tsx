@@ -93,8 +93,8 @@ export default function BlocConjointCollaborateur() {
               <strong>Durée limitée à 5 ans cumulés</strong> (loi de
               financement de la sécurité sociale pour 2022) — au-delà, basculement obligatoire en salarié ou
               associé (à défaut, conjoint salarié). Pour un statut adopté
-              avant 2022, il prend fin au 31 décembre 2026, sauf exception
-              de fin de carrière.
+              avant 2022, il prend fin au 31 décembre 2026 (conjoint·e
+              né·e en 1964 ou avant : jusqu&apos;à ses 67 ans au plus — urssaf.fr).
             </li>
             <li>
               <strong>Pas d&apos;AGS</strong> ni d&apos;allocation chômage
@@ -109,7 +109,8 @@ export default function BlocConjointCollaborateur() {
             </li>
             <li>
               <strong>Cotisations</strong> à l&apos;URSSAF (TI) ou à la
-              MSA, sur une assiette au choix : forfaitaire (un tiers du
+              MSA, sur une assiette au choix (pour un artisan ou un
+              commerçant ; règles différentes à la Cipav et à la MSA) : forfaitaire (un tiers du
               plafond annuel de la sécurité sociale) ou fraction (un tiers
               ou la moitié) du revenu professionnel du chef
               d&apos;entreprise, avec ou sans partage.

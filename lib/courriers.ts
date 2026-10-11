@@ -103,8 +103,8 @@ export const LIBELLES_CHAMPS: Record<string, string> = {
   DATE_REPRISE_COURANT: 'Date depuis laquelle les cotisations courantes sont payées',
   DATE_SOUSCRIPTION: 'Date de souscription du prêt',
   DETAIL_DOSSIER: 'Détail du dossier (faits, adversaire, enjeu)',
-  DIFFERE_DEMANDE: 'Différé demandé (ex. : différé d\'amortissement de 12 mois)',
-  DUREE_DEMANDEE: 'Durée totale demandée (années)',
+  DIFFERE_DEMANDE: 'Différé demandé (6 mois au plus, ex. : différé d\'amortissement de 6 mois)',
+  DUREE_DEMANDEE: 'Allongement demandé (années : 2 au plus, 4 si particulièrement justifié)',
   DUREE_PLAN: 'Durée souhaitée du plan (mois)',
   EFFECTIF: 'Effectif (nombre de salariés)',
   ETAT_PERSONNEL: 'Ce que vous traversez (en quelques mots)',
@@ -273,7 +273,7 @@ Pièces jointes recommandées :
 
 Veuillez agréer, Madame, Monsieur le Médiateur, l'expression de mes salutations respectueuses.
 
-Note : la saisine peut aussi se faire en ligne sur https://mediateur-credit.banque-france.fr`,
+Note : la saisine se fait en ligne, en créant votre dossier sur https://www.banque-france.fr/fr/a-votre-service/entreprises/saisir-mediation-credit (renseignements au 34 14) ; ce courrier vous sert de base pour exposer votre situation. Il faut d'abord avoir tenté de régler la difficulté avec votre banque. En cas de dénonciation de découvert, saisissez la médiation avant la fin du préavis de 60 jours.`,
   },
   {
     slug: 'cessation-paiements',
@@ -294,16 +294,17 @@ Date de cessation des paiements : {{DATE_CESSATION}}
 Nombre de salariés : {{NB_SALARIES}}
 Chiffre d'affaires du dernier exercice : {{CA}} €
 
-Pièces jointes (conformément à l'article R631-1 du Code de commerce) :
-1. Extrait K-bis de moins de 3 mois
-2. État du passif exigible et de l'actif disponible
-3. Comptes annuels du dernier exercice
-4. État des créances et des dettes
-5. État actif et passif des sûretés et engagements hors bilan
-6. Inventaire sommaire des biens de l'entreprise
-7. Situation de trésorerie datant de moins d'un mois
-8. Nombre de salariés et montant du chiffre d'affaires
-9. Copie pièce d'identité du dirigeant
+Pièces jointes (article R631-1 du Code de commerce) :
+1. Formulaire Cerfa n° 10530*02 « Déclaration de cessation des paiements », comprenant l'état du passif exigible et de l'actif disponible
+2. Comptes annuels du dernier exercice
+3. Numéro unique d'identification (SIREN) de l'entreprise
+4. Situation de trésorerie datant de moins d'un mois
+5. Nombre de salariés à la date de la demande (nom et adresse de chacun) et chiffre d'affaires du dernier exercice
+6. État chiffré des créances et des dettes (nom et domicile des créanciers, montant global des salaires impayés)
+7. État actif et passif des sûretés et engagements hors bilan
+8. Inventaire sommaire des biens de l'entreprise
+9. Le cas échéant : liste des associés responsables solidairement des dettes sociales ; nom et adresse des représentants du CSE ; ordre professionnel dont relève l'activité (profession libérale réglementée)
+10. Attestation sur l'honneur certifiant l'absence de mandat ad hoc ou de conciliation dans les 18 mois précédant la demande (sinon, date de désignation ou d'ouverture et autorité qui y a procédé)
 
 Je demande au Tribunal de bien vouloir ouvrir une procédure de redressement judiciaire (ou de liquidation judiciaire si le redressement est manifestement impossible).
 
@@ -315,7 +316,7 @@ Fait à {{VILLE}}, le {{DATE}}`,
     destinataire: 'CCI de votre département',
     categorie: 'cci',
     icone: '📅',
-    description: 'Solliciter un accompagnement gratuit auprès de votre CCI.',
+    description: 'Solliciter un rendez-vous d\'accompagnement auprès de votre CCI (artisan·e : votre chambre de métiers et de l\'artisanat).',
     objet: 'Demande de rendez-vous — accompagnement entreprise en difficulté',
     corps: `Madame, Monsieur,
 
@@ -360,9 +361,18 @@ Je précise que la société n'est pas en état de cessation des paiements.
 Mission souhaitée pour le mandataire :
 {{MISSION_SOUHAITEE}}
 
+Pièces jointes :
+- Extrait K-bis ou justificatif d'immatriculation au RNE
+- État des créances et des dettes, avec échéancier et liste des principaux créanciers
+- État actif et passif des sûretés et engagements hors bilan
+- Comptes annuels, tableau de financement et situation de l'actif disponible et du passif exigible des 3 derniers exercices (s'ils ont été établis)
+- Attestation sur l'honneur de l'absence de cessation des paiements
+
 Je reste à la disposition du Tribunal pour tout complément d'information.
 
-Veuillez agréer, Madame, Monsieur le Président, l'expression de ma haute considération.`,
+Veuillez agréer, Madame, Monsieur le Président, l'expression de ma haute considération.
+
+Note : le greffe propose un formulaire « Demande de désignation d'un mandataire ad hoc ». La demande se dépose en ligne (Tribunal digital) ou en 2 exemplaires au greffe du tribunal du siège. La procédure est confidentielle ; la rémunération du mandataire, fixée par le président du tribunal avec votre accord, est à la charge de l'entreprise.`,
   },
   {
     slug: 'conciliation',
@@ -384,7 +394,7 @@ Présentation de l'entreprise :
 
 L'entreprise éprouve une difficulté juridique, économique ou financière, avérée ou prévisible, sans être en cessation des paiements depuis plus de 45 jours.
 
-Nature des difficultés :
+Situation économique, sociale, financière et patrimoniale, besoins de financement et moyens d'y faire face :
 {{DESCRIPTION_DIFFICULTES}}
 
 Principaux créanciers :
@@ -393,13 +403,17 @@ Principaux créanciers :
 Accord recherché :
 {{OBJECTIF_CONCILIATION}}
 
-Pièces jointes :
-- K-bis de moins de 3 mois
-- Derniers comptes annuels
-- État prévisionnel de trésorerie
-- État des créances et dettes
+Pièces jointes (article R611-22 du Code de commerce) :
+- Extrait K-bis ou justificatif d'immatriculation au RNE (numéro unique d'identification)
+- État des créances et des dettes, avec échéancier et liste des principaux créanciers
+- État actif et passif des sûretés et engagements hors bilan
+- Comptes annuels, tableau de financement et situation de l'actif réalisable et disponible et du passif exigible des 3 derniers exercices (s'ils ont été établis)
+- Attestation sur l'honneur certifiant l'absence de procédure de conciliation dans les 3 mois précédant la demande
+- Déclaration indiquant, le cas échéant, si un tiers prend en charge les frais de la procédure
 
-Veuillez agréer, Madame, Monsieur le Président, l'expression de ma haute considération.`,
+Veuillez agréer, Madame, Monsieur le Président, l'expression de ma haute considération.
+
+Note : la requête se dépose en ligne (Tribunal digital) ou en 2 exemplaires au greffe du tribunal du siège. Le conciliateur est désigné pour 4 mois au plus, prolongeables à sa demande dans la limite de 5 mois au total (art. L611-6). La procédure est confidentielle ; la rémunération du conciliateur est à la charge de l'entreprise.`,
   },
   {
     slug: 'creancier-arrangement',
@@ -460,7 +474,9 @@ Pièces jointes :
 
 Je reste à votre disposition pour tout complément d'information.
 
-Veuillez agréer, Madame, Monsieur, l'expression de mes salutations respectueuses.`,
+Veuillez agréer, Madame, Monsieur, l'expression de mes salutations respectueuses.
+
+Important : joignez à ce courrier le formulaire de l'aide demandée (rubrique « Action sanitaire et sociale »), rempli et signé, et envoyez le tout depuis la messagerie de votre espace en ligne urssaf.fr (motif « Un autre sujet », puis « Solliciter l'action sociale du CPSTI »). L'aide est accordée au cas par cas.`,
   },
   {
     slug: 'contestation-urssaf',
@@ -484,11 +500,11 @@ Pièces justificatives jointes :
 
 Je vous demande de bien vouloir réexaminer ma situation et annuler / modifier les sommes réclamées.
 
-À défaut d'accord amiable, je me réserve le droit de saisir le Tribunal judiciaire compétent dans le délai légal.
+À défaut d'accord amiable, je me réserve le droit de saisir le pôle social du tribunal judiciaire compétent dans le délai légal.
 
 Veuillez agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
 
-Important : ce courrier doit être envoyé en recommandé avec accusé de réception dans un délai de 2 mois à compter de la réception de la mise en demeure.`,
+Important : la commission de recours amiable doit être saisie dans un délai de 2 mois à compter de la notification de la mise en demeure (art. R142-1 du Code de la sécurité sociale). Envoyez ce courrier en recommandé avec accusé de réception, pour garder la preuve de la date.`,
   },
   {
     slug: 'saisine-ccsf',
@@ -527,17 +543,18 @@ PROPOSITION DE PLAN D'APUREMENT
 - Premier versement : {{DATE_PREMIER_VERSEMENT}}
 
 PIÈCES JOINTES
-- Dossier de saisine de la CCSF dûment complété (impots.gouv.fr)
-- Dernier bilan et liasse fiscale
-- Plan de trésorerie prévisionnel sur 12 mois
-- Attestation de paiement à jour des cotisations courantes
-- Tableau récapitulatif des dettes (échéances, montants, créanciers)
+- Dossier de saisine de la CCSF dûment complété (formulaire sur entreprendre.service-public.gouv.fr)
+- Attestation de l'expert-comptable sur les difficultés financières de l'entreprise
+- Attestation Urssaf de paiement des parts salariales des cotisations (ou attestation sur l'honneur qu'aucune n'est due)
+- Dernier bilan, chiffre d'affaires depuis le 1er janvier et situation de trésorerie actuelle
+- Plan de trésorerie prévisionnel couvrant la durée du plan demandé
+- Tableau récapitulatif des dettes (principal, pénalités, frais de poursuite, créanciers)
 
 Je m'engage à respecter scrupuleusement ce plan et à maintenir le paiement des échéances courantes. Je reste à votre disposition pour tout complément d'information.
 
 Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
 
-Important : ce courrier doit être adressé à la DDFiP de votre département (service CCSF). La saisine est gratuite et confidentielle. La commission a 2 mois pour répondre ; sans réponse, la demande est considérée comme rejetée.`,
+Important : ce courrier doit être adressé au secrétariat permanent de la CCSF de votre département (à la DDFiP). Conditions : être à jour de vos déclarations fiscales et sociales et avoir payé les parts salariales des cotisations. La saisine est gratuite et confidentielle. La commission a 2 mois pour répondre ; sans réponse, la demande est considérée comme rejetée.`,
   },
   {
     slug: 'restructuration-pge',
@@ -545,11 +562,11 @@ Important : ce courrier doit être adressé à la DDFiP de votre département (s
     destinataire: 'Votre banque (à l\'attention de votre conseiller)',
     categorie: 'banque',
     icone: '💳',
-    description: 'Demande de réaménagement du PGE au titre du protocole de place du 19 janvier 2022 — étalement jusqu\'à 10 ans, garantie d\'État maintenue.',
+    description: 'Ouvrir le dialogue avec votre banque avant de saisir la Médiation du crédit, qui organise les restructurations de PGE (accord de place reconduit jusqu\'au 31 décembre 2026) : allongement de 2 ans en général, 4 ans au plus, garantie de l\'État maintenue.',
     objet: 'Demande de réaménagement du PGE n° {{REFERENCE_PGE}}',
     corps: `Madame, Monsieur,
 
-Je sollicite par la présente le réaménagement du Prêt Garanti par l'État (PGE) n° {{REFERENCE_PGE}} contracté par la société {{NOM_ENTREPRISE}} (SIRET {{SIRET}}) auprès de votre établissement, au titre du protocole de place du 19 janvier 2022 (BdF, FBF, Bpifrance).
+Je vous sollicite au sujet du Prêt garanti par l'État (PGE) n° {{REFERENCE_PGE}} contracté par la société {{NOM_ENTREPRISE}} (SIRET {{SIRET}}) auprès de votre établissement, dont l'entreprise n'est plus en mesure d'honorer les échéances selon l'échéancier actuel.
 
 SITUATION DU PGE
 - Montant initial : {{MONTANT_PGE}} €
@@ -562,38 +579,37 @@ SITUATION ÉCONOMIQUE
 {{SITUATION_ECONOMIQUE}}
 
 DEMANDE DE RÉAMÉNAGEMENT
-Conformément à l'accord de place signé entre la Banque de France, la Médiation du crédit, la Fédération bancaire française et Bpifrance, je sollicite :
-- Allongement de la durée totale du PGE à {{DUREE_DEMANDEE}} ans (plafond 10 ans)
+Je souhaite examiner avec vous un réaménagement de ce prêt :
+- Allongement de la durée de remboursement de {{DUREE_DEMANDEE}} an(s)
 - {{DIFFERE_DEMANDE}}
 - Nouvelle mensualité cible : {{MENSUALITE_CIBLE}} €
 
-Je rappelle que cet aménagement, encadré par le protocole de place, est réalisé sans perte de la garantie d'État (Bpifrance) et sans inscription défavorable au fichier des incidents bancaires.
+À défaut de solution, j'envisage de saisir la Médiation du crédit dans le cadre de l'accord de place du 19 janvier 2022 sur les restructurations de PGE, reconduit jusqu'au 31 décembre 2026. Je vous remercie, le cas échéant, de m'indiquer par écrit que vous m'orientez vers cette procédure : ce document est demandé lors de la saisine.
 
 PIÈCES JOINTES
-- Plan de trésorerie prévisionnel sur 24 mois
+- Situation prévisionnelle de trésorerie à 12 mois
+- État des dettes fiscales et sociales
 - Dernier bilan et compte de résultat
+- Attestation de l'expert-comptable ou du commissaire aux comptes sur les difficultés de l'entreprise
 - Justificatifs des actions correctives engagées
-- Avis de votre expert-comptable
 
-Je vous remercie de bien vouloir examiner cette demande et de m'apporter votre réponse motivée par écrit dans les meilleurs délais.
-
-À défaut de réponse positive, je me réserve le droit de saisir gratuitement la Médiation du crédit (34 14 / mediateur-credit.banque-france.fr), conformément au dispositif officiel.
+Je vous remercie de bien vouloir examiner cette demande et de m'apporter votre réponse par écrit dans les meilleurs délais.
 
 Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
 
-Important : ce courrier doit être envoyé par LRAR ou e-mail avec accusé de réception à votre conseiller bancaire. En cas de refus ou sans réponse : saisir la Médiation du crédit gratuitement.`,
+Important : une restructuration de PGE avec maintien de la garantie de l'État passe par la Médiation du crédit (saisine en ligne sur le site de la Banque de France, renseignements au 34 14), une seule fois. Conditions : PGE de 50 000 € au plus (au-delà, adressez-vous d'abord au conseiller départemental à la sortie de crise), moins de 250 salariés, pas de cessation des paiements, attestation d'un expert-comptable ou d'un commissaire aux comptes. La restructuration porte sur l'ensemble des crédits bancaires à échéance (hors crédit-bail, location financière, affacturage et concours à durée indéterminée). L'allongement est de 2 ans au plus (4 ans si la situation le justifie particulièrement), un éventuel différé supplémentaire de 6 mois au plus étant compris dans cet allongement. À savoir : l'entreprise est alors classée en défaut par les banques, ce qui complique l'accès à de nouveaux financements pendant au moins un an.`,
   },
   {
     slug: 'demande-acpr',
-    titre: 'Notification ACPR (entreprise du secteur financier)',
-    destinataire: 'Autorité de contrôle prudentiel et de résolution (ACPR)',
+    titre: 'Information de l\'ACPR (organisme financier contrôlé)',
+    destinataire: 'Autorité de contrôle prudentiel et de résolution (ACPR) — votre service de contrôle habituel',
     categorie: 'banque',
     icone: '🏦',
-    description: 'Pour les entreprises du secteur financier (banque, assurance, intermédiaire ORIAS) en difficulté : notification de la situation et demande d\'accompagnement.',
-    objet: 'Notification de situation difficile — demande d\'accompagnement',
+    description: 'Pour un organisme contrôlé par l\'ACPR (banque, établissement de paiement, organisme d\'assurance) : informer votre superviseur de vos difficultés. L\'ACPR n\'accorde ni financement ni délai ; les intermédiaires (courtiers, IOBSP) relèvent des dispositifs de droit commun.',
+    objet: 'Information sur une situation financière difficile',
     corps: `Madame, Monsieur,
 
-Conformément à mes obligations en tant que dirigeant d'un organisme contrôlé par l'ACPR, je vous notifie par la présente la situation difficile dans laquelle se trouve la société {{NOM_ENTREPRISE}}.
+En tant que dirigeant·e d'un organisme soumis au contrôle de l'ACPR, je vous informe de la situation financière difficile que traverse la société {{NOM_ENTREPRISE}}.
 
 IDENTIFICATION
 - Dénomination : {{NOM_ENTREPRISE}}
@@ -604,38 +620,37 @@ IDENTIFICATION
 NATURE DE LA DIFFICULTÉ
 {{NATURE_DIFFICULTE}}
 
-INDICATEURS DE SOLVABILITÉ
+INDICATEURS FINANCIERS ET RÉGLEMENTAIRES
 - {{INDICATEURS_FINANCIERS}}
 
 ACTIONS DÉJÀ ENGAGÉES
 {{ACTIONS_REDRESSEMENT}}
 
 DEMANDE
-Je sollicite un entretien avec votre cellule dédiée pour :
-- Examiner les voies de résolution organisée envisageables
-- Vérifier la compatibilité de mes actions avec mes obligations prudentielles
-- Bénéficier le cas échéant d'un accompagnement préventif
+Je sollicite un échange avec le service chargé du contrôle de notre organisme afin de :
+- vous présenter la situation et les mesures de redressement envisagées ;
+- m'assurer que ces mesures respectent nos obligations réglementaires.
 
-Je m'engage à maintenir un dialogue transparent avec vos services et à informer immédiatement votre cellule de toute évolution significative de ma situation.
+Je m'engage à vous tenir informé·e de toute évolution significative de la situation.
 
 PIÈCES JOINTES
 - Dernier bilan et compte de résultat
-- États financiers prudentiels récents
+- Derniers états réglementaires remis (le cas échéant)
 - Plan d'action de redressement
 - Décisions des organes de gouvernance
 
 Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
 
-Important : ce courrier doit être adressé à l'ACPR (4 place de Budapest, CS 92459, 75436 Paris Cedex 09). La notification précoce est non seulement une obligation mais aussi un atout : l'ACPR peut vous orienter vers un dispositif de résolution organisée.`,
+Important : l'ACPR contrôle les banques, les organismes d'assurance et leurs intermédiaires ; elle n'accorde ni financement ni délai de paiement et n'intervient pas dans les litiges avec les clients. Adressez ce courrier à votre interlocuteur habituel à l'ACPR (siège : 4 place de Budapest, 75009 Paris). Si vous êtes intermédiaire immatriculé·e à l'ORIAS (courtier, agent, IOBSP), vos difficultés se traitent avec les outils de droit commun (CCI, mandat ad hoc, conciliation, médiation du crédit) ; pensez à mettre à jour vos informations auprès de l'ORIAS et de votre association professionnelle en cas de changement.`,
   },
   {
     slug: 'demande-apesa',
-    titre: 'Demande de soutien APESA (urgence psychologique)',
-    destinataire: 'APESA — Aide Psychologique aux Entrepreneurs en Souffrance Aiguë',
+    titre: 'Demande de soutien APESA (souffrance psychologique)',
+    destinataire: 'Une sentinelle APESA (expert-comptable, avocat, conseiller CCI ou CMA, greffe ou juge du tribunal, mandataire…) ou l\'APESA de votre territoire',
     categorie: 'social',
     icone: '🤝',
-    description: 'Saisir directement APESA pour bénéficier de 5 séances gratuites avec un psychologue clinicien (entrepreneurs en grande souffrance).',
-    objet: 'Demande de prise en charge psychologique APESA',
+    description: 'Demander à un professionnel formé (« sentinelle ») de déclencher une alerte APESA : un psychologue vous rappelle, souvent dans les 24 heures, et propose jusqu\'à 5 consultations gratuites. APESA n\'est pas un service d\'urgence : en cas d\'idées suicidaires, appelez le 3114.',
+    objet: 'Demande de mise en relation avec APESA (soutien psychologique)',
     corps: `Madame, Monsieur,
 
 Je vous contacte en tant que chef d'entreprise traversant une période de très forte tension psychique liée à mes difficultés professionnelles.
@@ -649,7 +664,7 @@ SITUATION PROFESSIONNELLE
 ÉTAT PERSONNEL
 Sans entrer dans le détail clinique, je traverse actuellement {{ETAT_PERSONNEL}} qui affectent significativement ma capacité à piloter la situation et à prendre des décisions sereines.
 
-Je sollicite le bénéfice du dispositif APESA, qui permet d'accéder à 5 séances gratuites avec un psychologue clinicien spécialisé dans l'accompagnement des dirigeants.
+J'accepte d'être aidé·e et je vous demande de déclencher une alerte APESA à mon nom, afin qu'un·e psychologue du dispositif me contacte. Le dispositif propose jusqu'à 5 consultations de soutien psychologique, gratuites et confidentielles.
 
 INFORMATIONS UTILES
 - Disponibilité : {{DISPONIBILITES}}
@@ -657,22 +672,20 @@ INFORMATIONS UTILES
 - Ville / région : {{LOCALISATION}}
 - Contact privilégié : {{COORDONNEES}}
 
-Je m'engage à respecter la confidentialité du dispositif et à honorer les rendez-vous fixés.
-
 Je vous remercie pour votre écoute et votre accompagnement.
 
 Bien à vous.
 
-Important : APESA peut aussi être saisi via le tribunal de commerce, votre expert-comptable, votre avocat, ou directement par téléphone. La saisine est confidentielle et gratuite (www.apesa-france.com).`,
+Important : l'alerte APESA est déclenchée, avec votre accord, par une « sentinelle » formée (juge ou greffier, mandataire ou administrateur judiciaire, avocat, expert-comptable, conseiller de CCI ou de chambre de métiers…). Vous pouvez aussi trouver l'APESA de votre territoire sur www.apesa-france.com (« Trouver mon APESA ») ou joindre son secrétariat au 05 46 98 42 85. APESA n'est pas un dispositif d'urgence : en cas d'idées suicidaires, appelez le 3114 (24 h/24, 7 j/7), ou le 15.`,
   },
   {
     slug: 'demande-aide-juridictionnelle',
     titre: 'Demande d\'aide juridictionnelle',
-    destinataire: 'Bureau d\'aide juridictionnelle du tribunal',
+    destinataire: 'Bureau d\'aide juridictionnelle du tribunal judiciaire',
     categorie: 'tribunal',
     icone: '⚖️',
-    description: 'Demander la prise en charge totale ou partielle des frais d\'avocat et d\'huissier pour vos procédures (perso ou pro).',
-    objet: 'Demande d\'aide juridictionnelle — référence Cerfa 16146*03',
+    description: 'Demander la prise en charge totale ou partielle des frais d\'avocat et de commissaire de justice (ex-huissier). Réservée aux personnes physiques (y compris l\'entrepreneur individuel) : une société commerciale n\'y a pas droit.',
+    objet: 'Demande d\'aide juridictionnelle — Cerfa 16146*04',
     corps: `Madame, Monsieur,
 
 Je sollicite le bénéfice de l'aide juridictionnelle pour une procédure {{NATURE_PROCEDURE}} en application de la loi n° 91-647 du 10 juillet 1991.
@@ -687,14 +700,14 @@ SITUATION FINANCIÈRE
 - Patrimoine financier (épargne, valeurs mobilières) : {{PATRIMOINE_FIN}} €
 
 Au vu de mon RFR, je sollicite :
-- [ ] L'aide juridictionnelle TOTALE (RFR ≤ 12 957 € en 2026)
-- [ ] L'aide juridictionnelle PARTIELLE (RFR > 12 957 € et ≤ 19 433 € en 2026)
+- [ ] L'aide juridictionnelle TOTALE (RFR ≤ 12 957 € en 2026 pour une personne seule)
+- [ ] L'aide juridictionnelle PARTIELLE (RFR > 12 957 € et ≤ 19 433 € en 2026 pour une personne seule)
 
 AVOCAT SOUHAITÉ
 {{AVOCAT_CHOISI}}
 
 PIÈCES JOINTES
-- Cerfa 16146*03 dûment complété
+- Formulaire Cerfa 16146*04 dûment complété
 - Avis d'imposition de l'année N-1 (recto-verso)
 - Justificatifs de patrimoine (relevés bancaires, taxe foncière)
 - Justificatif d'identité
@@ -704,7 +717,7 @@ PIÈCES JOINTES
 
 Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
 
-Important : à déposer au bureau d'aide juridictionnelle, installé au tribunal judiciaire. Aucun délai de réponse n'est fixé : la décision est notifiée « dans les meilleurs délais » ; si une audience approche, demandez l'aide juridictionnelle provisoire. Barème 2026 pour une personne seule (service-public.gouv.fr) : l'AJ totale couvre 100 % des frais (RFR jusqu'à 12 957 €) ; l'AJ partielle couvre 55 % (RFR de 12 958 à 15 316 €) ou 25 % (RFR de 15 317 à 19 433 €).`,
+Important : la demande se fait en ligne (service « Demande d'aide juridictionnelle en ligne ») ou avec le formulaire, déposé au bureau d'aide juridictionnelle du tribunal judiciaire de votre domicile (avant le procès) ou de celui où l'affaire est traitée. Aucun délai de réponse n'est fixé : la décision est notifiée « dans les meilleurs délais » ; si une audience approche, demandez l'aide juridictionnelle provisoire. Barème 2026 pour une personne seule (service-public.gouv.fr) : l'AJ totale couvre 100 % des frais (RFR jusqu'à 12 957 €) ; l'AJ partielle couvre 55 % (RFR de 12 958 à 15 316 €) ou 25 % (RFR de 15 317 à 19 433 €). Plafonds majorés selon les personnes à charge. Le patrimoine compte aussi : pour une personne seule, au-delà de 12 957 € de patrimoine mobilier ou de 38 866 € de patrimoine immobilier (hors résidence principale), aucune aide n'est possible.`,
   },
 ];
 
@@ -804,19 +817,25 @@ function effectifFragment(effectif?: Effectif, detail?: string): string | null {
 }
 
 function conseilCategorie(template: CourrierTemplate, ctx: CourrierContext): string | null {
+  if (template.slug === 'demande-apesa') {
+    return "Remettez ce courrier à un professionnel formé APESA (expert-comptable, avocat, conseiller CCI ou CMA, greffe du tribunal…) : c'est lui qui déclenche l'alerte. En cas d'idées suicidaires, n'attendez pas : appelez le 3114 (24 h/24).";
+  }
+  if (template.slug === 'demande-acpr') {
+    return "L'ACPR n'accorde ni financement ni délai. Pour négocier avec vos créanciers, utilisez plutôt le mandat ad hoc ou la conciliation, et la médiation du crédit en cas de refus bancaire.";
+  }
   switch (template.categorie) {
     case 'urssaf':
       if (ctx.situation === 'assignation') {
         return `URGENT : envoyez ce courrier en recommandé AR sous 48 h et appelez en parallèle votre URSSAF (${telUrssaf(ctx.effectif)}). En cas d'assignation, demandez explicitement une suspension des poursuites.`;
       }
-      return "Envoyez en recommandé AR. L'URSSAF traite les demandes argumentées plus vite — joignez bilan + situation de trésorerie + prévisionnel.";
+      return "Envoyez en recommandé AR et joignez bilan + situation de trésorerie + prévisionnel : une demande argumentée est plus facile à instruire.";
     case 'impots':
       if (ctx.situation === 'redressement' || ctx.situation === 'assignation') {
         return "Demandez en parallèle un rendez-vous avec votre interlocuteur dédié au SIE (Service des Impôts des Entreprises) et mentionnez la possibilité d'une CCSF (Commission des chefs des services financiers).";
       }
-      return "Joignez impérativement un prévisionnel de trésorerie. Le SIE accepte plus volontiers un échelonnement quand la demande est anticipée.";
+      return "Joignez impérativement un prévisionnel de trésorerie, et faites la demande dès que vous anticipez la difficulté, sans attendre les relances.";
     case 'tribunal':
-      return "Ce courrier engage votre entreprise. Faites-le relire par un avocat ou par un mandataire judiciaire avant envoi — la plupart proposent un premier échange gratuit.";
+      return "Ce courrier engage votre entreprise. Faites-le relire par un avocat avant envoi : des consultations gratuites d'avocats sont proposées dans les points-justice.";
     case 'banque':
       if (ctx.situation === 'redressement' || ctx.situation === 'assignation') {
         return "Joignez immédiatement la médiation du crédit (gratuit) : le médiateur vous contacte sous 48 h, puis vos banques ont 5 jours ouvrés pour revoir leur position.";
@@ -825,9 +844,9 @@ function conseilCategorie(template: CourrierTemplate, ctx: CourrierContext): str
     case 'fournisseurs':
       return "Téléphonez avant d'envoyer le courrier : un appel humain change souvent l'issue. Le courrier sécurise ensuite l'accord par écrit.";
     case 'cci':
-      return "La CCI propose souvent un premier rendez-vous sous 7 jours. N'hésitez pas à les relancer par téléphone si pas de réponse en une semaine.";
+      return "Appelez aussi votre CCI (ou votre chambre de métiers et de l'artisanat) pour demander le service chargé des entreprises en difficulté, et relancez par téléphone sans réponse sous une semaine.";
     case 'social':
-      return "Préparez vos justificatifs avant l'envoi : avis d'imposition, relevés bancaires, quittances. Une demande complète est traitée en 2 à 4 semaines.";
+      return "Préparez vos justificatifs avant l'envoi : avis d'imposition, relevés bancaires, quittances. Un dossier complet évite les allers-retours.";
     default:
       return null;
   }

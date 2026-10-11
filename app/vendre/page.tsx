@@ -52,7 +52,7 @@ const options: Option[] = [
       {
         label: 'Salarié·e·s',
         value:
-          'Entreprise de moins de 250 salarié·e·s, hors procédure collective ou conciliation : informez les salarié·e·s (ou le CSE à partir de 50 salarié·e·s s’il existe) au moins 1 mois avant la vente — 2 mois pour les ventes conclues jusqu’au 27 juillet 2026 (loi n° 2026-403 du 26 mai 2026). Sinon : dommages et intérêts jusqu’à 0,5 % du prix.',
+          'Entreprise de moins de 250 salarié·e·s, hors procédure collective ou conciliation : informez les salarié·e·s au moins 1 mois avant la vente — 2 mois pour les ventes conclues jusqu’au 27 juillet 2026 (loi n° 2026-403 du 26 mai 2026). À partir de 50 salarié·e·s, s’il existe un CSE, c’est lui qui est informé et consulté. Sinon : dommages et intérêts jusqu’à 0,5 % du prix.',
       },
     ],
     conseil:
@@ -81,7 +81,7 @@ const options: Option[] = [
       {
         label: 'Salarié·e·s',
         value:
-          'Cession de plus de 50 % du capital d’une société de moins de 250 salarié·e·s, hors procédure collective ou conciliation : informez les salarié·e·s (ou le CSE à partir de 50 salarié·e·s s’il existe) au moins 1 mois avant — 2 mois pour les cessions conclues jusqu’au 27 juillet 2026. Sinon : dommages et intérêts jusqu’à 0,5 % du prix.',
+          'Cession de plus de 50 % du capital d’une société de moins de 250 salarié·e·s, hors procédure collective ou conciliation : informez les salarié·e·s au moins 1 mois avant — 2 mois pour les cessions conclues jusqu’au 27 juillet 2026. À partir de 50 salarié·e·s, s’il existe un CSE, c’est lui qui est informé et consulté. Sinon : dommages et intérêts jusqu’à 0,5 % du prix.',
       },
       {
         label: 'Si en difficulté',

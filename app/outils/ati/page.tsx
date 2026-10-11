@@ -80,8 +80,8 @@ export default function AtiPage() {
     if (typeOk) {
       const labels: Record<TypeCessation, string> = {
         'liquidation': 'Liquidation judiciaire — situation type couverte.',
-        'redressement-remplacement': "Plan de redressement imposant remplacement du dirigeant — couvert depuis la réforme 2022.",
-        'non-viable': "Activité déclarée économiquement non viable — couverte depuis la réforme 2022 (baisse ≥ 30 % du revenu).",
+        'redressement-remplacement': "Redressement judiciaire avec remplacement du dirigeant décidé par le tribunal — situation couverte depuis la création de l'ATI (1er novembre 2019).",
+        'non-viable': "Cessation définitive d'une activité non viable économiquement, attestée par un tiers de confiance (baisse ≥ 30 % des revenus) — couverte depuis le 1er avril 2022.",
         'autre': 'Cas non couvert par l\'ATI.',
       };
       motifs.push(labels[typeCessation]);

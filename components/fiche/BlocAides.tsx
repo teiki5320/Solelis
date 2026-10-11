@@ -35,7 +35,7 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
     });
     specifiques.push({
       nom: 'Action sociale des travailleurs indépendants',
-      description: 'Réservée aux travailleurs indépendants : prise en charge partielle de cotisations ou aide financière, au cas par cas (action sociale du CPSTI, demande par la messagerie de votre espace Urssaf). Les employeurs n\'y ont pas accès.',
+      description: 'Réservée aux travailleurs indépendants : prise en charge de tout ou partie de vos cotisations ou aide financière, au cas par cas (action sociale du CPSTI, demande par la messagerie de votre espace Urssaf). La prise en charge vise vos cotisations personnelles, pas les cotisations dues sur les salaires de vos salarié·e·s.',
       site: 'https://www.urssaf.fr',
     });
   }
@@ -186,7 +186,7 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
   });
   nationales.push({
     nom: 'France Active · Garanties de prêts',
-    description: 'Garantit une partie d\'un prêt bancaire (de 50 à 80 % selon la garantie et l\'étape du projet), réduisant le risque pour la banque. Accompagnement inclus.',
+    description: 'Garantit une partie d\'un prêt bancaire (jusqu\'à 80 % selon la garantie), réduisant le risque pour la banque. Accompagnement inclus.',
     site: 'https://www.franceactive.org',
   });
   sections.push({ titre: 'Aides nationales', aides: nationales });

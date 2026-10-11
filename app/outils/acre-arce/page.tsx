@@ -7,11 +7,12 @@ import Link from 'next/link';
 // Exonération partielle des cotisations de sécurité sociale pendant 12 mois.
 // Conditions d'éligibilité (au moins l'une) :
 // - Demandeur d'emploi indemnisé ou non indemnisé (inscrit depuis ≥ 6 mois dans les 18 derniers mois)
-// - Bénéficiaire de l'ARE / RSA / ASS
-// - 18-25 ans (ou < 30 si handicap)
-// - Licencié d'une entreprise en RJ / LJ
+// - Bénéficiaire du RSA / ASS / PreParE
+// - 18-25 ans, < 30 ans non indemnisé (durée d'activité insuffisante) ou < 30 ans handicapé
+// - Salarié ou licencié d'une entreprise en sauvegarde / RJ / LJ qui la reprend
 // - Contrat d'appui au projet d'entreprise (CAPE)
-// - Création en QPV
+// - Création en QPV ou en ZFRR / ZFRR+
+// - Ne pas avoir bénéficié de l'Acre dans les 3 années précédentes (urssaf.fr)
 // Exonération (LFSS 2026, art. 23 ; décret n° 2026-69 du 6 février 2026) :
 // - Hors micro (créations depuis le 1er janvier 2026) : exonération du QUART des
 //   cotisations maladie-maternité, allocations familiales, retraite de base et
@@ -110,11 +111,11 @@ export default function AcreArcePage() {
   const STATUTS: { value: Statut; label: string; description: string }[] = [
     { value: 'demandeur-indemnise', label: 'Demandeur d\'emploi indemnisé (ARE)', description: 'Inscrit à France Travail, indemnisé' },
     { value: 'demandeur-6mois', label: 'Demandeur d\'emploi inscrit ≥ 6 mois', description: 'Non indemnisé mais inscrit sur les 18 derniers mois' },
-    { value: 'rsa-ass', label: 'Bénéficiaire du RSA ou ASS', description: 'Ou CSS, PPA' },
-    { value: 'jeune-25', label: 'Jeune de 18 à 25 ans (ou < 30 ans si handicap)', description: '' },
-    { value: 'licencie-rjlj', label: 'Licencié d\'une entreprise en RJ ou LJ', description: 'Repreneur de la même entreprise' },
+    { value: 'rsa-ass', label: 'Bénéficiaire du RSA, de l\'ASS ou de la PreParE', description: 'PreParE : prestation partagée d\'éducation de l\'enfant' },
+    { value: 'jeune-25', label: 'Jeune de 18 à 25 ans (ou < 30 ans si handicap)', description: 'Ou moins de 30 ans sans ARE faute de durée d\'activité suffisante' },
+    { value: 'licencie-rjlj', label: 'Salarié ou licencié d\'une entreprise en sauvegarde, RJ ou LJ', description: 'Qui reprend l\'activité de cette entreprise' },
     { value: 'cape', label: 'Contrat d\'Appui au Projet d\'Entreprise (CAPE)', description: '' },
-    { value: 'qpv', label: 'Création dans un Quartier Prioritaire de la Ville (QPV)', description: '' },
+    { value: 'qpv', label: 'Création dans un Quartier Prioritaire de la Ville (QPV) ou en zone France ruralités revitalisation (ZFRR, ZFRR+)', description: '' },
     { value: 'aucun', label: 'Aucun de ces cas', description: '' },
   ];
 
@@ -128,7 +129,7 @@ export default function AcreArcePage() {
       {
         '@type': 'HowToStep',
         name: 'Identifier votre situation d\'éligibilité ACRE',
-        text: 'Sélectionnez votre situation parmi les cas d\'éligibilité : demandeur d\'emploi, bénéficiaire RSA/ASS, jeune de 18-25 ans, licencié d\'une entreprise en RJ/LJ, CAPE ou création en QPV.',
+        text: 'Sélectionnez votre situation parmi les cas d\'éligibilité : demandeur d\'emploi, bénéficiaire RSA/ASS/PreParE, jeune de 18-25 ans, salarié repreneur d\'une entreprise en sauvegarde/RJ/LJ, CAPE, création en QPV ou ZFRR.',
       },
       {
         '@type': 'HowToStep',

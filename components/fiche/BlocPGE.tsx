@@ -23,7 +23,7 @@ export default function BlocPGE() {
     <BlocAccordeon
       icone="💳"
       titre="PGE en difficulté ? Restructuration possible"
-      soustitre="Médiation du crédit BdF — allongement de 2 à 4 ans, avant la procédure collective"
+      soustitre="Médiation du crédit BdF — jusqu'à +2 ans (+4 par exception), avant la procédure collective"
     >
       <p className="text-sm text-navy/80">
         Le <strong>PGE — Prêt Garanti par l&apos;État</strong>, distribué
@@ -57,8 +57,9 @@ export default function BlocPGE() {
           Un accord de place signé par l&apos;État, la Banque de France,
           l&apos;IEDOM et la Fédération bancaire française, prolongé
           jusqu&apos;au 31 décembre 2026, permet aux TPE et PME de{' '}
-          <strong>allonger le PGE de 2 à 4 ans</strong> par rapport à
-          l&apos;échéancier initial (10 ans au total au maximum) dans le cadre de la Médiation du
+          <strong>allonger le PGE de 2 ans au plus</strong> par rapport à
+          l&apos;échéancier initial (4 ans au plus si c&apos;est
+          particulièrement justifié, soit 10 ans au total au maximum) dans le cadre de la Médiation du
           crédit, <strong>sans perte de la garantie d&apos;État</strong>.
           Attention : la restructuration est en principe classée « en
           défaut » par les banques, ce qui peut peser sur la cotation et
@@ -74,8 +75,9 @@ export default function BlocPGE() {
             confidentielle de la<strong> Médiation du crédit</strong>.
           </li>
           <li>
-            Elle peut s&apos;accompagner d&apos;un différé en capital de
-            6 mois au plus.
+            Elle peut s&apos;accompagner, si c&apos;est particulièrement
+            justifié, d&apos;un différé en capital de 6 mois au plus,
+            compris dans la durée d&apos;allongement.
           </li>
         </ul>
       </div>

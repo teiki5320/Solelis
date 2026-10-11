@@ -212,7 +212,7 @@ export function scorePriorityCards({ reponses, company, sector, seuils }: BuildC
       icone: '💳',
       label: 'PGE en cours',
       valeur: 'À restructurer',
-      detail: 'Médiation du crédit : +2 à 4 ans',
+      detail: 'Médiation du crédit : jusqu\'à +2 ans (+4 par exception)',
       tone: 'jaune',
       scrollTo: 'echeances',
       score: 8,

@@ -31,4 +31,11 @@ describe('vérificateur ACRE / ARCE', () => {
     fireEvent.click(screen.getByLabelText(/Aucun de ces cas/i));
     expect(screen.getByText('ACRE — non éligible')).toBeInTheDocument();
   });
+
+  it('liste ACRE conforme à urssaf.fr (PreParE, ZFRR ; ni CSS ni prime d’activité)', () => {
+    render(<AcreArcePage />);
+    expect(screen.getByLabelText(/PreParE/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/ZFRR/)).toBeInTheDocument();
+    expect(screen.queryByText(/Ou CSS, PPA/)).not.toBeInTheDocument();
+  });
 });
