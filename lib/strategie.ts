@@ -231,6 +231,23 @@ export function getTribunalCompetent(
 }
 
 /**
+ * Nom du tribunal à placer dans les courriers ({{TRIBUNAL}} : « Madame,
+ * Monsieur le Président du … »). Vide quand on ne connaît pas le tribunal
+ * précis (carte générique « dont dépend votre siège » / « de votre
+ * ressort ») : le champ reste alors à compléter par le dirigeant.
+ */
+export function nomTribunalPourCourrier(
+  company: Pick<CompanyData, 'formeJuridique' | 'naf' | 'departement'> & Partial<Pick<CompanyData, 'codePostal'>>,
+): string {
+  const { nom } = getTribunalCompetent(company);
+  if (/dont dépend|de votre ressort/.test(nom)) return '';
+  return nom
+    .replace(/\s*\((?:compétence commerciale|compétent pour [^)]*)\)\s*$/i, '')
+    .replace(/\s+-\s+Chambre commerciale$/i, ' (chambre commerciale)')
+    .trim();
+}
+
+/**
  * Libellé du tribunal à insérer dans une phrase. N'utilise JAMAIS la
  * commune de l'entreprise (« tribunal de commerce de Cargèse » n'existe pas).
  */

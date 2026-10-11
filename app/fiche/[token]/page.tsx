@@ -22,7 +22,7 @@ import {
 } from '@/lib/organismes';
 import { getSectorInfo, getCompanyAge, getEffectifSeuils } from '@/lib/secteur';
 import { tokenSchema } from '@/lib/schemas';
-import { getJuridiction } from '@/lib/strategie';
+import { getJuridiction, nomTribunalPourCourrier } from '@/lib/strategie';
 import { formaterSiret } from '@/lib/siret';
 import { CLE_FICHE_LOCALE } from '@/lib/ficheLocale';
 import { lireCookieFicheLocale, lireParametreD } from '@/lib/ficheLocaleServeur';
@@ -273,7 +273,12 @@ async function renderFiche(data: FicheData) {
         </div>
       )}
 
-      <StoreCompanyData company={company_data} token={token} reponses={reponses} />
+      <StoreCompanyData
+        company={company_data}
+        token={token}
+        reponses={reponses}
+        tribunal={nomTribunalPourCourrier(company_data)}
+      />
 
       {!company_data.fetched && (
         <div role="note" className="dashed-band p-4 text-sm text-navy sm:p-5">

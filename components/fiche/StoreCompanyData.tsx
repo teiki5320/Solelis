@@ -22,9 +22,11 @@ interface Props {
   company: CompanyData;
   token: string;
   reponses?: Reponses;
+  /** Tribunal compétent pour {{TRIBUNAL}} (vide s'il n'est pas connu précisément). */
+  tribunal?: string;
 }
 
-export default function StoreCompanyData({ company, token, reponses }: Props) {
+export default function StoreCompanyData({ company, token, reponses, tribunal }: Props) {
   useEffect(() => {
     try {
       sessionStorage.setItem(
@@ -38,6 +40,7 @@ export default function StoreCompanyData({ company, token, reponses }: Props) {
           FORME_JURIDIQUE: company.formeJuridique,
           DATE_CREATION: company.dateCreation,
           ACTIVITE: company.nafLabel || company.naf,
+          ...(tribunal ? { TRIBUNAL: tribunal } : {}),
         })
       );
       if (reponses) {
@@ -60,7 +63,7 @@ export default function StoreCompanyData({ company, token, reponses }: Props) {
         }));
       }
     } catch {}
-  }, [company, token, reponses]);
+  }, [company, token, reponses, tribunal]);
 
   return null;
 }
