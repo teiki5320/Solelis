@@ -226,11 +226,13 @@ export default function BlocPlanAction({ defaultOpen }: Props) {
           value={newText}
           onChange={(e) => setNewText(e.target.value)}
           placeholder="Ajouter une action personnelle…"
+          aria-label="Ajouter une action personnelle"
           className="flex-1 rounded-full border border-navy/10 bg-white/80 px-4 py-2 text-sm focus:border-bleu focus:outline-none"
         />
         <button
           type="submit"
           disabled={!newText.trim()}
+          aria-label="Ajouter l’action"
           className="rounded-full bg-bleu-fonce px-4 py-2 text-sm font-medium text-white disabled:opacity-40"
         >
           +
