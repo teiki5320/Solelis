@@ -183,7 +183,7 @@ export default function LicenciementPage() {
                 )}
                 {s.ancienneteMois < ANCIENNETE_MIN_MOIS && (
                   <p className="mt-3 rounded-xl bg-jaune/10 p-3 text-xs text-navy/70">
-                    Pas d&apos;indemnité légale de licenciement (ancienneté &lt; 8 mois requise par L1234-9).
+                    Pas d&apos;indemnité légale de licenciement (ancienneté d&apos;au moins 8 mois requise, art. L1234-9 C. trav.).
                     Une convention collective peut prévoir un seuil inférieur.
                   </p>
                 )}
