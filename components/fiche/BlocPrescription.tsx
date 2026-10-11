@@ -2,6 +2,7 @@
 import type { Reponses } from '@/lib/types';
 import { useFiche } from '@/lib/FicheContext';
 import { getTribunalCompetent } from '@/lib/strategie';
+import { relevantDeLaMsa } from '@/lib/organismes';
 import BlocAccordeon from './BlocAccordeon';
 
 interface Alerte {
@@ -15,10 +16,28 @@ export function buildAlertes(
   age: number | null,
   seuils: { cse: boolean; obligations50: boolean },
   tribunal = 'le tribunal',
+  /** Exploitant·e agricole (métropole) : cotisations MSA (relevantDeLaMsa). */
+  regimeMsa = false,
 ): Alerte[] {
   const alertes: Alerte[] = [];
 
-  if (r.probleme === 'urssaf') {
+  if (r.probleme === 'urssaf' && regimeMsa) {
+    // Régime agricole : art. L725-7 du Code rural et de la pêche maritime
+    // (Légifrance, version en vigueur depuis le 1er janvier 2017) ; la CRA de
+    // la MSA est visée par l'art. R142-1 du Code de la sécurité sociale.
+    alertes.push({
+      texte: 'Les cotisations MSA se prescrivent par 3 ans',
+      detail:
+        'Le délai court à partir de la fin de l\'année civile au titre de laquelle les cotisations sont dues (art. L725-7 du Code rural et de la pêche maritime). Après une mise en demeure, le délai pour agir en recouvrement est celui de l\'art. L244-8-1 du Code de la sécurité sociale. Des cotisations anciennes peuvent donc être prescrites : vérifiez les dates exactes avec un avocat.',
+      urgence: 'attention',
+    });
+    alertes.push({
+      texte: 'Vous avez 2 mois pour contester une mise en demeure de la MSA',
+      detail:
+        'À compter de la notification de la mise en demeure, vous disposez de 2 mois pour saisir la Commission de Recours Amiable (CRA) de votre caisse de MSA (art. R142-1 du Code de la sécurité sociale). Passé ce délai, la contestation est beaucoup plus difficile.',
+      urgence: 'attention',
+    });
+  } else if (r.probleme === 'urssaf') {
     alertes.push({
       texte: 'Les cotisations URSSAF se prescrivent par 3 ans',
       detail:
@@ -116,8 +135,14 @@ export function buildAlertes(
 }
 
 export default function BlocPrescription() {
-  const { reponses, company, companyAge, seuils } = useFiche();
-  const alertes = buildAlertes(reponses, companyAge, seuils, getTribunalCompetent(company).leGenerique);
+  const { reponses, company, companyAge, seuils, sector } = useFiche();
+  const alertes = buildAlertes(
+    reponses,
+    companyAge,
+    seuils,
+    getTribunalCompetent(company).leGenerique,
+    relevantDeLaMsa(sector.secteur, company.departement),
+  );
 
   return (
     <BlocAccordeon

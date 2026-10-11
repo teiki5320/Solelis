@@ -124,10 +124,10 @@ export default function CourrierDetail({ slug }: { slug: string }) {
           )}
         </div>
         <h1 className="font-display text-2xl text-navy sm:text-4xl">
-          {template.titre}
+          {personalized?.titre ?? template.titre}
         </h1>
         <p className="mt-2 text-navy/60">
-          Destinataire : {template.destinataire}
+          Destinataire : {personalized?.destinataire ?? template.destinataire}
         </p>
         {context && (personalized?.preambule || personalized?.closing) && (
           <p className="mt-3 text-xs text-vert">

@@ -3,6 +3,11 @@ import { useId, useState } from 'react';
 
 interface Props {
   token: string;
+  /**
+   * Fiche déjà liée à une adresse e-mail (calculé côté serveur ; l'adresse
+   * n'est jamais envoyée au navigateur) : on ne redemande pas de l'enregistrer.
+   */
+  emailEnregistre?: boolean;
 }
 
 type Statut = 'idle' | 'sending' | 'done' | 'err';
@@ -21,7 +26,25 @@ function messageErreur(status: number | null): string {
   return 'L’e-mail n’a pas pu être envoyé. Réessayez plus tard — votre fiche reste disponible sur cette page.';
 }
 
-export default function SaveBanner({ token }: Props) {
+/** Fiche déjà enregistrée : court message, même style que le bandeau. */
+function FicheEnregistree() {
+  return (
+    <div role="note" className="no-print dashed-band flex items-center gap-3 p-4 text-sm text-bleu-fonce">
+      <span aria-hidden="true">✉︎</span>
+      <span>
+        <strong>Fiche enregistrée par e-mail.</strong> Pour la retrouver, utilisez le lien
+        privé envoyé à l&apos;adresse enregistrée.
+      </span>
+    </div>
+  );
+}
+
+export default function SaveBanner({ token, emailEnregistre = false }: Props) {
+  if (emailEnregistre) return <FicheEnregistree />;
+  return <FormulaireSauvegarde token={token} />;
+}
+
+function FormulaireSauvegarde({ token }: { token: string }) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<Statut>('idle');
   const [erreur, setErreur] = useState('');

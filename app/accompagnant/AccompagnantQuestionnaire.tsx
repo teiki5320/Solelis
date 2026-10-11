@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import data from '@/data/organismes.json';
 import { departementDepuisCodePostal } from '@/lib/sirene';
-import { getDepartement, tribunalSelonCodePostal } from '@/lib/organismes';
+import { getDepartement, tribunalSelonCodePostal, cciSelonCommune } from '@/lib/organismes';
 
 interface OrganismeLocal {
   nom: string;
@@ -206,6 +206,13 @@ export default function AccompagnantQuestionnaire() {
     return dep ? tribunalSelonCodePostal(dep, codePostal) : null;
   }, [departement, codePostal]);
 
+  // Département à plusieurs CCI territoriales : celle du code postal, ou une
+  // carte générique « CCI dont dépend votre commune » (annuaire officiel).
+  const cci = useMemo(() => {
+    const dep = departement ? getDepartement(departement.code) : null;
+    return dep ? cciSelonCommune(dep, codePostal) : null;
+  }, [departement, codePostal]);
+
   const slides = [
     { title: 'Quel est votre lien avec le dirigeant ?', key: 'lien' as const, choices: LIENS },
     { title: 'Comment percevez-vous son état ?', key: 'etat' as const, choices: ETATS },
@@ -358,28 +365,31 @@ export default function AccompagnantQuestionnaire() {
                 </p>
 
                 {/* CCI locale */}
-                {departement.cci && (
+                {cci && (
                   <div className="glass-soft flex items-start gap-3 rounded-2xl p-4">
                     <span className="mt-0.5 text-lg" aria-hidden="true">🏢</span>
                     <div>
-                      <p className="font-display text-base text-navy">{departement.cci.nom}</p>
+                      <p className="font-display text-base text-navy">{cci.nom}</p>
                       <p className="mt-0.5 text-xs text-navy/60">
                         Accompagnement gratuit · Premier rendez-vous confidentiel
                       </p>
-                      {departement.cci.telephone && (
+                      {!cci.telephone && cci.adresse && (
+                        <p className="mt-0.5 text-xs text-navy/60">{cci.adresse}</p>
+                      )}
+                      {cci.telephone && (
                         <a
-                          href={`tel:${departement.cci.telephone.replace(/\s/g, '')}`}
+                          href={`tel:${cci.telephone.replace(/\s/g, '')}`}
                           className="mt-1 inline-block text-sm font-medium text-bleu-fonce"
                         >
-                          {departement.cci.telephone}
+                          {cci.telephone}
                         </a>
                       )}
-                      {departement.cci.telephoneNote && (
-                        <span className="block text-[11px] text-navy/55">{departement.cci.telephoneNote}</span>
+                      {cci.telephoneNote && (
+                        <span className="block text-[11px] text-navy/55">{cci.telephoneNote}</span>
                       )}
-                      {departement.cci.site && (
+                      {cci.site && (
                         <a
-                          href={departement.cci.site}
+                          href={cci.site}
                           target="_blank"
                           rel="noreferrer"
                           className="ml-3 text-sm text-bleu-fonce underline underline-offset-4"

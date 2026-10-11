@@ -18,6 +18,7 @@ import {
   buildSoutien,
   buildReseauxSpecifiques,
   getDepartement,
+  relevantDeLaMsa,
   OrganismeCard,
 } from '@/lib/organismes';
 import { getSectorInfo, getCompanyAge, getEffectifSeuils } from '@/lib/secteur';
@@ -63,6 +64,11 @@ interface FicheData {
   siret: string;
   reponses: Reponses;
   company_data: CompanyData;
+  /**
+   * La fiche est-elle déjà liée à une adresse e-mail ? Seul ce booléen part
+   * au navigateur : l'adresse elle-même ne quitte jamais le serveur.
+   */
+  emailEnregistre: boolean;
 }
 
 async function loadFiche(
@@ -80,6 +86,7 @@ async function loadFiche(
       siret: locale.siret,
       reponses: locale.reponses,
       company_data,
+      emailEnregistre: false,
     };
   }
 
@@ -98,6 +105,7 @@ async function loadFiche(
     siret: rec.siret,
     reponses: rec.reponses as Reponses,
     company_data,
+    emailEnregistre: !!rec.email?.trim(),
   };
 }
 
@@ -160,7 +168,7 @@ async function ContenuFiche({ token, d }: { token: string; d?: string }) {
 }
 
 async function renderFiche(data: FicheData) {
-  const { token, siret, reponses, company_data } = data;
+  const { token, siret, reponses, company_data, emailEnregistre } = data;
 
   let bodacc: BodaccItem[] = [];
   let infogreffe: BodaccItem[] = [];
@@ -168,12 +176,20 @@ async function renderFiche(data: FicheData) {
   // si le BODACC n'a pas pu être interrogé.
   let bodaccIndisponible = true;
   let avocatsRaw: Awaited<ReturnType<typeof searchAvocats>> = [];
+  const dep = getDepartement(company_data.departement);
 
   try {
     const [resBodacc, resProcedures, avocats] = await Promise.all([
       fetchBodaccResultat(siret),
       fetchProceduresResultat(siret),
-      searchAvocats(company_data.ville || company_data.departement).catch(() => []),
+      // Commune + code postal + département : une commune au nom ambigu
+      // (ex. Vert, 40420) ne doit pas renvoyer des cabinets d'autres régions.
+      searchAvocats({
+        ville: company_data.ville,
+        codePostal: company_data.codePostal,
+        departement: company_data.departement,
+        nomDepartement: dep?.nom,
+      }).catch(() => []),
     ]);
     bodacc = resBodacc.annonces;
     infogreffe = resProcedures.annonces;
@@ -185,7 +201,6 @@ async function renderFiche(data: FicheData) {
   const alertes = computeAlertes(bodacc, infogreffe, reponses.situation, {
     bodaccDisponible: !bodaccIndisponible,
   });
-  const dep = getDepartement(company_data.departement);
 
   const avocats: OrganismeCard[] = avocatsRaw.map((p) => ({
     nom: p.name,
@@ -214,10 +229,11 @@ async function renderFiche(data: FicheData) {
       sector.secteur,
       company_data.effectif,
       getJuridiction(company_data),
+      { codePostal: company_data.codePostal, ville: company_data.ville },
     );
     const groupeOrdres = buildOrdresProfessionnels(sector);
     const groupeSoutien = buildSoutien(reponses);
-    const groupeAidesPerso = buildAidesPersonnelles(reponses);
+    const groupeAidesPerso = buildAidesPersonnelles(reponses, sector.secteur, company_data.departement);
     const groupesReseaux = buildReseauxSpecifiques(reponses, sector);
     groupes = [
       ...groupesBase,
@@ -279,6 +295,7 @@ async function renderFiche(data: FicheData) {
         reponses={reponses}
         tribunal={nomTribunalPourCourrier(company_data)}
         secteurLabel={sector.label}
+        regimeMsa={relevantDeLaMsa(sector.secteur, company_data.departement)}
       />
 
       {!company_data.fetched && (
@@ -298,7 +315,7 @@ async function renderFiche(data: FicheData) {
       )}
 
       {token !== 'local' ? (
-        <SaveBanner token={token} />
+        <SaveBanner token={token} emailEnregistre={emailEnregistre} />
       ) : (
         <div role="note" className="dashed-band p-4 text-sm text-navy sm:p-5">
           <p className="font-medium">Cette fiche n&apos;a pas pu être enregistrée.</p>

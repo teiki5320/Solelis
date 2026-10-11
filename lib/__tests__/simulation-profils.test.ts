@@ -356,7 +356,7 @@ function construireFiche(r: Reponses, c: CompanyData) {
     ...groupesBase,
     ...(ordres ? [ordres] : []),
     buildSoutien(r),
-    buildAidesPersonnelles(r),
+    buildAidesPersonnelles(r, sector.secteur, c.departement),
     ...buildReseauxSpecifiques(r, sector),
   ];
   const alertes = computeAlertes([], [], r.situation, { bodaccDisponible: true });

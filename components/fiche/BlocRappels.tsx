@@ -5,6 +5,7 @@ import { buildIcs, downloadIcs, type IcsEvent } from '@/lib/ics';
 import BlocAccordeon from './BlocAccordeon';
 import { CESSATION_DATE_EVENT } from './BlocCessationDecompte';
 import { estDateRappelAcceptable } from '@/lib/dateRappel';
+import { relevantDeLaMsa } from '@/lib/organismes';
 
 interface Echeance {
   cle: string;
@@ -207,7 +208,9 @@ function RappelEmail({ token, echeances }: { token: string; echeances: Echeance[
 }
 
 export default function BlocRappels() {
-  const { reponses, token } = useFiche();
+  const { reponses, token, sector, company } = useFiche();
+  // Exploitant·e agricole : mise en demeure de la MSA (même délai de 2 mois).
+  const orgCotisations = relevantDeLaMsa(sector?.secteur, company?.departement) ? 'MSA' : 'URSSAF';
   const [copie, setCopie] = useState<'idle' | 'ok' | 'err'>('idle');
   const minuterieCopie = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => () => {
@@ -298,7 +301,7 @@ export default function BlocRappels() {
         const limit = addDays(d, 60); // 2 mois
         items.push({
           cle: 'contestation-urssaf',
-          titre: 'Contestation URSSAF — délai de 2 mois',
+          titre: `Contestation ${orgCotisations} — délai de 2 mois`,
           joursAvantAjd: daysBetween(new Date(), limit),
           description: "Article R142-1 CSS : 2 mois pour saisir la Commission de Recours Amiable (CRA) à compter de la réception de la mise en demeure.",
           source: 'CSS R142-1',
@@ -325,7 +328,7 @@ export default function BlocRappels() {
     // Trier par date croissante
     items.sort((a, b) => a.baseDate.getTime() - b.baseDate.getTime());
     return items;
-  }, [dateCessation, dateAssignation, dateMiseDemeure, dateJugement]);
+  }, [dateCessation, dateAssignation, dateMiseDemeure, dateJugement, orgCotisations]);
 
   function exportIcs() {
     const events: IcsEvent[] = echeances.map((e) => ({
@@ -417,7 +420,7 @@ export default function BlocRappels() {
           </span>
         </label>
         <label className="block text-sm text-navy">
-          Date de mise en demeure URSSAF reçue
+          {`Date de mise en demeure ${orgCotisations} reçue`}
           <input
             type="date"
             value={dateMiseDemeure}

@@ -62,3 +62,18 @@ describe('SaveBanner', () => {
     expect(f).not.toHaveBeenCalled();
   });
 });
+
+describe('SaveBanner : fiche déjà liée à une adresse e-mail', () => {
+  it('affiche « Fiche enregistrée par e-mail » au lieu du formulaire', () => {
+    render(<SaveBanner token="tok" emailEnregistre />);
+    expect(screen.getByText('Fiche enregistrée par e-mail.')).toBeInTheDocument();
+    expect(screen.queryByLabelText('Votre adresse e-mail')).not.toBeInTheDocument();
+    expect(screen.queryByText('Sauvegardez votre fiche par e-mail')).not.toBeInTheDocument();
+  });
+
+  it('sans adresse enregistrée : le formulaire reste proposé', () => {
+    render(<SaveBanner token="tok" emailEnregistre={false} />);
+    expect(screen.getByText('Sauvegardez votre fiche par e-mail')).toBeInTheDocument();
+    expect(screen.queryByText('Fiche enregistrée par e-mail.')).not.toBeInTheDocument();
+  });
+});

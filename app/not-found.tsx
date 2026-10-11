@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { META_PAGE_INTROUVABLE } from '@/lib/og';
 
-export const metadata: Metadata = {
-  title: 'Page introuvable — Solelis',
-  robots: { index: false, follow: true },
-};
+export const metadata: Metadata = META_PAGE_INTROUVABLE;
 
 export default function NotFound() {
   return (

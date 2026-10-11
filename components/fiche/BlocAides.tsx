@@ -3,7 +3,14 @@ import type { Reponses, CompanyData } from '@/lib/types';
 import type { SectorInfo } from '@/lib/secteur';
 import { getAidesRegionales } from '@/lib/aidesRegionales';
 import { isEI } from '@/lib/strategie';
-import { contactCotisations, institutionEmission } from '@/lib/organismes';
+import {
+  contactCotisations,
+  institutionEmission,
+  carteActionSocialeNonSalarie,
+  relevantDuCpsti,
+  relevantDeLaMsa,
+  URSSAF_ACTION_SOCIALE_CPSTI,
+} from '@/lib/organismes';
 import { useFiche } from '@/lib/FicheContext';
 import BlocAccordeon from './BlocAccordeon';
 
@@ -16,11 +23,26 @@ interface Aide {
   condition?: string;
 }
 
-function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string; aides: Aide[] }[] {
+/** Carte « aides de la MSA » (exploitant·e agricole), au format du bloc Aides. */
+function aideMsa(carte: { nom: string; site?: string; badge?: string }): Aide {
+  return {
+    nom: carte.nom,
+    description:
+      'Exploitant·e agricole : ce n\'est pas l\'Urssaf mais votre caisse de MSA qui peut prendre en charge une partie de vos cotisations ou vous accorder un échéancier de paiement, au cas par cas (demande en ligne ou par formulaire, sur msa.fr).',
+    site: carte.site,
+    badge: carte.badge,
+  };
+}
+
+export function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string; aides: Aide[] }[] {
   const sections: { titre: string; aides: Aide[] }[] = [];
   const dep = c.departement || '';
   const ville = c.ville || '';
   const ei = isEI(c.formeJuridique);
+  // Exploitant·e agricole (métropole) : carte MSA à la place de l'action
+  // sociale du CPSTI (Urssaf), qui ne concerne pas le régime agricole.
+  const actionSociale = carteActionSocialeNonSalarie(s.secteur, dep);
+  const msa = actionSociale && !relevantDuCpsti(s.secteur) ? actionSociale : null;
 
   // Section 1: Aides liées au problème principal
   const specifiques: Aide[] = [];
@@ -28,16 +50,20 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
     const cot = contactCotisations(s, r.effectif, dep);
     specifiques.push({
       nom: cot.org === 'URSSAF' ? 'Échelonnement URSSAF' : `Échelonnement · ${cot.org}`,
-      description: `Demandez un échéancier auprès de ${cot.orgAvecArticle}${cot.tel ? '' : ` (${cot.telLibelle})`}. Des cotisations anciennes peuvent être prescrites (3 ans, sauf mise en demeure envoyée à temps — art. L244-3 CSS).`,
+      description: `Demandez un échéancier auprès de ${cot.orgAvecArticle}${cot.tel ? '' : ` (${cot.telLibelle})`}. Des cotisations anciennes peuvent être prescrites (3 ans, sauf mise en demeure envoyée à temps — ${relevantDeLaMsa(s.secteur, dep) ? 'art. L725-7 du Code rural et de la pêche maritime' : 'art. L244-3 CSS'}).`,
       telephone: cot.tel ?? undefined,
       site: cot.site,
       badge: 'Prioritaire pour vous',
     });
-    specifiques.push({
-      nom: 'Action sociale des travailleurs indépendants',
-      description: 'Réservée aux travailleurs indépendants : prise en charge de tout ou partie de vos cotisations ou aide financière, au cas par cas (action sociale du CPSTI, demande par la messagerie de votre espace Urssaf). La prise en charge vise vos cotisations personnelles, pas les cotisations dues sur les salaires de vos salarié·e·s.',
-      site: 'https://www.urssaf.fr',
-    });
+    if (relevantDuCpsti(s.secteur)) {
+      specifiques.push({
+        nom: 'Action sociale des travailleurs indépendants',
+        description: 'Réservée aux travailleurs indépendants : prise en charge de tout ou partie de vos cotisations ou aide financière, au cas par cas (action sociale du CPSTI, demande par la messagerie de votre espace Urssaf). La prise en charge vise vos cotisations personnelles, pas les cotisations dues sur les salaires de vos salarié·e·s.',
+        site: 'https://www.urssaf.fr',
+      });
+    } else if (msa) {
+      specifiques.push(aideMsa(msa));
+    }
   }
   if (r.probleme === 'impots') {
     specifiques.push({
@@ -71,23 +97,30 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
     });
   }
   if (specifiques.length) {
-    sections.push({ titre: `Pour votre situation (${r.probleme === 'urssaf' ? 'URSSAF' : r.probleme === 'impots' ? 'impôts' : r.probleme === 'banque' ? 'banque' : 'fournisseurs'})`, aides: specifiques });
+    sections.push({ titre: `Pour votre situation (${r.probleme === 'urssaf' ? (relevantDeLaMsa(s.secteur, dep) ? 'MSA' : 'URSSAF') : r.probleme === 'impots' ? 'impôts' : r.probleme === 'banque' ? 'banque' : 'fournisseurs'})`, aides: specifiques });
   }
 
   // Section 2: Aides selon le statut
   const statut: Aide[] = [];
   if (r.effectif === 'independant' || ei) {
-    statut.push({
-      nom: 'Urssaf · Action sociale des indépendants',
-      description: `Aide financière exceptionnelle et prise en charge de cotisations pour les indépendants en difficulté. Vous êtes ${ei ? 'entrepreneur individuel' : 'indépendant'} : vous pouvez la demander (attribution au cas par cas).`,
-      telephone: '36 98',
-      site: 'https://www.urssaf.fr/accueil/services/services-independants/solliciter-action-sociale-cpsti.html',
-      badge: 'Gratuit',
-    });
+    if (relevantDuCpsti(s.secteur)) {
+      statut.push({
+        nom: 'Urssaf · Action sociale des indépendants',
+        description: `Aide financière exceptionnelle et prise en charge de cotisations pour les indépendants en difficulté. Vous êtes ${ei ? 'entrepreneur individuel' : 'indépendant'} : vous pouvez la demander (attribution au cas par cas).`,
+        telephone: '36 98',
+        site: URSSAF_ACTION_SOCIALE_CPSTI,
+        badge: 'Gratuit',
+      });
+    } else if (msa && r.probleme !== 'urssaf') {
+      // (Déjà proposée plus haut quand le problème principal est les cotisations.)
+      statut.push(aideMsa(msa));
+    }
     statut.push({
       nom: 'RSA',
       description: 'Si votre revenu d\'activité est nul ou très faible, vous pouvez demander le RSA tout en poursuivant votre activité, sous conditions.',
-      site: 'https://www.caf.fr',
+      // Exploitant·e agricole : RSA demandé à la MSA (msa.fr, « Le RSA pour
+      // les exploitants et les chefs d'entreprise agricoles »).
+      site: relevantDeLaMsa(s.secteur, dep) ? 'https://www.msa.fr/lfp/rsa' : 'https://www.caf.fr',
     });
   }
   if (r.effectif === 'salaries') {

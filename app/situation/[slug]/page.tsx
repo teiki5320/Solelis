@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { META_PAGE_INTROUVABLE } from '@/lib/og';
 
 interface SituationData {
   titre: string;
@@ -105,7 +106,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const d = DATA[slug];
-  if (!d) return { title: 'Solelis' };
+  if (!d) return META_PAGE_INTROUVABLE;
   return {
     title: d.metaTitle,
     description: d.metaDesc,

@@ -70,10 +70,17 @@ const sections: Section[] = [
       {
         nom: 'Urssaf · Action sociale du CPSTI',
         description:
-          'Aide financière exceptionnelle ou prise en charge de cotisations pour les indépendants en difficulté (attribution au cas par cas)',
+          'Aide financière exceptionnelle ou prise en charge de cotisations pour les indépendants en difficulté (attribution au cas par cas). Exploitant·e agricole : voir la MSA ci-dessous',
         url: 'https://www.urssaf.fr/accueil/services/services-independants/solliciter-action-sociale-cpsti.html',
         urlLabel: 'urssaf.fr',
         tel: '36 98',
+      },
+      {
+        nom: 'MSA · exploitant·e·s agricoles en difficulté',
+        description:
+          'Prise en charge partielle de cotisations ou échéancier de paiement, à demander à votre caisse de MSA (au cas par cas). Pas de numéro national : coordonnées de votre caisse sur msa.fr',
+        url: 'https://www.msa.fr/lfp/web/msa/exploitant/aides-au-paiement-des-cotisations',
+        urlLabel: 'msa.fr',
       },
       {
         nom: 'Délais de paiement Urssaf',

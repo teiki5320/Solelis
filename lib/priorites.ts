@@ -1,6 +1,7 @@
 import type { Reponses, CompanyData } from './types';
 import type { SectorInfo, EffectifSeuils } from './secteur';
 import { resolveStrategie, AXE_META, getTribunalCompetent } from './strategie';
+import { relevantDeLaMsa } from './organismes';
 
 export type Tone = 'rouge' | 'jaune' | 'bleu' | 'vert' | 'navy';
 
@@ -160,12 +161,15 @@ export function scorePriorityCards({ reponses, company, sector, seuils }: BuildC
 
   // 8. Aides disponibles
   const scoreAides = reponses.probleme === 'urssaf' || reponses.probleme === 'impots' ? 6 : 4;
+  // Cotisations : MSA pour un·e exploitant·e agricole (métropole), ENIM pour la pêche.
+  const orgCotisations =
+    sector.secteur === 'peche' ? 'ENIM' : relevantDeLaMsa(sector.secteur, dep) ? 'MSA' : 'URSSAF';
   cards.push({
     id: 'aides',
     icone: '💶',
     label: 'Aides',
     valeur: 'Disponibles',
-    detail: reponses.probleme === 'urssaf' ? 'URSSAF + CCSF + BPI' : reponses.probleme === 'impots' ? 'SIE + CCSF + CODEFI' : reponses.probleme === 'banque' ? 'Médiation du crédit' : 'Plusieurs leviers',
+    detail: reponses.probleme === 'urssaf' ? `${orgCotisations} + CCSF + BPI` : reponses.probleme === 'impots' ? 'SIE + CCSF + CODEFI' : reponses.probleme === 'banque' ? 'Médiation du crédit' : 'Plusieurs leviers',
     tone: 'bleu',
     scrollTo: 'aides',
     score: scoreAides,
