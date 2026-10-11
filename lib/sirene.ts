@@ -244,6 +244,20 @@ export function choisirNom(...candidats: (string | null | undefined)[]): string 
   return 'Votre entreprise';
 }
 
+/**
+ * L'API recherche-entreprises renvoie dans `nom_complet` le nom commercial
+ * entre parenthèses, même quand il est identique à la dénomination :
+ * « AMP ETANCHEITE (AMP ETANCHEITE) ». On retire la parenthèse quand elle
+ * répète le nom (casse et espaces ignorés) ; sinon on la garde.
+ */
+export function nettoyerNomComplet(nom: string | null | undefined): string {
+  const brut = (nom ?? '').trim();
+  const m = brut.match(/^(.*\S)\s*\(([^()]*)\)$/);
+  if (!m) return brut;
+  const normaliser = (s: string) => s.replace(/\s+/g, ' ').trim().toLocaleUpperCase('fr-FR');
+  return normaliser(m[1]) === normaliser(m[2]) ? m[1].trim() : brut;
+}
+
 function fallbackFor(siret: string): CompanyData {
   return {
     siret,
@@ -294,7 +308,7 @@ async function fetchFromRechercheEntreprises(
       ? determinerDepartement(matching.commune, matching.code_postal, matching.departement)
       : determinerDepartement(result.siege?.commune, codePostal, result.siege?.departement);
     const nom = choisirNom(
-      result.nom_complet,
+      nettoyerNomComplet(result.nom_complet),
       result.nom_raison_sociale,
       [result.prenom_usuel, result.nom].filter(Boolean).join(' '),
     );

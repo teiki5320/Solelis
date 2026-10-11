@@ -6,6 +6,7 @@ import {
   departementDepuisCodePostal,
   determinerDepartement,
   choisirNom,
+  nettoyerNomComplet,
   DELAIS_REESSAI,
 } from '../sirene';
 import { getDepartement } from '../organismes';
@@ -170,6 +171,19 @@ describe('choisirNom', () => {
   });
 });
 
+describe('nettoyerNomComplet', () => {
+  it('retire la parenthèse qui répète le nom', () => {
+    expect(nettoyerNomComplet('AMP ETANCHEITE (AMP ETANCHEITE)')).toBe('AMP ETANCHEITE');
+    expect(nettoyerNomComplet('Amp  Etancheite (AMP ETANCHEITE)')).toBe('Amp  Etancheite');
+  });
+
+  it('garde un sigle ou un nom commercial différent', () => {
+    expect(nettoyerNomComplet('SOCIETE NATIONALE SNCF (SNCF)')).toBe('SOCIETE NATIONALE SNCF (SNCF)');
+    expect(nettoyerNomComplet('ACME')).toBe('ACME');
+    expect(nettoyerNomComplet(undefined)).toBe('');
+  });
+});
+
 describe('fetchSirene (API recherche-entreprises simulée)', () => {
   afterEach(() => {
     vi.unstubAllGlobals();
@@ -212,6 +226,16 @@ describe('fetchSirene (API recherche-entreprises simulée)', () => {
       vi.fn().mockResolvedValue(reponse({ code_postal: '97400', commune: '97411', libelle_commune: 'SAINT-DENIS' })),
     );
     expect((await fetchSirene('34963839500021')).departement).toBe('974');
+  });
+
+  it('nom complet doublé « X (X) » → « X »', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(
+        reponse({ code_postal: '85100' }, { nom_complet: 'AMP ETANCHEITE (AMP ETANCHEITE)' }),
+      ),
+    );
+    expect((await fetchSirene('34963839500021')).nom).toBe('AMP ETANCHEITE');
   });
 
   it('nom vide (diffusion partielle) → « Votre entreprise »', async () => {
