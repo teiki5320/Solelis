@@ -1,10 +1,11 @@
+import { Suspense } from 'react';
+import type { Metadata } from 'next';
 import { notFound, unstable_rethrow } from 'next/navigation';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import SaveBanner from '@/components/fiche/SaveBanner';
 import ExportPDF from '@/components/fiche/ExportPDF';
 import StoreCompanyData from '@/components/fiche/StoreCompanyData';
-import FicheLocale from '@/components/fiche/FicheLocale';
 import LayoutDashboard from '@/components/fiche/layouts/LayoutDashboard';
 import { getFicheByTokenMemo } from '@/lib/db';
 import { fetchSirene } from '@/lib/sirene';
@@ -25,14 +26,32 @@ import { getJuridiction } from '@/lib/strategie';
 import { formaterSiret } from '@/lib/siret';
 import { CLE_FICHE_LOCALE } from '@/lib/ficheLocale';
 import { lireCookieFicheLocale, lireParametreD } from '@/lib/ficheLocaleServeur';
+import Chargement from './Chargement';
 import type { CompanyData, Reponses, BodaccItem } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
 
+/**
+ * Données d'une fiche locale : ancien format ?d=<base64> (toujours lisible),
+ * sinon cookie court posé par le navigateur (voir lib/ficheLocale.ts).
+ */
+async function lireFicheLocale(d?: string) {
+  return d
+    ? lireParametreD(d)
+    : lireCookieFicheLocale((await cookies()).get(CLE_FICHE_LOCALE)?.value);
+}
+
 // Les fiches sont des contenus personnels — ne pas indexer.
-export const metadata = {
-  robots: { index: false, follow: false, noarchive: true, nosnippet: true },
-};
+const ROBOTS = { index: false, follow: false, noarchive: true, nosnippet: true };
+
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
+  const { token } = await params;
+  if (token !== 'local') return { robots: ROBOTS };
+  // Fiche locale sans données : la page répond 404 (voir FichePage).
+  const { d } = await searchParams;
+  const locale = await lireFicheLocale(d);
+  return locale ? { robots: ROBOTS } : { robots: ROBOTS, title: 'Page introuvable — Solelis' };
+}
 
 interface PageProps {
   params: Promise<{ token: string }>;
@@ -53,9 +72,7 @@ async function loadFiche(
   if (token === 'local') {
     // Ancien format ?d=<base64> (toujours lisible), sinon cookie court posé par le
     // navigateur (voir lib/ficheLocale.ts) : les réponses ne passent plus par l'URL.
-    const locale = d
-      ? lireParametreD(d)
-      : lireCookieFicheLocale((await cookies()).get(CLE_FICHE_LOCALE)?.value);
+    const locale = await lireFicheLocale(d);
     if (!locale) return null;
     const company_data = await fetchSirene(locale.siret);
     return {
@@ -94,10 +111,34 @@ function ErreurChargement() {
   );
 }
 
+/**
+ * Vérifications rapides AVANT toute frontière de chargement : tant que rien
+ * n'est envoyé au navigateur, notFound() donne un vrai statut HTTP 404.
+ * (Un loading.tsx de segment figerait le statut à 200 dès le début du
+ * streaming : le chargement est donc une <Suspense> placée après ces tests.)
+ */
 export default async function FichePage({ params, searchParams }: PageProps) {
   const { token } = await params;
   const { d } = await searchParams;
 
+  if (token === 'local') {
+    // Fiche locale sans données (cookie expiré, ancien lien…) : vrai 404.
+    // La page 404 de ce segment (not-found.tsx) relit encore l'onglet
+    // (sessionStorage) et recharge la fiche si elle y est.
+    const locale = await lireFicheLocale(d);
+    if (!locale) notFound();
+  } else if (!tokenSchema.safeParse(token).success || !(await getFicheByTokenMemo(token))) {
+    notFound();
+  }
+
+  return (
+    <Suspense fallback={<Chargement />}>
+      <ContenuFiche token={token} d={d} />
+    </Suspense>
+  );
+}
+
+async function ContenuFiche({ token, d }: { token: string; d?: string }) {
   let data: FicheData | null;
   try {
     data = await loadFiche(token, d);
@@ -106,12 +147,8 @@ export default async function FichePage({ params, searchParams }: PageProps) {
     return <ErreurChargement />;
   }
 
-  if (!data) {
-    // Fiche locale : les données sont peut-être encore dans l'onglet (sessionStorage).
-    if (token === 'local') return <FicheLocale />;
-    // Hors de tout try/catch : notFound() doit remonter jusqu'à Next (vrai 404).
-    notFound();
-  }
+  // Cas déjà écartés avant la frontière de chargement (voir FichePage).
+  if (!data) notFound();
 
   try {
     return await renderFiche(data);

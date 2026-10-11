@@ -1,6 +1,19 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getFicheByTokenMemo } from '@/lib/db';
 import { tokenSchema } from '@/lib/schemas';
+
+/** Fiche inconnue : le titre de l'onglet annonce la page introuvable (404). */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ token: string }>;
+}): Promise<Metadata> {
+  const { token } = await params;
+  if (token === 'local') return {};
+  const existe = tokenSchema.safeParse(token).success && !!(await getFicheByTokenMemo(token));
+  return existe ? {} : { title: 'Page introuvable — Solelis' };
+}
 
 /**
  * Vérifie l'existence de la fiche AVANT la frontière de chargement

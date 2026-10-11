@@ -45,10 +45,13 @@ function parcourir(n: ReactNode, textes: string[], elements: { type: unknown; pr
 }
 
 async function rendre() {
-  const arbre = (await FichePage({
+  // FichePage renvoie <Suspense><ContenuFiche …/></Suspense> : on exécute le contenu.
+  const suspense = (await FichePage({
     params: Promise.resolve({ token: TOKEN }),
     searchParams: Promise.resolve({}),
-  })) as ReactNode;
+  })) as { props: { children: { type: (p: unknown) => Promise<ReactNode>; props: unknown } } };
+  const contenu = suspense.props.children;
+  const arbre = await contenu.type(contenu.props);
   const textes: string[] = [];
   const elements: { type: unknown; props: Record<string, unknown> }[] = [];
   parcourir(arbre, textes, elements);
