@@ -18,15 +18,34 @@ export function adresseComplete(company: Pick<CompanyData, 'adresse' | 'codePost
   return [adresse, localite].filter(Boolean).join(', ');
 }
 
+/**
+ * Activité pour les courriers ({{ACTIVITE}}). L'API ne donne souvent que le
+ * code NAF (« 43.32A ») : on le précède alors du secteur (« BTP / Construction
+ * (code NAF 43.32A) ») plutôt que d'écrire un code seul dans la lettre.
+ */
+export function activitePourCourrier(
+  company: Pick<CompanyData, 'naf' | 'nafLabel'>,
+  secteurLabel?: string,
+): string {
+  const libelle = (company.nafLabel ?? '').trim();
+  const estCode = (v: string) => /^\d{2}\.?\d{2}[A-Z]?$/i.test(v);
+  if (libelle && !estCode(libelle)) return libelle;
+  const naf = (company.naf ?? '').trim() || libelle;
+  if (!naf) return '';
+  return secteurLabel && secteurLabel !== 'Autre' ? `${secteurLabel} (code NAF ${naf})` : `code NAF ${naf}`;
+}
+
 interface Props {
   company: CompanyData;
   token: string;
   reponses?: Reponses;
   /** Tribunal compétent pour {{TRIBUNAL}} (vide s'il n'est pas connu précisément). */
   tribunal?: string;
+  /** Libellé du secteur (getSectorInfo), pour {{ACTIVITE}}. */
+  secteurLabel?: string;
 }
 
-export default function StoreCompanyData({ company, token, reponses, tribunal }: Props) {
+export default function StoreCompanyData({ company, token, reponses, tribunal, secteurLabel }: Props) {
   useEffect(() => {
     try {
       sessionStorage.setItem(
@@ -39,7 +58,7 @@ export default function StoreCompanyData({ company, token, reponses, tribunal }:
           NOM_DIRIGEANT: '',
           FORME_JURIDIQUE: company.formeJuridique,
           DATE_CREATION: company.dateCreation,
-          ACTIVITE: company.nafLabel || company.naf,
+          ACTIVITE: activitePourCourrier(company, secteurLabel),
           ...(tribunal ? { TRIBUNAL: tribunal } : {}),
         })
       );
@@ -63,7 +82,7 @@ export default function StoreCompanyData({ company, token, reponses, tribunal }:
         }));
       }
     } catch {}
-  }, [company, token, reponses, tribunal]);
+  }, [company, token, reponses, tribunal, secteurLabel]);
 
   return null;
 }

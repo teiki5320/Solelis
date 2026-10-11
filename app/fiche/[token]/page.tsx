@@ -278,6 +278,7 @@ async function renderFiche(data: FicheData) {
         token={token}
         reponses={reponses}
         tribunal={nomTribunalPourCourrier(company_data)}
+        secteurLabel={sector.label}
       />
 
       {!company_data.fetched && (

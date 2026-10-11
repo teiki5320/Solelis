@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { adresseComplete } from '../fiche/StoreCompanyData';
+import { adresseComplete, activitePourCourrier } from '../fiche/StoreCompanyData';
 
 describe('adresseComplete (adresse des courriers)', () => {
   it('ne répète pas le code postal et la ville déjà présents (API recherche-entreprises)', () => {
@@ -21,5 +21,14 @@ describe('adresseComplete (adresse des courriers)', () => {
   it('sans voie : code postal et ville seulement ; tout vide : chaîne vide', () => {
     expect(adresseComplete({ adresse: '', codePostal: '75002', ville: 'PARIS' })).toBe('75002 PARIS');
     expect(adresseComplete({ adresse: '', codePostal: '', ville: '' })).toBe('');
+  });
+});
+
+describe('activitePourCourrier ({{ACTIVITE}} des courriers)', () => {
+  it('jamais un code NAF seul', () => {
+    expect(activitePourCourrier({ naf: '43.32A' }, 'BTP / Construction')).toBe('BTP / Construction (code NAF 43.32A)');
+    expect(activitePourCourrier({ naf: '43.32A', nafLabel: '43.32A' }, 'Autre')).toBe('code NAF 43.32A');
+    expect(activitePourCourrier({ naf: '56.10A', nafLabel: 'Restauration traditionnelle' })).toBe('Restauration traditionnelle');
+    expect(activitePourCourrier({ naf: '' })).toBe('');
   });
 });
