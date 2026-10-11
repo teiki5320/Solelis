@@ -175,6 +175,9 @@ describe('nettoyerNomComplet', () => {
   it('retire la parenthèse qui répète le nom', () => {
     expect(nettoyerNomComplet('AMP ETANCHEITE (AMP ETANCHEITE)')).toBe('AMP ETANCHEITE');
     expect(nettoyerNomComplet('Amp  Etancheite (AMP ETANCHEITE)')).toBe('Amp  Etancheite');
+    expect(nettoyerNomComplet('MICHEL MILON MENUISERIE (MICHEL MILON MENUISERIE) (M.M.M)')).toBe(
+      'MICHEL MILON MENUISERIE (M.M.M)',
+    );
   });
 
   it('garde un sigle ou un nom commercial différent', () => {

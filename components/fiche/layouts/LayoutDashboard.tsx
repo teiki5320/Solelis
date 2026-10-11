@@ -45,6 +45,7 @@ import StrategieHero from '@/components/fiche/dashboard/StrategieHero';
 import SectionNav from '@/components/fiche/dashboard/SectionNav';
 import SectionHeader from '@/components/fiche/dashboard/SectionHeader';
 import { harmoniserCarteTribunal } from '@/lib/strategie';
+import { nettoyerNomComplet } from '@/lib/sirene';
 import type { CompanyData } from '@/lib/types';
 import type { LayoutData } from './types';
 
@@ -53,6 +54,9 @@ import type { LayoutData } from './types';
  * identique au nom, on obtient « AMP ETANCHEITE (AMP ETANCHEITE) ».
  */
 export function nomSansSigleRedondant(nom: string): string {
+  // « NOM (NOM) (SIGLE) » (fiches enregistrées avant le nettoyage à la source).
+  const nettoye = nettoyerNomComplet(nom);
+  if (nettoye !== nom.trim()) return nettoye;
   const m = /^(.+?)\s*\((.+)\)$/.exec(nom.trim());
   if (!m) return nom;
   const normaliser = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/gi, '').toLowerCase();

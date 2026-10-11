@@ -247,6 +247,7 @@ describe('Identité', () => {
   it('nom non doublé quand le sigle est identique', () => {
     expect(nomSansSigleRedondant('AMP ETANCHEITE (AMP ETANCHEITE)')).toBe('AMP ETANCHEITE');
     expect(nomSansSigleRedondant('SOCIETE DUPONT (SD)')).toBe('SOCIETE DUPONT (SD)');
+    expect(nomSansSigleRedondant('MICHEL MILON MENUISERIE (MICHEL MILON MENUISERIE) (M.M.M)')).toBe('MICHEL MILON MENUISERIE (M.M.M)');
   });
   it('pas de point « · » isolé après le SIRET', () => {
     render(<FicheProvider value={ctx()}><IdentiteHero /></FicheProvider>);

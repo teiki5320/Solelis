@@ -252,10 +252,12 @@ export function choisirNom(...candidats: (string | null | undefined)[]): string 
  */
 export function nettoyerNomComplet(nom: string | null | undefined): string {
   const brut = (nom ?? '').trim();
-  const m = brut.match(/^(.*\S)\s*\(([^()]*)\)$/);
+  // « NOM (NOM) » ou « NOM (NOM) (SIGLE) » : la 1re parenthèse répète le nom.
+  const m = brut.match(/^(.*?\S)\s*\(([^()]*)\)(\s*\([^()]*\))?$/);
   if (!m) return brut;
   const normaliser = (s: string) => s.replace(/\s+/g, ' ').trim().toLocaleUpperCase('fr-FR');
-  return normaliser(m[1]) === normaliser(m[2]) ? m[1].trim() : brut;
+  if (normaliser(m[1]) !== normaliser(m[2])) return brut;
+  return m[1].trim() + (m[3] ? ' ' + m[3].trim() : '');
 }
 
 function fallbackFor(siret: string): CompanyData {
