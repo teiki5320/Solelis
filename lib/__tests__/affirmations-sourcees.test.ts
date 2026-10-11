@@ -19,7 +19,7 @@ function fichiers(dir: string): string[] {
     return /\.(tsx?|json)$/.test(e.name) ? [rel] : [];
   });
 }
-const SOURCES = [...fichiers('app'), ...fichiers('components'), ...fichiers('lib')].map((f) => ({
+const SOURCES = [...fichiers('app'), ...fichiers('components'), ...fichiers('lib'), ...fichiers('data')].map((f) => ({
   f,
   t: fs.readFileSync(path.join(RACINE, f), 'utf8'),
 }));
@@ -81,6 +81,12 @@ const INTERDITS: { re: RegExp; pourquoi: string }[] = [
   // Tour 5, 2e contre-vérification
   { re: /entrepreneur individuel, immatriculé ou non/, pourquoi: 'L526-1 C. com. (en vigueur depuis le 1er janvier 2023) : personne physique immatriculée au registre national des entreprises' },
   { re: /paiements de\{' '\}\s*<strong>allonger/, pourquoi: 'BlocPGE : « d’allonger »' },
+  // Tour 6, contrôle indépendant
+  { re: /20200 Bastia Cedex/, pourquoi: 'TC de Bastia : 20200 Bastia (siège) ou 20297 Bastia Cedex (courrier), greffe-tc-bastia.fr, mentions légales' },
+  { re: /134 avenue du Général-de-Gaulle, 10000 Troyes/, pourquoi: 'TC de Troyes : 134 rue du Général-de-Gaulle (greffe-tc-troyes.fr, Base adresse nationale)' },
+  { re: /Jennings-Kilmaine/, pourquoi: 'TC de Tarascon : allée du Général-Jennings-de-Kilmaine (greffe-tc-tarascon.fr)' },
+  { re: /— 2 mois pour les (ventes|cessions) conclues avant/, pourquoi: 'loi n° 2026-403, art. 22 II : ancien régime (2 mois, 2 %) présenté au passé' },
+  { re: /IEOM · Correspondant TPE-PME|Correspondant TPE-PME IEOM/, pourquoi: 'ieom.fr : « accompagnement des entreprises », pas de correspondant TPE-PME confirmé' },
 ];
 
 describe('contre-audit : affirmations retirées', () => {

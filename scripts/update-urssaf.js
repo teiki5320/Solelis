@@ -1,3 +1,15 @@
+// SCRIPT OBSOLÈTE — NE PAS RELANCER EN L'ÉTAT.
+// Les données URSSAF / CGSS de data/organismes.json ont été vérifiées à la main
+// (annuaire service-public, sites des organismes) en octobre 2026. Les valeurs
+// ci-dessous datent de mai 2026 : relancer ce script réintroduirait d'anciennes
+// adresses, d'anciens noms et d'anciens numéros. Mettre à jour le script avant
+// toute nouvelle utilisation.
+console.error(
+  "Script obsolète : les données URSSAF / CGSS de data/organismes.json ont été vérifiées à la main en octobre 2026. " +
+    'Ne relancez pas ce script sans l’avoir mis à jour (il réintroduirait d’anciennes données).',
+);
+process.exit(1);
+
 // Mise à jour des URSSAF départementales (sites) par département.
 // Données collectées via urssaf.fr + annuaire-administration.com (28/05/2026).
 // Téléphone : 3957 partout (numéro national), sauf CGSS DOM.

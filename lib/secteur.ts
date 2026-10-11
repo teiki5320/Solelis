@@ -1047,7 +1047,7 @@ export function getObligationsEffectif(seuils: EffectifSeuils): ObligationSeuil[
       atteint: n >= 300,
       titre: 'GEPP et bilan social obligatoire',
       description:
-        "À 300 salariés : négociation obligatoire sur la Gestion des Emplois et des Parcours Professionnels (GEPP), bilan social annuel, commission formation et commission égalité au CSE.",
+        "À 300 salariés : négociation obligatoire sur la Gestion des Emplois et des Parcours Professionnels (GEPP), bilan social annuel ; à défaut d'accord d'entreprise, commission de la formation et commission de l'égalité professionnelle au CSE (C. trav. L2242-2, L2312-28, L2315-49 et L2315-56).",
     },
     {
       seuilMin: 1000,

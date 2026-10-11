@@ -6,7 +6,7 @@
     "tribunal": {
       "nom": "Tribunal de commerce de Troyes",
       "type": "Tribunal de commerce",
-      "adresse": "134 avenue du Général-de-Gaulle, 10000 Troyes",
+      "adresse": "134 rue du Général-de-Gaulle, 10000 Troyes",
       "telephone": "08 91 01 11 11",
       "site": "https://www.justice.fr/recherche/annuaires",
       "telephoneNote": "Numéro surtaxé (08 9x : service payant + prix d’un appel)"
@@ -842,7 +842,7 @@
       {
         "nom": "Tribunal de commerce de Tarascon",
         "type": "Tribunal de commerce",
-        "adresse": "28 allée du Général-Jennings-Kilmaine, 13150 Tarascon",
+        "adresse": "28 allée du Général-Jennings-de-Kilmaine, 13150 Tarascon",
         "site": "https://www.justice.fr/recherche/annuaires",
         "telephone": "04 90 91 46 00",
         "codesPostaux": [
@@ -2994,7 +2994,7 @@
     "cci": {
       "nom": "CCI Saône-Doubs (Besançon)",
       "type": "Chambre de commerce et d’industrie",
-      "adresse": "46 avenue Villarceau, 25042 Besançon Cedex",
+      "adresse": "46 avenue Villarceau, CS 51666, 25042 Besançon Cedex",
       "telephone": "03 81 25 25 70",
       "site": "https://www.bourgognefranchecomte.cci.fr"
     },
@@ -3352,7 +3352,7 @@
     "tribunal": {
       "nom": "Tribunal de commerce d'Évreux",
       "type": "Tribunal de commerce",
-      "adresse": "7 rue de la Petite-Cité, BP 382, 27003 Évreux",
+      "adresse": "7 rue de la Petite-Cité, BP 382, 27003 Évreux Cedex",
       "telephone": "02 32 22 37 20",
       "site": "https://www.justice.fr/recherche/annuaires",
       "codesPostaux": [
@@ -18117,7 +18117,7 @@
       "type": "Caisse Générale de Sécurité Sociale (URSSAF + CPAM + CARSAT)",
       "adresse": "Espace Turenne Radamonthe, Route de Raban, 97300 Cayenne",
       "telephone": "3957",
-      "telephoneNote": "Employeurs : 39 57 (service 0,12 €/min + prix d’appel) ; travailleurs indépendants : 36 98 (service gratuit + prix d’appel)",
+      "telephoneNote": "Employeurs : 39 57 (service 0,12 €/min + prix d’appel) ; travailleurs indépendants (artisans, commerçants, hors professions libérales) : 36 98 (service gratuit + prix d’appel)",
       "site": "https://www.urssaf.fr"
     },
     "cgss": {
@@ -20915,7 +20915,7 @@
     "tribunal": {
       "nom": "Tribunal de commerce de Bastia",
       "type": "Tribunal de commerce",
-      "adresse": "10 boulevard Auguste-Gaudin, 20200 Bastia Cedex",
+      "adresse": "10 boulevard Auguste-Gaudin, 20200 Bastia",
       "telephone": "04 95 34 84 70",
       "site": "https://www.justice.fr/recherche/annuaires"
     },

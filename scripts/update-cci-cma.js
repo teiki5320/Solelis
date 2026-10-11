@@ -1,3 +1,15 @@
+// SCRIPT OBSOLÈTE — NE PAS RELANCER EN L'ÉTAT.
+// Les données CCI / CMA de data/organismes.json ont été vérifiées à la main
+// (annuaire service-public, sites des organismes) en octobre 2026. Les valeurs
+// ci-dessous datent de mai 2026 : relancer ce script réintroduirait d'anciennes
+// adresses, d'anciens noms et d'anciens numéros. Mettre à jour le script avant
+// toute nouvelle utilisation.
+console.error(
+  "Script obsolète : les données CCI / CMA de data/organismes.json ont été vérifiées à la main en octobre 2026. " +
+    'Ne relancez pas ce script sans l’avoir mis à jour (il réintroduirait d’anciennes données).',
+);
+process.exit(1);
+
 // Mise à jour des CCI et CMA territoriales par département.
 // Données collectées via annuaire-administration.com + service-public.gouv.fr (29/05/2026).
 // CMA régionalisées depuis 2021 : antenne départementale (adresse locale) + nom régional.

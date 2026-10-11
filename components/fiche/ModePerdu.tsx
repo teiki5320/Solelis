@@ -55,10 +55,10 @@ export default function ModePerdu() {
     }
     if (emission.nom !== 'Banque de France') {
       return {
-        nom: `${emission.nom} · Correspondant TPE-PME`,
+        nom: `${emission.nom} · ${emission.accompagnement}`,
         action: 'Échange gratuit pour faire le point et vous orienter',
         tel: emission.telephone || null,
-        site: emission.nom === 'IEDOM' ? 'https://www.iedom.fr' : 'https://www.ieom.fr',
+        site: emission.site,
         labelSite: emission.nom === 'IEDOM' ? 'iedom.fr' : 'ieom.fr',
       };
     }

@@ -125,7 +125,10 @@ export function contactCotisations(
  * Institution qui assure la médiation du crédit et le correspondant TPE-PME :
  * la Banque de France en métropole, l'IEDOM dans les départements d'outre-mer,
  * à Saint-Pierre-et-Miquelon, Saint-Barthélemy et Saint-Martin, l'IEOM dans
- * le Pacifique (iedom.fr, ieom.fr). Téléphone : 34 14 (annuaire service-public).
+ * le Pacifique (iedom.fr, ieom.fr). Téléphone : 34 14 (annuaire service-public,
+ * y compris pour les agences de l'IEOM). Le « correspondant TPE-PME » est un
+ * dispositif de la Banque de France et de l'IEDOM ; l'IEOM présente son offre
+ * comme un « accompagnement des entreprises » (ieom.fr/Entreprises).
  */
 export function institutionEmission(departement?: string): {
   nom: 'Banque de France' | 'IEDOM' | 'IEOM';
@@ -134,12 +137,14 @@ export function institutionEmission(departement?: string): {
   telephone: string;
   /** Site de l'institution (accompagnement des entreprises). */
   site: string;
+  /** « Correspondant TPE-PME » (Banque de France, IEDOM) ou « Accompagnement des entreprises » (IEOM). */
+  accompagnement: string;
 } {
   const code = departement ?? '';
   const tel = DATA[code]?.banqueDeFrance?.telephone;
-  if (/^97[1-8]$/.test(code)) return { nom: 'IEDOM', avecArticle: "l'IEDOM", telephone: tel ?? '34 14', site: 'https://www.iedom.fr' };
-  if (/^98[678]$/.test(code)) return { nom: 'IEOM', avecArticle: "l'IEOM", telephone: tel ?? '34 14', site: 'https://www.ieom.fr' };
-  return { nom: 'Banque de France', avecArticle: 'la Banque de France', telephone: '34 14', site: 'https://entreprises.banque-france.fr' };
+  if (/^97[1-8]$/.test(code)) return { nom: 'IEDOM', avecArticle: "l'IEDOM", telephone: tel ?? '34 14', site: 'https://www.iedom.fr', accompagnement: 'Correspondant TPE-PME' };
+  if (/^98[678]$/.test(code)) return { nom: 'IEOM', avecArticle: "l'IEOM", telephone: tel ?? '34 14', site: 'https://www.ieom.fr/Entreprises', accompagnement: 'Accompagnement des entreprises' };
+  return { nom: 'Banque de France', avecArticle: 'la Banque de France', telephone: '34 14', site: 'https://entreprises.banque-france.fr', accompagnement: 'Correspondant TPE-PME' };
 }
 
 /** Nom de commune comparable à la base officielle des codes postaux (« ST QUENTIN »). */
@@ -477,7 +482,7 @@ export function buildOrganismes(
   // Correspondant TPE-PME Banque de France (IEDOM / IEOM outre-mer) — diagnostic gratuit et confidentiel
   const emission = institutionEmission(dep?.code);
   fin.push({
-    nom: `Correspondant TPE-PME ${emission.nom}`,
+    nom: `${emission.accompagnement} ${emission.nom}`,
     type: 'Diagnostic financier confidentiel',
     telephone: emission.telephone || undefined,
     site: emission.site,

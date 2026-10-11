@@ -50,7 +50,7 @@ export default function BlocAidesEtat() {
     const emission = institutionEmission(company.departement);
     dispositifs.push({
       cle: 'bdf',
-      nom: `${emission.nom} · Correspondant TPE-PME`,
+      nom: `${emission.nom} · ${emission.accompagnement}`,
       description:
         "Numéro unique pour les dirigeants face à une difficulté bancaire, de trésorerie ou de financement. Un référent local vous oriente vers la médiation du crédit ou un dispositif adapté.",
       telephone: emission.telephone || undefined,

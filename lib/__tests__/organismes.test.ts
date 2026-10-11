@@ -273,4 +273,11 @@ describe('institutionEmission : Banque de France, IEDOM, IEOM (tour 5)', () => {
     expect(institutionEmission('974').telephone).toBe('34 14');
     expect(institutionEmission('988')).toMatchObject({ nom: 'IEOM', telephone: '34 14' });
   });
+  it('« correspondant TPE-PME » : Banque de France et IEDOM seulement (ieom.fr : accompagnement des entreprises)', () => {
+    expect(institutionEmission('75').accompagnement).toBe('Correspondant TPE-PME');
+    expect(institutionEmission('972').accompagnement).toBe('Correspondant TPE-PME');
+    for (const d of ['986', '987', '988']) {
+      expect(institutionEmission(d).accompagnement).toBe('Accompagnement des entreprises');
+    }
+  });
 });
