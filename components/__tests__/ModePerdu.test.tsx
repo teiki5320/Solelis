@@ -76,7 +76,7 @@ describe('ModePerdu', () => {
     expect(document.activeElement?.id).toBe(ID_TITRE_FICHE);
   });
 
-  it('URSSAF : 36 98 pour un·e indépendant·e, CGSS outre-mer — jamais 3957 par défaut', () => {
+  it('URSSAF : 36 98 pour un·e indépendant·e, CGSS outre-mer au 39 57 pour un employeur', () => {
     const indep = makeContext({ moral: 'perdu', situation: 'prevention', probleme: 'urssaf', effectif: 'independant' });
     const { unmount } = render(<FicheProvider value={indep}><ModePerdu /></FicheProvider>);
     expect(screen.getByText(/3698/)).toBeInTheDocument();
@@ -85,8 +85,8 @@ describe('ModePerdu', () => {
     const dom = makeContext({ moral: 'perdu', situation: 'prevention', probleme: 'urssaf', effectif: 'salaries' });
     dom.company = { ...dom.company, departement: '974', codePostal: '97400' };
     render(<FicheProvider value={dom}><ModePerdu /></FicheProvider>);
-    expect(screen.getByText(/CGSS Réunion/)).toBeInTheDocument();
-    expect(screen.queryByText(/3957/)).toBeNull();
+    expect(screen.getAllByText(/CGSS Réunion/).length).toBeGreaterThan(0);
+    expect(screen.queryByText(/0 820 000/)).toBeNull();
   });
 
   it('priorise l\'avocat en assignation', () => {

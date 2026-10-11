@@ -286,7 +286,7 @@ export function detectIncoherenceBodacc(
       niveau: 'jaune',
       titre: "Aucune procédure publique détectée",
       message:
-        "Vous indiquez être en cessation des paiements. Si la déclaration a été déposée, elle n'est pas encore publiée. Rappel : l'article L631-4 du Code de commerce impose de la déclarer dans les 45 jours qui suivent la cessation des paiements.",
+        "Vous indiquez être en cessation des paiements. Si vous avez déjà déposé la déclaration, le jugement d'ouverture n'est peut-être pas encore publié. Rappel : l'article L631-4 du Code de commerce impose de la déclarer dans les 45 jours qui suivent la cessation des paiements.",
       source: 'Bodacc · vos réponses',
     };
   }

@@ -53,7 +53,7 @@ export default function ModePerdu() {
     }
     return {
       nom: 'Banque de France · Correspondant TPE-PME',
-      action: 'Premier diagnostic confidentiel, gratuit, sous 5 jours',
+      action: 'Échange gratuit pour faire le point et vous orienter',
       tel: '3414',
       site: 'https://entreprises.banque-france.fr',
       labelSite: 'entreprises.banque-france.fr',
@@ -152,7 +152,7 @@ export default function ModePerdu() {
           <p className="mt-2 font-display text-base text-navy">Vous n&apos;êtes pas seul·e</p>
           <p className="mt-2 text-xs text-navy/70">
             <strong>APESA</strong> — soutien psychologique gratuit pour
-            dirigeant·e·s, numéro vert 0 805 65 50 50 (7 j/7, de 8 h à 20 h). Si c&apos;est très lourd ce soir : <strong>3114</strong>{' '}
+            dirigeant·e·s, gratuit et confidentiel (apesa-france.com). Si c&apos;est très lourd ce soir : <strong>3114</strong>{' '}
             (prévention suicide, 24h/24, gratuit, anonyme).
           </p>
           <div className="mt-4 flex flex-wrap gap-2 text-sm">

@@ -34,8 +34,8 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
       badge: 'Prioritaire pour vous',
     });
     specifiques.push({
-      nom: 'Fonds d\'action sociale URSSAF',
-      description: 'Prise en charge partielle de cotisations en cas de difficulté avérée.',
+      nom: 'Action sociale des travailleurs indépendants',
+      description: 'Réservée aux travailleurs indépendants : prise en charge partielle de cotisations ou aide financière, au cas par cas (action sociale du CPSTI, demande par la messagerie de votre espace Urssaf). Les employeurs n\'y ont pas accès.',
       site: 'https://www.urssaf.fr',
     });
   }
@@ -56,7 +56,7 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
   if (r.probleme === 'banque') {
     specifiques.push({
       nom: `Médiation du crédit${dep ? ` · Banque de France (${dep})` : ''}`,
-      description: 'Gratuit et confidentiel. Le médiateur contacte votre banque et négocie pour vous. Taux de succès élevé.',
+      description: 'Gratuit et confidentiel. Le médiateur contacte votre banque et négocie pour vous.',
       telephone: '34 14',
       site: 'https://mediateur-credit.banque-france.fr',
       badge: 'Prioritaire pour vous',
@@ -66,7 +66,6 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
     specifiques.push({
       nom: 'Médiateur des entreprises',
       description: 'Différend avec un fournisseur ou client ? Le Médiateur des entreprises vous aide à renouer le dialogue. Gratuit et confidentiel.',
-      telephone: '01 53 17 87 40',
       site: 'https://www.economie.gouv.fr/mediateur-des-entreprises',
       badge: 'Prioritaire pour vous',
     });
@@ -82,12 +81,12 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
       nom: 'Urssaf · Action sociale des indépendants',
       description: `Aide financière exceptionnelle et prise en charge de cotisations pour les indépendants en difficulté. Vous êtes ${ei ? 'entrepreneur individuel' : 'indépendant'} : vous pouvez la demander (attribution au cas par cas).`,
       telephone: '36 98',
-      site: 'https://www.secu-independants.fr',
+      site: 'https://www.urssaf.fr/accueil/services/services-independants/solliciter-action-sociale-cpsti.html',
       badge: 'Gratuit',
     });
     statut.push({
-      nom: 'RSA / ASS',
-      description: 'Si votre revenu d\'activité est nul ou très faible, vous pouvez cumuler RSA et activité professionnelle.',
+      nom: 'RSA',
+      description: 'Si votre revenu d\'activité est nul ou très faible, vous pouvez demander le RSA tout en poursuivant votre activité, sous conditions.',
       site: 'https://www.caf.fr',
     });
   }
@@ -100,8 +99,7 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
     });
     statut.push({
       nom: 'AGS · Garantie des salaires',
-      description: 'En cas de redressement ou liquidation, les salaires sont garantis par l\'AGS.',
-      telephone: '01 55 90 27 00',
+      description: 'En cas de redressement ou de liquidation judiciaire, l\'AGS garantit les sommes dues aux salarié·e·s, dans la limite d\'un plafond. Le mandataire judiciaire fait la demande au centre (CGEA) compétent.',
       site: 'https://www.ags-garantie-salaires.org',
     });
     statut.push({
@@ -139,13 +137,13 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
       {
         nom: 'Escompte commercial',
         description:
-          'Mobilisation auprès de votre banque d\'effets de commerce (lettres de change, billets à ordre) avant leur échéance. La banque vous paie immédiatement, déduction faite d\'un agio. Moins coûteux que l\'affacturage mais nécessite des effets acceptés. Différent de l\'escompte fournisseur (remise pour paiement comptant).',
+          'Mobilisation auprès de votre banque d\'effets de commerce (lettres de change, billets à ordre) avant leur échéance. La banque vous paie immédiatement, déduction faite d\'un agio. Nécessite des effets de commerce. Différent de l\'escompte fournisseur (remise pour paiement comptant).',
         badge: 'Si effets acceptés',
       },
       {
         nom: 'Cession Dailly (loi du 2 janv. 1981)',
         description:
-          'Cession de créances professionnelles à votre banque, via un bordereau simplifié (art. L313-23 CMF). Plus souple que l\'escompte (pas besoin d\'effet de commerce) et moins cher que l\'affacturage. Vous restez en relation avec votre client. Outil sous-utilisé en TPE/PME.',
+          'Cession de créances professionnelles à votre banque, via un bordereau simplifié (art. L313-23 CMF). Plus souple que l\'escompte (pas besoin d\'effet de commerce). Vous restez en relation avec votre client.',
         badge: 'Souple · banque',
       },
       {
@@ -176,20 +174,19 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
   });
   nationales.push({
     nom: 'CIP · Centre d\'Information sur la Prévention',
-    description: 'Rendez-vous gratuit et confidentiel avec d\'anciens chefs d\'entreprise, avocats et comptables bénévoles.',
+    description: 'Rendez-vous gratuit et confidentiel avec un trio de bénévoles : expert-comptable, avocat et ancien juge du tribunal de commerce.',
     site: 'https://www.cip-national.fr',
     badge: 'Gratuit · confidentiel',
   });
   nationales.push({
     nom: 'ADIE · Micro-crédit',
-    description: 'Prêts jusqu\'à 15 000 € remboursables sur 48 mois au plus (adie.org). Accessible même si vous êtes interdit bancaire ou fiché FICP.',
-    telephone: '0 969 328 110',
+    description: 'Prêts jusqu\'à 15 000 € remboursables sur 48 mois au plus (adie.org), pour les personnes qui n\'ont pas accès au crédit bancaire.',
     site: 'https://www.adie.org',
-    badge: 'Même interdit bancaire',
+    badge: 'Sans accès au crédit bancaire',
   });
   nationales.push({
     nom: 'France Active · Garanties de prêts',
-    description: 'Garantit jusqu\'à 65 % d\'un prêt bancaire, réduisant le risque pour la banque. Accompagnement inclus.',
+    description: 'Garantit une partie d\'un prêt bancaire (de 50 à 80 % selon la garantie et l\'étape du projet), réduisant le risque pour la banque. Accompagnement inclus.',
     site: 'https://www.franceactive.org',
   });
   sections.push({ titre: 'Aides nationales', aides: nationales });

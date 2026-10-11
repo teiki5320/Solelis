@@ -40,7 +40,8 @@ export default function BlocFranchise() {
           avant la signature</strong> du contrat (art. <strong>L330-3 du
           Code de commerce</strong>, loi Doubin). Le DIP doit contenir :
           présentation du réseau, état du marché local, comptes du
-          franchiseur, liste des franchisés sortants, etc.
+          franchiseur, nombre d&apos;exploitants ayant quitté le réseau
+          l&apos;année précédente, etc.
         </p>
         <p className="mt-2 text-sm text-navy/80">
           Un DIP <strong>incomplet, mensonger ou tardif</strong> peut justifier
@@ -82,8 +83,9 @@ export default function BlocFranchise() {
           <strong>non remboursable</strong>, sauf si vous démontrez un{' '}
           <strong>vice du contrat</strong> (DIP défaillant, défaut d&apos;assistance
           du franchiseur, savoir-faire inexistant ou inadapté). La
-          jurisprudence retient la nullité dès lors que le franchiseur n&apos;a
-          pas réellement transmis un savoir-faire substantiel et identifié.
+          jurisprudence a déjà retenu la nullité lorsque le franchiseur
+          n&apos;avait pas réellement transmis un savoir-faire substantiel
+          et identifié.
         </p>
       </div>
 
@@ -93,16 +95,17 @@ export default function BlocFranchise() {
           Clause de non-concurrence post-contractuelle
         </p>
         <p className="mt-2 text-sm text-navy/80">
-          Depuis la <strong>loi Macron (2015)</strong> et le règlement
-          européen 330/2010, la clause de non-concurrence post-contractuelle
-          n&apos;est valable que si elle est :
+          Depuis la <strong>loi Macron (2015)</strong> (art. L341-2 C.
+          com., réseaux de commerce de détail), la clause de
+          non-concurrence post-contractuelle n&apos;est valable que si
+          elle est :
         </p>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li><strong>Limitée à 1 an maximum</strong> après la fin du contrat</li>
           <li>Limitée aux <strong>locaux où vous exerciez</strong> (pas de
             zone géographique étendue)</li>
-          <li>Indispensable à la protection du savoir-faire transmis</li>
-          <li>Proportionnée aux intérêts du franchiseur</li>
+          <li>Indispensable à la protection d&apos;un savoir-faire substantiel, spécifique et secret transmis par le contrat</li>
+          <li>Limitée aux biens et services en concurrence avec ceux du contrat</li>
         </ul>
         <p className="mt-2 text-sm text-navy/80">
           Toute clause excédant ces limites est <strong>réputée non écrite</strong>.
@@ -117,8 +120,9 @@ export default function BlocFranchise() {
           Médiation de la Fédération Française de la Franchise (FFF)
         </p>
         <p className="mt-1 text-xs text-navy/60">
-          Service gratuit et confidentiel, ouvert même si le franchiseur
-          n&apos;est pas adhérent FFF
+          Médiation confidentielle et payante (150 € de frais
+          d&apos;ouverture de dossier, coût connu dès la saisine), ouverte
+          même si le franchiseur n&apos;est pas adhérent FFF
         </p>
         <div className="mt-3 flex flex-wrap gap-2 text-sm">
           <a
@@ -128,7 +132,7 @@ export default function BlocFranchise() {
             <span aria-hidden>☎</span> 01 53 75 22 25
           </a>
           <a
-            href="https://www.franchise-fff.com"
+            href="https://www.franchise-fff.com/services-outils/regler-un-differend-en-franchise/mediation-franchise/"
             target="_blank"
             rel="noreferrer"
             className="rounded-full bg-white/80 px-3 py-1.5 text-bleu-fonce hover:bg-white"
@@ -139,9 +143,11 @@ export default function BlocFranchise() {
       </div>
 
       <p className="mt-5 text-xs text-navy/50">
-        Sources : Code de commerce, art. L330-3 (loi Doubin du 31 décembre 1989) ;
-        Règlement UE 330/2010 sur les restrictions verticales ; loi Macron
-        n° 2015-990 du 6 août 2015 ; Fédération Française de la Franchise.
+        Sources : Code de commerce, art. L330-3 et R330-1 (loi Doubin du
+        31 décembre 1989) et L341-2 (loi Macron n° 2015-990 du 6 août
+        2015) ; règlement (UE) 2022/720 sur les restrictions verticales
+        (qui a remplacé le règlement 330/2010) ; Fédération Française de
+        la Franchise (médiation M2F).
       </p>
     </BlocAccordeon>
   );

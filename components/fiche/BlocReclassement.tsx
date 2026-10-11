@@ -10,7 +10,7 @@ import BlocAccordeon from './BlocAccordeon';
  *
  * Couvre le CSP (obligatoire < 1000 salariés), le congé de reclassement
  * (≥ 1000), le PSE (≥ 50 et ≥ 10 licenciements/30j), ainsi que les
- * dispositifs de formation (FNE, AFE) et les contacts utiles.
+ * dispositifs de formation (FNE, RFF, POE) et les contacts utiles.
  *
  * Voir aussi `getObligationsLicenciement()` dans lib/secteur.ts pour
  * le détail des obligations selon l'effectif exact.
@@ -55,7 +55,8 @@ export default function BlocReclassement() {
           </li>
           <li>
             <strong>Accompagnement renforcé</strong> par un conseiller
-            référent France Travail (entretiens hebdomadaires).
+            France Travail spécialisé (ou un opérateur habilité), pour un
+            retour à l&apos;emploi ou une création d&apos;entreprise.
           </li>
           <li>
             <strong>Délai : 21 jours</strong> pour le salarié pour accepter
@@ -128,14 +129,14 @@ export default function BlocReclassement() {
           <li>
             <strong>FNE-Formation</strong> : financement par l&apos;État des
             actions de formation pour maintenir l&apos;emploi pendant une
-            baisse d&apos;activité. Mobilisable en activité partielle ou en
-            difficulté économique.
+            baisse d&apos;activité. Conditions en vigueur à vérifier
+            auprès de votre OPCO ou de la DREETS.
           </li>
           <li>
-            <strong>AFE — Allocation de Fin d&apos;Études</strong> :
-            destinée aux salariés engagés dans une formation longue au
-            moment du licenciement, pour leur permettre d&apos;aller au
-            bout de leur cursus.
+            <strong>RFF — Rémunération de fin de formation</strong> :
+            versée par France Travail au demandeur d&apos;emploi dont les
+            droits à l&apos;allocation s&apos;arrêtent avant la fin
+            d&apos;une formation prévue dans son projet, sous conditions.
           </li>
           <li>
             <strong>POE — Préparation Opérationnelle à l&apos;Emploi</strong> :
@@ -149,7 +150,7 @@ export default function BlocReclassement() {
       {opco.cle !== 'autre' && (
         <div className="mt-4 rounded-2xl border border-vert/30 bg-vert/5 p-4">
           <p className="font-display text-base text-vert">
-            Votre OPCO compétent : {opco.nom}
+            Votre OPCO probable (selon votre code NAF ; il dépend de votre convention collective) : {opco.nom}
           </p>
           <p className="mt-2 text-sm text-navy/80">
             {opco.description}
@@ -232,7 +233,7 @@ export default function BlocReclassement() {
         Sources : Code du travail, art. L1233-65 et s. (CSP), L1233-71 et s.
         (congé de reclassement), L1233-61 et s. (PSE) ; circulaires Unédic
         et France Travail relatives à l&apos;ASP ; ministère du Travail
-        (FNE-Formation, AFE, POE).
+        (FNE-Formation, POE) ; francetravail.fr (RFF).
       </p>
     </BlocAccordeon>
   );

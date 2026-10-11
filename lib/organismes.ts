@@ -13,17 +13,33 @@ interface OrganismeLocal {
   site?: string;
 }
 
+/**
+ * Juridiction commerciale avec son ressort, quand le département en compte
+ * plusieurs : codes postaux propres aux communes du ressort (`codesPostaux`)
+ * et, pour un code postal partagé entre plusieurs communes, clés
+ * « code postal|COMMUNE » (`communes`, noms normalisés par normaliserCommune).
+ */
+type TribunalAvecRessort = OrganismeLocal & { codesPostaux?: string[]; communes?: string[] };
+
 export interface DepartementData {
   code: string;
   nom: string;
   chefLieu: string;
-  tribunal: OrganismeLocal;
   /**
-   * Autres juridictions commerciales du département, avec les codes postaux
-   * de leur ressort (ex. tribunal mixte de commerce de Saint-Pierre, 974).
-   * Le tribunal principal (`tribunal`) couvre le reste du département.
+   * Juridiction du chef-lieu. Si elle porte `codesPostaux`, le département
+   * compte plusieurs juridictions commerciales et elle ne couvre que ce
+   * ressort ; sinon elle couvre tout le département hors tribunaux secondaires.
    */
-  tribunauxSecondaires?: (OrganismeLocal & { codesPostaux: string[] })[];
+  tribunal: TribunalAvecRessort;
+  /**
+   * Autres juridictions commerciales du département, avec leur ressort
+   * (ex. tribunal mixte de commerce de Saint-Pierre, 974 ; tribunal de
+   * commerce de Bayonne, 64). Sources : « Données géocodées des structures de
+   * la Justice » et « Liste des juridictions compétentes pour les communes »
+   * (ministère de la Justice, data.gouv.fr, 2026), base officielle des codes
+   * postaux (La Poste).
+   */
+  tribunauxSecondaires?: (TribunalAvecRessort & { codesPostaux: string[] })[];
   cci: OrganismeLocal;
   urssaf: OrganismeLocal;
   sie: OrganismeLocal;
@@ -56,7 +72,7 @@ export interface ContactCotisations {
   telLibelle: string;
   telephoneNote?: string;
   site: string;
-  /** « URSSAF (3698) », « CGSS Réunion (0 820 000 974) », « MSA (numéro de votre caisse sur msa.fr) ». */
+  /** « URSSAF (3698) », « CGSS Réunion (3957) », « MSA (numéro de votre caisse sur msa.fr) ». */
   libelle: string;
 }
 
@@ -88,7 +104,10 @@ export function contactCotisations(
   }
   const dep = departement ? DATA[departement] : undefined;
   if (dep?.urssaf && /^9[78]/.test(departement ?? '')) {
-    const tel = dep.urssaf.telephone ?? null;
+    // CGSS : 39 57 pour les employeurs, 36 98 pour les indépendant·e·s
+    // (cgss-martinique.fr, « Urssaf employeurs » / « Urssaf indépendants »).
+    const brut = dep.urssaf.telephone ?? null;
+    const tel = effectif === 'independant' && brut?.replace(/\s/g, '') === '3957' ? '3698' : brut;
     return fabrique(dep.urssaf.nom, tel, tel ?? 'coordonnées sur le site de la caisse', dep.urssaf.site ?? 'https://www.urssaf.fr', dep.urssaf.telephoneNote);
   }
   if (sector.secteur === 'agriculture') {
@@ -100,21 +119,67 @@ export function contactCotisations(
   return fabrique('URSSAF', tel, tel, 'https://www.urssaf.fr');
 }
 
-/**
- * Tribunal du département dont dépend le code postal : tribunal secondaire
- * si le code postal figure dans son ressort, tribunal principal sinon.
- */
-export function tribunalSelonCodePostal(dep: DepartementData, codePostal?: string): OrganismeLocal {
-  const cp = (codePostal ?? '').trim();
-  const secondaire = cp ? dep.tribunauxSecondaires?.find((t) => t.codesPostaux.includes(cp)) : undefined;
-  if (!secondaire) return dep.tribunal;
+/** Nom de commune comparable à la base officielle des codes postaux (« ST QUENTIN »). */
+export function normaliserCommune(ville: string): string {
+  return ville
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toUpperCase()
+    .replace(/[^A-Z0-9]+/g, ' ')
+    .trim()
+    .replace(/\bSAINTE\b/g, 'STE')
+    .replace(/\bSAINT\b/g, 'ST');
+}
+
+function sansRessort(t: OrganismeLocal): OrganismeLocal {
   return {
-    nom: secondaire.nom,
-    type: secondaire.type,
-    telephone: secondaire.telephone,
-    telephoneNote: secondaire.telephoneNote,
-    adresse: secondaire.adresse,
-    site: secondaire.site,
+    nom: t.nom,
+    type: t.type,
+    telephone: t.telephone,
+    telephoneNote: t.telephoneNote,
+    adresse: t.adresse,
+    site: t.site,
+  };
+}
+
+/**
+ * Tribunal du département dont dépend l'entreprise, d'après son code postal
+ * (et sa commune quand le code postal est partagé) :
+ * - tribunal secondaire si l'adresse est dans son ressort ;
+ * - département à une seule juridiction : le tribunal principal ;
+ * - département à plusieurs juridictions et ressort non déterminé : carte
+ *   générique « … dont dépend votre siège », avec la liste des juridictions
+ *   du département (jamais un tribunal possiblement faux).
+ */
+export function tribunalSelonCodePostal(dep: DepartementData, codePostal?: string, ville?: string): OrganismeLocal {
+  const cp = (codePostal ?? '').trim();
+  const cle = cp && ville ? `${cp}|${normaliserCommune(ville)}` : '';
+  const couvre = (t: TribunalAvecRessort) =>
+    !!cp && ((t.codesPostaux ?? []).includes(cp) || (!!cle && (t.communes ?? []).includes(cle)));
+  const secondaire = dep.tribunauxSecondaires?.find(couvre);
+  if (secondaire) return sansRessort(secondaire);
+  if (!dep.tribunal.codesPostaux || couvre(dep.tribunal)) return sansRessort(dep.tribunal);
+  const tous = [dep.tribunal, ...(dep.tribunauxSecondaires ?? [])];
+  const alsaceMoselle = tous.every((t) => /chambre commerciale/i.test(t.type));
+  const avecTae = tous.some((t) => /activit[ée]s [ée]conomiques/i.test(t.type));
+  const liste = tous
+    .map((t) => t.nom.replace(/\s+-\s+Chambre commerciale$/i, ''))
+    .join(', ');
+  if (alsaceMoselle) {
+    return {
+      nom: 'Chambre commerciale du tribunal judiciaire dont dépend votre siège',
+      type: 'Chambre commerciale du tribunal judiciaire',
+      adresse: `Dans le département : ${liste}`,
+      site: 'https://www.justice.fr/recherche/annuaires',
+    };
+  }
+  return {
+    nom: avecTae
+      ? 'Tribunal de commerce ou des activités économiques dont dépend votre siège'
+      : 'Tribunal de commerce dont dépend votre siège',
+    type: avecTae ? 'Tribunal de commerce ou tribunal des activités économiques' : 'Tribunal de commerce',
+    adresse: `Dans le département : ${liste}`,
+    site: 'https://www.justice.fr/recherche/annuaires',
   };
 }
 
@@ -180,6 +245,17 @@ export function carteTribunal(
     site: tribunal.site,
   };
   if (juridiction !== 'TJ') return carteLocale;
+  // Département à TAE et tribunaux de commerce, ressort non déterminé : TAE
+  // (compétent pour tous les débiteurs) ou tribunal judiciaire.
+  if (/ ou tribunal des activit/i.test(tribunal.type)) {
+    return {
+      nom: 'Tribunal judiciaire ou tribunal des activités économiques dont dépend votre siège',
+      type: 'Tribunal judiciaire ou tribunal des activités économiques',
+      adresse: tribunal.adresse,
+      site: 'https://www.justice.fr/recherche/annuaires',
+      badge: 'Art. L621-2 C. com.',
+    };
+  }
   if (/activit[ée]s [ée]conomiques/i.test(tribunal.type)) {
     return { ...carteLocale, badge: 'Sauf professions du droit (tribunal judiciaire)' };
   }
@@ -384,9 +460,10 @@ export function buildOrganismes(
   }
   if (reponses.probleme === 'fournisseurs') {
     fin.push({
+      // Saisine en ligne uniquement : aucun numéro public sur le site du
+      // Médiateur des entreprises.
       nom: 'Médiateur des entreprises',
-      type: 'Différends fournisseurs',
-      telephone: '01 53 17 87 40',
+      type: 'Différends fournisseurs · saisine en ligne',
       site: 'https://www.economie.gouv.fr/mediateur-des-entreprises',
       badge: 'Gratuit',
     });
@@ -403,16 +480,17 @@ export function buildOrganismes(
   const soc: OrganismeCard[] = [];
   if (reponses.effectif === 'salaries') {
     soc.push({
+      // Pas de numéro national publié (ags-garantie-salaires.org : formulaire
+      // de contact et CGEA régionaux).
       nom: 'AGS',
       type: 'Garantie des salaires',
-      telephone: '01 55 90 27 00',
       site: 'https://www.ags-garantie-salaires.org',
       badge: 'Si salariés',
     });
     if (dep?.dreets) {
       soc.push({
         nom: dep.dreets.nom,
-        type: 'DREETS',
+        type: dep.dreets.type || 'Services de l\'État · travail et emploi',
         telephone: dep.dreets.telephone,
         site: dep.dreets.site ?? 'https://dreets.gouv.fr',
       });
@@ -425,12 +503,16 @@ export function buildOrganismes(
     }
   }
   if (reponses.effectif === 'independant') {
+    // La « Sécurité sociale des indépendants » (SSI) a disparu le 1er janvier
+    // 2020 : l'action sociale des indépendant·e·s est celle du CPSTI, demandée
+    // à l'Urssaf (urssaf.fr, « Comment solliciter l'action sanitaire et sociale
+    // du CPSTI ? »).
     soc.push({
-      nom: 'SSI · Sécurité Sociale des Indépendants',
-      type: 'Action sociale dirigeants',
+      nom: 'Urssaf · Action sociale du CPSTI',
+      type: 'Aides aux indépendant·e·s en difficulté (cotisations, aide financière exceptionnelle)',
       telephone: '3698',
-      site: 'https://www.secu-independants.fr',
-      badge: 'Aides dédiées indépendants',
+      site: 'https://www.urssaf.fr/accueil/services/services-independants/solliciter-action-sociale-cpsti.html',
+      badge: 'Sur demande · au cas par cas',
     });
     soc.push({
       nom: 'France Travail Indépendants',
@@ -493,7 +575,8 @@ export function buildAidesPersonnelles(reponses: Reponses): GroupeOrganismes {
   cartes.push({
     nom: 'CSS · Complémentaire Santé Solidaire',
     type: 'Assurance Maladie',
-    telephone: '0 800 17 13 23',
+    // 3646 : numéro de l'Assurance Maladie (lannuaire.service-public.gouv.fr).
+    telephone: '3646',
     site: 'https://www.complementaire-sante-solidaire.gouv.fr',
     badge: 'Gratuit ou < 1€/jour',
   });
@@ -605,8 +688,8 @@ export function buildSoutien(reponses: Reponses): GroupeOrganismes {
 
   cartes.push({
     nom: 'BGE · Boutiques de Gestion',
+    // Pas de numéro national : chaque BGE a ses coordonnées (bge.asso.fr).
     type: 'Accompagnement créateurs/repreneurs',
-    telephone: '01 43 55 03 03',
     site: 'https://www.bge.asso.fr',
     badge: 'Rebond et reconversion',
   });
@@ -699,7 +782,8 @@ export function buildReseauxSpecifiques(
     femmes.push({
       nom: 'Force Femmes',
       type: 'Femmes > 45 ans · accompagnement emploi/création',
-      telephone: '01 44 51 03 53',
+      // forcefemmes.com/nous-contacter : siège et Île-de-France.
+      telephone: '01 42 63 59 49',
       site: 'https://www.forcefemmes.com',
       badge: 'Gratuit · > 45 ans',
     });
@@ -723,9 +807,8 @@ export function buildReseauxSpecifiques(
         {
           nom: '1 jeune 1 mentor',
           type: 'Mentorat · 16-30 ans',
-          telephone: '0 800 712 712',
           site: 'https://www.1jeune1mentor.fr',
-          badge: 'Gratuit · numéro vert',
+          badge: 'Gratuit',
         },
         {
           nom: 'Mission Locale',
@@ -742,7 +825,6 @@ export function buildReseauxSpecifiques(
         {
           nom: 'Adie Créajeunes',
           type: 'Microcrédit + accompagnement',
-          telephone: '0 969 328 110',
           site: 'https://www.adie.org',
           badge: 'Spécial < 32 ans',
         },
@@ -767,14 +849,13 @@ export function buildReseauxSpecifiques(
         {
           nom: "EGEE · Entente des Générations pour l'Emploi",
           type: 'Anciens dirigeants bénévoles',
-          telephone: '01 47 05 57 71',
           site: 'https://www.egee.asso.fr',
           badge: 'Conseil gratuit · présentiel',
         },
         {
           nom: 'ECTI · Experts retraités',
           type: 'Échanges et Consultations Techniques Internationaux',
-          telephone: '01 53 41 80 80',
+          telephone: '01 41 40 36 00',
           site: 'https://www.ecti.org',
           badge: 'Mission de conseil',
         },
@@ -870,7 +951,7 @@ export function buildReseauxSpecifiques(
           type: 'Écoute · prévention suicide',
           telephone: '01 40 44 46 45',
           site: 'https://www.sos-suicide-phenix.org',
-          badge: 'Tous les jours · gratuit',
+          badge: 'Tous les jours, 13 h – 23 h · prix d\'un appel local',
         },
         {
           nom: 'Suicide Écoute',

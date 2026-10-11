@@ -63,8 +63,7 @@ export default function BlocAidesEtat() {
       cle: 'ccsf',
       nom: 'CCSF — Commission des chefs des services financiers',
       description:
-        "Plan d'apurement unique couvrant à la fois vos dettes fiscales (impôts, TVA, IS) et sociales (URSSAF, retraite). Durée fixée par la commission. Saisine via la DDFiP.",
-      telephone: '0 809 401 401',
+        "Plan d'apurement unique couvrant à la fois vos dettes fiscales (impôts, TVA, IS) et sociales (URSSAF, retraite). Durée fixée par la commission. Saisine auprès du secrétariat permanent de la CCSF, à la DDFiP de votre département.",
       site: 'https://www.impots.gouv.fr/professionnel/accompagnement-individualise-en-cas-de-difficultes-economiques-et-financieres',
       badge: 'Dettes fiscales + sociales',
       accent: 'vert',
@@ -122,7 +121,7 @@ export default function BlocAidesEtat() {
       description:
         "Cofinancement européen pour les actions de reclassement, formation et accompagnement des salariés lors de restructurations. Géré par les Régions (volet décentralisé) et la DGEFP (volet national). Mobilisable en complément d'un PSE ou d'un plan de reclassement.",
       site: 'https://www.fse.gouv.fr',
-      badge: 'Cofinancement UE · jusqu\'à 60 %',
+      badge: 'Cofinancement UE',
       accent: 'bleu',
     });
   }

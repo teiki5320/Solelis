@@ -37,17 +37,22 @@ const options: Option[] = [
       {
         label: 'Avantages',
         value:
-          'Préserve l’activité et les emplois. Le repreneur ne reprend PAS les dettes.',
+          'Préserve l’activité et les emplois. Le repreneur ne reprend PAS les dettes du vendeur (mais les contrats de travail lui sont transférés — C. trav. art. L1224-1).',
       },
       {
         label: 'Formalités',
         value:
-          'Publication JAL + BODACC. Créanciers ont 10 jours pour s’opposer.',
+          'Publication dans un journal d’annonces légales sous 15 jours, puis au BODACC. Les créanciers ont 10 jours après la publication au BODACC pour s’opposer au paiement du prix.',
       },
       {
         label: 'Coût',
         value:
-          'Droits d’enregistrement à la charge de l’acheteur (3 % à 5 %).',
+          'Droits d’enregistrement : 0 % jusqu’à 23 000 €, 3 % de 23 000 à 200 000 €, 5 % au-delà. En principe à la charge de l’acheteur (l’acte peut prévoir autre chose).',
+      },
+      {
+        label: 'Salarié·e·s',
+        value:
+          'Entreprise de moins de 250 salarié·e·s, hors procédure collective ou conciliation : informez les salarié·e·s (ou le CSE à partir de 50 salarié·e·s s’il existe) au moins 1 mois avant la vente — 2 mois pour les ventes conclues jusqu’au 27 juillet 2026 (loi n° 2026-403 du 26 mai 2026). Sinon : dommages et intérêts jusqu’à 0,5 % du prix.',
       },
     ],
     conseil:
@@ -71,7 +76,12 @@ const options: Option[] = [
       {
         label: 'Attention',
         value:
-          'Ne vous libère PAS de vos cautions personnelles sauf si le repreneur les assume expressément.',
+          'Ne vous libère PAS de vos cautions personnelles : seul le créancier (la banque) peut accepter de vous en décharger, par exemple contre une nouvelle garantie du repreneur.',
+      },
+      {
+        label: 'Salarié·e·s',
+        value:
+          'Cession de plus de 50 % du capital d’une société de moins de 250 salarié·e·s, hors procédure collective ou conciliation : informez les salarié·e·s (ou le CSE à partir de 50 salarié·e·s s’il existe) au moins 1 mois avant — 2 mois pour les cessions conclues jusqu’au 27 juillet 2026. Sinon : dommages et intérêts jusqu’à 0,5 % du prix.',
       },
       {
         label: 'Si en difficulté',
@@ -105,14 +115,14 @@ const options: Option[] = [
       {
         label: 'Durée',
         value:
-          'Libre. En procédure, la vente doit intervenir dans 2 ans.',
+          'Libre. Dans un plan de cession, l’entreprise doit être effectivement vendue dans les 2 ans du jugement qui arrête le plan (art. L642-15 Code de commerce).',
       },
     ],
     conseil:
       'La location-gérance peut être un tremplin vers une vente dans de meilleures conditions.',
   },
   {
-    titre: 'Plan de cession (en redressement judiciaire)',
+    titre: 'Plan de cession (redressement ou liquidation judiciaire)',
     borderColor: 'border-rouge',
     dotColor: 'bg-rouge',
     champs: [
@@ -124,17 +134,17 @@ const options: Option[] = [
       {
         label: 'Quand',
         value:
-          'Pendant un redressement judiciaire, quand le plan de continuation n’est pas viable.',
+          'En redressement judiciaire, quand l’entreprise ne peut pas se redresser seule (art. L631-22 Code de commerce), ou en liquidation judiciaire (art. L642-1).',
       },
       {
         label: 'Le repreneur',
         value:
-          'Reprend l’activité et les salariés mais PAS les dettes.',
+          'Reprend l’activité et les contrats de travail compris dans son offre, mais PAS les dettes antérieures (sauf exceptions, par exemple certains prêts ayant financé des biens repris — art. L642-12).',
       },
       {
         label: 'Interdiction',
         value:
-          'Le dirigeant NE PEUT PAS racheter sa propre entreprise (art. L642-3 Code de commerce). Ni le conjoint, ni les ascendants/descendants.',
+          'Le dirigeant (de droit ou de fait) et ses parents ou alliés jusqu’au 2e degré ne peuvent pas présenter d’offre (art. L642-3 Code de commerce), sauf autorisation exceptionnelle du tribunal, sur requête du ministère public, par un jugement spécialement motivé.',
       },
     ],
     conseil:
@@ -148,7 +158,7 @@ const options: Option[] = [
       {
         label: 'Quoi',
         value:
-          'Enchères publiques des actifs de l’entreprise ordonnées par le juge-commissaire pendant la liquidation.',
+          'Vente aux enchères des biens de l’entreprise (immeubles, matériel…) ordonnée par le juge-commissaire pendant la liquidation (art. L642-18 et L642-19 Code de commerce).',
       },
       {
         label: 'Quand',
@@ -162,7 +172,7 @@ const options: Option[] = [
       {
         label: 'Interdiction',
         value:
-          'Même interdiction que le plan de cession (dirigeant, conjoint, famille).',
+          'Même interdiction que pour le plan de cession (dirigeant, parents ou alliés jusqu’au 2e degré), sauf dérogation du juge-commissaire sur requête du ministère public (art. L642-20).',
       },
     ],
     conseil:

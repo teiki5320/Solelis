@@ -58,8 +58,8 @@ export default function BlocConjointCollaborateur() {
             <li>
               <strong>Droits chômage</strong> à France Travail si
               licenciement économique (attention : la subordination réelle
-              doit être démontrée — un conjoint co-gérant ne peut pas
-              être salarié).
+              doit être démontrée — un mandat de co-gérant la rend
+              difficile à établir).
             </li>
             <li>
               <strong>CSP obligatoire</strong> si licenciement éco — votre
@@ -85,29 +85,34 @@ export default function BlocConjointCollaborateur() {
           <p className="mt-2 text-sm text-navy/80">
             Statut intermédiaire (loi PACTE 2019 + loi de financement de la sécurité sociale pour 2022).
             Le conjoint participe sans rémunération mais est{' '}
-            <strong>inscrit au RCS / RM</strong> et cotise pour sa
-            retraite et la prévoyance.
+            <strong>mentionné au registre national des entreprises
+            (RNE)</strong> et cotise pour sa retraite et la prévoyance.
           </p>
           <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-navy/80">
             <li>
               <strong>Durée limitée à 5 ans cumulés</strong> (loi de
               financement de la sécurité sociale pour 2022) — au-delà, basculement obligatoire en salarié ou
-              associé. Vérifiez si vous approchez de la limite.
+              associé (à défaut, conjoint salarié). Pour un statut adopté
+              avant 2022, il prend fin au 31 décembre 2026, sauf exception
+              de fin de carrière.
             </li>
             <li>
               <strong>Pas d&apos;AGS</strong> ni d&apos;allocation chômage
               (pas de contrat de travail).
             </li>
             <li>
-              <strong>Pouvoirs de gestion</strong> : peut accomplir des
-              actes d&apos;administration courante au nom de l&apos;entreprise
-              (commandes, factures), engageant solidairement le chef
-              d&apos;entreprise.
+              <strong>Pouvoirs de gestion</strong> : réputé avoir reçu
+              mandat d&apos;accomplir les actes d&apos;administration pour
+              les besoins de l&apos;entreprise (commandes, factures). Ces
+              actes engagent le chef d&apos;entreprise, sans obligation
+              personnelle pour le conjoint (art. L121-6 et L121-7 C. com.).
             </li>
             <li>
               <strong>Cotisations</strong> à l&apos;URSSAF (TI) ou à la
-              MSA, sur une assiette forfaitaire ou réelle au choix.
-              Calculées sur le revenu professionnel du chef d&apos;entreprise.
+              MSA, sur une assiette au choix : forfaitaire (un tiers du
+              plafond annuel de la sécurité sociale) ou fraction (un tiers
+              ou la moitié) du revenu professionnel du chef
+              d&apos;entreprise, avec ou sans partage.
             </li>
             <li>
               <strong>En procédure collective</strong> : les droits
@@ -132,22 +137,25 @@ export default function BlocConjointCollaborateur() {
               caution personnelle, garantie ou faute de gestion).
             </li>
             <li>
-              <strong>Co-gérant</strong> possible : si oui, statut TNS
-              (cotisations indépendants) si gérant majoritaire, sinon
-              assimilé salarié (sans chômage).
+              <strong>Co-gérant</strong> possible : en SARL, statut TNS
+              (cotisations indépendants) si la gérance est majoritaire
+              (parts des gérants et de leurs conjoints additionnées),
+              sinon assimilé salarié (sans chômage).
             </li>
             <li>
               <strong>Risque en cessation</strong> : si votre conjoint est
-              co-gérant ET la justice retient une <strong>solidarité de
-              gestion</strong>, l&apos;action en comblement de passif
-              (L651-2) peut le viser à titre personnel. La preuve
+              co-gérant·e (dirigeant·e de droit), l&apos;action en
+              responsabilité pour insuffisance d&apos;actif (L651-2) peut le
+              viser à titre personnel en cas de faute de gestion ayant
+              contribué à cette insuffisance. La preuve
               d&apos;une participation effective à la décision fautive
               est nécessaire.
             </li>
             <li>
               <strong>Dividendes</strong> : suspendus en procédure
-              collective, et déjà perçus peuvent être réclamés s&apos;ils
-              relèvent de la période suspecte (L632-1).
+              collective ; ceux déjà versés peuvent être remis en cause
+              s&apos;ils l&apos;ont été pendant la période suspecte (art.
+              L632-1 et L632-2).
             </li>
           </ul>
         </div>

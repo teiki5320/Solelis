@@ -78,7 +78,7 @@ const CAS: SecteurCase[] = [
     cle: 'commerce',
     naf: '47.11D', // Supermarchés
     labelContient: /commerce/i,
-    syndicatsAttendus: ['CdCF', 'FCD', 'CGI'],
+    syndicatsAttendus: ['CdCF', 'FCD', 'CGF'],
     opcoAttendu: 'opcommerce', // 47 → L'Opcommerce (OPCO du commerce)
   },
   {
@@ -92,15 +92,15 @@ const CAS: SecteurCase[] = [
     cle: 'hotellerie',
     naf: '56.10A', // Restauration traditionnelle
     labelContient: /Hôtellerie|Restauration/i,
-    syndicatsAttendus: ['UMIH', 'GNI', 'GHR'],
+    syndicatsAttendus: ['UMIH', 'GHR'],
     opcoAttendu: 'akto',
   },
   {
     cle: 'information',
     naf: '62.01Z', // Programmation informatique
     labelContient: /Numérique|IT|information/i,
-    syndicatsAttendus: ['Numeum', 'CINOV-IT', 'France Digitale'],
-    opcoAttendu: ['akto', 'atlas'], // 62 → AKTO/ATLAS selon nos règles
+    syndicatsAttendus: ['Numeum', 'Cinov Digital', 'France Digitale'],
+    opcoAttendu: 'atlas', // 62.01Z → ATLAS (93 % des établissements, France compétences)
   },
   {
     cle: 'finance',
@@ -121,15 +121,15 @@ const CAS: SecteurCase[] = [
     naf: '69.10Z', // Activités juridiques
     labelContient: /libéral/i,
     syndicatsAttendus: ['UNAPL', 'CNB', 'OEC', 'AGEA'],
-    caissesAttendues: ['CNBF', 'CRPCEN', 'CAVOM', 'CAVAMAC'],
-    opcoAttendu: 'atlas',
+    caissesAttendues: ['CNBF', 'CPRN', 'CAVOM', 'CAVAMAC'],
+    opcoAttendu: 'opco-ep', // 69.10Z → OPCO EP (cabinets d'avocats, notariat : 96 %, France compétences)
   },
   {
     cle: 'education',
     naf: '85.59A', // Formation continue d'adultes
     labelContient: /Éducation|Formation/i,
-    syndicatsAttendus: ['FFP', 'SYNOFDES', 'CINOV Formation'],
-    opcoAttendu: 'uniformation',
+    syndicatsAttendus: ['Les Acteurs de la Compétence', 'SYNOFDES', 'CINOV Formation'],
+    opcoAttendu: 'akto', // 85.59A → AKTO (organismes de formation : 80 %, France compétences)
   },
   {
     cle: 'sante',

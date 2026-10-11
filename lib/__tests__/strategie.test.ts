@@ -256,9 +256,13 @@ describe('buildStrategie', () => {
   });
 
   it('cite le tribunal du département, jamais « tribunal de commerce de <commune> »', () => {
+    const lyon = buildStrategie('sauvegarder', makeReponses(), makeCompany({ ville: 'LYON', departement: '69', codePostal: '69003' }), 5);
+    expect(lyon.etapes.join(' ')).toContain('Tribunal des activités économiques de Lyon');
+    // Rhône : deux juridictions (TAE de Lyon, TC de Villefranche-Tarare) ; hors
+    // de leur commune siège, le ressort n'est pas déterminé → carte générique.
     const strat = buildStrategie('sauvegarder', makeReponses(), makeCompany({ ville: 'Villeurbanne', departement: '69', codePostal: '69100' }), 5);
     const etapesJointes = strat.etapes.join(' ');
-    expect(etapesJointes).toContain('Tribunal des activités économiques de Lyon');
+    expect(etapesJointes).toContain('tribunal de commerce ou des activités économiques dont dépend votre siège');
     expect(etapesJointes).not.toMatch(/tribunal de commerce de Villeurbanne/i);
   });
 });

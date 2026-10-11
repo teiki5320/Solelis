@@ -23,90 +23,78 @@ const REGIONS = [
   'Bourgogne-Franche-Comté',
   'Centre-Val de Loire',
   'Normandie',
-  'Corse',
+  'Outre-mer',
 ];
 
-// Source : cip-national.fr — extraits indicatifs au 2025
-// Environ 60 CIP territoriaux : la liste complète et à jour est sur cip-national.fr
+// Source : carte officielle des CIP territoriaux sur cip-national.fr
+// (consultée en octobre 2026 : 52 CIP). Le CIP National indique « une soixantaine »
+// de CIP territoriaux : la liste complète et à jour (adresses, téléphones) est sur cip-national.fr.
 const CIP_PRINCIPAUX: CIP[] = [
   // — Île-de-France —
-  { region: 'Île-de-France', ville: 'Paris', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Paris (TC Paris)' },
-  { region: 'Île-de-France', ville: 'Nanterre', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Hauts-de-Seine' },
-  { region: 'Île-de-France', ville: 'Bobigny', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Seine-Saint-Denis' },
-  { region: 'Île-de-France', ville: 'Créteil', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Val-de-Marne' },
-  { region: 'Île-de-France', ville: 'Évry', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Essonne' },
-  { region: 'Île-de-France', ville: 'Versailles', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Yvelines' },
-  { region: 'Île-de-France', ville: 'Pontoise', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Val-d\'Oise' },
+  { region: 'Île-de-France', ville: 'Paris', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Paris (75) — CCI de Paris' },
+  { region: 'Île-de-France', ville: 'Nanterre', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Hauts-de-Seine (92) — CMA' },
+  { region: 'Île-de-France', ville: 'Bobigny', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Seine-Saint-Denis (93) — CCI' },
+  { region: 'Île-de-France', ville: 'Lisses', permanenceFrequence: 'sur rendez-vous', contact: 'CIP de l\'Essonne (91)' },
+  { region: 'Île-de-France', ville: 'Versailles', permanenceFrequence: 'sur rendez-vous', contact: 'CIP des Yvelines (78)' },
+  { region: 'Île-de-France', ville: 'Vaux-le-Pénil', permanenceFrequence: 'sur rendez-vous', contact: 'CIP de Seine-et-Marne (77)' },
   // — Auvergne-Rhône-Alpes —
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Lyon', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Rhône' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Grenoble', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Isère' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Saint-Étienne', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Loire' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Clermont-Ferrand', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Puy-de-Dôme' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Chambéry', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Savoie' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Annecy', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Haute-Savoie' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Valence', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Drôme' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Bourg-en-Bresse', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Ain' },
+  { region: 'Auvergne-Rhône-Alpes', ville: 'Bourg-en-Bresse', permanenceFrequence: 'sur rendez-vous', contact: 'CIP de l\'Ain (01)' },
+  { region: 'Auvergne-Rhône-Alpes', ville: 'Le Puy-en-Velay', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Haute-Loire (43)' },
+  { region: 'Auvergne-Rhône-Alpes', ville: 'Saint-Étienne', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Loire Sud (42)' },
+  { region: 'Auvergne-Rhône-Alpes', ville: 'Roanne', permanenceFrequence: 'sur rendez-vous', contact: 'CIP du Bassin roannais (42)' },
   // — Provence-Alpes-Côte d'Azur —
-  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Marseille', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Bouches-du-Rhône' },
-  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Nice', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Alpes-Maritimes' },
-  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Aix-en-Provence', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Aix-en-Provence' },
-  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Toulon', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Var' },
-  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Avignon', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Vaucluse' },
-  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Draguignan', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Draguignan' },
+  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Nice', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Alpes-Maritimes (06) — CCI Nice Côte d\'Azur' },
+  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Manosque', permanenceFrequence: 'sur rendez-vous', contact: 'CIP des Alpes-de-Haute-Provence (04)' },
+  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Gap', permanenceFrequence: 'sur rendez-vous', contact: 'CIP des Hautes-Alpes (05) — CCI' },
+  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Toulon', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Toulon (83) — Maison de justice et du droit' },
+  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Draguignan', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Haut-Centre Var (83) — CMA du Var' },
+  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Pernes-les-Fontaines', permanenceFrequence: 'sur rendez-vous', contact: 'CIP du Vaucluse (84)' },
   // — Occitanie —
-  { region: 'Occitanie', ville: 'Toulouse', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Haute-Garonne' },
-  { region: 'Occitanie', ville: 'Montpellier', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Hérault' },
-  { region: 'Occitanie', ville: 'Nîmes', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Gard' },
-  { region: 'Occitanie', ville: 'Perpignan', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Pyrénées-Orientales' },
-  { region: 'Occitanie', ville: 'Albi', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Tarn' },
-  { region: 'Occitanie', ville: 'Tarbes', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Hautes-Pyrénées' },
-  { region: 'Occitanie', ville: 'Montauban', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Tarn-et-Garonne' },
+  { region: 'Occitanie', ville: 'Toulouse', permanenceFrequence: 'sur rendez-vous', contact: 'CIP de Haute-Garonne (31) — Ordre des experts-comptables' },
+  { region: 'Occitanie', ville: 'Mauguio', permanenceFrequence: 'sur rendez-vous', contact: 'CIP de l\'Hérault (34) — CCI Hérault' },
+  { region: 'Occitanie', ville: 'Béziers', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Béziers (34) — CCI Hérault' },
+  { region: 'Occitanie', ville: 'Nîmes', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Gard (30) — CCI' },
+  { region: 'Occitanie', ville: 'Carcassonne', permanenceFrequence: 'sur rendez-vous', contact: 'CIP de l\'Aude (11) — CCI' },
+  { region: 'Occitanie', ville: 'Narbonne', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Narbonne (11)' },
+  { region: 'Occitanie', ville: 'Cahors', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Lot (46) — CCI' },
+  { region: 'Occitanie', ville: 'Tarbes', permanenceFrequence: 'sur rendez-vous', contact: 'CIP de Tarbes (65) — CCI' },
+  { region: 'Occitanie', ville: 'Montauban', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Tarn-et-Garonne (82) — CCI' },
   // — Nouvelle-Aquitaine —
-  { region: 'Nouvelle-Aquitaine', ville: 'Bordeaux', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Gironde' },
-  { region: 'Nouvelle-Aquitaine', ville: 'Limoges', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Haute-Vienne' },
-  { region: 'Nouvelle-Aquitaine', ville: 'Poitiers', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Vienne' },
-  { region: 'Nouvelle-Aquitaine', ville: 'La Rochelle', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Charente-Maritime' },
-  { region: 'Nouvelle-Aquitaine', ville: 'Angoulême', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Charente' },
-  { region: 'Nouvelle-Aquitaine', ville: 'Pau', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Pyrénées-Atlantiques' },
-  { region: 'Nouvelle-Aquitaine', ville: 'Bayonne', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Pays basque' },
+  { region: 'Nouvelle-Aquitaine', ville: 'Bordeaux', permanenceFrequence: 'sur rendez-vous', contact: 'CIP de Gironde (33) — CCI' },
+  { region: 'Nouvelle-Aquitaine', ville: 'Angoulême', permanenceFrequence: 'sur rendez-vous', contact: 'CIP de Charente (16)' },
+  { region: 'Nouvelle-Aquitaine', ville: 'Bayonne', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Pyrénées-Atlantiques (64)' },
+  { region: 'Nouvelle-Aquitaine', ville: 'Marmande', permanenceFrequence: 'sur rendez-vous', contact: 'CIP du Lot-et-Garonne (47)' },
   // — Pays de la Loire —
-  { region: 'Pays de la Loire', ville: 'Nantes', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Loire-Atlantique' },
-  { region: 'Pays de la Loire', ville: 'Angers', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Maine-et-Loire' },
-  { region: 'Pays de la Loire', ville: 'Le Mans', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Sarthe' },
-  { region: 'Pays de la Loire', ville: 'La Roche-sur-Yon', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Vendée' },
+  { region: 'Pays de la Loire', ville: 'Nantes', permanenceFrequence: 'sur rendez-vous', contact: 'CIP de Loire-Atlantique (44) — Ordre des experts-comptables' },
+  { region: 'Pays de la Loire', ville: 'Angers', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Maine-et-Loire (49)' },
+  { region: 'Pays de la Loire', ville: 'Le Mans', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Sarthe (72)' },
+  { region: 'Pays de la Loire', ville: 'Laval', permanenceFrequence: 'sur rendez-vous', contact: 'CIP de Mayenne (53)' },
+  { region: 'Pays de la Loire', ville: 'La Roche-sur-Yon', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Vendée (85) — CMA' },
   // — Bretagne —
-  { region: 'Bretagne', ville: 'Rennes', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Ille-et-Vilaine' },
-  { region: 'Bretagne', ville: 'Brest', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Finistère' },
-  { region: 'Bretagne', ville: 'Vannes', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Morbihan' },
-  { region: 'Bretagne', ville: 'Saint-Brieuc', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Côtes-d\'Armor' },
+  { region: 'Bretagne', ville: 'Saint-Brieuc', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Côtes-d\'Armor (22) — CCI' },
+  { region: 'Bretagne', ville: 'Lorient', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Morbihan (56)' },
   // — Hauts-de-France —
-  { region: 'Hauts-de-France', ville: 'Lille', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Nord' },
-  { region: 'Hauts-de-France', ville: 'Valenciennes', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Valenciennois' },
-  { region: 'Hauts-de-France', ville: 'Amiens', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Somme' },
-  { region: 'Hauts-de-France', ville: 'Beauvais', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Oise' },
-  { region: 'Hauts-de-France', ville: 'Dunkerque', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Dunkerquois' },
+  { region: 'Hauts-de-France', ville: 'Dunkerque', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Dunkerque Côte d\'Opale (59)' },
   // — Grand Est —
-  { region: 'Grand Est', ville: 'Strasbourg', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Bas-Rhin' },
-  { region: 'Grand Est', ville: 'Nancy', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Meurthe-et-Moselle' },
-  { region: 'Grand Est', ville: 'Metz', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Moselle' },
-  { region: 'Grand Est', ville: 'Reims', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Marne' },
-  { region: 'Grand Est', ville: 'Mulhouse', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Haut-Rhin' },
+  { region: 'Grand Est', ville: 'Reims', permanenceFrequence: 'sur rendez-vous', contact: 'CIP de Champagne-Ardenne (51)' },
+  { region: 'Grand Est', ville: 'Metz', permanenceFrequence: 'sur rendez-vous', contact: 'CIP de Moselle (57) — CCI' },
   // — Bourgogne-Franche-Comté —
-  { region: 'Bourgogne-Franche-Comté', ville: 'Dijon', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Côte-d\'Or' },
-  { region: 'Bourgogne-Franche-Comté', ville: 'Besançon', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Doubs' },
-  { region: 'Bourgogne-Franche-Comté', ville: 'Chalon-sur-Saône', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Saône-et-Loire' },
+  { region: 'Bourgogne-Franche-Comté', ville: 'Besançon', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Doubs (25) — CCI' },
+  { region: 'Bourgogne-Franche-Comté', ville: 'Vesoul', permanenceFrequence: 'sur rendez-vous', contact: 'CIP de Haute-Saône (70) — CCI' },
+  { region: 'Bourgogne-Franche-Comté', ville: 'Belfort', permanenceFrequence: 'sur rendez-vous', contact: 'CIP de Belfort (90) — CCI' },
+  { region: 'Bourgogne-Franche-Comté', ville: 'Chalon-sur-Saône', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Saône-et-Loire (71) — CCI' },
   // — Centre-Val de Loire —
-  { region: 'Centre-Val de Loire', ville: 'Tours', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Indre-et-Loire' },
-  { region: 'Centre-Val de Loire', ville: 'Orléans', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Loiret' },
-  { region: 'Centre-Val de Loire', ville: 'Bourges', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Cher' },
+  { region: 'Centre-Val de Loire', ville: 'Tours', permanenceFrequence: 'sur rendez-vous', contact: 'CIP de Tours (37) — CCI de Touraine' },
+  { region: 'Centre-Val de Loire', ville: 'Châteauroux', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Indre (36) — CCI' },
   // — Normandie —
-  { region: 'Normandie', ville: 'Rouen', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Seine-Maritime' },
-  { region: 'Normandie', ville: 'Caen', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Calvados' },
-  { region: 'Normandie', ville: 'Le Havre', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Le Havre' },
-  { region: 'Normandie', ville: 'Évreux', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Eure' },
-  // — Corse —
-  { region: 'Corse', ville: 'Ajaccio', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Corse-du-Sud' },
-  { region: 'Corse', ville: 'Bastia', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Haute-Corse' },
+  { region: 'Normandie', ville: 'Rouen', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Seine Normandie (76)' },
+  { region: 'Normandie', ville: 'Le Havre', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Seine Estuaire (76) — CCI' },
+  { region: 'Normandie', ville: 'Caen', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Ouest-Normandie — Calvados (14)' },
+  { region: 'Normandie', ville: 'Caen', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Ouest-Normandie — Manche (50)' },
+  { region: 'Normandie', ville: 'Alençon', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Ouest-Normandie — Orne (61)' },
+  // — Outre-mer —
+  { region: 'Outre-mer', ville: 'Pointe-à-Pitre', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Guadeloupe (971) — CCI' },
+  { region: 'Outre-mer', ville: 'Fort-de-France', permanenceFrequence: 'sur rendez-vous', contact: 'CIP Martinique (972) — CCI' },
 ];
 
 export default function CipPage() {
@@ -142,11 +130,10 @@ export default function CipPage() {
         CIP — Centres d&apos;Information sur la Prévention
       </h1>
       <p className="mt-3 text-base text-navy/70">
-        Le CIP est un dispositif national d&apos;<strong>accompagnement
-        gratuit, confidentiel et sans rendez-vous</strong> pour les chefs
-        d&apos;entreprise en difficulté. Les permanences sont assurées par
-        des bénévoles : anciens chefs d&apos;entreprise, avocats,
-        experts-comptables et juges consulaires honoraires.
+        Le CIP propose aux chef·fe·s d&apos;entreprise en difficulté un <strong>entretien gratuit, confidentiel et anonyme, sur
+        rendez-vous</strong> (les « Entretiens du jeudi »). Vous êtes
+        reçu·e par des bénévoles : un expert-comptable ou commissaire aux
+        comptes, un avocat et un ancien juge du tribunal de commerce.
       </p>
 
       <div className="mt-6 grid gap-3 sm:grid-cols-3">
@@ -170,9 +157,9 @@ export default function CipPage() {
         </p>
         <ul className="mt-2 list-disc space-y-1.5 pl-5">
           <li>Entretien de <strong>30 à 60 minutes</strong> environ, sur rendez-vous</li>
-          <li>Une équipe de bénévoles vous reçoit (en général un expert-comptable, un avocat et un ancien juge du tribunal de commerce)</li>
+          <li>Un trio de bénévoles vous reçoit : un expert-comptable ou commissaire aux comptes, un avocat et un ancien juge du tribunal de commerce (parfois un conseiller CCI ou CMA)</li>
           <li>Diagnostic de votre situation, orientation vers les bons interlocuteurs</li>
-          <li>Aucun engagement, aucun coût, secret professionnel des intervenants</li>
+          <li>Aucun engagement, aucun coût ; entretien confidentiel et anonyme (vos nom et coordonnées ne sont pas enregistrés)</li>
         </ul>
       </div>
 
@@ -249,9 +236,10 @@ export default function CipPage() {
           Pour trouver l&apos;antenne CIP la plus proche
         </p>
         <p className="mt-2">
-          Consultez l&apos;annuaire officiel et prenez RDV en ligne ou
-          par téléphone. Les permanences se tiennent en général au
-          tribunal de commerce, à la CCI ou la CMA de votre ville.
+          Consultez la carte officielle et prenez RDV auprès du CIP de
+          votre choix. Les CIP sont le plus souvent hébergés par une CCI,
+          l&apos;ordre des experts-comptables, une maison des avocats ou une
+          CMA.
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           <a
@@ -273,11 +261,10 @@ export default function CipPage() {
 
       <p className="mt-6 text-xs text-navy/50">
         Source : Centre d&apos;Information sur la Prévention des
-        difficultés des entreprises (CIP National). Cadre :
-        association loi 1901 reconnue d&apos;intérêt général,
-        partenaire du ministère de la Justice et du ministère de
-        l&apos;Économie. Les fréquences de permanence sont indicatives :
-        confirmez les horaires sur cip-national.fr.
+        difficultés des entreprises (CIP National), cip-national.fr :
+        carte des CIP territoriaux et page « Les Entretiens du jeudi ».
+        Confirmez l&apos;adresse et les modalités de rendez-vous auprès
+        du CIP choisi.
       </p>
     </section>
   );

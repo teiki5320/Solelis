@@ -55,7 +55,7 @@ export function buildDefaultActions(r: Reponses, c: CompanyData, s: SectorInfo):
     actions.push({ id: 'fournisseur-lettre', texte: 'Écrire une lettre de demande de délai au fournisseur principal', done: false });
   }
   if (r.pgeEnCours === 'oui') {
-    actions.push({ id: 'pge-restructure', texte: 'Demander à ma banque la restructuration du PGE (protocole de place — étalement 10 ans, garantie maintenue)', done: false });
+    actions.push({ id: 'pge-restructure', texte: 'Demander la restructuration du PGE à ma banque, puis via la Médiation du crédit (accord de place — allongement de 2 à 4 ans, garantie maintenue)', done: false });
   }
   if (r.conjointStatut === 'aucun') {
     actions.push({ id: 'conjoint-statut', texte: 'Déclarer le statut de mon conjoint·e s\'il·elle travaille régulièrement dans l\'entreprise (à défaut, il·elle est réputé·e conjoint·e salarié·e — art. L121-4 C. com.)', done: false });
@@ -64,7 +64,7 @@ export function buildDefaultActions(r: Reponses, c: CompanyData, s: SectorInfo):
     actions.push({ id: 'conjoint-duree', texte: 'Vérifier la durée du statut de conjoint collaborateur (limite 5 ans — C. com. art. L121-4)', done: false });
   }
   if (r.coGerants === 'oui') {
-    actions.push({ id: 'cogerance-pv', texte: 'Établir un PV de répartition des fonctions entre co-gérants (protection contre l\'action en comblement de passif)', done: false });
+    actions.push({ id: 'cogerance-pv', texte: 'Établir un PV de répartition des fonctions entre co-gérants (utile pour apprécier la responsabilité de chacun en cas d\'action pour insuffisance d\'actif, art. L651-2 C. com.)', done: false });
   }
   if (r.rqth === 'oui') {
     actions.push({ id: 'rqth-agefiph', texte: 'Contacter l\'AGEFIPH ou Cap Emploi pour l\'aide à la création/reprise d\'activité spécifique RQTH', done: false });

@@ -59,7 +59,7 @@ export default function BlocCSP() {
           <li>
             <strong>Tout salarié</strong> totalisant au moins 88 jours ou
             610 heures de travail (4 mois) sur les 24 derniers mois (36
-            mois au-delà de 53 ans) — soit la majorité (Unédic, France
+            mois à partir de 55 ans) — soit la majorité (Unédic, France
             Travail).
           </li>
         </ul>
@@ -146,9 +146,8 @@ export default function BlocCSP() {
           </li>
           <li>
             En <strong>RJ/LJ</strong> : la contribution due à France
-            Travail est une créance de la procédure (à déclarer au passif
-            par France Travail) — pas une dette personnelle du
-            mandataire.
+            Travail est une dette de l&apos;entreprise en procédure — pas
+            une dette personnelle du mandataire.
           </li>
         </ul>
       </div>
@@ -188,8 +187,10 @@ export default function BlocCSP() {
 
       <p className="mt-5 text-xs text-navy/50">
         Sources : C. trav. art. L1233-65 à L1233-70 (CSP) ; Convention
-        Unédic relative au CSP du 26 janv. 2015 (avenants 2018, 2021,
-        2024) ; circulaire DGEFP n° 2015-09 ; service-public (fiche F13819).
+        Unédic relative au CSP du 26 janv. 2015 (avenant n° 10 du 20 mars
+        2025, période de référence alignée sur l&apos;assurance chômage ;
+        avenant n° 11 du 25 nov. 2025, prorogation jusqu&apos;au 31 déc.
+        2026) ; circulaire Unédic n° 2022-04 ; service-public (fiche F13819).
       </p>
     </BlocAccordeon>
   );

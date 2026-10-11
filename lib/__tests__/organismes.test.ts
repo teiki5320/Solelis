@@ -153,10 +153,12 @@ describe('buildOrganismes', () => {
     expect(financier.cartes.some((c) => c.nom === 'Bpifrance')).toBe(true);
   });
 
-  it('inclut SSI pour les indépendants dans le groupe social', () => {
+  it('inclut l\'action sociale du CPSTI (Urssaf) pour les indépendants dans le groupe social', () => {
     const groupes = buildOrganismes(null, makeReponses({ effectif: 'independant' }), []);
     const social = groupes.find((g) => g.cle === 'social')!;
-    expect(social.cartes.some((c) => c.nom.includes('SSI'))).toBe(true);
+    expect(social.cartes.some((c) => c.nom.includes('CPSTI'))).toBe(true);
+    // La SSI n'existe plus depuis le 1er janvier 2020.
+    expect(social.cartes.some((c) => /\bSSI\b|Sécurité Sociale des Indépendants/.test(c.nom))).toBe(false);
   });
 
   it('inclut AGS pour les salariés dans le groupe social', () => {
@@ -254,7 +256,7 @@ describe('carte tribunal et numéros', () => {
   it('indépendant·e : Urssaf au 3698 ; employeur : 3957', () => {
     const indep = tous(buildOrganismes(getDepartement('75'), makeReponses({ effectif: 'independant' }), []));
     expect(indep.find((c) => c.type === 'URSSAF')!.telephone).toBe('3698');
-    expect(indep.find((c) => c.nom.startsWith('SSI'))!.telephone).toBe('3698');
+    expect(indep.find((c) => c.nom.includes('CPSTI'))!.telephone).toBe('3698');
     const empl = tous(buildOrganismes(getDepartement('75'), makeReponses({ effectif: 'salaries' }), []));
     expect(empl.find((c) => c.type === 'URSSAF')!.telephone).toBe('3957');
   });

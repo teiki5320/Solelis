@@ -33,7 +33,7 @@ export function buildJalons(r: Reponses, c: CompanyData, s: SectorInfo): Jalon[]
     jalons.push({
       delai: 'Dès aujourd\'hui',
       date: formatDate(now),
-      texte: 'Appeler le numéro vert de soutien psychologique 0 805 65 50 50 (APESA) — gratuit et confidentiel',
+      texte: 'Demander un soutien psychologique : APESA (apesa-france.com, gratuit et confidentiel) ; en cas de crise, le 3114, 24 h/24',
       urgence: 'vert',
     });
   }

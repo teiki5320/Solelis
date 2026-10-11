@@ -130,18 +130,41 @@ describe('Tribunal : une seule source (getJuridiction + data/organismes.json)', 
 
   it('cite le tribunal réel du département', () => {
     expect(getTribunalCompetent(co({ departement: '2A' })).nom).toBe("Tribunal de commerce d'Ajaccio");
-    expect(getTribunalCompetent(co({ departement: '13' })).nom).toBe('Tribunal des activités économiques de Marseille');
-    expect(getTribunalCompetent(co({ departement: '57' })).generique).toBe('chambre commerciale du tribunal judiciaire');
-    expect(getTribunalCompetent(co({ departement: '57' })).leGenerique).toBe('la chambre commerciale du tribunal judiciaire');
+    expect(getTribunalCompetent(co({ departement: '13', codePostal: '13006', ville: 'MARSEILLE' })).nom).toBe('Tribunal des activités économiques de Marseille');
+    expect(getTribunalCompetent(co({ departement: '57', codePostal: '57000', ville: 'METZ' })).generique).toBe('chambre commerciale du tribunal judiciaire');
+    expect(getTribunalCompetent(co({ departement: '57', codePostal: '57000', ville: 'METZ' })).leGenerique).toBe('la chambre commerciale du tribunal judiciaire');
     expect(getTribunalCompetent(co({ departement: '971' })).generique).toBe('tribunal mixte de commerce');
   });
 
   it('courriers : {{TRIBUNAL}} prérempli avec le tribunal compétent, vide s’il est inconnu', () => {
     expect(nomTribunalPourCourrier(co({ departement: '2A' }))).toBe("Tribunal de commerce d'Ajaccio");
-    expect(nomTribunalPourCourrier(co({ departement: '67' }))).toBe('Tribunal judiciaire de Strasbourg (chambre commerciale)');
+    expect(nomTribunalPourCourrier(co({ departement: '67', codePostal: '67000', ville: 'STRASBOURG' }))).toBe('Tribunal judiciaire de Strasbourg (chambre commerciale)');
     expect(nomTribunalPourCourrier(co({ departement: '986' }))).toBe('Tribunal de première instance de Mata-Utu');
     expect(nomTribunalPourCourrier(co({ departement: '' }))).toBe('');
     expect(nomTribunalPourCourrier(co({ departement: '33', formeJuridique: EI, naf: '01.11Z' }))).toBe('');
+  });
+
+  it('départements à plusieurs juridictions : celle du ressort, sinon une carte générique (jamais un tribunal faux)', () => {
+    // Juridictions : « Données géocodées des structures de la Justice » (2026) ;
+    // Alsace-Moselle : ressort du tribunal judiciaire (compétences territoriales 2026).
+    const t = (departement: string, codePostal: string, ville: string) =>
+      getTribunalCompetent(co({ departement, codePostal, ville })).nom;
+    expect(t('76', '76600', 'LE HAVRE')).toBe('Tribunal des activités économiques du Havre');
+    expect(t('76', '76000', 'ROUEN')).toBe('Tribunal de commerce de Rouen');
+    expect(t('76', '76190', 'YVETOT')).toBe('Tribunal de commerce ou des activités économiques dont dépend votre siège');
+    expect(t('64', '64100', 'BAYONNE')).toBe('Tribunal de commerce de Bayonne');
+    expect(t('59', '59140', 'DUNKERQUE')).toBe('Tribunal de commerce de Dunkerque');
+    expect(t('02', '02100', 'Saint-Quentin')).toBe('Tribunal de commerce de Saint-Quentin');
+    expect(t('02', '02100', 'Harly')).toBe('Tribunal de commerce dont dépend votre siège');
+    expect(t('57', '57100', 'THIONVILLE')).toBe('Tribunal judiciaire de Thionville - Chambre commerciale');
+    expect(t('67', '67600', 'SELESTAT')).toBe('Tribunal judiciaire de Colmar - Chambre commerciale');
+    expect(t('68', '68100', 'MULHOUSE')).toBe('Tribunal judiciaire de Mulhouse - Chambre commerciale');
+    // Courrier : champ laissé à compléter quand le ressort est inconnu.
+    expect(nomTribunalPourCourrier(co({ departement: '76', codePostal: '76190', ville: 'YVETOT' }))).toBe('');
+    // Agriculteur·rice d'un département à TAE, ressort inconnu : TAE ou tribunal judiciaire.
+    const agri = getTribunalCompetent(co({ departement: '13', codePostal: '13140', ville: 'MIRAMAS', formeJuridique: EI, naf: '01.11Z' }));
+    expect(agri.nom).toMatch(/^Tribunal judiciaire ou tribunal des activités économiques/);
+    expect(agri.leGenerique).toBe('le tribunal compétent');
   });
 
   it('agriculteur, libéral, association, société civile → tribunal judiciaire', () => {
@@ -224,11 +247,14 @@ describe('Cotisations : bon organisme, bon numéro', () => {
       expect(c.libelle).toBe('URSSAF (3957)');
     }
   });
-  it('outre-mer : la CGSS / CSSM, jamais 3957', () => {
+  it('outre-mer : la CGSS / CSSM, au 39 57 (employeurs) ou 36 98 (indépendant·e·s)', () => {
+    // Pages « nous contacter » des CGSS et annuaire service-public (2026) :
+    // le 0 820 000 97x n'est plus publié.
     for (const dep of ['971', '972', '973', '974']) {
       const c = contactCotisations(generique, 'salaries', dep);
       expect(c.org).toMatch(/CGSS/);
-      expect(c.tel).toMatch(/^0 820 000 97/);
+      expect(c.tel).toBe('3957');
+      expect(contactCotisations(generique, 'independant', dep).tel).toBe('3698');
     }
     expect(contactCotisations(generique, 'salaries', '976').org).toMatch(/CSSM/);
   });
@@ -263,9 +289,18 @@ describe('Organismes', () => {
       expect(new Set(noms).size).toBe(noms.length);
     }
   });
-  it('noms URSSAF régionaux actuels (plus de « Rhône-Alpes », « Midi-Pyrénées »…)', () => {
-    for (const code of ['01', '31', '67', '59', '17']) {
-      expect(getDepartement(code)!.urssaf.nom).not.toMatch(/Rhône-Alpes -|Midi-Pyrénées|Alsace|Nord-Pas-de-Calais|Poitou-Charentes/);
+  it('noms des Urssaf : ceux de l’annuaire officiel (les Urssaf n’ont pas suivi les régions de 2016)', () => {
+    // api-lannuaire.service-public.fr (2026) : « Urssaf Rhône-Alpes - site de l'Ain »…
+    const attendus: Record<string, RegExp> = {
+      '01': /^Urssaf Rhône-Alpes/,
+      '31': /^Urssaf Midi-Pyrénées/,
+      '67': /^Urssaf Alsace/,
+      '59': /^Urssaf Nord-Pas-de-Calais/,
+      '17': /^Urssaf Poitou-Charentes/,
+      '15': /^Urssaf Auvergne/,
+    };
+    for (const [code, re] of Object.entries(attendus)) {
+      expect(getDepartement(code)!.urssaf.nom).toMatch(re);
     }
   });
   it('interlocuteur adapté : pas de CCI pour un libéral ou une association, pas d\'abréviation « CA »', () => {

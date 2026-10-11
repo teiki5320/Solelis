@@ -192,9 +192,9 @@ export function buildPoches(r: Reponses, c: CompanyData): Poche[] {
     titre: 'Véhicule personnel',
     niveau: 'mixte',
     analyse:
-      "Les véhicules peuvent être saisis sauf s'ils sont nécessaires à une activité professionnelle salariée (pas à l'entreprise en difficulté).",
+      "Un véhicule personnel peut être saisi par un créancier muni d'un titre exécutoire. Certains biens nécessaires au travail échappent à la saisie : faites vérifier votre cas.",
     action:
-      "Un véhicule financé en LOA/LLD reste propriété du loueur — il est protégé de la saisie.",
+      "Un véhicule financé en LOA/LLD appartient au loueur : vos créanciers ne peuvent pas le saisir, mais le loueur peut le reprendre en cas d'impayés.",
   });
 
   // Cautions (rappel si pertinent)

@@ -75,7 +75,7 @@ const PLAUSIBLE_INIT = `window.plausible=window.plausible||function(){(window.pl
 const PIED_DE_PAGE = [
   { href: '/confidentialite', label: 'Confidentialité' },
   { href: '/parler', label: 'Parler à quelqu\'un' },
-  { href: '/temoignages', label: 'Témoignages' },
+  { href: '/temoignages', label: 'Exemples de parcours' },
   { href: '/mentions-legales', label: 'Mentions légales' },
   { href: '/politique-donnees', label: 'RGPD' },
   { href: '/accessibilite', label: 'Accessibilité' },

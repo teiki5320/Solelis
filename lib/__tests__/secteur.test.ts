@@ -262,7 +262,7 @@ describe('transport : FNTR réservée au transport routier (49.4)', () => {
 
   it('fret routier et déménagement : FNTR proposée', () => {
     expect(noms('49.41A')[0]).toBe('FNTR');
-    expect(noms('49.42Z')[0]).toBe('FNDA');
+    expect(noms('49.42Z')[0]).toBe('CSD');
     expect(noms('49.42Z')).toContain('FNTR');
   });
 

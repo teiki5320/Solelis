@@ -49,7 +49,7 @@ export default function BlocCCSF() {
           <ul className="mt-2 space-y-1 text-sm text-navy/80">
             <li>• Entreprise à jour de ses obligations déclaratives</li>
             <li>• Part salariale des cotisations sociales payée</li>
-            <li>• Pas de procédure collective en cours (le plan peut prendre fin si une procédure s&apos;ouvre)</li>
+            <li>• Pas de procédure collective en cours (l&apos;ouverture d&apos;une procédure met fin au plan)</li>
             <li>• Difficulté avérée mais activité viable</li>
           </ul>
         </div>
@@ -72,7 +72,7 @@ export default function BlocCCSF() {
             (TPE : dossier simplifié avec dernier bilan et trésorerie).
           </li>
           <li>
-            <strong>3.</strong> Adressez-le à la <strong>DDFiP{dep ? ` du département ${dep}` : ''}</strong>{' '}
+            <strong>3.</strong> Adressez-le au secrétaire permanent de la CCSF, à la <strong>DDFiP{dep ? ` du département ${dep}` : ''}</strong>{' '}
             (Direction Départementale des Finances Publiques), qui assure
             le secrétariat de la commission.
           </li>
@@ -94,12 +94,14 @@ export default function BlocCCSF() {
             <p className="mt-0.5 text-xs text-navy/60">{ddfip.adresse}</p>
           )}
           <div className="mt-3 flex flex-wrap gap-2 text-xs">
-            <a
-              href={`tel:${(ddfip.telephone ?? '0809401401').replace(/\s/g, '')}`}
-              className="rounded-full bg-white/80 px-3 py-1 text-navy/80 hover:bg-white"
-            >
-              <span aria-hidden>☎</span> {ddfip.telephone ?? '0 809 401 401'}
-            </a>
+            {ddfip.telephone && (
+              <a
+                href={`tel:${ddfip.telephone.replace(/\s/g, '')}`}
+                className="rounded-full bg-white/80 px-3 py-1 text-navy/80 hover:bg-white"
+              >
+                <span aria-hidden>☎</span> {ddfip.telephone}
+              </a>
+            )}
             {ddfip.site && (
               <a
                 href={ddfip.site}
@@ -132,12 +134,6 @@ export default function BlocCCSF() {
           📄 Saisir la CCSF (service-public)
         </a>
         <a
-          href="tel:0809401401"
-          className="rounded-full bg-white/80 px-3 py-1.5 text-navy/80 hover:bg-white"
-        >
-          <span aria-hidden>☎</span> 0 809 401 401 (renseignements fiscaux)
-        </a>
-        <a
           href="https://www.economie.gouv.fr/entreprises/commission-chefs-services-financiers-ccsf"
           target="_blank"
           rel="noreferrer"
@@ -148,8 +144,9 @@ export default function BlocCCSF() {
       </div>
 
       <p className="mt-5 text-xs text-navy/50">
-        Source : décret n°2007-686 du 4 mai 2007 et articles D626-9 à
-        D626-15 du Code de commerce (remises de dettes publiques).
+        Source : décret n° 2007-686 du 4 mai 2007 ; Code de commerce,
+        art. D626-14 (remises de dettes) ; entreprendre.service-public.gouv.fr
+        (fiche F38326).
       </p>
     </BlocAccordeon>
   );

@@ -33,7 +33,7 @@ export default function BlocSCOP() {
         majoritaires (au moins 51 % du capital et 65 % des droits de vote).
         C&apos;est une option <strong>très méconnue</strong> qui permet de
         sauver une entreprise en difficulté en la transmettant à son équipe,
-        avec un accompagnement gratuit et des financements dédiés.
+        avec l&apos;accompagnement du réseau des Scop et des financements dédiés.
       </p>
 
       {/* Avantages */}
@@ -60,8 +60,9 @@ export default function BlocSCOP() {
             coopératives (Crédit Coopératif, Crédit Mutuel).
           </li>
           <li>
-            <strong>Fiscalité avantageuse</strong> : exonération d&apos;IS sur
-            la part bénéficiaire distribuée aux salariés.
+            <strong>Fiscalité avantageuse</strong> : la part des bénéfices
+            distribuée aux salariés est déductible du résultat imposable à
+            l&apos;IS, et la Scop est exonérée de CFE.
           </li>
         </ul>
       </div>
@@ -74,10 +75,10 @@ export default function BlocSCOP() {
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
             <strong>Adhésion volontaire</strong> des salariés (au moins 2
-            associés pour une SARL coopérative, 7 pour une SA).
+            associés salariés pour une SARL ou une SAS coopérative, 7 pour une SA).
           </li>
           <li>
-            <strong>Capital minimum</strong> : 30 € pour une SARL,
+            <strong>Capital minimum</strong> : 30 € pour une SARL ou une SAS,
             18 500 € pour une SA. Chaque associé apporte au moins la valeur
             d&apos;une part sociale.
           </li>
@@ -87,7 +88,9 @@ export default function BlocSCOP() {
           </li>
           <li>
             <strong>Réserves impartageables</strong> : au moins 16 % des
-            bénéfices doivent alimenter les fonds propres de la coopérative.
+            bénéfices (15 % de réserve légale + 1 % de fonds de
+            développement) alimentent les fonds propres, et au moins 25 %
+            reviennent aux salariés.
           </li>
         </ul>
       </div>
@@ -114,7 +117,7 @@ export default function BlocSCOP() {
             CG SCOP — Confédération Générale des SCOP
           </p>
           <p className="mt-1 text-xs text-navy/60">
-            Tête de réseau nationale, étude de faisabilité gratuite
+            Tête de réseau nationale, oriente vers votre union régionale
           </p>
           <div className="mt-3 flex flex-wrap gap-2 text-sm">
             <a
@@ -135,7 +138,7 @@ export default function BlocSCOP() {
         </div>
         <div className="rounded-2xl border border-navy/15 bg-white/60 p-4">
           <p className="font-display text-base text-navy">
-            SOCODEN — Fonds de garantie des SCOP
+            SOCODEN — financement du Mouvement Scop
           </p>
           <p className="mt-1 text-xs text-navy/60">
             Prêt participatif pour renforcer les fonds propres au moment
@@ -159,8 +162,8 @@ export default function BlocSCOP() {
           Union régionale des SCOP
         </p>
         <p className="mt-1 text-xs text-navy/60">
-          13 unions régionales en métropole + outre-mer. Accompagnement
-          gratuit : étude de faisabilité, montage juridique, plan de
+          9 unions régionales (dont une couvrant l&apos;outre-mer).
+          Accompagnement : étude de faisabilité, montage juridique, plan de
           financement, formation des futurs associés.
         </p>
         <div className="mt-3 flex flex-wrap gap-2 text-sm">

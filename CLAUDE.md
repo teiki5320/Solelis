@@ -130,7 +130,7 @@ En thème clair, `text-vert` et `text-jaune` sont rendus avec les variantes fonc
 - **Entités HTML** : utiliser directement les caractères UTF-8 dans le JSX (é, è, ê, à…), pas les entités (&eacute; etc.). Exceptions JSX : `&apos;`, `&lt;`, `&gt;`, `&amp;`
 - **Liens externes** : toujours `target="_blank" rel="noreferrer"`. URLs gouvernementales avec `www.` (ex: `https://www.impots.gouv.fr`)
 - **Sources** : ne citer que des sources officielles (codes de loi, sites .gouv.fr). Pas de stats sans source vérifiable
-- **URSSAF** : `36 98` travailleurs indépendants, `39 57` employeurs (urssaf.fr) ; MSA : pas de numéro national, numéro de la caisse locale (msa.fr) ; CGSS Outre-mer : `0 820 000 [code]`
+- **URSSAF** : `36 98` travailleurs indépendants, `39 57` employeurs (urssaf.fr) ; MSA : pas de numéro national, numéro de la caisse locale (msa.fr) ; CGSS Outre-mer : `39 57` employeurs, `36 98` indépendants (sites des CGSS, annuaire service-public)
 - **Tribunal** : `getJuridiction(company)` → TJ pour libéraux/agri/santé (NAF 69-74, 01-03, 86-88), TC sinon (loi 22 déc. 2021)
 - **Commits** : format conventionnel `type(scope): message` en français
 - **Métadonnées** : pas de title/description/url dans l'openGraph racine (chaque page hérite des siens) ; `ogMeta({ …, chemin })` ajoute og:url + canonique. Les titres de page incluent déjà « Solelis » (pas de modèle de titre global)

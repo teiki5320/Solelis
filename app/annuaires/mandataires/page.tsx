@@ -24,83 +24,70 @@ const REGIONS = [
   'Bourgogne-Franche-Comté',
   'Normandie',
   'Centre-Val de Loire',
-  'Corse',
 ];
 
-// Sources : cnajmj.fr, ajup.fr, btsg.eu, fhbx.eu, mjs-partners.fr — extraits indicatifs au 2025
+// Source : annuaire du CNAJMJ (www.cnajmj.fr/annuaire), rubrique « Implantations »
+// de la fiche de chaque professionnel, consultée en octobre 2026. Sélection indicative.
 const ETUDES: Etude[] = [
   // — Île-de-France —
-  { region: 'Île-de-France', ville: 'Paris (75)', nom: 'AJ Associés (Bouquemont, Sapin)', type: 'administrateur', telephone: '01 53 30 90 00' },
-  { region: 'Île-de-France', ville: 'Paris (75)', nom: 'BTSG² (Pellier-Tetreau, Sapin)', type: 'mandataire', telephone: '01 56 02 03 90' },
-  { region: 'Île-de-France', ville: 'Paris (75)', nom: 'Étude Smith & Hellenbrand', type: 'mandataire', telephone: '01 53 36 35 00' },
-  { region: 'Île-de-France', ville: 'Paris (75)', nom: 'AJ Up Paris', type: 'administrateur', telephone: '01 89 16 35 30' },
-  { region: 'Île-de-France', ville: 'Neuilly-sur-Seine (92)', nom: 'SELARL FHBX (Bourbouloux)', type: 'administrateur', telephone: '01 40 97 05 41' },
-  { region: 'Île-de-France', ville: 'Bobigny (93)', nom: 'MJS Partners', type: 'mandataire', telephone: '01 48 32 45 45' },
-  { region: 'Île-de-France', ville: 'Évry-Courcouronnes (91)', nom: 'FHBX Évry', type: 'administrateur' },
+  { region: 'Île-de-France', ville: 'Paris (75)', nom: 'SELARL AJAssociés', type: 'administrateur', telephone: '01 53 64 92 92' },
+  { region: 'Île-de-France', ville: 'Neuilly-sur-Seine (92)', nom: 'SCP BTSG²', type: 'mandataire', telephone: '01 41 96 82 82' },
+  { region: 'Île-de-France', ville: 'Paris (75)', nom: 'SELAFA MJA', type: 'mandataire', telephone: '01 44 24 65 65' },
+  { region: 'Île-de-France', ville: 'Paris (75)', nom: 'SELAS AJ UP (Paris)', type: 'administrateur', telephone: '01 89 16 35 30' },
+  { region: 'Île-de-France', ville: 'Neuilly-sur-Seine (92)', nom: 'SELARL FHBX', type: 'administrateur', telephone: '01 40 97 05 41' },
+  { region: 'Île-de-France', ville: 'Bobigny (93)', nom: 'SELAS MJS Partners (Bobigny)', type: 'mandataire', telephone: '01 48 32 45 45' },
+  { region: 'Île-de-France', ville: 'Bobigny (93)', nom: 'SELARL BVMJ', type: 'mandataire', telephone: '01 41 50 93 15' },
+  { region: 'Île-de-France', ville: 'Évry-Courcouronnes (91)', nom: 'SELARL FHBX (Évry)', type: 'administrateur' },
   // — Auvergne-Rhône-Alpes —
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Lyon (69)', nom: 'MJ Associés Lyon', type: 'mandataire', telephone: '04 72 60 50 30' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Lyon (69)', nom: 'AJ Up Lyon', type: 'administrateur', telephone: '04 78 29 20 04' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Lyon (69)', nom: 'BTSG² Lyon', type: 'mandataire' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Lyon (69)', nom: 'FHBX Lyon', type: 'administrateur' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Grenoble (38)', nom: 'AJ Up Grenoble', type: 'administrateur', telephone: '04 76 44 16 55' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Saint-Étienne (42)', nom: 'AJ Up Saint-Étienne', type: 'administrateur', telephone: '04 77 38 74 40' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Clermont-Ferrand (63)', nom: 'AJ Up Clermont-Ferrand', type: 'administrateur', telephone: '04 73 40 30 20' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Chambéry (73)', nom: 'AJ Up Chambéry', type: 'administrateur' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Annecy (74)', nom: 'AJ Up Annecy', type: 'administrateur' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Bourg-en-Bresse (01)', nom: 'AJ Up Bourg-en-Bresse', type: 'administrateur' },
-  { region: 'Auvergne-Rhône-Alpes', ville: 'Roanne (42)', nom: 'AJ Up Roanne', type: 'administrateur', telephone: '04 77 71 50 89' },
+  { region: 'Auvergne-Rhône-Alpes', ville: 'Lyon (69)', nom: 'SELAS AJ UP (Lyon)', type: 'administrateur', telephone: '04 78 29 20 04' },
+  { region: 'Auvergne-Rhône-Alpes', ville: 'Lyon (69)', nom: 'SCP BTSG² (Lyon)', type: 'mandataire' },
+  { region: 'Auvergne-Rhône-Alpes', ville: 'Lyon (69)', nom: 'SELARL FHBX (Lyon)', type: 'administrateur' },
+  { region: 'Auvergne-Rhône-Alpes', ville: 'Grenoble (38)', nom: 'SELAS AJ UP (Grenoble)', type: 'administrateur', telephone: '04 76 44 16 55' },
+  { region: 'Auvergne-Rhône-Alpes', ville: 'Saint-Étienne (42)', nom: 'SELAS AJ UP (Saint-Étienne)', type: 'administrateur', telephone: '04 77 38 74 40' },
+  { region: 'Auvergne-Rhône-Alpes', ville: 'Clermont-Ferrand (63)', nom: 'SELAS AJ UP (Clermont-Ferrand)', type: 'administrateur', telephone: '04 73 40 30 20' },
+  { region: 'Auvergne-Rhône-Alpes', ville: 'Chambéry (73)', nom: 'SELAS AJ UP (Chambéry)', type: 'administrateur' },
+  { region: 'Auvergne-Rhône-Alpes', ville: 'Bourg-en-Bresse (01)', nom: 'SELAS AJ UP (Bourg-en-Bresse)', type: 'administrateur' },
+  { region: 'Auvergne-Rhône-Alpes', ville: 'Roanne (42)', nom: 'SELAS AJ UP (Roanne)', type: 'administrateur', telephone: '04 77 71 50 89' },
   // — Provence-Alpes-Côte d'Azur —
-  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Marseille (13)', nom: 'SCP Mandon-Maraval', type: 'mandataire', telephone: '04 91 13 41 80' },
-  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Nice (06)', nom: 'SELARL Pellier — Les Mandataires', type: 'mandataire', telephone: '04 22 13 60 50' },
-  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Cannes (06)', nom: 'BTSG² Cannes', type: 'mandataire', telephone: '04 93 85 89 72' },
+  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Nice (06)', nom: 'SELARL Pellier – Les Mandataires', type: 'mandataire', telephone: '04 22 13 60 50' },
+  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Cannes (06)', nom: 'SCP BTSG² (Cannes)', type: 'mandataire', telephone: '04 93 85 89 72' },
+  { region: 'Provence-Alpes-Côte d\'Azur', ville: 'Toulon (83)', nom: 'SCP BR Associés', type: 'mandataire', telephone: '04 94 89 96 79' },
   // — Occitanie —
-  { region: 'Occitanie', ville: 'Toulouse (31)', nom: 'SCP Olivier-Fauveau-Cazals', type: 'mandataire', telephone: '05 62 27 33 33' },
-  { region: 'Occitanie', ville: 'Toulouse (31)', nom: 'BR Associés', type: 'administrateur', telephone: '05 61 14 47 47' },
-  { region: 'Occitanie', ville: 'Montpellier (34)', nom: 'FHBX Montpellier', type: 'administrateur' },
-  { region: 'Occitanie', ville: 'Perpignan (66)', nom: 'FHBX Perpignan', type: 'administrateur' },
+  { region: 'Occitanie', ville: 'Montpellier (34)', nom: 'SELARL FHBX (Montpellier)', type: 'administrateur' },
+  { region: 'Occitanie', ville: 'Perpignan (66)', nom: 'SELARL FHBX (Perpignan)', type: 'administrateur' },
   // — Nouvelle-Aquitaine —
-  { region: 'Nouvelle-Aquitaine', ville: 'Bordeaux (33)', nom: 'SCP Silvestri-Baujet', type: 'mandataire', telephone: '05 56 79 21 90' },
-  { region: 'Nouvelle-Aquitaine', ville: 'Bordeaux (33)', nom: 'Hirou', type: 'administrateur', telephone: '05 56 81 16 16' },
-  { region: 'Nouvelle-Aquitaine', ville: 'Bordeaux (33)', nom: 'FHBX Bordeaux', type: 'administrateur' },
-  { region: 'Nouvelle-Aquitaine', ville: 'Limoges (87)', nom: 'BTSG² Limoges', type: 'mandataire', telephone: '09 70 64 00 30' },
-  { region: 'Nouvelle-Aquitaine', ville: 'Brive-la-Gaillarde (19)', nom: 'BTSG² Brive', type: 'mandataire', telephone: '09 70 64 00 31' },
-  { region: 'Nouvelle-Aquitaine', ville: 'Pau (64)', nom: 'FHBX Pau', type: 'administrateur' },
-  { region: 'Nouvelle-Aquitaine', ville: 'Bayonne (64)', nom: 'FHBX Bayonne', type: 'administrateur' },
-  { region: 'Nouvelle-Aquitaine', ville: 'Poitiers (86)', nom: 'AJ Up Poitiers', type: 'administrateur', telephone: '02 40 20 11 18' },
-  { region: 'Nouvelle-Aquitaine', ville: 'Niort (79)', nom: 'AJ Up Niort', type: 'administrateur', telephone: '02 40 20 11 18' },
+  { region: 'Nouvelle-Aquitaine', ville: 'Bordeaux (33)', nom: 'SCP Silvestri-Baujet', type: 'mandataire', telephone: '05 56 48 85 85' },
+  { region: 'Nouvelle-Aquitaine', ville: 'Libourne (33)', nom: 'SELARL Louis et Laurent Hirou', type: 'mandataire', telephone: '05 57 74 05 50' },
+  { region: 'Nouvelle-Aquitaine', ville: 'Bordeaux (33)', nom: 'SELARL FHBX (Bordeaux)', type: 'administrateur' },
+  { region: 'Nouvelle-Aquitaine', ville: 'Limoges (87)', nom: 'SCP BTSG² (Limoges)', type: 'mandataire', telephone: '09 70 64 00 30' },
+  { region: 'Nouvelle-Aquitaine', ville: 'Brive-la-Gaillarde (19)', nom: 'SCP BTSG² (Brive)', type: 'mandataire', telephone: '09 70 64 00 31' },
+  { region: 'Nouvelle-Aquitaine', ville: 'Pau (64)', nom: 'SELARL FHBX (Pau)', type: 'administrateur' },
+  { region: 'Nouvelle-Aquitaine', ville: 'Bayonne (64)', nom: 'SELARL FHBX (Bayonne)', type: 'administrateur' },
+  { region: 'Nouvelle-Aquitaine', ville: 'Poitiers (86)', nom: 'SELAS AJ UP (Poitiers)', type: 'administrateur' },
+  { region: 'Nouvelle-Aquitaine', ville: 'Niort (79)', nom: 'SELAS AJ UP (Niort)', type: 'administrateur', telephone: '02 40 20 11 18' },
   // — Pays de la Loire —
-  { region: 'Pays de la Loire', ville: 'Nantes (44)', nom: 'SCP Cottret-Cattaneo', type: 'mandataire', telephone: '02 40 35 00 32' },
-  { region: 'Pays de la Loire', ville: 'Nantes (44)', nom: 'AJ Up Nantes', type: 'administrateur', telephone: '02 40 20 11 18' },
-  { region: 'Pays de la Loire', ville: 'Angers (49)', nom: 'AJ Up Angers', type: 'administrateur', telephone: '02 41 18 09 25' },
+  { region: 'Pays de la Loire', ville: 'Nantes (44)', nom: 'SELAS AJ UP (Nantes)', type: 'administrateur', telephone: '02 40 20 11 18' },
+  { region: 'Pays de la Loire', ville: 'Angers (49)', nom: 'SELAS AJ UP (Angers)', type: 'administrateur', telephone: '02 41 18 09 25' },
   { region: 'Pays de la Loire', ville: 'Le Mans (72)', nom: 'SELARL SBCMJ', type: 'mandataire' },
   // — Bretagne —
-  { region: 'Bretagne', ville: 'Rennes (35)', nom: 'SELARL Le Layec', type: 'mandataire', telephone: '02 99 67 36 50' },
-  { region: 'Bretagne', ville: 'Brest (29)', nom: 'Cabinet 2M', type: 'administrateur' },
+  { region: 'Bretagne', ville: 'Rennes (35)', nom: '2M & Associés', type: 'administrateur' },
   // — Hauts-de-France —
-  { region: 'Hauts-de-France', ville: 'Lille (59)', nom: 'SELARL MJA Nord', type: 'mandataire', telephone: '03 20 14 90 50' },
-  { region: 'Hauts-de-France', ville: 'Roubaix (59)', nom: 'MJS Partners (siège)', type: 'mandataire', telephone: '03 20 06 19 22' },
-  { region: 'Hauts-de-France', ville: 'Valenciennes (59)', nom: 'MJS Partners Valenciennes', type: 'mandataire' },
-  { region: 'Hauts-de-France', ville: 'Amiens (80)', nom: 'MJS Partners Amiens', type: 'mandataire' },
-  { region: 'Hauts-de-France', ville: 'Arras (62)', nom: 'MJS Partners Arras', type: 'mandataire' },
-  { region: 'Hauts-de-France', ville: 'Boulogne-sur-Mer (62)', nom: 'FHBX Boulogne-sur-Mer', type: 'administrateur' },
+  { region: 'Hauts-de-France', ville: 'Roubaix (59)', nom: 'SELAS MJS Partners (siège)', type: 'mandataire', telephone: '03 20 06 19 22' },
+  { region: 'Hauts-de-France', ville: 'Valenciennes (59)', nom: 'SELAS MJS Partners (Valenciennes)', type: 'mandataire' },
+  { region: 'Hauts-de-France', ville: 'Amiens (80)', nom: 'SELAS MJS Partners (Amiens)', type: 'mandataire' },
+  { region: 'Hauts-de-France', ville: 'Arras (62)', nom: 'SELAS MJS Partners (Arras)', type: 'mandataire' },
+  { region: 'Hauts-de-France', ville: 'Boulogne-sur-Mer (62)', nom: 'SELARL FHBX (Boulogne-sur-Mer)', type: 'administrateur' },
   // — Grand Est —
-  { region: 'Grand Est', ville: 'Strasbourg (67)', nom: 'SCP Sapin', type: 'mandataire', telephone: '03 88 16 11 80' },
   { region: 'Grand Est', ville: 'Reims (51)', nom: 'SELARL Bruno Raulet', type: 'mandataire' },
-  { region: 'Grand Est', ville: 'Metz (57)', nom: 'SCP Noël Lanzetta', type: 'mandataire' },
-  { region: 'Grand Est', ville: 'Nancy (54)', nom: 'Maître Bogelmann', type: 'mandataire' },
+  { region: 'Grand Est', ville: 'Metz (57)', nom: 'SELARL MJ AIR', type: 'mandataire' },
+  { region: 'Grand Est', ville: 'Nancy (54)', nom: 'Étude Bogelmann', type: 'mandataire' },
   // — Bourgogne-Franche-Comté —
-  { region: 'Bourgogne-Franche-Comté', ville: 'Chalon-sur-Saône (71)', nom: 'BTSG² Chalon', type: 'mandataire', telephone: '03 85 48 86 91' },
-  { region: 'Bourgogne-Franche-Comté', ville: 'Dijon (21)', nom: 'Maître Pernot Sanrey', type: 'mandataire' },
+  { region: 'Bourgogne-Franche-Comté', ville: 'Chalon-sur-Saône (71)', nom: 'SCP BTSG² (Chalon)', type: 'mandataire', telephone: '03 85 48 86 91' },
   // — Normandie —
-  { region: 'Normandie', ville: 'Rouen (76)', nom: 'Maître Leblay', type: 'mandataire' },
-  { region: 'Normandie', ville: 'Caen (14)', nom: 'Maître Lizé', type: 'mandataire' },
-  { region: 'Normandie', ville: 'Le Havre (76)', nom: 'FHBX Le Havre', type: 'administrateur' },
+  { region: 'Normandie', ville: 'Caen (14)', nom: 'Étude Lize', type: 'mandataire' },
+  { region: 'Normandie', ville: 'Le Havre (76)', nom: 'SELARL FHBX (Le Havre)', type: 'administrateur' },
   // — Centre-Val de Loire —
-  { region: 'Centre-Val de Loire', ville: 'Tours (37)', nom: 'SELARL Bally MJ', type: 'mandataire' },
-  { region: 'Centre-Val de Loire', ville: 'Tours (37)', nom: 'AJ Up Tours', type: 'administrateur' },
-  { region: 'Centre-Val de Loire', ville: 'Orléans (45)', nom: 'SELARL Valliot MJ', type: 'mandataire' },
-  // — Corse —
-  { region: 'Corse', ville: 'Ajaccio (2A)', nom: 'SELARL Ferracci MJ', type: 'mandataire' },
+  { region: 'Centre-Val de Loire', ville: 'Tours (37)', nom: 'SELARL AJAssociés (Tours)', type: 'administrateur', telephone: '02 47 20 47 50' },
 ];
 
 export default function MandatairesPage() {
@@ -151,13 +138,13 @@ export default function MandatairesPage() {
         </p>
         <ul className="mt-2 list-disc space-y-1.5 pl-5">
           <li>
-            Vous pouvez <strong>proposer</strong> un mandataire/administrateur précis dans votre déclaration de cessation des paiements ou requête en sauvegarde.
+            Vous pouvez <strong>proposer</strong> au tribunal le nom d&apos;un administrateur judiciaire (C. com. L621-4) ; ce n&apos;est qu&apos;une proposition.
           </li>
           <li>
-            Le tribunal en désigne un parmi la liste régionale (en général sur rotation).
+            C&apos;est le tribunal qui désigne le mandataire judiciaire et, le cas échéant, l&apos;administrateur judiciaire ; il n&apos;est pas tenu de suivre votre proposition.
           </li>
           <li>
-            Un premier RDV avec un professionnel <strong>avant</strong> la procédure est gratuit (consultation découverte). N&apos;hésitez pas à en contacter plusieurs.
+            Avant toute procédure, vous pouvez contacter une étude pour un premier échange : demandez à l&apos;avance s&apos;il est facturé.
           </li>
         </ul>
       </div>
@@ -262,10 +249,10 @@ export default function MandatairesPage() {
       </div>
 
       <p className="mt-6 text-xs text-navy/50">
-        Sources : Conseil National des Administrateurs Judiciaires et
-        Mandataires Judiciaires (CNAJMJ), sites officiels des études
-        (ajup.fr, btsg.eu, fhbx.eu, mjs-partners.fr). Cadre légal :
-        C. com. art. L811-1 à L814-15.
+        Source : annuaire du Conseil National des Administrateurs
+        Judiciaires et Mandataires Judiciaires (CNAJMJ), fiches des
+        professionnels (implantations et téléphones). Cadre légal :
+        C. com., livre VIII, titre Ier (art. L811-1 et suivants).
       </p>
     </section>
   );

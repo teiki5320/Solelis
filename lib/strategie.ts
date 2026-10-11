@@ -188,6 +188,8 @@ const CARTE_TJ_GENERIQUE: OrganismeCard = {
 
 function generiqueDepuisType(type: string, juridiction: 'TC' | 'TJ'): string {
   const t = type.toLowerCase();
+  // Ressort non déterminé dans un département qui compte un TAE et des TC.
+  if (/ ou (le )?tribunal des activit/.test(t)) return 'tribunal compétent';
   if (/activit[ée]s [ée]conomiques/.test(t)) return 'tribunal des activités économiques';
   if (/chambre commerciale/.test(t)) return 'chambre commerciale du tribunal judiciaire';
   if (/mixte de commerce/.test(t)) return 'tribunal mixte de commerce';
@@ -203,11 +205,11 @@ function generiqueDepuisType(type: string, juridiction: 'TC' | 'TJ'): string {
  * le plan d'action, la checklist, les courriers et la carte « Organismes ».
  */
 export function getTribunalCompetent(
-  company: Pick<CompanyData, 'formeJuridique' | 'naf' | 'departement'> & Partial<Pick<CompanyData, 'codePostal'>>,
+  company: Pick<CompanyData, 'formeJuridique' | 'naf' | 'departement'> & Partial<Pick<CompanyData, 'codePostal' | 'ville'>>,
 ): TribunalCompetent {
   const juridiction = getJuridiction(company as CompanyData);
   const dep = getDepartement(company.departement);
-  const local = dep?.tribunal ? tribunalSelonCodePostal(dep, company.codePostal) : null;
+  const local = dep?.tribunal ? tribunalSelonCodePostal(dep, company.codePostal, company.ville) : null;
   let carte: OrganismeCard =
     (local && carteTribunal(local, juridiction)) ??
     (juridiction === 'TJ'
@@ -237,7 +239,7 @@ export function getTribunalCompetent(
  * ressort ») : le champ reste alors à compléter par le dirigeant.
  */
 export function nomTribunalPourCourrier(
-  company: Pick<CompanyData, 'formeJuridique' | 'naf' | 'departement'> & Partial<Pick<CompanyData, 'codePostal'>>,
+  company: Pick<CompanyData, 'formeJuridique' | 'naf' | 'departement'> & Partial<Pick<CompanyData, 'codePostal' | 'ville'>>,
 ): string {
   const { nom } = getTribunalCompetent(company);
   if (/dont dépend|de votre ressort/.test(nom)) return '';
@@ -352,7 +354,8 @@ export function computeScores(r: Reponses, c: CompanyData): Record<Axe, number> 
   if (eligiblePRP) scores.rebondir += 3;
   if (eligiblePRP && r.situation === 'redressement') scores.rebondir += 2;
   if (r.moral === 'perdu' && eligiblePRP) scores.rebondir += 1;
-  // Antécédent : si liquidation antérieure, le rebond passe par 60 000 Rebonds plutôt que PRP
+  // Antécédent : le texte affiché rappelle que le PRP est fermé après une liquidation
+  // pour insuffisance d'actif ou un PRP clôturés depuis moins de 5 ans (art. L645-2).
   if (r.antecedents === 'oui' && eligiblePRP) scores.rebondir += 1;
 
   return scores;
@@ -377,7 +380,7 @@ export function buildStrategie(axe: Axe, r: Reponses, c: CompanyData, score: num
             ? "Vous n'êtes pas (ou pas depuis plus de 45 j) en cessation des paiements — les outils amiables restent accessibles."
             : r.moral === 'combatif'
               ? "Votre moral et votre volonté de continuer sont des atouts forts."
-              : "Un plan de redressement permet de poursuivre l'activité en étalant les dettes, jusqu'à 10 ans.",
+              : "Un plan de redressement permet de poursuivre l'activité en étalant les dettes, sur 10 ans au plus (15 ans pour une activité agricole — art. L626-12 C. com.).",
           r.moral === 'combatif'
             ? "Vous avez l'énergie nécessaire pour piloter la restructuration."
             : 'Une restructuration ciblée préserve votre outil de travail.',
@@ -387,10 +390,10 @@ export function buildStrategie(axe: Axe, r: Reponses, c: CompanyData, score: num
           'Prévisionnel de trésorerie à 6 mois avec votre expert-comptable',
           'Demandes de délais : URSSAF, SIE, bailleur, fournisseurs (courriers Solelis)',
           r.pgeEnCours === 'oui'
-            ? 'PGE en cours : demande de restructuration auprès de votre banque, puis Médiation du crédit (3414) — étalement jusqu\'à 10 ans, sans perte de la garantie d\'État'
+            ? 'PGE en cours : demande de réaménagement auprès de votre banque, puis Médiation du crédit (renseignements au 3414) — l\'accord de place, prolongé jusqu\'au 31 décembre 2026, permet d\'allonger le PGE de 2 à 4 ans en gardant la garantie de l\'État'
             : 'Saisine médiation du crédit si tension bancaire',
           'Audit des coûts fixes — éliminer le non-essentiel',
-          'RDV avec le CIP (Centre d\'information sur la prévention) pour un diagnostic externe gratuit et confidentiel',
+          'RDV avec le CIP (Centre d\'information sur la prévention des difficultés des entreprises) : entretien gratuit et confidentiel pour faire le point',
         ],
         alternatives: enCessation
           ? [
@@ -414,16 +417,16 @@ export function buildStrategie(axe: Axe, r: Reponses, c: CompanyData, score: num
         pourquoi: [
           "Vous n'êtes pas encore en cessation des paiements — la sauvegarde est la procédure la plus protectrice ouverte à votre cas.",
           r.effectif === 'salaries'
-            ? "Elle préserve l'emploi pendant la période d'observation."
+            ? "L'activité, et donc l'emploi, se poursuit pendant la période d'observation."
             : "Elle gèle les poursuites individuelles (banque, fournisseurs).",
-          "Le plan de sauvegarde peut s'étaler sur 10 ans.",
+          "Le plan de sauvegarde peut s'étaler sur 10 ans au plus (15 ans pour une activité agricole — art. L626-12 C. com.).",
         ],
         etapes: [
           "Rendez-vous confidentiel avec un avocat en droit des entreprises en difficulté",
           `Préparation du dossier (bilan, trésorerie, passif exigible) — ${juridictionLabel}`,
           "Dépôt de la requête en sauvegarde",
           "Audience d'ouverture et désignation du juge-commissaire / mandataire",
-          "Élaboration du plan de sauvegarde avec l'administrateur",
+          "Élaboration du plan de sauvegarde (avec l'administrateur judiciaire, s'il en a été désigné un)",
         ],
         alternatives: [
           'Si vous préférez la confidentialité totale : mandat ad hoc puis conciliation',
@@ -448,16 +451,16 @@ export function buildStrategie(axe: Axe, r: Reponses, c: CompanyData, score: num
             ? 'Céder vous libère de la charge psychique quotidienne.'
             : "La cession préserve la valeur accumulée pendant des années.",
           r.effectif === 'salaries'
-            ? 'Un repreneur reprend souvent les contrats de travail — les emplois sont préservés.'
+            ? "En cas de reprise de l'activité, les contrats de travail passent en principe au repreneur (art. L1224-1 C. trav.) ; dans un plan de cession, seuls les emplois prévus par l'offre retenue le sont."
             : 'Même en indépendant, la clientèle et la marque ont une valeur.',
         ],
         etapes: [
           "Valorisation par un expert-comptable (multiple d'EBE, valeur patrimoniale)",
-          'Identification de repreneurs : salariés, concurrents, réseaux CCI/CMA, plateformes (Cedants-Repreneurs.fr)',
+          'Identification de repreneurs : salariés, concurrents, réseaux CCI/CMA, bourses d\'annonces (Transentreprise des CCI et CMA, Bourse de la transmission de Bpifrance)',
           'Data room (bilan, contrats, litiges) + mandat à un intermédiaire de cession',
           'Négociation accompagnée (avocat + expert-comptable)',
           r.situation === 'redressement'
-            ? 'Si en procédure : proposition de plan de cession au tribunal'
+            ? 'Si en procédure : les offres de reprise sont déposées auprès de l\'administrateur judiciaire et le tribunal choisit (plan de cession)'
             : 'Signature compromis puis acte définitif',
         ],
         alternatives: [
@@ -490,14 +493,14 @@ export function buildStrategie(axe: Axe, r: Reponses, c: CompanyData, score: num
         ],
         etapes: [
           `Déclaration de cessation des paiements au ${juridictionLabel}, dans les 45 jours qui suivent la cessation`,
-          "Le juge nomme un mandataire liquidateur — vous l'assistez dans l'inventaire",
-          'Licenciement des éventuels salariés avec garantie AGS',
+          "Le tribunal désigne un liquidateur judiciaire — vous lui remettez les informations sur vos biens et vos dettes",
+          'Licenciement des éventuels salariés par le liquidateur ; leurs créances sont garanties par l\'AGS',
           "Réalisation de l'actif et répartition entre créanciers",
           'Clôture de la procédure — puis rebond personnel',
         ],
         alternatives: [
           ...(prpEnvisageable(r, c)
-            ? ['Entrepreneur individuel sans salarié avec un actif de moins de 15 000 € : rétablissement professionnel (PRP, 4 mois — art. L645-1 C. com.)']
+            ? ['Entrepreneur individuel sans salarié avec un actif de moins de 15 000 € : rétablissement professionnel (PRP, 4 mois — art. L645-1 et L645-4 C. com.)']
             : []),
           "Si un repreneur apparaît en dernière minute : plan de cession",
         ],
@@ -511,31 +514,33 @@ export function buildStrategie(axe: Axe, r: Reponses, c: CompanyData, score: num
         : forme === 'ei' ? 'entrepreneur individuel (micro-entreprise comprise)'
         : 'entrepreneur';
       const pourquoi = [
-        'La procédure est rapide (4 mois) et allégée.',
-        "Pas d'inventaire complexe, pas de mandataire liquidateur désigné.",
-        'Vous pouvez recréer une activité dès la clôture.',
+        'La procédure dure 4 mois (art. L645-4 C. com.).',
+        "Pas de liquidation de vos biens et vous gardez la gestion : un mandataire judiciaire aide le juge commis à recenser votre actif et vos dettes.",
+        'Rien dans la procédure ne vous empêche de lancer une nouvelle activité après la clôture.',
       ];
       if (r.antecedents === 'oui') {
-        pourquoi.push('Vous avez déjà connu une procédure : le rebond accompagné (60 000 Rebonds, mentor) est crucial pour ne pas répéter les mêmes pièges.');
+        pourquoi.push(
+          "Vous avez déjà connu une procédure : le rétablissement professionnel est fermé si une liquidation clôturée pour insuffisance d'actif ou un rétablissement professionnel a été clôturé il y a moins de 5 ans (art. L645-2 C. com.). Un accompagnement au rebond (60 000 Rebonds : coach et parrain) aide aussi à ne pas répéter les mêmes pièges.",
+        );
       }
       return {
         axe,
         score,
         titre: 'Rétablissement professionnel (PRP) puis rebond',
         verdict:
-          `Vous êtes ${labelForme}, sans salarié et en cessation des paiements. Si votre actif est faible, le rétablissement professionnel efface les dettes professionnelles en 4 mois, sans liquidation longue, pour vous permettre de repartir.`,
+          `Vous êtes ${labelForme}, sans salarié et en cessation des paiements. Si votre actif est inférieur à 15 000 €, le rétablissement professionnel peut, en 4 mois et sans liquidation, aboutir à l'effacement de vos dettes nées avant la procédure et signalées au juge (sauf exceptions), pour vous permettre de repartir. C'est le tribunal qui décide.`,
         pourquoi,
         etapes: [
-          "Vérifier l'éligibilité (art. L645-1 et R645-1 C. com.) : personne physique, redressement manifestement impossible, aucun salarié au cours des 6 derniers mois, aucune instance prud'homale en cours, actif déclaré inférieur à 15 000 €",
+          "Vérifier l'éligibilité (art. L645-1, L645-2 et R645-1 C. com.) : personne physique, redressement manifestement impossible, activité arrêtée depuis moins d'un an (ou toujours en cours), aucun salarié au cours des 6 derniers mois, aucune instance prud'homale en cours, actif déclaré inférieur à 15 000 €, pas de liquidation clôturée pour insuffisance d'actif ni de rétablissement professionnel clôturé depuis moins de 5 ans",
           `Dépôt de la demande au ${juridictionLabel}`,
-          "Désignation d'un mandataire qui examine votre situation",
-          'Clôture : effacement des dettes professionnelles',
-          'Reprise : 60 000 Rebonds + BPI Prêt rebond pour relancer',
+          "Le tribunal désigne un juge commis et un mandataire judiciaire, qui informe vos créanciers : signalez toutes vos dettes, seules celles portées à la connaissance du juge peuvent être effacées",
+          "Clôture au bout de 4 mois : effacement des dettes antérieures signalées au juge, sauf notamment les créances des salarié·e·s, les pensions alimentaires et les condamnations pénales (art. L645-11 C. com.) ; si votre bonne foi est mise en cause, le tribunal peut ouvrir une liquidation à la place (art. L645-9)",
+          "Rebond : accompagnement par l'association 60 000 Rebonds (coach et parrain, pour les entrepreneur·e·s ayant perdu leur entreprise depuis moins de 24 mois)",
         ],
         alternatives: [
           'Si votre actif dépasse 15 000 € ou si vous avez eu un salarié dans les 6 derniers mois : liquidation judiciaire (simplifiée selon la taille)',
           ...(forme === 'micro' || forme === 'ei'
-            ? ['Si vous êtes au régime micro : radiation simple possible si CA nul depuis 2 ans (guichet unique formalites.entreprises.gouv.fr)']
+            ? ["Arrêter simplement l'activité (déclaration de cessation dans les 30 jours sur le guichet des formalités des entreprises, formalites.entreprises.gouv.fr) n'efface aucune dette : cotisations, impôts et fournisseurs restent dus. Et après plus d'un an d'arrêt, le rétablissement professionnel n'est plus possible (art. L645-1 C. com.)."]
             : []),
         ],
       };

@@ -58,7 +58,8 @@ export default function BlocCreditBail() {
           En sauvegarde, redressement ou liquidation,{' '}
           <strong>l&apos;administrateur judiciaire (ou le liquidateur)
           dispose d&apos;une option</strong> sur les contrats en cours
-          (art. <strong>L622-13 C. com.</strong>) :
+          (art. <strong>L622-13 C. com.</strong> ; art. L641-11-1 en
+          liquidation) :
         </p>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
@@ -88,9 +89,14 @@ export default function BlocCreditBail() {
           l&apos;option d&apos;achat n&apos;est pas levée. En cas de
           résiliation, il peut exiger la restitution. Pour être opposable
           aux autres créanciers en procédure collective, le contrat doit
-          être <strong>publié au greffe</strong> (art. R313-4 CMF). À
-          défaut, le bailleur perd le droit de revendiquer son matériel,
-          qui peut être saisi par les créanciers de l&apos;entreprise.
+          être <strong>publié au greffe</strong> (art. R313-4 à R313-10
+          CMF). À défaut, le bailleur ne peut pas opposer son droit de
+          propriété aux créanciers (sauf s&apos;il prouve qu&apos;ils en
+          avaient connaissance), et le matériel peut être vendu au profit
+          de la procédure. Même publié, le contrat ne dispense pas de
+          demander la restitution du bien dans les 3 mois suivant la
+          publication du jugement d&apos;ouverture (art. L624-9 et L624-10
+          C. com.).
         </p>
       </div>
 
@@ -113,7 +119,7 @@ export default function BlocCreditBail() {
           En procédure collective, l&apos;indemnité constitue une{' '}
           <strong>créance chirographaire</strong> (sans privilège) qui sera
           payée au marc le franc selon les disponibilités. En liquidation,
-          elle est très souvent éteinte de fait.
+          elle n&apos;est payée que si l&apos;actif le permet.
         </p>
       </div>
 
@@ -125,9 +131,11 @@ export default function BlocCreditBail() {
         <p className="mt-2 text-sm text-navy/80">
           Dans le cadre d&apos;un plan de sauvegarde ou de redressement,
           le matériel essentiel peut être <strong>intégré au plan</strong>{' '}
-          avec rééchelonnement des loyers sur 10 ans maximum (art. L626-18
-          C. com.). Le crédit-bailleur ne peut pas s&apos;y opposer si le
-          plan préserve sa créance.
+          : les loyers impayés antérieurs au jugement (déclarés au passif)
+          peuvent être rééchelonnés sur la durée du plan, 10 ans au plus
+          (art. L626-12 et L626-18 C. com.) ; le tribunal peut imposer ces
+          délais au crédit-bailleur qui les refuse. Les loyers à échoir du
+          contrat poursuivi restent dus à leurs échéances.
         </p>
       </div>
 
@@ -157,13 +165,13 @@ export default function BlocCreditBail() {
               🖨️ Cas 2 — Photocopieur en LLD, liquidation
             </p>
             <p className="mt-1">
-              Loyer 320 €/mois · contrat 36 mois, 12 mois restants ·
+              Loyer 320 €/mois · contrat 36 mois, 24 mois restants ·
               indemnité contractuelle de résiliation = 320 × 24 = 7 680 €.
               Le liquidateur restitue le matériel. Le bailleur revend
               4 000 €. Préjudice réel ≈ 3 680 €. La clause de
               7 680 € est jugée excessive → le juge la réduit à
               4 500 € (art. 1231-5 C. civ.). Le bailleur déclare 4 500 €
-              au passif chirographaire — généralement éteint en pratique.
+              au passif chirographaire — payé seulement si l&apos;actif le permet.
             </p>
           </div>
           <div>
@@ -172,12 +180,11 @@ export default function BlocCreditBail() {
             </p>
             <p className="mt-1">
               Valeur matériel 80 000 €. Crédit-bailleur n&apos;a pas
-              publié son contrat au greffe (oubli fréquent). En liquidation,
-              il revendique la pelleteuse. <strong>Le mandataire
-              refuse</strong> : sans publication, le contrat est
-              inopposable aux autres créanciers (art. R313-4 CMF). La
-              pelleteuse est saisie pour le compte de la procédure et
-              revendue au profit de tous les créanciers. Conséquence :
+              publié son contrat au greffe. En liquidation, il revendique
+              la pelleteuse. <strong>Le liquidateur refuse</strong> : sans
+              publication, ses droits sont inopposables aux créanciers
+              (art. R313-10 CMF). La pelleteuse est vendue au profit de
+              tous les créanciers. Conséquence :
               le bailleur perd son bien et ne récupère que sa part
               chirographaire — c&apos;est dur, mais c&apos;est la règle.
             </p>
@@ -191,8 +198,9 @@ export default function BlocCreditBail() {
           ASF — Association française des Sociétés Financières
         </p>
         <p className="mt-1 text-xs text-navy/60">
-          Syndicat professionnel des sociétés de crédit-bail. Peut faciliter
-          un dialogue avec un membre adhérent en cas de litige.
+          Association professionnelle des sociétés de financement
+          spécialisées, dont le crédit-bail. Elle propose un service de
+          médiation en cas de litige avec un établissement adhérent.
         </p>
         <div className="mt-3 flex flex-wrap gap-2 text-sm">
           <a
@@ -213,10 +221,11 @@ export default function BlocCreditBail() {
       </div>
 
       <p className="mt-5 text-xs text-navy/50">
-        Sources : Code monétaire et financier, art. L313-7 à L313-11 ;
-        Code de commerce, art. L622-13 (continuation des contrats en cours)
-        et L626-18 (plan de continuation) ; Code civil, art. 1231-5
-        (réduction des clauses pénales).
+        Sources : Code monétaire et financier, art. L313-7 à L313-11 et
+        R313-4 à R313-10 (publicité) ;
+        Code de commerce, art. L622-13 et L641-11-1 (contrats en cours),
+        L624-9 et L624-10 (revendication), L626-12 et L626-18 (plan) ;
+        Code civil, art. 1231-5 (réduction des clauses pénales).
       </p>
     </BlocAccordeon>
   );

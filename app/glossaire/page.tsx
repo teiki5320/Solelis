@@ -29,15 +29,15 @@ const terms: Term[] = [
   {
     name: 'Conciliation',
     enClair:
-      "Similaire au mandat ad hoc, mais un peu plus encadré. Un conciliateur est nommé par le tribunal pour trouver un accord avec vos créanciers. C'est confidentiel.",
+      "Similaire au mandat ad hoc, mais un peu plus encadré. Un conciliateur est désigné par le président du tribunal pour trouver un accord avec vos créanciers. C'est confidentiel.",
     pourQui:
       "Un dirigeant en difficulté, avec ou sans cessation des paiements depuis moins de 45 jours.",
-    duree: '4 mois, prolongeable 1 mois.',
+    duree: '4 mois au plus, prolongeable : 5 mois au total maximum (art. L611-6 C. com.).',
   },
   {
     name: 'Sauvegarde',
     enClair:
-      "Le tribunal vous protège de vos créanciers pendant que vous restructurez. Vous gardez le contrôle de l'entreprise, avec l'aide d'un administrateur.",
+      "Le tribunal vous protège de vos créanciers pendant que vous restructurez. Vous gardez le contrôle de l'entreprise, le cas échéant avec l'aide d'un administrateur.",
     pourQui:
       "Un dirigeant qui n'est PAS encore en cessation des paiements, mais qui ne peut pas surmonter ses difficultés seul.",
     duree: 'Période d’observation de 6 mois, renouvelable une fois 6 mois : 12 mois au maximum (art. L621-3 C. com.).',
@@ -45,7 +45,7 @@ const terms: Term[] = [
   {
     name: 'Sauvegarde accélérée',
     enClair:
-      "Version express de la sauvegarde, qui intervient après une conciliation. Le tribunal impose un plan aux créanciers récalcitrants en quelques semaines.",
+      "Version express de la sauvegarde, qui intervient après une conciliation. Le plan peut être imposé aux créanciers récalcitrants, en 4 mois au plus.",
     pourQui:
       "Entreprise engagée dans une conciliation, qui a préparé un projet de plan susceptible d'être largement soutenu, et dont les comptes sont certifiés par un commissaire aux comptes ou établis par un expert-comptable (art. L628-1 C. com.). Il n'y a plus de seuil de salariés ou de chiffre d'affaires depuis le 1er octobre 2021.",
     duree: '2 mois, prolongeable — 4 mois au total maximum (art. L628-8 C. com.).',
@@ -87,7 +87,7 @@ const terms: Term[] = [
     enClair:
       "Le tribunal ordonne le transfert de l'entreprise à un repreneur. L'activité et les emplois sont préservés — les dettes restent dans l'ancienne structure.",
     pourQui:
-      "En redressement judiciaire, quand un plan de continuation n'est pas viable mais que l'activité mérite d'être sauvée.",
+      "En redressement ou en liquidation judiciaire, quand un plan de continuation n'est pas viable mais que l'activité mérite d'être sauvée.",
     duree: 'Variable — dépend des offres de reprise.',
   },
   {
@@ -95,7 +95,7 @@ const terms: Term[] = [
     enClair:
       "Procédure simplifiée qui efface vos dettes professionnelles SANS passer par une liquidation complète. Un vrai nouveau départ, rapide et discret.",
     pourQui:
-      "Entrepreneurs individuels uniquement (pas les sociétés). Conditions : cessation des paiements, aucun salarié, actifs inférieurs à 15 000 €.",
+      "Entrepreneurs individuels uniquement (pas les sociétés). Conditions : cessation des paiements avec redressement manifestement impossible, aucun salarié au cours des 6 derniers mois, actif inférieur à 15 000 €, pas d’instance prud’homale en cours (art. L645-1 et R645-1 C. com.).",
     duree: '4 mois maximum.',
   },
   {
@@ -135,7 +135,7 @@ const terms: Term[] = [
     enClair:
       "Un professionnel nommé par le tribunal pour aider le dirigeant à gérer l'entreprise pendant la procédure. Il peut aussi préparer un plan de redressement.",
     pourQui:
-      'Nommé dans les procédures de sauvegarde et de redressement judiciaire.',
+      'Peut être nommé en sauvegarde et en redressement judiciaire ; obligatoire au-delà de seuils de salariés et de chiffre d’affaires fixés par décret (art. L621-4 C. com.).',
     duree: "Présent pendant la période d'observation.",
   },
   {
@@ -149,15 +149,15 @@ const terms: Term[] = [
   {
     name: 'CODEFI',
     enClair:
-      "Comité départemental qui aide les entreprises de moins de 400 salariés en difficulté de financement. Peut négocier avec vos créanciers et débloquer des aides.",
+      "Comité départemental, présidé par le préfet, qui aide les entreprises de moins de 400 salariés en difficulté de financement. Peut faire réaliser un audit et accorder un prêt du FDES (Fonds de développement économique et social).",
     pourQui:
-      "Entreprises de moins de 400 salariés, tous secteurs. Accès via la Préfecture ou la DREETS.",
+      "Entreprises de moins de 400 salariés, tous secteurs, à jour de leurs obligations fiscales et sociales. Saisine via le secrétariat permanent du CODEFI à la DDFiP ou le CRP de votre région (impots.gouv.fr).",
     duree: "Accompagnement sur mesure, pas de durée fixe.",
   },
   {
     name: 'CIP (Centre d’Information sur la Prévention)',
     enClair:
-      "Réseau de centres locaux qui informent gratuitement et confidentiellement les dirigeants sur les options de prévention. Animé par des bénévoles (anciens chefs d'entreprise, avocats, comptables).",
+      "Réseau de centres locaux qui informent gratuitement et confidentiellement les dirigeants sur les options de prévention. Animé par des bénévoles (ancien juge du tribunal de commerce, avocat, expert-comptable).",
     pourQui:
       "Tout dirigeant inquiet pour son entreprise, à n'importe quel stade.",
     duree: 'Rendez-vous ponctuel, gratuit.',
@@ -165,7 +165,7 @@ const terms: Term[] = [
   {
     name: 'PGE (Prêt Garanti par l’État)',
     enClair:
-      "Prêt distribué par votre banque pendant la crise Covid (2020-2021), garanti à 70 à 90 % par l’État. Le protocole de place du 19 janvier 2022 permet de l’étaler jusqu’à 10 ans sans perdre la garantie d’État.",
+      "Prêt distribué par votre banque pendant la crise Covid (2020-2021), garanti à 70 à 90 % par l’État. L’accord de place du 19 janvier 2022 permet, via la Médiation du crédit et sous conditions (notamment PGE de 50 000 € au plus), de l’étaler jusqu’à 10 ans au total sans perdre la garantie d’État, avec l’accord de toutes les banques concernées.",
     pourQui:
       "Toute entreprise ayant souscrit un PGE et qui peine aujourd’hui à le rembourser.",
     duree: 'Restructuration amiable à tenter en priorité ; en sauvegarde ou redressement, le PGE peut aussi être rééchelonné dans le plan, garantie d’État maintenue.',
@@ -183,11 +183,11 @@ const terms: Term[] = [
     enClair:
       "Guichet unique qui regroupe vos dettes fiscales (SIE) et sociales (URSSAF) pour un échéancier global. Saisine confidentielle via la DDFiP (dossier de saisine sur impots.gouv.fr).",
     pourQui:
-      "Dirigeants avec dettes fiscales ET sociales — sauf en RJ/LJ.",
+      "Entreprises (hors micro-entrepreneurs) ayant des dettes fiscales et/ou sociales, à jour de leurs déclarations et de la part salariale des cotisations — pas en procédure collective.",
     duree: 'Durée du plan fixée par la commission ; réponse sous 2 mois, sinon la demande est rejetée.',
   },
   {
-    name: 'CRP (Commissaire aux Restructurations et à la Prévention)',
+    name: 'CRP (Commissaire aux restructurations et à la prévention des difficultés des entreprises)',
     enClair:
       "Représentant de l’État en région (DREETS / Préfecture) chargé d’accompagner confidentiellement les entreprises en difficulté. Aide à coordonner les créanciers publics et privés.",
     pourQui:
@@ -197,9 +197,9 @@ const terms: Term[] = [
   {
     name: 'CIRI (Comité Interministériel de Restructuration Industrielle)',
     enClair:
-      "Cellule interministérielle dédiée aux entreprises de plus de 400 salariés (ou plus de 250 stratégiques). Coordonne État, banques et créanciers publics pour structurer un plan de retournement.",
+      "Comité interministériel, dont le secrétariat est assuré par la direction générale du Trésor, dédié aux entreprises de plus de 400 salariés. Coordonne État, banques et créanciers publics pour structurer un plan de retournement.",
     pourQui:
-      "Entreprises >250 salariés stratégiques ou >400 salariés.",
+      "Entreprises de plus de 400 salariés.",
     duree: 'Accompagnement confidentiel.',
   },
   {
@@ -221,7 +221,7 @@ const terms: Term[] = [
   {
     name: 'PSE (Plan de Sauvegarde de l’Emploi)',
     enClair:
-      "Plan obligatoire si l’entreprise a au moins 50 salariés ET licencie au moins 10 salariés sur 30 jours. Doit prévoir reclassement, formation, indemnités supra-légales. Validé/homologué par la DREETS.",
+      "Plan obligatoire si l’entreprise a au moins 50 salariés ET licencie au moins 10 salariés sur 30 jours. Doit prévoir des mesures de reclassement interne et externe, de formation, de soutien à la création d’activité, etc. (art. L1233-62 C. trav.). Validé/homologué par la DREETS.",
     pourQui:
       "Entreprises ≥ 50 salariés en licenciement collectif important.",
     duree: 'Validation accord 15 j / homologation document unilatéral 21 j.',
@@ -239,8 +239,8 @@ const terms: Term[] = [
     enClair:
       "ACRE = exonération partielle de cotisations sociales pendant 1 an pour les créateurs et repreneurs (depuis 2026 : un quart des cotisations visées hors micro, et 25 % de réduction pour les micro-entreprises créées depuis le 1er juillet 2026 ; demande à l’Urssaf sous 60 jours). ARCE = versement en capital de l’allocation chômage (60 % des droits restants, moins 3 % pour la retraite complémentaire) si vous percevez l’ARE et avez obtenu l’ACRE, et que vous créez/reprenez.",
     pourQui:
-      "Toute personne créant ou reprenant une activité — particulièrement utile pour rebondir.",
-    duree: 'ACRE : 12 mois. ARCE : versement en 2 fois.',
+      "ACRE : créateurs et repreneurs relevant de certains publics (demandeurs d’emploi, bénéficiaires du RSA ou de l’ASS, jeunes de 18 à 25 ans, création en quartier prioritaire…). ARCE : bénéficiaires de l’ARE ayant obtenu l’ACRE.",
+    duree: 'ACRE : 12 mois (micro-entreprise : jusqu’à la fin du 3e trimestre civil suivant le début d’activité). ARCE : versement en 2 fois.',
   },
   {
     name: 'FSE+ (Fonds Social Européen Plus 2021-2027)',
@@ -280,7 +280,7 @@ const terms: Term[] = [
       "Plateforme unique de l’État (Bercy) pour identifier l’aide ou l’interlocuteur public adapté à votre situation. Un conseiller vous rappelle gratuitement.",
     pourQui:
       "Tout dirigeant qui ne sait pas par quoi commencer.",
-    duree: 'Rappel sous 5 jours ouvrés.',
+    duree: 'Un conseiller vous rappelle (pas de délai garanti).',
   },
   {
     name: 'Période suspecte',
@@ -301,7 +301,7 @@ const terms: Term[] = [
   {
     name: 'APESA (Aide Psychologique aux Entrepreneurs en Souffrance Aiguë)',
     enClair:
-      "Dispositif de soutien psychologique gratuit pour les dirigeant·e·s en grande souffrance. Une alerte peut être donnée, avec votre accord, par une « sentinelle » formée (tribunal de commerce, expert-comptable, CCI…) ; vous pouvez aussi appeler le numéro vert 0 805 65 50 50 (7 j/7, de 8 h à 20 h). Site : www.apesa-france.com.",
+      "Dispositif de soutien psychologique gratuit pour les dirigeant·e·s en grande souffrance. Une alerte peut être donnée, avec votre accord, par une « sentinelle » formée (tribunal de commerce, expert-comptable, CCI…). APESA n’est pas un service d’urgence : en cas de crise, appelez le 3114. Site : www.apesa-france.com.",
     pourQui:
       "Tout dirigeant traversant une crise psychique.",
     duree: 'Prise en charge rapide, gratuite et confidentielle par un·e psychologue formé·e.',
@@ -309,10 +309,10 @@ const terms: Term[] = [
   {
     name: '60 000 Rebonds',
     enClair:
-      "Association nationale qui accompagne gratuitement les dirigeants après une liquidation : mentor, groupe de pairs, bilan de compétences, projet de rebond.",
+      "Association nationale qui accompagne gratuitement les dirigeants ayant perdu leur entreprise : coaching, parrainage, accompagnement collectif.",
     pourQui:
       "Dirigeants post-liquidation souhaitant rebondir.",
-    duree: '12 à 24 mois d’accompagnement.',
+    duree: 'Durée variable selon l’accompagnement.',
   },
   {
     name: 'Surendettement (commission BdF)',

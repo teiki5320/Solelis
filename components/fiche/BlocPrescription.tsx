@@ -64,7 +64,7 @@ export function buildAlertes(
     alertes.push({
       texte: 'Les salaires ont un super-privilège',
       detail:
-        'En cas de procédure collective, les 60 derniers jours de salaires sont garantis par l\'AGS et bénéficient d\'un super-privilège. Vos salariés seront payés — mais vous devez déclarer rapidement.',
+        'En cas de procédure collective, les salaires des 60 derniers jours de travail bénéficient d\'un super-privilège, et l\'AGS garantit les sommes dues aux salariés dans la limite d\'un plafond (art. L3253-2 et L3253-8 C. trav.). Pour que vos salariés soient payés rapidement, ne tardez pas à déclarer.',
       urgence: 'info',
     });
   }
@@ -80,9 +80,9 @@ export function buildAlertes(
 
   if (seuils.cse) {
     alertes.push({
-      texte: 'Avec 11+ salariés, le CSE doit être informé en cas de difficulté',
+      texte: 'Avec 11+ salariés, le CSE doit être associé en cas de difficulté',
       detail:
-        'Le Code du travail impose d\'informer le CSE en cas de difficulté économique. Ne pas le faire peut engager votre responsabilité. C\'est aussi un allié : le CSE peut déclencher un droit d\'alerte économique.',
+        'Le CSE doit notamment être consulté avant un licenciement économique collectif, et ses représentants sont entendus par le tribunal en cas de procédure collective. Ne pas le faire peut engager votre responsabilité (délit d\'entrave). Dans les entreprises d\'au moins 50 salariés, le CSE peut aussi déclencher un droit d\'alerte économique (art. L2312-63 C. trav.).',
       urgence: 'attention',
     });
   }
@@ -91,7 +91,7 @@ export function buildAlertes(
     alertes.push({
       texte: 'Avec 50+ salariés, des obligations renforcées s\'appliquent',
       detail:
-        'PSE (Plan de Sauvegarde de l\'Emploi) obligatoire en cas de licenciement économique de 10+ salariés sur 30 jours. Le CSE doit être consulté avec un expert-comptable.',
+        'PSE (Plan de Sauvegarde de l\'Emploi) obligatoire en cas de licenciement économique de 10+ salariés sur 30 jours (art. L1233-61 C. trav.). Le CSE doit être consulté et peut se faire assister d\'un expert-comptable.',
       urgence: 'attention',
     });
   }
@@ -147,8 +147,8 @@ export default function BlocPrescription() {
       </div>
       <p className="mt-5 text-xs text-navy/50">
         Ces informations sont générales. Les délais exacts dépendent de
-        votre situation. Un avocat peut les vérifier gratuitement lors
-        d&apos;une première consultation.
+        votre situation. Un avocat peut les vérifier ; une consultation
+        gratuite est possible dans un point-justice (3039).
       </p>
     </BlocAccordeon>
   );

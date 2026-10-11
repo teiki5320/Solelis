@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 const contacts = [
   {
     name: 'APESA',
-    phone: '0 805 65 50 50',
-    tel: '0805655050',
+    phone: 'Trouver mon APESA',
+    tel: null,
     description:
-      'Numéro vert de soutien psychologique aux chef·fe·s d’entreprise, avec l’association APESA · 7 j/7, de 8 h à 20 h · Gratuit · Confidentiel',
+      'Soutien psychologique gratuit et confidentiel pour les entrepreneur·e·s en souffrance : un·e psychologue vous contacte après l’alerte d’une « sentinelle » (greffe, mandataire, expert-comptable…), avec votre accord · Pas un service d’urgence : en cas de crise, 3114',
     url: 'https://www.apesa-france.com',
     urlLabel: 'www.apesa-france.com',
     color: 'bg-bleu/10 text-bleu-fonce',
@@ -29,20 +29,20 @@ const contacts = [
     color: 'bg-rouge/10 text-rouge',
   },
   {
-    name: 'CCI "Entreprise en difficulté"',
-    phone: '0 820 012 112',
-    tel: '+33820012112',
+    name: 'Votre CCI',
+    phone: 'Trouver ma CCI',
+    tel: null,
     description:
-      'Orientation par le réseau des CCI · Numéro non gratuit (08 20 : service payant + prix d’un appel) — vous pouvez aussi contacter directement votre CCI',
-    url: null,
-    urlLabel: null,
+      'Orientation et prévention des difficultés par le réseau des CCI · Coordonnées de la CCI de votre territoire sur cci.fr',
+    url: 'https://www.cci.fr',
+    urlLabel: 'www.cci.fr',
     color: 'bg-jaune/10 text-jaune',
   },
   {
     name: 'SOS Amitié',
     phone: '09 72 39 40 50',
     tel: '+33972394050',
-    description: 'Écoute anonyme · 24 h/24, 7 j/7',
+    description: 'Écoute anonyme et gratuite · 24 h/24, 7 j/7 · Prix d’un appel selon votre opérateur',
     url: null,
     urlLabel: null,
     color: 'bg-vert/10 text-vert',

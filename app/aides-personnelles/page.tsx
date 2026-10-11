@@ -35,14 +35,14 @@ const sections: Section[] = [
       {
         nom: 'ATI (Allocation des Travailleurs Indépendants)',
         description:
-          '592 à 789 €/mois pendant 6 mois. Conditions : 2+ ans d’activité, 10 K€ minimum de revenus sur au moins 1 des 2 dernières années, cessation involontaire (liquidation ou redressement judiciaire).',
+          'De 19,73 à 26,30 € par jour (environ 600 à 800 €/mois) pendant 182 jours (environ 6 mois). Conditions : 2 ans d’activité continue dans la même entreprise, au moins 10 000 € de revenus sur l’une des 2 années précédant l’arrêt, ressources sous le montant du RSA, et perte involontaire de l’activité : liquidation judiciaire, redressement judiciaire dont le plan impose le remplacement du dirigeant, ou activité non viable attestée par un tiers de confiance.',
         url: 'https://chomage-independant.francetravail.fr',
         urlLabel: 'chomage-independant.francetravail.fr',
       },
       {
         nom: 'RSA',
         description:
-          'Accessible aux dirigeants dont les revenus sont quasi nuls. Depuis le 01/01/2025, inscription automatique à France Travail. Conditions : CA < 20 550 €/3 mois (BIC), 25+ ans.',
+          'Accessible aux dirigeant·e·s dont les ressources du foyer sont faibles. Conditions : au moins 25 ans (sauf exceptions) ; pour les indépendant·e·s, règles particulières de prise en compte des revenus (pas de salarié·e, chiffre d’affaires plafonné) à vérifier auprès de la CAF ou de la MSA. Depuis le 01/01/2025, inscription automatique à France Travail.',
         url: 'https://www.caf.fr',
         urlLabel: 'caf.fr',
         badge: 'Sous conditions',
@@ -67,7 +67,7 @@ const sections: Section[] = [
       {
         nom: 'CSS (Complémentaire Santé Solidaire, ex CMU-C)',
         description:
-          'Mutuelle gratuite si vos revenus sont inférieurs à 10 166 €/an. Couvre soins, médicaments, optique et dentaire sans avance de frais.',
+          'Gratuite si les ressources annuelles ne dépassent pas 10 421 € (personne seule, métropole) ; avec une participation financière jusqu’à 14 069 €. Couvre soins, médicaments, optique et dentaire sans avance de frais.',
         url: 'https://www.complementaire-sante-solidaire.gouv.fr',
         urlLabel: 'complementaire-sante-solidaire.gouv.fr',
         tel: '3646',
@@ -77,7 +77,7 @@ const sections: Section[] = [
       {
         nom: 'APL / ALS',
         description:
-          'Aide au logement recalculée tous les 3 mois sur vos revenus actuels. Si vos revenus baissent, l’aide augmente automatiquement. Pensez à déclarer vos changements de situation.',
+          'Aide au logement réexaminée tous les 3 mois. Attention : pour les revenus d’activité indépendante, la CAF retient en principe ceux de l’année N-2, donc une baisse récente n’est pas prise en compte automatiquement. Déclarez vos changements de situation.',
         url: 'https://www.caf.fr',
         urlLabel: 'caf.fr',
       },
@@ -114,7 +114,7 @@ const sections: Section[] = [
       {
         nom: 'AGEFIPH',
         description:
-          'Aide de 3 000 € pour les dirigeants reconnus travailleurs handicapés (RQTH). Cette aide peut financer l’adaptation de votre poste de travail ou un accompagnement spécifique.',
+          'Aide forfaitaire de 3 000 € pour créer ou reprendre une entreprise (personne en situation de handicap, accompagnée en amont par un expert habilité). Si votre handicap compromet la poursuite de votre activité d’indépendant·e, une aide au maintien dans l’emploi existe aussi (prescrite par Cap emploi).',
         url: 'https://agefiph.fr',
         urlLabel: 'agefiph.fr',
       },

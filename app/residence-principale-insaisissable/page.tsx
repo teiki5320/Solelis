@@ -33,7 +33,7 @@ export default function ResidencePrincipalePage() {
         <h2 className="font-display text-xl text-navy">✓ Vous êtes Entrepreneur Individuel (EI)</h2>
         <p className="mt-3 text-sm text-navy/80">
           <strong>La résidence principale est INSAISISSABLE DE DROIT</strong> pour les dettes professionnelles
-          (loi Macron du 6 août 2015, étendue par la loi du 14 février 2022 sur le statut unique de l&apos;EI).
+          (loi Macron du 6 août 2015, art. L526-1 C. com. ; la loi du 14 février 2022 sur le statut unique de l&apos;EI a en outre séparé patrimoine professionnel et patrimoine personnel).
         </p>
         <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>Aucune formalité à accomplir — la protection s&apos;applique automatiquement</li>
@@ -57,10 +57,10 @@ export default function ResidencePrincipalePage() {
           peut être saisie en cas d&apos;appel de la caution.
         </p>
         <p className="mt-3 text-sm text-navy/80">
-          <strong>Renforcement :</strong> vous pouvez faire une <strong>déclaration d&apos;insaisissabilité</strong> chez
-          notaire (art. L526-1 C. com.) qui rend votre résidence insaisissable pour les dettes <strong>professionnelles
-          futures</strong> uniquement. Acte notarié (émoluments du notaire et frais de publication). Publication au Service de la publicité
-          foncière.
+          <strong>Attention :</strong> l&apos;insaisissabilité de l&apos;art. L526-1 C. com. (et la <strong>déclaration
+          d&apos;insaisissabilité</strong> chez notaire) est réservée aux <strong>personnes physiques</strong> immatriculées
+          comme entrepreneur individuel. En tant que dirigeant·e de société, vous ne pouvez pas l&apos;utiliser pour
+          protéger votre résidence contre une banque dont vous êtes caution.
         </p>
       </article>
 
@@ -72,12 +72,12 @@ export default function ResidencePrincipalePage() {
           La caution est un engagement personnel autonome qui survit à toute insaisissabilité.
         </p>
         <p className="mt-3 text-sm text-navy/80">
-          <strong>Bonne nouvelle :</strong> une part importante des cautions est contestable. La banque doit prouver :
+          <strong>Bonne nouvelle :</strong> une caution peut être contestée dans plusieurs cas. Points à vérifier :
         </p>
         <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-navy/80">
-          <li><strong>Proportionnalité</strong> : la caution doit être proportionnée à vos biens et revenus au jour de la signature (art. 2300 C. civ.)</li>
+          <li><strong>Proportionnalité</strong> : la caution ne doit pas être manifestement disproportionnée à vos biens et revenus au jour de la signature (art. 2300 C. civ. pour les cautions signées depuis 2022 ; ancien art. L332-1 C. conso avant)</li>
           <li><strong>Information annuelle</strong> : la banque doit vous informer chaque année avant le 31 mars du montant restant dû (art. 2302 C. civ. ; ancien L313-22 C. mon. fin. pour les cautions antérieures à 2022)</li>
-          <li><strong>Mention manuscrite</strong> : la caution doit comporter une mention manuscrite spécifique (art. 2297 C. civ.)</li>
+          <li><strong>Mention obligatoire</strong> : vous devez avoir apposé vous-même une mention précisant le montant et la nature de votre engagement, à peine de nullité (art. 2297 C. civ.)</li>
         </ul>
         <p className="mt-3 text-sm text-navy/80">
           → Voir notre{' '}
@@ -96,12 +96,14 @@ export default function ResidencePrincipalePage() {
         </p>
         <p className="mt-3 text-sm text-navy/80">
           <strong>Régime séparation</strong> : chacun ses biens. La résidence est-elle indivise (50/50) ou
-          propriété d&apos;un seul ? Cela change tout. Les créanciers d&apos;un époux ne peuvent saisir que sa quote-part.
+          propriété d&apos;un seul ? Cela change tout. Les créanciers personnels d&apos;un époux ne peuvent pas saisir directement sa part d&apos;un bien indivis, mais ils peuvent provoquer le partage en son nom (art. 815-17 C. civ.).
         </p>
         <p className="mt-3 text-sm text-navy/80">
-          <strong>Changement de régime matrimonial en urgence</strong> : possible (acte notarié, déclaration au TJ),
-          mais <strong>opposable aux créanciers seulement pour les dettes FUTURES</strong>. Sur les dettes passées,
-          l&apos;action paulienne (1341-2 C. civ.) reste possible 5 ans.
+          <strong>Changement de régime matrimonial en urgence</strong> : possible par acte notarié, mais vos
+          créanciers sont informés par un avis publié et peuvent <strong>s&apos;opposer dans les 3 mois</strong> (le
+          changement doit alors être homologué par le juge). Il n&apos;est opposable aux tiers que 3 mois après sa
+          mention en marge de l&apos;acte de mariage, et les créanciers peuvent l&apos;attaquer s&apos;il a été fait en
+          fraude de leurs droits (art. 1397 et 1341-2 C. civ.).
         </p>
       </article>
 
@@ -110,9 +112,10 @@ export default function ResidencePrincipalePage() {
         <h2 className="font-display text-xl text-jaune">Limites de l&apos;insaisissabilité</h2>
         <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
-            <strong>Dettes fiscales / sociales personnelles</strong> : l&apos;administration peut saisir
-            (impôts personnels, URSSAF cotisations TI, etc.) sauf application du seuil de saisie sur
-            résidence principale (art. L213-1 LPP).
+            <strong>Dettes personnelles et administration fiscale</strong> : l&apos;insaisissabilité ne vise que les
+            dettes nées de votre activité professionnelle (pas les impôts personnels ni les dettes privées). Et elle
+            ne joue pas face à l&apos;administration fiscale en cas de manœuvres frauduleuses ou d&apos;inobservation
+            grave et répétée de vos obligations fiscales (art. L526-1 C. com.).
           </li>
           <li>
             <strong>Liquidation à votre demande</strong> : si vous décidez de vendre votre résidence (par exemple
@@ -137,7 +140,7 @@ export default function ResidencePrincipalePage() {
         <h2 className="font-display text-lg text-vert">Recommandations</h2>
         <ul className="mt-3 space-y-2 text-sm text-navy/80">
           <li>✓ Si vous êtes EI : aucune démarche, mais conservez un état clair de la séparation pro/perso</li>
-          <li>✓ Si vous êtes en société : envisagez une déclaration notariée d&apos;insaisissabilité dès le départ</li>
+          <li>✓ Si vous êtes en société : limitez les cautions personnelles et faites vérifier celles déjà signées</li>
           <li>✓ Vérifiez la proportionnalité de toutes vos cautions personnelles signées</li>
           <li>✓ Ne mélangez JAMAIS comptes pro et perso</li>
           <li>✓ Ne réalisez aucun transfert d&apos;actif récent (donation, vente à proches) en période difficile</li>

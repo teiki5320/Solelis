@@ -44,9 +44,9 @@ const SECTIONS: Section[] = [
     intro:
       "La cotation est un indicateur de la capacité de l'entreprise à honorer ses engagements financiers. Elle est communiquée aux banques et influence fortement l'accès au crédit.",
     points: [
-      { label: 'Échelle', valeur: '3++ (excellente) à 9 (incapacité à honorer) ; P si procédure collective ouverte ; 0 si aucune info.' },
+      { label: 'Échelle', valeur: 'Depuis janvier 2022 : 22 positions, de 1+ (excellente) à 8 (fortement compromise) ; P (défaillante) si procédure collective ouverte ; 0 si aucune information significative.' },
       { label: 'Mise à jour', valeur: 'Au moins annuelle, ou suite à un événement significatif (dépôt des comptes, incident, jugement).' },
-      { label: "Seuil d'alerte", valeur: "Passage à 6 et en dessous : l'accès au crédit devient très difficile. 7 signale un risque élevé." },
+      { label: "Seuil d'alerte", valeur: "À partir de 6 (« menacée »), puis 6- (« compromise »), 7 et 8, la cote signale une capacité menacée ou compromise à honorer les engagements financiers." },
       { label: 'Votre droit', valeur: "Vous avez le droit de connaître votre cote, les motifs de la cotation, et de la contester via un entretien avec la BDF." },
     ],
     actions: [
@@ -55,8 +55,7 @@ const SECTIONS: Section[] = [
       "Communiquez tout élément positif (contrats, restructuration, recapitalisation)",
     ],
     sources: [
-      'Banque de France — « Cotation des entreprises »',
-      'Règlement BCE 2014/1374 (crédits éligibles à la BCE)',
+      'Banque de France — « Cotation des entreprises » (nouvelle échelle de cotation, janvier 2022)',
     ],
     liens: [
       { label: 'entreprises.banque-france.fr', url: 'https://entreprises.banque-france.fr' },
@@ -70,8 +69,8 @@ const SECTIONS: Section[] = [
     points: [
       { label: 'Action en responsabilité pour insuffisance d\'actif (ex-« comblement de passif »)', valeur: "Peut viser le dirigeant ayant commis une faute de gestion ayant contribué à l'insuffisance d'actif. Condamnation à payer tout ou partie du passif. Prescription : 3 ans à compter du jugement de liquidation." },
       { label: 'Faillite personnelle', valeur: "Interdiction de diriger toute entreprise pendant 15 ans max. Déclenchée pour fautes graves : poursuite abusive d'activité, détournement d'actif, comptabilité fictive." },
-      { label: 'Interdiction de gérer', valeur: "Sanction plus large (jusqu'à 15 ans) pour manquements de bonne foi moins graves que la faillite personnelle (défaut de déclaration dans les 45 j, absence de coopération avec le mandataire)." },
-      { label: 'Banqueroute (pénal)', valeur: "Délit passible de 5 ans de prison et 75 000 € d'amende. Suppose une procédure collective ET un comportement frauduleux (détournement, faux en écritures, augmentation frauduleuse du passif)." },
+      { label: 'Interdiction de gérer', valeur: "Sanction moins lourde que la faillite personnelle, prononcée à sa place (15 ans maximum), notamment pour avoir omis sciemment de demander l'ouverture d'une procédure dans les 45 jours ou, de mauvaise foi, ne pas avoir remis au mandataire les informations dues." },
+      { label: 'Banqueroute (pénal)', valeur: "Délit passible de 5 ans de prison et 75 000 € d'amende. Suppose une procédure collective ET un comportement frauduleux (détournement d'actif, comptabilité fictive ou disparue, augmentation frauduleuse du passif)." },
       { label: 'Dettes sociales / fiscales', valeur: "L'administration peut engager la responsabilité solidaire du dirigeant (L267 LPF ; L243-3-2 CSS en cas de travail dissimulé) en cas de manœuvres frauduleuses ou d'inobservation grave et répétée." },
     ],
     actions: [
@@ -107,22 +106,22 @@ const SECTIONS: Section[] = [
       {
         label: 'Confusion de patrimoine — extension de procédure (art. L621-2 C. com.)',
         valeur:
-          "Si la justice constate une confusion entre votre patrimoine personnel et celui de la société (compte mixte, dépenses perso payées par la société, flux financiers anormaux), la procédure collective peut être ÉTENDUE à d'autres sociétés du groupe, voire à votre patrimoine personnel. C'est l'un des rares mécanismes capables de faire tomber les protections classiques — y compris, dans certains cas, la protection de la résidence principale de l'EIRL ou de l'entrepreneur individuel.",
+          "Si la justice constate une confusion entre votre patrimoine personnel et celui de la société (compte mixte, dépenses perso payées par la société, flux financiers anormaux), la procédure collective peut être ÉTENDUE à d'autres sociétés du groupe, voire à votre patrimoine personnel. C'est l'un des rares mécanismes capables de faire tomber les protections classiques — y compris la séparation entre patrimoine professionnel et patrimoine personnel de l'entrepreneur individuel.",
       },
       {
         label: 'Privilèges des créanciers en liquidation — l\'ordre de paiement',
         valeur:
-          "À savoir si vous êtes vous-même créancier de votre société (compte courant d'associé, apports) : (1) super-privilège des salaires (AGS), (2) frais de justice de la procédure, (3) privilège fiscal et social (Trésor + URSSAF), (4) créances garanties par sûreté, (5) créances chirographaires (sans garantie). Vos apports et comptes courants associés passent en DERNIER : il est très rare qu'ils soient remboursés. Ce n'est pas une injustice — c'est la règle légale.",
+          "À savoir si vous êtes vous-même créancier de votre société (compte courant d'associé, apports). En simplifiant : (1) super-privilège des salaires (avancés par l'AGS), (2) frais de justice, (3) créances nées après le jugement ou bénéficiant du privilège de conciliation, (4) créances garanties par une sûreté ou un privilège (Trésor, URSSAF, banques…), selon leur rang, (5) créances chirographaires (sans garantie). Un compte courant d'associé est en principe une créance chirographaire ; les apports en capital ne sont repris qu'après paiement de tous les créanciers. Ce n'est pas une injustice — c'est la règle légale.",
       },
       {
         label: 'Casier judiciaire B2 / B3 — conséquences professionnelles à long terme',
         valeur:
-          "Faillite personnelle, interdiction de gérer et banqueroute sont inscrites au bulletin n°2 du casier judiciaire. Le B2 est consultable par : employeurs publics, organismes de protection sociale, certaines professions réglementées (avocat, notaire, expert-comptable, médecin, agent immobilier, etc.). Durée d'inscription : 10 à 15 ans selon la peine. Conséquence concrète : impossibilité d'exercer certaines professions futures. Le B3 (votre exemplaire, demandable gratuitement) ne contient que les condamnations les plus lourdes.",
+          "Faillite personnelle, interdiction de gérer et condamnation pour banqueroute sont inscrites au casier judiciaire. Le bulletin n°2 peut être délivré à certaines autorités administratives (préfectures, mairies…), aux tribunaux de commerce et, dans les cas prévus par la loi, à certains employeurs. Conséquence concrète : l'accès à certaines professions ou fonctions peut être fermé. Le B3 (votre exemplaire, demandable gratuitement) ne contient que les condamnations les plus graves.",
       },
       {
         label: 'CRPC (Comparution sur Reconnaissance Préalable de Culpabilité) — en cas de banqueroute',
         valeur:
-          "Si vous êtes poursuivi pour banqueroute, le procureur peut vous proposer une CRPC (le « plaider-coupable » à la française). Vous reconnaissez les faits ; en échange, la peine proposée ne peut dépasser la moitié de la peine encourue. L'assistance d'un avocat est OBLIGATOIRE. Avantage : procédure plus rapide, peine plus faible, moins d'exposition médiatique. À discuter sérieusement avec votre avocat — c'est souvent la meilleure option quand les faits sont matériellement établis.",
+          "Si vous êtes poursuivi pour banqueroute, le procureur peut vous proposer une CRPC (le « plaider-coupable » à la française). Vous reconnaissez les faits ; en échange, la peine de prison proposée ne peut dépasser ni 3 ans ni la moitié de la peine encourue. L'assistance d'un avocat est OBLIGATOIRE. Avantage : procédure plus rapide, peine plus faible, moins d'exposition médiatique. À discuter sérieusement avec votre avocat — c'est souvent la meilleure option quand les faits sont matériellement établis.",
       },
     ],
     actions: [
@@ -136,8 +135,8 @@ const SECTIONS: Section[] = [
       'CSS art. L243-3-2 (solidarité du dirigeant en cas de travail dissimulé)',
       'C. com. art. L632-1 à L632-3 (période suspecte)',
       'C. com. art. L621-2 (extension pour confusion de patrimoine)',
-      'C. com. art. L641-13 (ordre des créanciers en liquidation)',
-      'Code de procédure pénale art. 775 (bulletin n°2) ; art. 495-7 et s. (CRPC)',
+      'C. com. art. L641-13 et L643-8 (ordre des créanciers en liquidation) ; C. trav. art. L3253-2 (super-privilège)',
+      'Code de procédure pénale art. 768 et s. (casier judiciaire) ; art. 495-7 et s. (CRPC) ; service-public.gouv.fr (fiche F14710)',
     ],
     liens: [
       { label: 'Demande de bulletin n°3', url: 'https://casier-judiciaire.justice.gouv.fr' },

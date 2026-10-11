@@ -16,7 +16,7 @@ function etapesAssignation(): Etape[] {
       jour: 'J-0',
       titre: 'Réception de l\'assignation',
       description:
-        "L'huissier vous remet l'assignation. À partir de maintenant, les délais courent.",
+        "Le commissaire de justice (ex-huissier) vous remet l'assignation. À partir de maintenant, les délais courent.",
       niveau: 'present',
     },
     {
@@ -70,7 +70,7 @@ function etapesRedressement(): Etape[] {
       jour: '+ 7 à 15 j',
       titre: 'Jugement d\'ouverture',
       description:
-        "Ouverture d'une procédure de redressement ou de liquidation. Désignation d'un mandataire judiciaire et d'un administrateur.",
+        "Ouverture d'une procédure de redressement ou de liquidation. Désignation d'un mandataire judiciaire (ou d'un liquidateur) et, au-delà de seuils de taille fixés par décret, d'un administrateur judiciaire (art. L621-4 C. com.).",
       niveau: 'futur',
     },
     {
@@ -103,7 +103,7 @@ function etapesPrevention(): Etape[] {
       jour: 'Semaines 1 à 2',
       titre: 'Premier RDV confidentiel',
       description:
-        "Prenez rendez-vous avec la CCI, le CIP, ou un avocat/mandataire. Ce premier échange est gratuit et confidentiel.",
+        "Prenez rendez-vous avec la CCI, le CIP, ou un avocat/mandataire. L'entretien au CIP est gratuit et confidentiel ; une consultation d'avocat gratuite est possible en point-justice (3039).",
       niveau: 'urgent',
     },
     {
@@ -150,7 +150,7 @@ function etapesTresorerie(): Etape[] {
       jour: 'Semaines 1-2',
       titre: 'Demandes de délais (URSSAF, SIE, fournisseurs, banque)',
       description:
-        "Utilisez les modèles de courriers de Solelis. La plupart des demandes argumentées aboutissent à un accord partiel ou total.",
+        "Utilisez les modèles de courriers de Solelis. Une demande argumentée, accompagnée de votre prévisionnel, a plus de chances d'aboutir.",
       niveau: 'urgent',
     },
     {

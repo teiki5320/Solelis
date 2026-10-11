@@ -35,6 +35,7 @@ import {
   nomTribunalPourCourrier,
   AXE_META,
   type Strategie,
+  harmoniserCarteTribunal,
 } from '@/lib/strategie';
 import { scorePriorityCards } from '@/lib/priorites';
 import {
@@ -348,7 +349,8 @@ function construireFiche(r: Reponses, c: CompanyData) {
   const seuils = getEffectifSeuils(c.effectif);
   const dep = getDepartement(c.departement);
   const juridiction = getJuridiction(c);
-  const groupesBase = buildOrganismes(dep, r, [], sector.secteur, c.effectif, juridiction);
+  // Comme LayoutDashboard : la carte tribunal est celle du ressort (code postal).
+  const groupesBase = harmoniserCarteTribunal(buildOrganismes(dep, r, [], sector.secteur, c.effectif, juridiction), c);
   const ordres = buildOrdresProfessionnels(sector);
   const groupes = [
     ...groupesBase,

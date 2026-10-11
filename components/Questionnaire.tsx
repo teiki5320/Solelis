@@ -100,7 +100,7 @@ const ANTECEDENTS: Choice<AntecedentsBodacc>[] = [
 ];
 
 const PGE_EN_COURS: Choice<PgeEnCours>[] = [
-  { value: 'oui', label: 'Oui, j’ai un PGE en cours', hint: 'Prêt Garanti par l’État (Covid 2020-2021)' },
+  { value: 'oui', label: 'Oui, j’ai un PGE en cours', hint: 'Prêt Garanti par l’État (PGE Covid ou PGE « résilience »)' },
   { value: 'non', label: 'Non, pas de PGE' },
   { value: 'ne-sais-pas', label: 'Je ne sais pas' },
 ];
@@ -112,7 +112,7 @@ const RQTH: Choice<Rqth>[] = [
 
 const CONJOINT: Choice<ConjointStatut>[] = [
   { value: 'salarie', label: 'Mon conjoint·e est salarié·e de la société', hint: 'Statut conjoint salarié — protections licenciement éco' },
-  { value: 'collaborateur', label: 'Mon conjoint·e est conjoint collaborateur', hint: 'Inscrit·e au RCS/RM, cotise sans rémunération' },
+  { value: 'collaborateur', label: 'Mon conjoint·e est conjoint collaborateur', hint: 'Mentionné·e au registre national des entreprises (RNE), cotise sans être rémunéré·e' },
   { value: 'associe', label: 'Mon conjoint·e est associé·e', hint: 'Détient des parts sociales' },
   { value: 'aucun', label: 'Mon conjoint·e n’a pas de rôle dans la société' },
   { value: 'sans-conjoint', label: 'Je n’ai pas de conjoint·e' },

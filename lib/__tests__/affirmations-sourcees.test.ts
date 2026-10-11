@@ -60,6 +60,14 @@ const INTERDITS: { re: RegExp; pourquoi: string }[] = [
   { re: /forfaitaire 650 €|réinsertion économique<\/strong>\{' '\}\s*\(jusqu/, pourquoi: 'aide au retour OFII : montants de l\'arrêté du 9 octobre 2023 (service-public F33974)' },
   { re: /souvent\s+inférieurs à 15 jours|commander vos formulaires CSP/, pourquoi: 'OPCO : délai non sourcé ; documents CSP fournis par France Travail' },
   { re: /loi 14 fév\. 2022\)|loi du 14 fév\. 2022\)|loi du 14 fév\. 2022\)\./, pourquoi: 'limite de 5 ans du conjoint collaborateur : C. com. art. L121-4 (LFSS 2022)' },
+  // Tour 4
+  { re: /0 805 65 50 50|0805655050/, pourquoi: 'ancienne cellule APESA (2020) : absente d’apesa-france.com, qui renvoie au 3114' },
+  { re: /0 820 012 112|0 820 000 97\d/, pourquoi: 'standard de la CCI Paris IdF / anciens numéros des CGSS (39 57 et 36 98 désormais)' },
+  { re: /SSI · Sécurité Sociale|secu-independants\.fr/, pourquoi: 'SSI supprimée au 1er janvier 2020 : action sociale du CPSTI via l’Urssaf' },
+  { re: /Cedants-Repreneurs|BPI Prêt rebond|Allocation de Fin d.Études|FNAUT-VTC/, pourquoi: 'site, prêt ou dispositif inexistants ou fermés' },
+  { re: /01 55 90 27 00|01 53 17 87 40|0 969 328 110/, pourquoi: 'numéros absents des sites officiels (AGS, Médiateur des entreprises : saisine en ligne ; Adie)' },
+  { re: /règlement européen 330\/2010/, pourquoi: 'règlement expiré, remplacé par le règlement (UE) 2022/720 ; clause de non-concurrence : L341-2 C. com.' },
+  { re: /Taux d.accord supérieur à 75|réétaler jusqu.à 10 ans|[Éé]talement (possible )?jusqu.à 10 ans/, pourquoi: 'PGE : allongement de 2 à 4 ans via la Médiation du crédit (accord de place) ; taux de médiation sans source' },
 ];
 
 describe('contre-audit : affirmations retirées', () => {

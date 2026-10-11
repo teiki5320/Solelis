@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 const urgences = [
   {
     nom: 'APESA',
-    telephone: '0 805 65 50 50',
-    tel: '0805655050',
-    description: 'Soutien psychologique · 7 j/7, 8 h – 20 h · Gratuit',
+    telephone: '05 46 98 42 85',
+    tel: '0546984285',
+    description: 'Secrétariat de l’association · soutien psychologique gratuit des entrepreneur·e·s · Pas un service d’urgence',
     couleur: 'bg-bleu/10 text-bleu-fonce',
   },
   {
@@ -24,10 +24,10 @@ const urgences = [
     couleur: 'bg-rouge/10 text-rouge',
   },
   {
-    nom: 'CCI',
-    telephone: '0 820 012 112',
-    tel: '+33820012112',
-    description: 'Conseiller entreprise · Numéro non gratuit (service payant + prix d’un appel)',
+    nom: 'Accès au droit',
+    telephone: '3039',
+    tel: '3039',
+    description: 'Numéro unique de l’accès au droit : mise en relation avec un point-justice proche · Gratuit et anonyme',
     couleur: 'bg-jaune/10 text-jaune',
   },
   {
@@ -83,7 +83,7 @@ export default function AccompagnantPage() {
           ))}
         </div>
         <p className="mt-3 text-center text-xs text-navy/50">
-          Ces services sont gratuits et confidentiels.
+          Ces services sont confidentiels ; APESA et le 3114 sont gratuits.
         </p>
       </div>
 

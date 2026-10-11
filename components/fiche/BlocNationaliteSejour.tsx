@@ -22,7 +22,7 @@ export default function BlocNationaliteSejour() {
     <BlocAccordeon
       icone="🛂"
       titre="Titre de séjour — impact d&apos;une procédure collective"
-      soustitre="Passeport Talent, carte entrepreneur, OFII : ce qu&apos;il faut anticiper"
+      soustitre="Carte « talent », carte entrepreneur, OFII : ce qu&apos;il faut anticiper"
     >
       <p className="text-sm text-navy/80">
         Vous nous avez indiqué une nationalité hors UE. Votre titre de
@@ -36,19 +36,20 @@ export default function BlocNationaliteSejour() {
       {/* Passeport Talent */}
       <div className="mt-5 rounded-2xl border border-bleu/30 bg-bleu/5 p-4">
         <p className="font-display text-base text-bleu-fonce">
-          Si vous êtes en Passeport Talent « créateur d&apos;entreprise »
+          Si vous avez une carte « talent – porteur de projet » (ex-passeport talent « créateur d&apos;entreprise »)
         </p>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
-            Délivré pour <strong>4 ans</strong> renouvelables, conditionné
-            à un projet économique sérieux (investissement ≥ 30 000 €,
-            création d&apos;emplois).
+            Délivrée pour <strong>4 ans au plus</strong>, conditionnée
+            notamment à un projet réel et sérieux de création
+            d&apos;entreprise, financé à hauteur d&apos;au moins 30 000 €,
+            et à des ressources au moins égales au SMIC.
           </li>
           <li>
-            <strong>Le titre n&apos;est PAS automatiquement retiré</strong>{' '}
-            en cours de validité en cas de difficulté économique : il
-            court jusqu&apos;à son terme. C&apos;est au renouvellement
-            que se pose la question.
+            Une difficulté économique ne fait pas tomber le titre
+            d&apos;elle-même : c&apos;est surtout au{' '}
+            <strong>renouvellement</strong> que se pose la question du
+            respect des conditions.
           </li>
           <li>
             Lors du renouvellement, la Préfecture examine si{' '}
@@ -71,17 +72,18 @@ export default function BlocNationaliteSejour() {
         </p>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
-            Délivrée pour <strong>1 an</strong> renouvelable. Plus
-            précaire que le Passeport Talent.
+            Délivrée pour <strong>1 an</strong> au plus, renouvelable ;
+            une carte pluriannuelle peut ensuite être demandée.
           </li>
           <li>
-            Condition essentielle : <strong>activité économique en cours
-            et viable</strong> (CA suffisant, comptes à jour, paiement
-            des cotisations).
+            Condition essentielle : <strong>activité économiquement
+            viable</strong>, qui vous procure des ressources au moins égales
+            au seuil fixé (montant sur service-public.gouv.fr, fiche F35795).
           </li>
           <li>
             En cas de cessation, le titre peut être refusé au
-            renouvellement ou abrogé prématurément (rare en pratique).
+            renouvellement, voire retiré si les conditions ne sont plus
+            remplies.
           </li>
         </ul>
       </div>
@@ -110,9 +112,11 @@ export default function BlocNationaliteSejour() {
             pour la Préfecture).
           </li>
           <li>
-            <strong>Anticiper le renouvellement</strong> : déposer le
-            dossier 2 à 4 mois avant l&apos;expiration. Tout dépôt tardif
-            peut entraîner une obligation de quitter le territoire (OQTF).
+            <strong>Anticiper le renouvellement</strong> : la demande se
+            dépose dans les 2 mois qui précèdent l&apos;expiration ; un dépôt
+            tardif entraîne un droit de visa de régularisation de 180 €.
+            Rester en France sans titre valide expose à une obligation de
+            quitter le territoire (OQTF).
           </li>
         </ol>
       </div>
@@ -233,11 +237,10 @@ export default function BlocNationaliteSejour() {
 
       <p className="mt-5 text-xs text-navy/50">
         Sources : CESEDA (Code de l&apos;entrée et du séjour des étrangers
-        et du droit d&apos;asile), art. L421-1 et s. (Passeport Talent),
-        L421-5 (entrepreneur) ; arrêtés ministériels sur les conditions
-        d&apos;intégration ; OFII, programme ARR (aide au retour et à la
-        réinsertion) ; jurisprudence CE sur le renouvellement des titres
-        économiques.
+        et du droit d&apos;asile), art. L421-5 (entrepreneur / profession
+        libérale) et L421-7 à L421-25 (cartes « talent ») ;
+        service-public.gouv.fr, fiches F16922 et F35795 ; OFII, programme
+        d&apos;aide au retour et à la réinsertion.
       </p>
     </BlocAccordeon>
   );

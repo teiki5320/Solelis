@@ -122,7 +122,7 @@ function buildProcedures(r: Reponses, c: CompanyData, s: SectorInfo): Procedure[
   procs.push({
     nom: 'Aides personnelles',
     pertinence: 'info',
-    description: "Indépendamment de l’entreprise, vous avez peut-être droit à l’ATI (chômage indépendant), la CSS (mutuelle gratuite), l’aide juridictionnelle, ou le RSA.",
+    description: "Indépendamment de l’entreprise, vous avez peut-être droit à l’ATI (chômage indépendant), la CSS (complémentaire santé solidaire, gratuite ou avec une participation de 8 à 30 € par mois et par personne selon vos ressources et votre âge), l’aide juridictionnelle, ou le RSA.",
     lien: '/aides-personnelles',
   });
 
