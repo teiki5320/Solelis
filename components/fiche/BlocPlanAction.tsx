@@ -1,13 +1,28 @@
 'use client';
 import { useState, useEffect } from 'react';
 import type { Reponses, CompanyData } from '@/lib/types';
-import { libelleActionSoutien, libelleContactSyndicat, type SectorInfo } from '@/lib/secteur';
+import { libelleActionSoutien, libelleContactSyndicat, libelleChambre, type SectorInfo } from '@/lib/secteur';
+import { contactCotisations } from '@/lib/organismes';
+import { getTribunalCompetent } from '@/lib/strategie';
 import { getTonePreset } from '@/lib/tone';
 import { useFiche, useFicheStorageKey } from '@/lib/FicheContext';
 import BlocAccordeon from './BlocAccordeon';
 
 interface Props {
   defaultOpen?: boolean;
+}
+
+/**
+ * « Vérifier le tribunal dont dépend mon siège (Tribunal de commerce de
+ * Bordeaux pour le département) » : nom issu de data/organismes.json, à
+ * confirmer sur justice.fr quand le département compte plusieurs tribunaux.
+ */
+export function texteTribunal(c: CompanyData, possessif: 'mon' | 'votre'): string {
+  const t = getTribunalCompetent(c);
+  if (/dont dépend|de votre ressort/.test(t.nom)) {
+    return `Identifier ${possessif} ${t.generique} (annuaire des juridictions sur justice.fr)`;
+  }
+  return `Identifier ${possessif} tribunal : ${t.nom} (à confirmer sur justice.fr selon la commune du siège)`;
 }
 
 interface Action {
@@ -17,21 +32,21 @@ interface Action {
   custom?: boolean;
 }
 
-function buildDefaultActions(r: Reponses, c: CompanyData, s: SectorInfo): Action[] {
+export function buildDefaultActions(r: Reponses, c: CompanyData, s: SectorInfo): Action[] {
   const actions: Action[] = [];
   const dep = c.departement || '';
-  const ville = c.ville || '';
 
   actions.push({ id: 'soin', texte: libelleActionSoutien(s), done: false });
 
   if (r.situation === 'assignation') {
-    actions.push({ id: 'avocat-urgence', texte: `Contacter un avocat en urgence${ville ? ` à ${ville}` : ''} (assignation reçue)`, done: false });
+    actions.push({ id: 'avocat-urgence', texte: 'Contacter un avocat en urgence (assignation reçue)', done: false });
   }
   if (r.probleme === 'urssaf') {
-    actions.push({ id: 'urssaf-appel', texte: `Appeler ${s.cotisationOrg}${dep ? ` (${dep})` : ''} au ${s.cotisationTel} pour demander un échelonnement`, done: false });
+    const cot = contactCotisations(s, r.effectif, dep);
+    actions.push({ id: 'urssaf-appel', texte: `Appeler ${cot.orgAvecArticle} (${cot.telLibelle}) pour demander un échelonnement`, done: false });
   }
   if (r.probleme === 'impots') {
-    actions.push({ id: 'impots-sie', texte: `Contacter le SIE${ville ? ` de ${ville}` : ''} pour demander un délai de paiement`, done: false });
+    actions.push({ id: 'impots-sie', texte: 'Contacter mon service des impôts des entreprises (SIE), via la messagerie de mon espace professionnel impots.gouv.fr, pour demander un délai de paiement', done: false });
   }
   if (r.probleme === 'banque') {
     actions.push({ id: 'mediation-credit', texte: `Saisir la médiation du crédit (Banque de France${dep ? `, dép. ${dep}` : ''})`, done: false });
@@ -43,7 +58,7 @@ function buildDefaultActions(r: Reponses, c: CompanyData, s: SectorInfo): Action
     actions.push({ id: 'pge-restructure', texte: 'Demander à ma banque la restructuration du PGE (protocole de place — étalement 10 ans, garantie maintenue)', done: false });
   }
   if (r.conjointStatut === 'aucun') {
-    actions.push({ id: 'conjoint-statut', texte: 'Vérifier le statut de mon conjoint (loi du 2 août 2005 — risque de reconnaissance « collaborateur de fait »)', done: false });
+    actions.push({ id: 'conjoint-statut', texte: 'Déclarer le statut de mon conjoint·e s\'il·elle travaille régulièrement dans l\'entreprise (à défaut, il·elle est réputé·e conjoint·e salarié·e — art. L121-4 C. com.)', done: false });
   }
   if (r.conjointStatut === 'collaborateur') {
     actions.push({ id: 'conjoint-duree', texte: 'Vérifier la durée du statut de conjoint collaborateur (limite 5 ans — loi du 14 fév. 2022)', done: false });
@@ -55,7 +70,7 @@ function buildDefaultActions(r: Reponses, c: CompanyData, s: SectorInfo): Action
     actions.push({ id: 'rqth-agefiph', texte: 'Contacter l\'AGEFIPH ou Cap Emploi pour l\'aide à la création/reprise d\'activité spécifique RQTH', done: false });
   }
 
-  actions.push({ id: 'chambre', texte: `Prendre RDV avec la ${s.chambre}${dep ? ` (${dep})` : ''} — accompagnement gratuit`, done: false });
+  actions.push({ id: 'chambre', texte: `Prendre RDV avec ${libelleChambre(s, c)} — accompagnement gratuit`, done: false });
   if (s.syndicats.length > 0) {
     actions.push({ id: 'syndicat', texte: libelleContactSyndicat(s.syndicats[0]), done: false });
   }
@@ -65,7 +80,7 @@ function buildDefaultActions(r: Reponses, c: CompanyData, s: SectorInfo): Action
     actions.push({ id: 'salaires', texte: 'Vérifier mes obligations vis-à-vis de l\'AGS et des salariés', done: false });
   }
 
-  actions.push({ id: 'tribunal', texte: `Identifier mon tribunal de commerce${ville ? ` (${ville})` : ''}`, done: false });
+  actions.push({ id: 'tribunal', texte: texteTribunal(c, 'mon'), done: false });
   actions.push({ id: 'bilan', texte: `Rassembler les derniers bilans et relevés bancaires de ${c.nom !== 'Votre entreprise' ? c.nom : 'mon entreprise'}`, done: false });
 
   if (r.situation === 'redressement' || r.situation === 'assignation') {

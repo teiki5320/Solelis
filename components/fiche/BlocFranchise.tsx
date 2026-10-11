@@ -44,7 +44,7 @@ export default function BlocFranchise() {
         </p>
         <p className="mt-2 text-sm text-navy/80">
           Un DIP <strong>incomplet, mensonger ou tardif</strong> peut justifier
-          l&apos;annulation du contrat pour <strong>vice du consentement</strong>
+          l&apos;annulation du contrat pour <strong>vice du consentement</strong>{' '}
           (dol ou erreur), avec restitution du droit d&apos;entrée et
           dommages-intérêts. Faites auditer votre DIP par un avocat
           spécialisé en droit de la distribution.
@@ -58,9 +58,9 @@ export default function BlocFranchise() {
         </p>
         <p className="mt-2 text-sm text-navy/80">
           Les redevances (forfaitaires ou indexées sur le chiffre
-          d&apos;affaires) peuvent être <strong>renégociées à l&apos;amiable</strong>
+          d&apos;affaires) peuvent être <strong>renégociées à l&apos;amiable</strong>{' '}
           en cas de baisse durable d&apos;activité. La <strong>médiation
-          interne</strong> au réseau, puis la <strong>médiation FFF</strong>
+          interne</strong> au réseau, puis la <strong>médiation FFF</strong>{' '}
           permettent d&apos;obtenir des moratoires, des baisses temporaires
           ou la suspension de la redevance de publicité.
         </p>

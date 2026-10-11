@@ -1,6 +1,7 @@
 'use client';
 import { yearFromDate } from '@/lib/sirene';
 import { useFiche } from '@/lib/FicheContext';
+import { ID_TITRE_FICHE } from '@/components/fiche/ModePerdu';
 
 function isValid(v?: string): boolean {
   if (!v) return false;
@@ -27,15 +28,14 @@ export default function IdentiteHero() {
         </div>
 
         <div className="min-w-0 flex-1">
-          <h1 className="font-display text-2xl leading-tight text-navy sm:text-4xl">
+          <h1 id={ID_TITRE_FICHE} tabIndex={-1} className="font-display text-2xl leading-tight text-navy focus:outline-none sm:text-4xl">
             {hasName ? company.nom : 'Votre entreprise'}
           </h1>
 
           <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-navy/60 sm:text-sm">
-            <span>SIRET · {company.siret}</span>
+            {company.siret && <span>SIRET · {company.siret}</span>}
             {(company.codePostal || company.ville) && (
               <>
-                <span className="text-navy/25">·</span>
                 <span>
                   {[
                     company.codePostal,

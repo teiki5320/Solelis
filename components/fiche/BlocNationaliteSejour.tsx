@@ -167,12 +167,12 @@ export default function BlocNationaliteSejour() {
           <p className="mt-1 text-xs text-navy/60">Permanences juridiques gratuites</p>
           <div className="mt-3 flex flex-wrap gap-2 text-sm">
             <a
-              href="https://www.lacimade.org/permanences/"
+              href="https://www.lacimade.org/etre-aide-par-la-cimade/"
               target="_blank"
               rel="noreferrer"
               className="rounded-full bg-white/80 px-3 py-1.5 text-bleu-fonce hover:bg-white"
             >
-              <span aria-hidden>🌐</span> lacimade.org/permanences
+              <span aria-hidden>🌐</span> lacimade.org
             </a>
           </div>
         </div>

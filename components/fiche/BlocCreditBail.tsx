@@ -101,10 +101,10 @@ export default function BlocCreditBail() {
         </p>
         <p className="mt-2 text-sm text-navy/80">
           Les contrats prévoient généralement une indemnité égale à{' '}
-          <strong>la totalité des loyers restant à échoir</strong>
+          <strong>la totalité des loyers restant à échoir</strong>{' '}
           (parfois actualisés), majorée de la valeur résiduelle. Cette
           clause est <strong>jugée comminatoire</strong> par la jurisprudence :
-          le juge peut la réduire à de <strong>justes proportions</strong>
+          le juge peut la réduire à de <strong>justes proportions</strong>{' '}
           (art. <strong>1231-5 C. civ.</strong>) si elle est manifestement
           excessive par rapport au préjudice réel du bailleur (perte
           financière nette après revente du matériel).
@@ -124,7 +124,7 @@ export default function BlocCreditBail() {
         </p>
         <p className="mt-2 text-sm text-navy/80">
           Dans le cadre d&apos;un plan de sauvegarde ou de redressement,
-          le matériel essentiel peut être <strong>intégré au plan</strong>
+          le matériel essentiel peut être <strong>intégré au plan</strong>{' '}
           avec rééchelonnement des loyers sur 10 ans maximum (art. L626-18
           C. com.). Le crédit-bailleur ne peut pas s&apos;y opposer si le
           plan préserve sa créance.
