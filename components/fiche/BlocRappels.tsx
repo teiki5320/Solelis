@@ -313,9 +313,9 @@ export default function BlocRappels() {
         const appelTC = addDays(d, 10);
         items.push({
           cle: 'appel-jugement',
-          titre: "Appel d'un jugement du tribunal de commerce",
+          titre: "Appel d'un jugement de procédure collective",
           joursAvantAjd: daysBetween(new Date(), appelTC),
-          description: "Délai d'appel : 10 jours à compter du prononcé du jugement en matière de procédure collective (C. com. R661-3).",
+          description: "Délai d'appel : 10 jours à compter de la notification du jugement en matière de procédure collective (C. com. R661-3).",
           source: 'C. com. R661-3',
           baseDate: appelTC,
         });
@@ -429,7 +429,7 @@ export default function BlocRappels() {
           </span>
         </label>
         <label className="block text-sm text-navy">
-          Date d&apos;un jugement à contester
+          Date de notification d&apos;un jugement à contester
           <input
             type="date"
             value={dateJugement}
@@ -437,7 +437,7 @@ export default function BlocRappels() {
             className="mt-1 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2 text-sm"
           />
           <span className="mt-1 block text-[10px] text-navy/55">
-            Délai d&apos;appel : 10 jours (C. com. R661-3).
+            Délai d&apos;appel : 10 jours à compter de la notification (C. com. R661-3).
           </span>
         </label>
       </div>

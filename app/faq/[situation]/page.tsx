@@ -156,7 +156,7 @@ const FAQ_PAR_SITUATION: Record<string, FaqCiblee> = {
       { q: 'Le créancier qui m\'assigne peut-il être condamné aux dépens ?', r: 'Oui, si l\'assignation est manifestement abusive ou non fondée. Le juge peut imposer le paiement des frais à l\'assignant. Argument à soulever par l\'avocat.' },
       { q: 'Que faire des autres créanciers pendant l\'audience ?', r: 'Suspendre les paiements non-essentiels. Ne PAS payer un créancier en priorité (risque de période suspecte = annulation). Continuer à payer les fournisseurs essentiels à l\'activité.' },
       { q: 'Quel est le coût d\'un avocat pour cette audience ?', r: 'Forfait audience : 800-2 000 € HT. Aide juridictionnelle si éligible. Premier RDV souvent gratuit — appelez 2-3 cabinets pour comparer.' },
-      { q: 'Si je perds, ai-je un recours ?', r: 'Appel possible sous 10 jours (art. R661-3 C. com.). L\'appel est suspensif sauf exécution provisoire de plein droit. À discuter immédiatement avec l\'avocat.' },
+      { q: 'Si je perds, ai-je un recours ?', r: 'Appel possible dans les 10 jours qui suivent la notification du jugement (art. R661-3 C. com.). Attention : la plupart des jugements de procédure collective sont exécutoires de plein droit à titre provisoire (art. R661-1 C. com.) — l\'appel n\'en suspend pas l\'exécution. À discuter immédiatement avec l\'avocat.' },
     ],
     liensConseilles: [
       { href: '/outils/aide-juridictionnelle', label: 'Calculateur AJ' },

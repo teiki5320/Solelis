@@ -100,6 +100,9 @@ describe('BlocRappels — texte des sanctions et copie', () => {
     expect(texte).not.toMatch(/faillite personnelle/i);
     expect(texte).toContain('faute de gestion (L651-2)');
     expect(texte).not.toMatch(/L653-1|L654-1\b/);
+    // Appel : 10 jours à compter de la notification, pas du prononcé (C. com. R661-3).
+    expect(texte).toContain('10 jours à compter de la notification');
+    expect(texte).not.toMatch(/prononcé/);
   });
 
   it('« Copier l’ICS » affiche « Copié ! »', async () => {

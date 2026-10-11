@@ -54,7 +54,7 @@ function buildExpandedContent(card: PriorityCardMeta, ctx: ContexteCartes): Reac
             <li className="flex gap-2"><span className="text-navy/40">→</span>Aide juridictionnelle possible si RFR ≤ 19 433 €/an pour une personne seule en 2026 (outil dédié)</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Pièces : bilan, trésorerie &lt; 1 mois, liste créanciers, propositions</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Réfléchir à la voie : RJ, plan de cession (L642-1), ou LJ</li>
-            <li className="flex gap-2"><span className="text-navy/40">→</span>Appel possible sous 10 j (C. com. R661-3)</li>
+            <li className="flex gap-2"><span className="text-navy/40">→</span>Appel possible sous 10 j après notification (C. com. R661-3)</li>
           </ul>
           <button type="button" onClick={() => scrollToId('echeances')} className="inline-flex text-sm font-medium text-rouge hover:underline">
             Voir la timeline juridique ↓

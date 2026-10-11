@@ -44,7 +44,7 @@ function etapesAssignation(): Etape[] {
       jour: 'Après jugement',
       titre: 'Notification et publication',
       description:
-        "Le jugement est notifié puis publié au BODACC. Possibilité d'appel dans un délai de 10 jours (selon jugement).",
+        "Le jugement est notifié puis publié au BODACC. Possibilité d'appel dans les 10 jours suivant la notification (C. com. R661-3).",
       niveau: 'futur',
     },
   ];
