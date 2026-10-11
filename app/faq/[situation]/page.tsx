@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { META_PAGE_INTROUVABLE } from '@/lib/og';
 
 interface QR {
   q: string;
@@ -172,7 +173,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ situation: string }> }): Promise<Metadata> {
   const { situation } = await params;
   const data = FAQ_PAR_SITUATION[situation];
-  if (!data) return {};
+  if (!data) return META_PAGE_INTROUVABLE;
   const ogUrl = `/api/og?${new URLSearchParams({ titre: data.titre.replace(/^FAQ — /, ''), sous: 'Questions fréquentes', cat: 'faq' }).toString()}`;
   return {
     title: data.metaTitle,

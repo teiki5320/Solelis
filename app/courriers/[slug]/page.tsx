@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { COURRIERS, getCourrier } from '@/lib/courriers';
-import { ogMeta } from '@/lib/og';
+import { META_PAGE_INTROUVABLE, ogMeta } from '@/lib/og';
 import CourrierDetail from './CourrierDetail';
 
 interface PageProps {
@@ -18,7 +18,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const courrier = getCourrier(slug);
-  if (!courrier) return {};
+  if (!courrier) return META_PAGE_INTROUVABLE;
   return ogMeta({
     titre: courrier.titre,
     sous: `Modèle de courrier · ${courrier.destinataire}`,

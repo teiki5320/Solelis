@@ -1,5 +1,15 @@
 import type { Metadata } from 'next';
 
+/**
+ * Métadonnées d'une page introuvable (404) : même titre d'onglet partout,
+ * y compris quand une route dynamique (/situation/[slug], /faq/[situation],
+ * /courriers/[slug]…) reçoit un identifiant inconnu.
+ */
+export const META_PAGE_INTROUVABLE: Metadata = {
+  title: 'Page introuvable — Solelis',
+  robots: { index: false, follow: true },
+};
+
 export type OgCat = 'outil' | 'courrier' | 'procedure' | 'situation' | 'aide' | 'faq' | 'defaut';
 
 /**
