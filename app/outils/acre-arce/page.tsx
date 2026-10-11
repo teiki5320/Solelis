@@ -29,7 +29,13 @@ import Link from 'next/link';
 // - Avoir obtenu l'ACRE
 // - Créer ou reprendre une entreprise
 // Montant : 60 % des droits restants (fins de contrat depuis le 1er juillet 2023),
-// moins 3 % pour le financement des retraites complémentaires.
+// puis déduction de la participation de 3 % au financement des retraites
+// complémentaires, calculée sur ce capital. Exemple Unédic : 40 € × 518 j ×
+// 60 % = 12 432 € ; 12 432 € − 373 € (3 %) = 12 059 €.
+// Source : unedic.org, fiche thématique « Aide à la reprise ou à la création
+// d'entreprise (ARCE) ».
+const TAUX_ARCE = 0.6;
+const PARTICIPATION_RETRAITE_COMPLEMENTAIRE = 0.03;
 
 // PASS 2026 (arrêté du 22 décembre 2025) : 48 060 €.
 const PASS_2026 = 48060;
@@ -97,7 +103,8 @@ export default function AcreArcePage() {
   const arceMontant = useMemo(() => {
     if (!aAre || !acreEligible || !arceRenseigne) return 0;
     const reliquatTotal = areMensuel * areMois;
-    return Math.round(reliquatTotal * 0.6);
+    const capital = reliquatTotal * TAUX_ARCE;
+    return Math.round(capital * (1 - PARTICIPATION_RETRAITE_COMPLEMENTAIRE));
   }, [aAre, acreEligible, arceRenseigne, areMensuel, areMois]);
 
   const STATUTS: { value: Statut; label: string; description: string }[] = [
@@ -317,7 +324,7 @@ export default function AcreArcePage() {
             ) : aAre && acreEligible ? (
               <>
                 <p className="mt-2 text-sm text-navy/80">
-                  60 % du reliquat ARE (moins 3 % pour la retraite complémentaire), versé en capital en 2 fois : la moitié au démarrage, l&apos;autre moitié 6 mois après si l&apos;activité se poursuit.
+                  60 % du reliquat ARE, moins la participation de 3 % au financement des retraites complémentaires (déjà déduite ci-dessous), versé en capital en 2 fois : la moitié au démarrage, l&apos;autre moitié 6 mois après si l&apos;activité se poursuit.
                 </p>
                 <p className="mt-3 text-2xl font-display text-vert">
                   ~ {formatEuros(arceMontant)}
@@ -359,8 +366,8 @@ export default function AcreArcePage() {
       <p className="mt-6 text-xs text-navy/50">
         Sources : Code de la sécurité sociale art. L131-6-4 et D131-6-1 ;
         décret n° 2026-69 du 6 février 2026 (ACRE) ; Code du travail
-        art. R5141-2 (ARCE) ; www.service-public.gouv.fr, www.urssaf.fr et
-        www.francetravail.fr. PASS 2026 : 48 060 € (arrêté du 22 décembre 2025).
+        art. R5141-2 (ARCE) ; www.service-public.gouv.fr, www.urssaf.fr,
+        www.francetravail.fr et www.unedic.org. PASS 2026 : 48 060 € (arrêté du 22 décembre 2025).
       </p>
     </section>
   );

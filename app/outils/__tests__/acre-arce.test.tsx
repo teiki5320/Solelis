@@ -20,8 +20,10 @@ describe('vérificateur ACRE / ARCE', () => {
 
     fireEvent.change(screen.getByLabelText(/Montant mensuel ARE/i), { target: { value: '1000' } });
     fireEvent.change(screen.getByLabelText(/Mois de droits restants/i), { target: { value: '10' } });
-    // 60 % × 1 000 € × 10 mois
-    expect(screen.getByText(/~\s6\s000\s€/)).toBeInTheDocument();
+    // 60 % × 1 000 € × 10 mois = 6 000 €, moins 3 % (retraites complémentaires,
+    // exemple Unédic) = 5 820 €
+    expect(screen.getByText(/~\s5\s820\s€/)).toBeInTheDocument();
+    expect(screen.getByText(/déjà déduite/)).toBeInTheDocument();
   });
 
   it('« Aucun de ces cas » : non éligible', () => {
