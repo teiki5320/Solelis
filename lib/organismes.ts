@@ -18,6 +18,12 @@ export interface DepartementData {
   nom: string;
   chefLieu: string;
   tribunal: OrganismeLocal;
+  /**
+   * Autres juridictions commerciales du département, avec les codes postaux
+   * de leur ressort (ex. tribunal mixte de commerce de Saint-Pierre, 974).
+   * Le tribunal principal (`tribunal`) couvre le reste du département.
+   */
+  tribunauxSecondaires?: (OrganismeLocal & { codesPostaux: string[] })[];
   cci: OrganismeLocal;
   urssaf: OrganismeLocal;
   sie: OrganismeLocal;
@@ -37,6 +43,78 @@ const DATA = data as Record<string, DepartementData>;
 
 export function getDepartement(code: string): DepartementData | null {
   return DATA[code] ?? null;
+}
+
+export interface ContactCotisations {
+  /** Organisme, ex. « URSSAF », « CGSS Réunion », « MSA (Mutualité Sociale Agricole) ». */
+  org: string;
+  /** Avec son article : « l'URSSAF », « la CGSS Réunion », « votre caisse de MSA »… */
+  orgAvecArticle: string;
+  /** Numéro à composer, ou null (MSA : pas de numéro national). */
+  tel: string | null;
+  /** Ce qu'on affiche à la place du numéro : le numéro, ou « numéro de votre caisse sur msa.fr ». */
+  telLibelle: string;
+  telephoneNote?: string;
+  site: string;
+  /** « URSSAF (3698) », « CGSS Réunion (0 820 000 974) », « MSA (numéro de votre caisse sur msa.fr) ». */
+  libelle: string;
+}
+
+/**
+ * Organisme de recouvrement des cotisations et numéro à appeler, seule
+ * source pour toute la fiche (plan d'action, checklist, mode perdu, aides…) :
+ * - outre-mer : la caisse locale (CGSS, CSSM Mayotte, CPS, CAFAT…) ;
+ * - exploitant·e agricole : la MSA (pas de numéro national : msa.fr) ;
+ * - marin-pêcheur : l'ENIM ;
+ * - sinon l'Urssaf : 36 98 pour les travailleurs indépendants, 39 57 pour
+ *   les employeurs (urssaf.fr, « Contacter l'Urssaf »).
+ */
+export function contactCotisations(
+  sector: Pick<SectorInfo, 'secteur' | 'cotisationOrg' | 'cotisationTel' | 'cotisationSite'>,
+  effectif: Reponses['effectif'],
+  departement?: string,
+): ContactCotisations {
+  const fabrique = (org: string, tel: string | null, telLibelle: string, site: string, telephoneNote?: string): ContactCotisations => ({
+    org,
+    orgAvecArticle: /^(URSSAF|ENIM)/.test(org) ? `l'${org}` : /^MSA/.test(org) ? 'votre caisse de MSA' : `la ${org}`,
+    tel,
+    telLibelle,
+    telephoneNote,
+    site,
+    libelle: `${org} (${telLibelle})`,
+  });
+  if (sector.secteur === 'peche') {
+    return fabrique(sector.cotisationOrg, sector.cotisationTel, sector.cotisationTel, sector.cotisationSite);
+  }
+  const dep = departement ? DATA[departement] : undefined;
+  if (dep?.urssaf && /^9[78]/.test(departement ?? '')) {
+    const tel = dep.urssaf.telephone ?? null;
+    return fabrique(dep.urssaf.nom, tel, tel ?? 'coordonnées sur le site de la caisse', dep.urssaf.site ?? 'https://www.urssaf.fr', dep.urssaf.telephoneNote);
+  }
+  if (sector.secteur === 'agriculture') {
+    return fabrique('MSA (Mutualité Sociale Agricole)', null, 'numéro de votre caisse sur msa.fr', 'https://www.msa.fr');
+  }
+  const tel = effectif === 'independant' ? '3698' : '3957';
+  const org = effectif === 'independant' ? 'URSSAF' : sector.cotisationOrg || 'URSSAF';
+  return fabrique(org, tel, tel, 'https://www.urssaf.fr');
+}
+
+/**
+ * Tribunal du département dont dépend le code postal : tribunal secondaire
+ * si le code postal figure dans son ressort, tribunal principal sinon.
+ */
+export function tribunalSelonCodePostal(dep: DepartementData, codePostal?: string): OrganismeLocal {
+  const cp = (codePostal ?? '').trim();
+  const secondaire = cp ? dep.tribunauxSecondaires?.find((t) => t.codesPostaux.includes(cp)) : undefined;
+  if (!secondaire) return dep.tribunal;
+  return {
+    nom: secondaire.nom,
+    type: secondaire.type,
+    telephone: secondaire.telephone,
+    telephoneNote: secondaire.telephoneNote,
+    adresse: secondaire.adresse,
+    site: secondaire.site,
+  };
 }
 
 export interface OrganismeCard {
@@ -133,12 +211,15 @@ export function buildOrganismes(
   };
 
   // Conseil juridique (violet)
-  const juridique: OrganismeCard[] = [...avocats];
+  // La recherche d'avocats (Google Places, à proximité) ne garantit pas la
+  // spécialité « entreprises en difficulté » : étiquette neutre.
+  const juridique: OrganismeCard[] = avocats.map((a) =>
+    /^avocat/i.test(a.type) ? { ...a, type: 'Avocat à proximité' } : a,
+  );
   juridique.push({
-    nom: 'Expert-comptable CIP',
-    type: 'CIP National',
-    telephone: 'ciprofessionnels.com',
-    site: 'https://www.ciprofessionnels.com',
+    nom: 'CIP · Centre d\'information sur la prévention',
+    type: 'Entretien avec un ancien juge, un avocat et un expert-comptable',
+    site: 'https://www.cip-national.fr',
     badge: 'Gratuit · confidentiel',
   });
   if (reponses.probleme === 'banque' || reponses.probleme === 'fournisseurs') {
@@ -240,10 +321,28 @@ export function buildOrganismes(
 
   // Financier (bleu marine)
   const fin: OrganismeCard[] = [];
-  if (reponses.probleme === 'urssaf' && dep?.urssaf) {
+  const outreMer = /^9[78]/.test(dep?.code ?? '');
+  if (reponses.probleme === 'urssaf' && sectorKey === 'agriculture' && !outreMer) {
+    // Exploitant·e agricole : cotisations recouvrées par la MSA, pas l'Urssaf.
+    fin.push({
+      nom: 'MSA · caisse de votre département',
+      type: 'MSA (Mutualité Sociale Agricole)',
+      site: 'https://www.msa.fr',
+      badge: 'Échelonnement possible',
+    });
+  } else if (reponses.probleme === 'urssaf' && sectorKey === 'peche') {
+    fin.push({
+      nom: 'ENIM',
+      type: 'Cotisations des marins (ENIM)',
+      telephone: '02 40 41 39 39',
+      site: 'https://www.enim.eu',
+      badge: 'Échelonnement possible',
+    });
+  } else if (reponses.probleme === 'urssaf' && dep?.urssaf) {
     fin.push({
       nom: dep.urssaf.nom,
-      type: 'URSSAF',
+      // Outre-mer : caisse locale (CGSS, CSSM, CPS, CAFAT…), pas l'Urssaf.
+      type: outreMer ? 'Caisse de sécurité sociale · cotisations' : 'URSSAF',
       telephone: telUrssaf(dep.urssaf.telephone),
       telephoneNote: dep.urssaf.telephoneNote,
       site: dep.urssaf.site ?? 'https://www.urssaf.fr',
@@ -462,45 +561,28 @@ export function buildOrdresProfessionnels(
     });
   }
 
+  // Une même caisse couvre parfois plusieurs professions (CARCDSF : dentistes
+  // et sages-femmes ; CAVOM : géomètres, commissaires de justice…) : une
+  // seule carte, professions regroupées.
+  const parCaisse = new Map<string, { caisse: NonNullable<SectorInfo['caissesRetraite']>[number]; professions: string[] }>();
   for (const caisse of sector.caissesRetraite ?? []) {
+    const deja = parCaisse.get(caisse.caisse);
+    if (deja) {
+      if (!deja.professions.includes(caisse.profession)) deja.professions.push(caisse.profession);
+    } else {
+      parCaisse.set(caisse.caisse, { caisse, professions: [caisse.profession] });
+    }
+  }
+  for (const { caisse, professions } of parCaisse.values()) {
     cartes.push({
       nom: `${caisse.caisse} · Action sociale`,
-      type: `Caisse de retraite · ${caisse.profession}`,
+      type: `Caisse de retraite · ${professions.join(', ')}`,
       telephone: caisse.telephone,
       site: caisse.site,
       badge: 'Aide d\'urgence possible',
     });
   }
 
-  // URPS supplémentaires (Pharmaciens, Sage-femmes, Auxiliaires médicaux,
-  // Chirurgiens-dentistes) — sites nationaux fédérateurs. Les URPS Médecins
-  // régionales sont déjà gérées dans data/organismes.json par département.
-  if (sector.secteur === 'sante') {
-    cartes.push({
-      nom: 'URPS Pharmaciens',
-      type: 'Union régionale des professionnels de santé',
-      site: 'https://urps-pharmaciens.org',
-      badge: 'Trouver l\'antenne régionale',
-    });
-    cartes.push({
-      nom: 'URPS Sage-femmes',
-      type: 'Union régionale des professionnels de santé',
-      site: 'https://www.urpssagefemmes.fr',
-      badge: 'Trouver l\'antenne régionale',
-    });
-    cartes.push({
-      nom: 'URPS Chirurgiens-dentistes',
-      type: 'Union régionale des professionnels de santé',
-      site: 'https://www.lesurps.fr/chirurgiens-dentistes',
-      badge: 'Trouver l\'antenne régionale',
-    });
-    cartes.push({
-      nom: 'URPS Auxiliaires médicaux (kinés, infirmiers, orthophonistes)',
-      type: 'Union régionale des professionnels de santé',
-      site: 'https://www.lesurps.fr',
-      badge: 'Trouver l\'antenne régionale',
-    });
-  }
 
   if (cartes.length === 0) return null;
 
@@ -590,7 +672,7 @@ export function buildReseauxSpecifiques(
     {
       nom: "Action'elles",
       type: 'Réseau · femmes entrepreneures',
-      site: 'https://www.action-elles.fr',
+      site: 'https://actionelles.fr',
       badge: 'Accompagnement gratuit',
     },
     {
@@ -729,7 +811,7 @@ export function buildReseauxSpecifiques(
       {
         nom: 'Cap Emploi',
         type: 'Réseau spécialisé handicap',
-        site: 'https://www.capemploi.com',
+        site: 'https://www.capemploi.info',
         badge: rqthDeclaree ? 'RDV gratuit recommandé' : 'Accompagnement gratuit',
       },
       {
@@ -741,7 +823,7 @@ export function buildReseauxSpecifiques(
       {
         nom: 'MDPH',
         type: 'Maison Départementale des Personnes Handicapées',
-        site: 'https://www.mdph.fr',
+        site: 'https://www.monparcourshandicap.gouv.fr/annuaire',
         badge: 'RQTH, AAH, PCH',
       },
       ...(rqthDeclaree
@@ -766,7 +848,7 @@ export function buildReseauxSpecifiques(
         {
           nom: 'CMP · Centre Médico-Psychologique',
           type: 'Suivi gratuit · par département',
-          site: 'https://www.service-public.fr/particuliers/vosdroits/F12368',
+          site: 'https://www.sante.fr/centre-medico-psychologique-cmp',
           badge: 'Secteur public · sans avance',
         },
         {
@@ -830,14 +912,8 @@ export function buildReseauxSpecifiques(
       {
         nom: 'Second Souffle',
         type: 'Entraide dirigeants en rebond',
-        site: 'https://second-souffle.com',
+        site: 'https://secondsouffle.org',
         badge: 'Communauté + ateliers',
-      },
-      {
-        nom: 'Re-Création',
-        type: 'Rebond entrepreneurial',
-        site: 'https://www.re-creation.org',
-        badge: 'Accompagnement gratuit',
       },
     ],
   });
@@ -852,8 +928,8 @@ export function buildReseauxSpecifiques(
       icone: '⚓',
       cartes: [
         {
-          nom: 'Solidarité Marins',
-          type: 'Société Nationale de Sauvetage en Mer · volet social',
+          nom: 'SNSM',
+          type: 'Société Nationale de Sauvetage en Mer',
           site: 'https://www.snsm.org',
           badge: 'Aide aux familles de marins',
         },
