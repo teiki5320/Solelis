@@ -25,6 +25,7 @@ import { getJuridiction, harmoniserCarteTribunal } from '@/lib/strategie';
 import { computeAlertes } from '@/lib/bodacc';
 import { buildAides } from '@/components/fiche/BlocAides';
 import { scorePriorityCards } from '@/lib/priorites';
+import { COURRIERS, personalizeCourrier, champsCourrier } from '@/lib/courriers';
 import LayoutDashboard from '@/components/fiche/layouts/LayoutDashboard';
 
 const EARL_VERT: CompanyData = {
@@ -203,5 +204,49 @@ describe('EARL à Vert (40420) : aucune orientation CPSTI / Urssaf indépendants
     const commercant = { ...EARL_VERT, formeJuridique: 'Entrepreneur individuel', naf: '47.11B' };
     const { html } = ficheComplete(INDEP_URSSAF, commercant);
     expect(html).toMatch(/CPSTI/);
+  });
+});
+
+describe('courriers : exploitant·e agricole → caisse de MSA', () => {
+  const get = (slug: string) => COURRIERS.find((c) => c.slug === slug)!;
+
+  it('aide d’urgence : adressée à la MSA, plus aucune mention du CPSTI ni de l’Urssaf', () => {
+    const p = personalizeCourrier(get('aide-urgence-social'), { regimeMsa: true, effectif: 'independant' });
+    expect(p.destinataire).toMatch(/caisse de MSA/);
+    expect(p.corps).not.toMatch(/CPSTI|urssaf/i);
+    expect(p.corps).toContain('Demande de prise en charge de cotisations sociales (fonds ASS)');
+    // Mise en page inchangée : mêmes champs à remplir.
+    expect(champsCourrier(p.corps).sort()).toEqual(champsCourrier(get('aide-urgence-social').corps).sort());
+  });
+
+  it('échelonnement et contestation : titre et destinataire MSA', () => {
+    const e = personalizeCourrier(get('echelonnement-urssaf'), { regimeMsa: true });
+    expect(e.titre).toBe("Demande d'échelonnement de cotisations MSA");
+    expect(e.destinataire).toMatch(/caisse de MSA/);
+    const c = personalizeCourrier(get('contestation-urssaf'), { regimeMsa: true, situation: 'assignation', effectif: 'independant' });
+    expect(c.destinataire).toBe('Commission de Recours Amiable (CRA) de votre caisse de MSA');
+    expect(c.conseil).toMatch(/caisse de MSA/);
+    expect(c.conseil).not.toMatch(/3698|URSSAF/);
+  });
+
+  it('CCSF : attestation de la caisse de MSA', () => {
+    const p = personalizeCourrier(get('saisine-ccsf'), { regimeMsa: true });
+    expect(p.corps).toContain('Attestation de votre caisse de MSA de paiement des parts salariales');
+    expect(p.corps).not.toContain('Attestation Urssaf');
+  });
+
+  it('aucun courrier personnalisé pour un·e exploitant·e ne s’adresse à l’Urssaf', () => {
+    for (const t of COURRIERS) {
+      const p = personalizeCourrier(t, { regimeMsa: true, situation: 'assignation', effectif: 'independant' });
+      expect(`${p.titre} ${p.destinataire} ${p.conseil ?? ''}`, t.slug).not.toMatch(/urssaf|cpsti/i);
+      expect(p.corps, t.slug).not.toMatch(/CPSTI|urssaf\.fr|Attestation Urssaf/i);
+    }
+  });
+
+  it('hors agriculture : courriers inchangés (Urssaf, CPSTI)', () => {
+    const p = personalizeCourrier(get('aide-urgence-social'), { effectif: 'independant' });
+    expect(p.destinataire).toBe(get('aide-urgence-social').destinataire);
+    expect(p.corps).toContain('CPSTI');
+    expect(personalizeCourrier(get('echelonnement-urssaf'), {}).titre).toBe(get('echelonnement-urssaf').titre);
   });
 });

@@ -73,9 +73,11 @@ interface Props {
   tribunal?: string;
   /** Libellé du secteur (getSectorInfo), pour {{ACTIVITE}}. */
   secteurLabel?: string;
+  /** Exploitant·e agricole (relevantDeLaMsa) : courriers adressés à la MSA. */
+  regimeMsa?: boolean;
 }
 
-export default function StoreCompanyData({ company, token, reponses, tribunal, secteurLabel }: Props) {
+export default function StoreCompanyData({ company, token, reponses, tribunal, secteurLabel, regimeMsa }: Props) {
   useEffect(() => {
     try {
       sessionStorage.setItem(
@@ -85,6 +87,8 @@ export default function StoreCompanyData({ company, token, reponses, tribunal, s
       if (reponses) {
         sessionStorage.setItem('solelis_reponses', JSON.stringify(reponses));
       }
+      if (regimeMsa) sessionStorage.setItem('solelis_regime', 'msa');
+      else sessionStorage.removeItem('solelis_regime');
       // Mémorise la dernière fiche pour « Retrouver votre fiche ».
       // Une fiche locale (non enregistrée) ne peut pas être rouverte par lien :
       // on ne la propose pas, et on retire une ancienne entrée « local ».
@@ -102,7 +106,7 @@ export default function StoreCompanyData({ company, token, reponses, tribunal, s
         }));
       }
     } catch {}
-  }, [company, token, reponses, tribunal, secteurLabel]);
+  }, [company, token, reponses, tribunal, secteurLabel, regimeMsa]);
 
   return null;
 }

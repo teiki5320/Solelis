@@ -17,9 +17,17 @@ export interface CourrierContext {
   probleme?: Probleme;
   effectif?: Effectif;
   effectifDetail?: string;
+  /**
+   * Exploitant·e agricole en métropole (fiche : relevantDeLaMsa) : les
+   * courriers adressés à l'Urssaf vont à sa caisse de MSA.
+   */
+  regimeMsa?: boolean;
 }
 
 export interface PersonalizedCourrier {
+  /** Titre et destinataire, adaptés au régime agricole le cas échéant. */
+  titre: string;
+  destinataire: string;
   objet: string;
   corps: string;
   preambule?: string;
@@ -78,7 +86,7 @@ export const LIBELLES_CHAMPS: Record<string, string> = {
   OBJECTIF_CONCILIATION: 'Objectif de la conciliation',
   REFERENCE_DETTE: 'Référence de la dette',
   PROPOSITION_ARRANGEMENT: 'Votre proposition d\'arrangement',
-  NUM_AFFILIATION: 'Numéro de sécurité sociale ou de cotisant Urssaf',
+  NUM_AFFILIATION: 'Numéro de sécurité sociale ou de cotisant (Urssaf ou MSA)',
   STATUT: 'Statut (indépendant, auto-entrepreneur…)',
   REVENUS: 'Revenus mensuels actuels (€)',
   CHARGES: 'Charges fixes mensuelles (€)',
@@ -826,7 +834,10 @@ function conseilCategorie(template: CourrierTemplate, ctx: CourrierContext): str
   switch (template.categorie) {
     case 'urssaf':
       if (ctx.situation === 'assignation') {
-        return `URGENT : envoyez ce courrier en recommandé AR sous 48 h et appelez en parallèle votre URSSAF (${telUrssaf(ctx.effectif)}). En cas d'assignation, demandez explicitement une suspension des poursuites.`;
+        const appel = ctx.regimeMsa
+          ? 'votre caisse de MSA (coordonnées sur msa.fr)'
+          : `votre URSSAF (${telUrssaf(ctx.effectif)})`;
+        return `URGENT : envoyez ce courrier en recommandé AR sous 48 h et appelez en parallèle ${appel}. En cas d'assignation, demandez explicitement une suspension des poursuites.`;
       }
       return "Envoyez en recommandé AR et joignez bilan + situation de trésorerie + prévisionnel : une demande argumentée est plus facile à instruire.";
     case 'impots':
@@ -907,10 +918,48 @@ export function remplirChamps(text: string, remplacement: (champ: string) => str
   return text.replace(/\{\{([A-Z0-9_]+)\}\}/g, (_, champ: string) => remplacement(champ));
 }
 
+/**
+ * Exploitant·e agricole : les courriers destinés à l'Urssaf vont à sa
+ * caisse de MSA (cotisations, CRA, action sanitaire et sociale). Seuls le
+ * titre, le destinataire et les phrases propres à l'Urssaf changent.
+ * Sources : msa.fr (« Aides pour les agriculteurs en cas de difficultés de
+ * paiement » : formulaire « Demande de prise en charge de cotisations
+ * sociales (fonds ASS) ») ; art. R142-1 CSS (CRA, y compris la mutualité
+ * sociale agricole).
+ */
+const IMPORTANT_CPSTI = /\n\nImportant : joignez à ce courrier le formulaire de l'aide demandée[^\n]*$/;
+const ADAPTATIONS_MSA: Record<string, { titre?: string; destinataire?: string; corps?: (corps: string) => string }> = {
+  'echelonnement-urssaf': {
+    titre: 'Demande d\'échelonnement de cotisations MSA',
+    destinataire: 'Votre caisse de MSA (recouvrement des cotisations)',
+  },
+  'contestation-urssaf': {
+    titre: 'Contestation de mise en demeure MSA',
+    destinataire: 'Commission de Recours Amiable (CRA) de votre caisse de MSA',
+  },
+  'aide-urgence-social': {
+    destinataire: 'Votre caisse de MSA — action sanitaire et sociale',
+    corps: (corps) =>
+      corps.replace(
+        IMPORTANT_CPSTI,
+        "\n\nImportant : envoyez ce courrier à votre caisse de MSA (coordonnées sur msa.fr). Pour une prise en charge de cotisations, joignez le formulaire « Demande de prise en charge de cotisations sociales (fonds ASS) », disponible sur msa.fr, ou faites la demande en ligne. L'aide est accordée au cas par cas.",
+      ),
+  },
+  'saisine-ccsf': {
+    corps: (corps) =>
+      corps.replace(
+        'Attestation Urssaf de paiement des parts salariales',
+        'Attestation de votre caisse de MSA de paiement des parts salariales',
+      ),
+  },
+};
+
 export function personalizeCourrier(
   template: CourrierTemplate,
   ctx: CourrierContext
 ): PersonalizedCourrier {
+  const msa = ctx.regimeMsa ? ADAPTATIONS_MSA[template.slug] : undefined;
+  const corpsBase = msa?.corps ? msa.corps(template.corps) : template.corps;
   const sansPreambule = SLUGS_SANS_PREAMBULE.has(template.slug);
   const sansClosing = SLUGS_SANS_CLOSING.has(template.slug);
 
@@ -941,8 +990,10 @@ export function personalizeCourrier(
   const urgence = ctx.situation ? SITUATION_URGENCY[ctx.situation] : undefined;
 
   return {
+    titre: msa?.titre ?? template.titre,
+    destinataire: msa?.destinataire ?? template.destinataire,
     objet: template.objet,
-    corps: injectFragments(template.corps, preambule, closing),
+    corps: injectFragments(corpsBase, preambule, closing),
     preambule,
     closing,
     conseil,
@@ -962,6 +1013,8 @@ export function loadContextFromStorage(): CourrierContext | null {
       probleme: r.probleme,
       effectif: r.effectif,
       effectifDetail: r.effectifDetail,
+      // Posé par la fiche (StoreCompanyData) pour un·e exploitant·e agricole.
+      regimeMsa: sessionStorage.getItem('solelis_regime') === 'msa',
     };
   } catch {
     return null;

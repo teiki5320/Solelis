@@ -18,6 +18,7 @@ import {
   buildSoutien,
   buildReseauxSpecifiques,
   getDepartement,
+  relevantDeLaMsa,
   OrganismeCard,
 } from '@/lib/organismes';
 import { getSectorInfo, getCompanyAge, getEffectifSeuils } from '@/lib/secteur';
@@ -294,6 +295,7 @@ async function renderFiche(data: FicheData) {
         reponses={reponses}
         tribunal={nomTribunalPourCourrier(company_data)}
         secteurLabel={sector.label}
+        regimeMsa={relevantDeLaMsa(sector.secteur, company_data.departement)}
       />
 
       {!company_data.fetched && (
