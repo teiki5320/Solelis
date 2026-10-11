@@ -129,4 +129,13 @@ describe('getAidesRegionales', () => {
       }
     }
   });
+
+  it('n\'utilise plus le domaine solutions-co.fr (il ne répond plus)', () => {
+    const result = getAidesRegionales('44');
+    expect(result).not.toBeNull();
+    expect(result!.aides.length).toBeGreaterThan(0);
+    for (const aide of result!.aides) {
+      expect(aide.site ?? '').not.toContain('solutions-co.fr');
+    }
+  });
 });

@@ -221,12 +221,6 @@ const REGION_AIDES: Record<Region, AideRegionale[]> = {
   ],
   'pays-de-la-loire': [
     {
-      nom: 'Solutions&co Pays de la Loire',
-      description: "Agence régionale d'attractivité et de développement. Accompagnement au redressement et à la cession.",
-      site: 'https://www.solutions-co.fr',
-      badge: 'Gratuit',
-    },
-    {
       nom: 'Pays de la Loire Redéploiement',
       description: "Dispositif régional de soutien aux entreprises en cours de restructuration.",
       site: 'https://www.paysdelaloire.fr',
