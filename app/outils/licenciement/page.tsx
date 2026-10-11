@@ -1,6 +1,7 @@
 'use client';
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { dureeEnAnnees } from '@/lib/format';
 
 import {
   PLAFOND_AGS_BAS,
@@ -141,7 +142,7 @@ export default function LicenciementPage() {
                       className="mt-1 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2 text-sm"
                     />
                     <span className="mt-1 block text-[11px] text-navy/55">
-                      = {(s.ancienneteMois / 12).toFixed(1)} années. Indemnité due à partir de 8 mois (L1234-9).
+                      = {dureeEnAnnees(s.ancienneteMois)}. Indemnité due à partir de 8 mois (L1234-9).
                     </span>
                   </label>
                   <label className="block text-xs text-navy/70">
@@ -226,7 +227,7 @@ export default function LicenciementPage() {
         <p className="font-display text-base text-navy">À savoir</p>
         <ul className="mt-2 list-disc space-y-1.5 pl-5">
           <li>
-            <strong>Préavis</strong> : 1 mois (6 mois à 2 ans d&apos;ancienneté), 2 mois (&gt; 2 ans). Indemnisé en plus si dispense.
+            <strong>Préavis</strong> : 1 mois (de 6 mois à moins de 2 ans d&apos;ancienneté), 2 mois (2 ans et plus). Indemnisé en plus si dispense.
           </li>
           <li>
             <strong>Congés payés non pris</strong> : à indemniser en plus.
