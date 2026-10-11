@@ -37,8 +37,9 @@ export default function BlocCSP() {
         salaire brut antérieur pendant 12 mois</strong> (Allocation de
         Sécurisation Professionnelle, ASP), versée par France Travail,
         et un accompagnement renforcé. Il est <strong>obligatoire</strong>{' '}
-        — son omission entraîne une contribution de 2 mois de salaire
-        à France Travail par salarié.
+        — s&apos;il n&apos;est pas proposé, France Travail le propose
+        à la place de l&apos;employeur, qui doit alors une contribution
+        de 2 mois de salaire (3 mois si le salarié adhère).
       </p>
 
       {/* Conditions */}
@@ -57,8 +58,9 @@ export default function BlocCSP() {
           </li>
           <li>
             <strong>Tout salarié</strong> totalisant au moins 88 jours ou
-            610 heures de travail dans les 28 derniers mois (Cdte du
-            travail) — soit la majorité.
+            610 heures de travail sur les 24 derniers mois (36 mois pour
+            les salarié·e·s seniors) — soit la majorité (Unédic, France
+            Travail).
           </li>
         </ul>
       </div>
@@ -80,10 +82,12 @@ export default function BlocCSP() {
           </li>
           <li>
             Si le salarié <strong>accepte</strong> : le contrat prend fin
-            au lendemain du 21e jour, sans préavis. L&apos;employeur paie
-            l&apos;indemnité légale de licenciement + verse à France
-            Travail un montant équivalent à l&apos;indemnité de préavis
-            (2 mois max).
+            à l&apos;issue du délai de réflexion, sans préavis.
+            L&apos;employeur paie l&apos;indemnité de licenciement et,
+            pour un salarié d&apos;au moins 1 an d&apos;ancienneté, verse
+            à France Travail l&apos;équivalent de l&apos;indemnité de
+            préavis dans la limite de 3 mois de salaire (le surplus
+            éventuel revient au salarié).
           </li>
           <li>
             Si le salarié <strong>refuse</strong> ou ne répond pas : le
@@ -134,8 +138,10 @@ export default function BlocCSP() {
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
             <strong>Contribution à France Travail</strong> équivalente à
-            2 mois de salaire brut moyen par salarié non informé (art.
-            L1233-66 C. trav.).
+            2 mois de salaire brut par salarié à qui le CSP n&apos;a pas
+            été proposé, portée à 3 mois si le salarié adhère au CSP
+            que France Travail lui propose alors (art. L1233-66 C.
+            trav.).
           </li>
           <li>
             <strong>Risque prud&apos;homal</strong> : la jurisprudence
@@ -167,15 +173,15 @@ export default function BlocCSP() {
             <span aria-hidden>☎</span> 39 95
           </a>
           <a
-            href="https://www.francetravail.fr/employeur"
+            href="https://www.francetravail.fr/employeur/vos-declarations-et-cotisations/la-fin-de-vos-contrats-de-travai/le-contrat-de-securisation-profe.html"
             target="_blank"
             rel="noreferrer"
             className="rounded-full bg-white/80 px-3 py-1.5 text-bleu-fonce hover:bg-white"
           >
-            <span aria-hidden>🌐</span> francetravail.fr/employeur
+            <span aria-hidden>🌐</span> francetravail.fr — CSP employeur
           </a>
           <a
-            href="https://www.service-public.fr/professionnels-entreprises/vosdroits/F31432"
+            href="https://entreprendre.service-public.gouv.fr/vosdroits/F13819"
             target="_blank"
             rel="noreferrer"
             className="rounded-full bg-white/80 px-3 py-1.5 text-bleu-fonce hover:bg-white"

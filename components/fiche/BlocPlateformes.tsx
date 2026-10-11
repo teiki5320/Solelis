@@ -8,8 +8,8 @@ import BlocAccordeon from './BlocAccordeon';
  * - Livraison (Deliveroo, Uber Eats, Stuart, Frichti)
  * - Services à la personne (Yoojo, AlloVoisin)
  *
- * S'affiche pour les NAF transport (49.32Z = taxis, 53.20Z = livraison
- * autre que poste), restauration livrée, services rendus aux ménages.
+ * S'affiche pour les indépendant·e·s des NAF transport (49.32Z = taxis,
+ * VTC ; 53.20Z = livraison autre que poste).
  *
  * Couvre : statut juridique, ARPE, charte sociale, DGCCRF, registre
  * VTC, prestation services au plus juste prix (loi du 7 mars 2024),
@@ -18,15 +18,12 @@ import BlocAccordeon from './BlocAccordeon';
 export default function BlocPlateformes() {
   const { company, reponses } = useFiche();
   const naf = (company.naf || '').replace(/\./g, '').toUpperCase();
-  // VTC/Taxi (49.32Z), livraison (53.20Z), services personne (96 / 88.10),
-  // restauration (56.10) avec activité essentiellement livrée
-  const naf2 = naf.slice(0, 2);
+  // Seuls le VTC/taxi (49.32Z) et la livraison (53.20Z) relèvent
+  // typiquement du travail de plateforme. Un restaurant (56.10), un salon
+  // de coiffure (96) ou un service d'aide à domicile (88) n'en relèvent
+  // pas : le bloc n'est plus affiché pour tout le code NAF.
   const isPlateforme =
-    naf.startsWith('4932') ||
-    naf.startsWith('5320') ||
-    naf.startsWith('5610') ||
-    naf2 === '96' ||
-    naf2 === '88';
+    (naf.startsWith('4932') || naf.startsWith('5320')) && reponses.effectif === 'independant';
 
   if (!isPlateforme) return null;
 

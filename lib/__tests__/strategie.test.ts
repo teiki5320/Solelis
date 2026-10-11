@@ -255,10 +255,11 @@ describe('buildStrategie', () => {
     }
   });
 
-  it('intègre la ville dans les étapes de sauvegarde', () => {
-    const strat = buildStrategie('sauvegarder', makeReponses(), makeCompany({ ville: 'Lyon' }), 5);
+  it('cite le tribunal du département, jamais « tribunal de commerce de <commune> »', () => {
+    const strat = buildStrategie('sauvegarder', makeReponses(), makeCompany({ ville: 'Villeurbanne', departement: '69', codePostal: '69100' }), 5);
     const etapesJointes = strat.etapes.join(' ');
-    expect(etapesJointes).toContain('Lyon');
+    expect(etapesJointes).toContain('Tribunal des activités économiques de Lyon');
+    expect(etapesJointes).not.toMatch(/tribunal de commerce de Villeurbanne/i);
   });
 });
 

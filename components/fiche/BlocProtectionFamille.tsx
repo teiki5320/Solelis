@@ -1,11 +1,12 @@
 'use client';
 import { useFiche } from '@/lib/FicheContext';
-import { isEI } from '@/lib/strategie';
+import { isEI, getResponsabiliteAssocies } from '@/lib/strategie';
 import BlocAccordeon from './BlocAccordeon';
 
 export default function BlocProtectionFamille() {
   const { reponses, company } = useFiche();
   const ei = isEI(company.formeJuridique);
+  const resp = getResponsabiliteAssocies(company.formeJuridique);
   const aCaution = reponses.caution === 'oui' || reponses.caution === 'ne-sais-pas';
   const proprietaire = reponses.patrimoine === 'proprietaire';
   const communaute = reponses.regime === 'communaute' || reponses.regime === 'ne-sais-pas';
@@ -16,13 +17,19 @@ export default function BlocProtectionFamille() {
   if (proprietaire && ei) {
     items.push({
       titre: 'Votre résidence est automatiquement protégée',
-      texte: "En tant qu’entrepreneur individuel, votre résidence principale est insaisissable par les créanciers professionnels depuis la loi Macron 2015. Aucune démarche nécessaire.",
+      texte: "En tant qu’entrepreneur·e individuel·le, votre résidence principale est insaisissable par les créanciers professionnels depuis la loi Macron 2015 (art. L526-1 C. com.). Depuis le 15 mai 2022, l’ensemble de votre patrimoine personnel est en outre séparé de plein droit de votre patrimoine professionnel (art. L526-22 C. com.). Aucune démarche nécessaire — mais une caution ou une renonciation signée au profit d’un créancier lève cette protection pour ce créancier.",
       urgence: 'vert',
     });
-  } else if (proprietaire && !ei) {
+  } else if (proprietaire && resp.illimitee) {
     items.push({
-      titre: 'Votre résidence n’est PAS automatiquement protégée',
-      texte: `En tant que dirigeant de ${company.formeJuridique || 'société'}, votre résidence principale n’est pas protégée automatiquement. Consultez un notaire pour une déclaration d’insaisissabilité sur vos autres biens immobiliers.`,
+      titre: 'Votre résidence peut répondre des dettes de la société',
+      texte: `Même sans caution, ${resp.texte} Faites le point avec un avocat ou un notaire avant toute décision.`,
+      urgence: 'rouge',
+    });
+  } else if (proprietaire && resp.regime === 'limitee') {
+    items.push({
+      titre: 'Votre résidence : le risque passe par vos cautions',
+      texte: `En tant que ${resp.qui}, vos biens personnels ne répondent pas des dettes de la société. Le risque vient des cautions personnelles (ou hypothécaires) que vous avez signées, et d’une éventuelle condamnation pour faute de gestion (art. L651-2 C. com.). La déclaration notariée d’insaisissabilité est réservée aux entrepreneur·e·s individuel·le·s (art. L526-1 C. com.).`,
       urgence: aCaution ? 'rouge' : 'jaune',
     });
   }
@@ -30,7 +37,7 @@ export default function BlocProtectionFamille() {
   if (aCaution) {
     items.push({
       titre: 'Vos cautions personnelles méritent une vérification',
-      texte: "Une caution peut être contestée si elle était disproportionnée par rapport à vos revenus et patrimoine au moment de la signature (art. 2297 Code civil). Faites vérifier TOUTES vos cautions par un avocat  -  beaucoup sont contestables.",
+      texte: "Une caution signée par une personne physique au profit d’un créancier professionnel peut être réduite si elle était manifestement disproportionnée par rapport à vos revenus et patrimoine au moment de la signature (art. 2300 C. civ.) — voire écartée pour une caution signée avant le 1er janvier 2022 (ancien art. L332-1 C. conso). Faites vérifier TOUTES vos cautions par un avocat — beaucoup sont contestables.",
       urgence: 'rouge',
     });
   }

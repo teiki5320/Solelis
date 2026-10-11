@@ -44,18 +44,18 @@ export default function BlocSurendettement() {
         </p>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
-            Être une <strong>personne physique de bonne foi</strong>
+            Être une <strong>personne physique de bonne foi</strong>{' '}
             (résident français ou français résidant à l&apos;étranger
             avec des dettes contractées en France).
           </li>
           <li>
-            Se trouver dans l&apos;<strong>impossibilité manifeste</strong>
+            Se trouver dans l&apos;<strong>impossibilité manifeste</strong>{' '}
             de faire face à l&apos;ensemble de ses dettes non
             professionnelles exigibles ou à échoir.
           </li>
           <li>
             Les <strong>dettes professionnelles</strong> sont en principe
-            exclues — sauf pour un EI, où des <strong>dettes mixtes</strong>
+            exclues — sauf pour un EI, où des <strong>dettes mixtes</strong>{' '}
             (caution personnelle, prêt étudiant, dettes fiscales
             personnelles) peuvent être prises en compte si elles sont
             liées à la vie privée.

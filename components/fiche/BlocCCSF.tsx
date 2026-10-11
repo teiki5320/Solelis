@@ -113,7 +113,7 @@ export default function BlocCCSF() {
 
       <div className="mt-5 flex flex-wrap gap-2 text-sm">
         <a
-          href="https://www.impots.gouv.fr/professionnel/commission-des-chefs-des-services-financiers-ccsf"
+          href="https://www.impots.gouv.fr/professionnel/accompagnement-individualise-en-cas-de-difficultes-economiques-et-financieres"
           target="_blank"
           rel="noreferrer"
           className="rounded-full bg-white/80 px-3 py-1.5 text-bleu-fonce hover:bg-white"
@@ -147,8 +147,6 @@ export default function BlocCCSF() {
       <p className="mt-5 text-xs text-navy/50">
         Source : décret n°2007-686 du 4 mai 2007 et articles D626-9 à
         D626-15 du Code de commerce (remises de dettes publiques).
-        La CCSF traite environ 4 000 dossiers par an avec un taux
-        d&apos;acceptation supérieur à 80 % quand l&apos;entreprise est viable.
       </p>
     </BlocAccordeon>
   );

@@ -53,7 +53,7 @@ function buildVerdict(dateCessation: Date): Verdict {
       echeance,
       titre: `Délai de 45 jours dépassé de ${Math.abs(joursRestants)} jour${Math.abs(joursRestants) > 1 ? 's' : ''}`,
       message:
-        "L'article L631-4 du Code de commerce imposait une déclaration sous 45 jours. Le dépassement expose à des sanctions civiles (action en responsabilité L651-2, faillite personnelle L653-1) et pénales (banqueroute L654-1 à L654-6). Régularisez SANS attendre.",
+        "L'article L631-4 du Code de commerce imposait de demander l'ouverture d'une procédure sous 45 jours (sauf conciliation demandée dans ce délai). Avoir omis sciemment de le faire expose à une interdiction de gérer (art. L653-8) ; en liquidation, le retard peut aussi être retenu comme faute de gestion (art. L651-2). Régularisez SANS attendre : plus le retard s'allonge, plus le risque augmente.",
       actions: [
         "Consultez un avocat ou un mandataire judiciaire dans les 24 h",
         "Préparez immédiatement la déclaration (formulaire CERFA n°10530)",
@@ -70,7 +70,7 @@ function buildVerdict(dateCessation: Date): Verdict {
       joursEcoules,
       echeance,
       titre: `Plus que ${joursRestants} jour${joursRestants > 1 ? 's' : ''} pour déclarer`,
-      message: `La déclaration de cessation des paiements doit être déposée au plus tard le ${formatDateFR(echeance)}. Au-delà, votre responsabilité personnelle (L651-2 et L654-2) peut être engagée.`,
+      message: `La déclaration de cessation des paiements doit être déposée au plus tard le ${formatDateFR(echeance)}. Au-delà, une interdiction de gérer peut être prononcée (art. L653-8 C. com.) et le retard peut être retenu comme faute de gestion (art. L651-2).`,
       actions: [
         "Prenez rendez-vous avec un avocat ou un mandataire judiciaire dès aujourd'hui",
         "Téléchargez le formulaire CERFA 10530 (déclaration de cessation)",
@@ -154,11 +154,14 @@ export default function BlocCessationDecompte() {
     >
       <p className="mb-4 text-sm text-navy/80">
         L&apos;article <strong>L631-4 du Code de commerce</strong> impose au
-        dirigeant de déclarer la cessation des paiements au tribunal dans
-        les <strong>45 jours</strong> qui suivent. Au-delà, la
-        responsabilité personnelle peut être engagée (action en comblement
-        de passif L651-2, faillite personnelle L653-1, banqueroute L654-1
-        à L654-6).
+        dirigeant de demander l&apos;ouverture d&apos;une procédure au
+        tribunal dans les <strong>45 jours</strong> qui suivent la
+        cessation des paiements, sauf s&apos;il a demandé une conciliation
+        dans ce délai. Omettre sciemment de le faire expose à une
+        interdiction de gérer (art. L653-8) ; en liquidation, le retard
+        peut aussi être retenu comme faute de gestion (responsabilité pour
+        insuffisance d&apos;actif, art. L651-2). La banqueroute (art.
+        L654-2) vise des actes frauduleux, pas un simple retard.
       </p>
 
       <label className="block text-xs text-navy/70">
@@ -226,8 +229,8 @@ export default function BlocCessationDecompte() {
         avocat ou un mandataire peut la fixer précisément.
       </p>
       <p className="mt-1 text-xs text-navy/45">
-        Source : Code de commerce, art. L631-1, L631-4, L651-2, L653-1,
-        L654-1 et s.
+        Source : Code de commerce, art. L611-4, L631-1, L631-4, L651-2,
+        L653-8, L654-2.
       </p>
     </BlocAccordeon>
   );

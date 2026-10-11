@@ -95,9 +95,9 @@ const SECTIONS: Section[] = [
       "Au-delà des sanctions principales, plusieurs mécanismes peu connus peuvent vous exposer personnellement. Les anticiper est la meilleure façon de les neutraliser — et la plupart sont évitables avec quelques précautions simples.",
     points: [
       {
-        label: 'Recouvrement personnel URSSAF (art. L243-6-2 CSS)',
+        label: 'Cotisations sociales : solidarité du dirigeant (art. L243-3-2 CSS)',
         valeur:
-          "En cas de manœuvres frauduleuses OU d'inobservation grave et répétée du paiement des cotisations sociales, le dirigeant peut être condamné solidairement avec la société. Exemples typiques : déclarations délibérément minorées, non-paiement systématique des cotisations sur plusieurs trimestres consécutifs. Une simple difficulté ponctuelle (même répétée) ne suffit pas : il faut une volonté manifeste de se soustraire.",
+          "Le dirigeant d'une société verbalisée pour travail dissimulé peut être déclaré solidairement responsable des cotisations par le président du tribunal judiciaire, s'il est responsable de manœuvres frauduleuses ou d'une inobservation grave et répétée de ses obligations. Hors de ce cas, une difficulté de paiement des cotisations ne rend pas le dirigeant personnellement redevable — sauf condamnation pour faute de gestion en liquidation (art. L651-2 C. com.).",
       },
       {
         label: 'Période suspecte — de la cessation des paiements au jugement (art. L631-8, L632-1 à L632-3 C. com.)',
@@ -133,7 +133,7 @@ const SECTIONS: Section[] = [
       "Demandez gratuitement votre bulletin n°3 du casier (casier-judiciaire.justice.gouv.fr) pour savoir ce qui y figure",
     ],
     sources: [
-      'CSS art. L243-6-2 (recouvrement personnel URSSAF)',
+      'CSS art. L243-3-2 (solidarité du dirigeant en cas de travail dissimulé)',
       'C. com. art. L632-1 à L632-3 (période suspecte)',
       'C. com. art. L621-2 (extension pour confusion de patrimoine)',
       'C. com. art. L641-13 (ordre des créanciers en liquidation)',

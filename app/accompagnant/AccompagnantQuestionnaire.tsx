@@ -79,6 +79,12 @@ const BESOINS: Choice<Besoin>[] = [
   { value: 'proteger', label: 'Protéger votre famille / patrimoine', hint: 'Anticiper l\'impact sur votre foyer' },
 ];
 
+/** Libellé lisible d'une réponse (jamais le code technique « en-colere »). */
+function libelleChoix<T extends string>(choix: Choice<T>[], valeur?: T): string {
+  const label = choix.find((c) => c.value === valeur)?.label ?? '';
+  return label ? label.charAt(0).toLowerCase() + label.slice(1) : '';
+}
+
 interface Answers {
   lien?: Lien;
   etat?: EtatPercu;
@@ -172,8 +178,8 @@ function buildConseils(a: Answers) {
     conseils.push({
       titre: 'Votre rôle est clé',
       texte: 'En tant que professionnel du chiffre, vous pouvez orienter votre client vers un mandat ad hoc ou une conciliation avant qu\'il ne soit trop tard. Un CIP (Centre d\'Information sur la Prévention) peut vous accompagner.',
-      lien: 'https://www.ciprofessionnels.com',
-      lienLabel: 'CIP',
+      lien: 'https://www.cip-national.fr',
+      lienLabel: 'cip-national.fr',
     });
   }
 
@@ -289,7 +295,7 @@ export default function AccompagnantQuestionnaire() {
               Ce que nous vous conseillons
             </h2>
             <p className="mt-2 text-sm text-navy/60">
-              Basé sur vos réponses — {answers.lien}, état perçu : {answers.etat}, besoin : {answers.besoin}.
+              Basé sur vos réponses : {[libelleChoix(LIENS, answers.lien), libelleChoix(ETATS, answers.etat), libelleChoix(BESOINS, answers.besoin)].filter(Boolean).join(' · ')}.
             </p>
           </div>
 

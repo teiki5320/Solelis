@@ -29,6 +29,7 @@ const FIELD_LABELS: Record<string, string> = {
   QUALITE: 'Qualité (gérant, président…)',
   ADRESSE: 'Adresse',
   VILLE: 'Ville',
+  TRIBUNAL: 'Tribunal compétent (voir la carte « Organismes » de votre fiche)',
   DATE: 'Date du courrier',
   DUREE: 'Durée souhaitée (mois)',
   MONTANT: 'Montant (€)',

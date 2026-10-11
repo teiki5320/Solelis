@@ -1,7 +1,9 @@
 'use client';
 import type { Reponses, CompanyData } from '@/lib/types';
 import type { SectorInfo } from '@/lib/secteur';
-import { getChambreLabel } from '@/lib/secteur';
+import { libelleChambre } from '@/lib/secteur';
+import { contactCotisations } from '@/lib/organismes';
+import { estEnCessation } from '@/lib/strategie';
 import { useFiche } from '@/lib/FicheContext';
 import BlocAccordeon from './BlocAccordeon';
 
@@ -22,10 +24,9 @@ function addDays(days: number): Date {
   return d;
 }
 
-function buildJalons(r: Reponses, c: CompanyData, s: SectorInfo): Jalon[] {
+export function buildJalons(r: Reponses, c: CompanyData, s: SectorInfo): Jalon[] {
   const jalons: Jalon[] = [];
   const now = new Date();
-  const ville = c.ville || 'votre ville';
   const dep = c.departement || '';
 
   if (r.moral === 'epuise' || r.moral === 'perdu') {
@@ -48,7 +49,7 @@ function buildJalons(r: Reponses, c: CompanyData, s: SectorInfo): Jalon[] {
     jalons.push({
       delai: 'Avant le ' + formatDate(addDays(7)),
       date: formatDate(addDays(7)),
-      texte: `Contacter ${s.cotisationOrg}${dep ? ` (${dep})` : ''} pour demander un échelonnement · ${s.cotisationTel}`,
+      texte: `Contacter ${contactCotisations(s, r.effectif, dep).libelle} pour demander un échelonnement`,
       urgence: 'jaune',
     });
   }
@@ -56,7 +57,7 @@ function buildJalons(r: Reponses, c: CompanyData, s: SectorInfo): Jalon[] {
     jalons.push({
       delai: 'Avant le ' + formatDate(addDays(7)),
       date: formatDate(addDays(7)),
-      texte: `Contacter le SIE${ville !== 'votre ville' ? ` de ${ville}` : ''} pour demander un délai`,
+      texte: 'Contacter votre service des impôts des entreprises (SIE), par la messagerie de votre espace professionnel impots.gouv.fr, pour demander un délai',
       urgence: 'jaune',
     });
   }
@@ -64,7 +65,7 @@ function buildJalons(r: Reponses, c: CompanyData, s: SectorInfo): Jalon[] {
   jalons.push({
     delai: 'Aujourd\'hui',
     date: formatDate(now),
-    texte: `Contacter la ${s.chambre}${dep ? ` (${dep})` : ''} — accompagnement gratuit et confidentiel`,
+    texte: `Contacter ${libelleChambre(s, c)} — accompagnement gratuit et confidentiel`,
   });
   jalons.push({
     delai: 'Avant le ' + formatDate(addDays(15)),
@@ -74,14 +75,18 @@ function buildJalons(r: Reponses, c: CompanyData, s: SectorInfo): Jalon[] {
   jalons.push({
     delai: 'Avant le ' + formatDate(addDays(30)),
     date: formatDate(addDays(30)),
-    texte: `Consulter un avocat${ville !== 'votre ville' ? ` à ${ville}` : ''} si la situation n'a pas évolué`,
+    texte: "Consulter un avocat (droit des entreprises en difficulté) si la situation n'a pas évolué",
   });
-  jalons.push({
-    delai: formatDate(addDays(45)),
-    date: formatDate(addDays(45)),
-    texte: 'Délai légal maximum pour déclarer la cessation des paiements — à ne pas dépasser',
-    urgence: 'rouge',
-  });
+  // Le délai de 45 jours court à partir de la cessation des paiements
+  // (art. L631-4 C. com.), pas d'aujourd'hui : pas de date calculée.
+  if (estEnCessation(r)) {
+    jalons.push({
+      delai: '45 jours max',
+      date: '',
+      texte: 'Déclarer la cessation des paiements au tribunal dans les 45 jours suivant la date de cessation des paiements (sauf conciliation demandée dans ce délai) — le décompte exact se fait dans le bloc « Décompte légal des 45 jours »',
+      urgence: 'rouge',
+    });
+  }
 
   return jalons;
 }

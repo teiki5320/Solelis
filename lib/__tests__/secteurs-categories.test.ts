@@ -54,9 +54,9 @@ const CAS: SecteurCase[] = [
     cle: 'peche',
     naf: '03.11Z', // Pêche en mer
     labelContient: /pêche/i,
-    syndicatsAttendus: ['CNPMEM', 'Solidarité Marins', 'SNSM'],
+    syndicatsAttendus: ['CNPMEM', 'SNSM'],
     cotisationOrg: /ENIM/,
-    soutienAttendu: /Solidarité Marins/i,
+    soutienAttendu: /APESA/i,
     caissesAttendues: ['ENIM'],
     opcoAttendu: 'ocapiat',
   },

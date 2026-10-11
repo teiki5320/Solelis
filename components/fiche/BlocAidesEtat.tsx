@@ -65,7 +65,7 @@ export default function BlocAidesEtat() {
       description:
         "Plan d'apurement unique couvrant à la fois vos dettes fiscales (impôts, TVA, IS) et sociales (URSSAF, retraite). Échelonnement jusqu'à 36 mois. Saisine via la DDFiP.",
       telephone: '0 809 401 401',
-      site: 'https://www.impots.gouv.fr/professionnel/commission-des-chefs-des-services-financiers-ccsf',
+      site: 'https://www.impots.gouv.fr/professionnel/accompagnement-individualise-en-cas-de-difficultes-economiques-et-financieres',
       badge: 'Dettes fiscales + sociales',
       accent: 'vert',
     });

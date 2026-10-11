@@ -1,19 +1,20 @@
 'use client';
-import { useState } from 'react';
 import type { Reponses, CompanyData } from '@/lib/types';
-import { libelleActionSoutien, libelleContactSyndicat, type SectorInfo } from '@/lib/secteur';
+import { libelleActionSoutien, libelleContactSyndicat, libelleChambre, type SectorInfo } from '@/lib/secteur';
+import { contactCotisations } from '@/lib/organismes';
 import { getTonePreset } from '@/lib/tone';
-import { useFiche } from '@/lib/FicheContext';
+import { useLocalStorage } from '@/lib/hooks';
+import { useFiche, useFicheStorageKey } from '@/lib/FicheContext';
+import { texteTribunal } from './BlocPlanAction';
 import BlocAccordeon from './BlocAccordeon';
 
 interface Props {
   defaultOpen?: boolean;
 }
 
-function buildItems(r: Reponses, c: CompanyData, s: SectorInfo): { id: string; texte: string; lien?: string }[] {
+export function buildItems(r: Reponses, c: CompanyData, s: SectorInfo): { id: string; texte: string; lien?: string }[] {
   const items: { id: string; texte: string; lien?: string }[] = [];
   const dep = c.departement || '';
-  const ville = c.ville || '';
 
   items.push({
     id: 'soin',
@@ -21,12 +22,13 @@ function buildItems(r: Reponses, c: CompanyData, s: SectorInfo): { id: string; t
     lien: 'https://www.apesa-france.com',
   });
   if (r.situation === 'assignation') {
-    items.push({ id: 'avocat', texte: `Contacter un avocat en urgence${ville ? ` à ${ville}` : ''}` });
+    items.push({ id: 'avocat', texte: 'Contacter un avocat en urgence (droit des entreprises en difficulté)' });
   }
   if (r.probleme === 'urssaf') {
+    const cot = contactCotisations(s, r.effectif, dep);
     items.push({
       id: 'urssaf',
-      texte: `Appeler ${s.cotisationOrg}${dep ? ` (${dep})` : ''} avant toute relance · ${s.cotisationTel}`,
+      texte: `Appeler ${cot.orgAvecArticle} avant toute relance · ${cot.telLibelle}`,
     });
   }
   if (r.probleme === 'banque') {
@@ -38,7 +40,7 @@ function buildItems(r: Reponses, c: CompanyData, s: SectorInfo): { id: string; t
   if (r.probleme === 'impots') {
     items.push({
       id: 'impots',
-      texte: `Contacter le SIE${ville ? ` de ${ville}` : ''} pour un délai de paiement`,
+      texte: 'Contacter votre service des impôts des entreprises (SIE) pour un délai de paiement',
     });
   }
   if (r.effectif === 'salaries') {
@@ -49,7 +51,7 @@ function buildItems(r: Reponses, c: CompanyData, s: SectorInfo): { id: string; t
   }
   items.push({
     id: 'chambre',
-    texte: `Prendre RDV avec la ${s.chambre}${dep ? ` (${dep})` : ''}`,
+    texte: `Prendre RDV avec ${libelleChambre(s, c)}`,
   });
   if (s.syndicats.length > 0) {
     items.push({
@@ -60,7 +62,7 @@ function buildItems(r: Reponses, c: CompanyData, s: SectorInfo): { id: string; t
   }
   items.push({
     id: 'tribunal',
-    texte: `Identifier votre tribunal de commerce${ville ? ` (${ville})` : ''}`,
+    texte: texteTribunal(c, 'votre'),
   });
   items.push({
     id: 'courrier',
@@ -77,14 +79,17 @@ function buildItems(r: Reponses, c: CompanyData, s: SectorInfo): { id: string; t
 export default function BlocChecklist({ defaultOpen }: Props) {
   const { reponses, company, sector } = useFiche();
   const items = buildItems(reponses, company, sector);
-  const [done, setDone] = useState<Record<string, boolean>>({});
+  // Cases cochées conservées dans le navigateur, comme le plan d'action
+  // (clé propre au SIRET de la fiche).
+  const storageKey = useFicheStorageKey('solelis_checklist');
+  const [done, setDone] = useLocalStorage<Record<string, boolean>>(storageKey, {});
   const tone = getTonePreset(reponses.moral);
 
   function toggle(id: string) {
     setDone((d) => ({ ...d, [id]: !d[id] }));
   }
 
-  const completed = Object.values(done).filter(Boolean).length;
+  const completed = items.filter((it) => done[it.id]).length;
 
   return (
     <BlocAccordeon

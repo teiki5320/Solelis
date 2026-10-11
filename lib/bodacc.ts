@@ -189,6 +189,24 @@ export async function fetchInfogreffeSignals(siret: string): Promise<BodaccItem[
   return versListe(await fetchProceduresResultat(siret));
 }
 
+/**
+ * Date d'annonce au format français (« 7 mai 2026 »). Chaîne vide si la date
+ * manque ou n'est pas lisible — jamais « () » ni « 2026-05-07 ».
+ */
+export function dateFr(date: string | undefined): string {
+  if (!date) return '';
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(date);
+  const d = m ? new Date(Date.UTC(+m[1], +m[2] - 1, +m[3])) : new Date(date);
+  if (isNaN(d.getTime())) return '';
+  return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+}
+
+/** « (le 7 mai 2026) » ou rien si la date manque. */
+function entreParentheses(date: string | undefined): string {
+  const f = dateFr(date);
+  return f ? ` (publiée le ${f})` : '';
+}
+
 function daysSince(date: string): number | null {
   if (!date) return null;
   const d = new Date(date);
@@ -236,7 +254,7 @@ export function detectIncoherenceBodacc(
     return {
       niveau: 'rouge',
       titre: 'Une procédure est déjà publiée',
-      message: `Une procédure apparaît au BODACC (${infogreffe[0].date}), alors que vous indiquez être en prévention. Vérifiez urgemment votre situation avec votre avocat ou le greffe — il peut s'agir d'une procédure ancienne non clôturée ou d'un décalage à lever.`,
+      message: `Une procédure apparaît au BODACC${entreParentheses(infogreffe[0].date)}, alors que vous indiquez être en prévention. Vérifiez urgemment votre situation avec votre avocat ou le greffe — il peut s'agir d'une procédure ancienne non clôturée ou d'un décalage à lever.`,
       source: 'Bodacc · vos réponses',
     };
   }
@@ -268,7 +286,7 @@ export function detectIncoherenceBodacc(
       niveau: 'jaune',
       titre: "Aucune procédure publique détectée",
       message:
-        "Vous indiquez être en cessation de paiements. Si la déclaration a été déposée, elle n'est pas encore publiée. Rappel : l'article L631-4 impose de déclarer dans les 45 jours.",
+        "Vous indiquez être en cessation des paiements. Si la déclaration a été déposée, elle n'est pas encore publiée. Rappel : l'article L631-4 du Code de commerce impose de la déclarer dans les 45 jours qui suivent la cessation des paiements.",
       source: 'Bodacc · vos réponses',
     };
   }
@@ -281,7 +299,7 @@ export function detectIncoherenceBodacc(
       return {
         niveau: 'vert',
         titre: 'Dernière annonce BODACC ancienne',
-        message: `Votre dernière annonce au BODACC date de ${mostRecent.date} — plus d'un an. Rien d'alarmant côté publications publiques.`,
+        message: `Votre dernière annonce au BODACC date du ${dateFr(mostRecent.date)} — plus d'un an. Rien d'alarmant côté publications publiques.`,
         source: 'Bodacc',
       };
     }
@@ -320,7 +338,7 @@ export function computeAlertes(
         titre: 'Procédure détectée',
         message:
           infogreffe.length > 0
-            ? `Une procédure collective apparaît dans les annonces publiques (${infogreffe[0].date}).`
+            ? `Une procédure collective apparaît dans les annonces publiques${entreParentheses(infogreffe[0].date)}.`
             : 'Vos réponses indiquent une procédure en cours. Un accompagnement urgent est recommandé.',
         source: infogreffe.length ? 'Bodacc / Infogreffe' : 'Vos réponses',
       });
@@ -336,7 +354,7 @@ export function computeAlertes(
     alertes.push({
       niveau: 'jaune',
       titre: 'Annonce récente au BODACC',
-      message: `${recent.type} publiée le ${recent.date}. Vérifiez qu'elle reflète votre situation actuelle.`,
+      message: `${recent.type} publiée le ${dateFr(recent.date)}. Vérifiez qu'elle reflète votre situation actuelle.`,
       source: 'Bodacc',
     });
   } else if (indisponible) {
@@ -355,8 +373,8 @@ export function computeAlertes(
     niveau: 'vert',
     titre: 'Vous avez fait le premier pas',
     message:
-      "Le simple fait de vous informer aujourd'hui change la trajectoire. Les dispositifs amiables (mandat ad hoc, conciliation) aboutissent dans la grande majorité des cas quand ils sont engagés tôt — avant la cessation des paiements.",
-    source: 'CIP National · CCI France',
+      "Le simple fait de vous informer aujourd'hui change la trajectoire. Les dispositifs amiables (mandat ad hoc, conciliation) ont d'autant plus de chances d'aboutir qu'ils sont engagés tôt — avant la cessation des paiements.",
+    source: 'Solelis',
   });
 
   return alertes.slice(0, 3);
