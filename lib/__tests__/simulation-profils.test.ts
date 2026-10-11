@@ -405,7 +405,9 @@ function controlerMoteur(r: Reponses, c: CompanyData) {
         'Outre-mer : la stratégie cite « tribunal de commerce de <ville> » alors que la carte Organismes indique un tribunal mixte de commerce (ou TPI)', profil, tribunalStrat);
     }
     const typeLocal = (dep as { tribunal?: { type?: string } } | null)?.tribunal?.type ?? '';
-    if (/activit[ée]s [ée]conomiques/i.test(typeLocal)) {
+    // Professions du droit (NAF 69.10) : exclues des TAE, restent au tribunal judiciaire.
+    const professionDuDroit = /^69\.?10/.test(c.naf) && /tribunal judiciaire de votre ressort/.test(tribunalStrat);
+    if (/activit[ée]s [ée]conomiques/i.test(typeLocal) && !professionDuDroit) {
       verif(false, 'CTR-tribunal-TAE', 'contradiction',
         'Ressort d\'un tribunal des activités économiques : la stratégie cite « tribunal de commerce/judiciaire de <ville> » alors que la carte Organismes indique le TAE', profil, `${tribunalStrat} ≠ ${typeLocal}`);
     }
@@ -438,7 +440,8 @@ function controlerMoteur(r: Reponses, c: CompanyData) {
   const ags = !!social?.cartes.some((x) => x.nom === 'AGS');
   verif(ags === (r.effectif === 'salaries'), 'ORG-AGS', 'contradiction', 'AGS proposé sans salariés (ou absent avec salariés)', profil);
   // Organismes ultramarins
-  if (DOM_CGSS.includes(c.departement) && r.probleme === 'urssaf') {
+  // Marins-pêcheurs : ENIM, y compris outre-mer (régime spécial des marins).
+  if (DOM_CGSS.includes(c.departement) && r.probleme === 'urssaf' && sector.secteur !== 'peche') {
     const fin = groupesBase.find((g) => g.cle === 'financier');
     verif(!!fin?.cartes.some((x) => /CGSS|CSSM/.test(x.nom)), 'DOM-pas-CGSS', 'juridique', 'DOM : la caisse de recouvrement n\'est pas la CGSS/CSSM', profil, fin?.cartes.map((x) => x.nom).join(' | '));
   }
@@ -570,7 +573,7 @@ function controlerRendu(r: Reponses, c: CompanyData) {
   verif(!csp || r.effectif === 'salaries', 'CSP-sans-salaries', 'contradiction', 'Bloc CSP affiché sans salariés', profil);
   verif(!plat.includes('Vérifier vos obligations AGS') || r.effectif === 'salaries', 'AGS-sans-salaries', 'contradiction', 'Checklist AGS sans salariés', profil);
   if (r.effectif === 'independant' && r.conjointStatut === 'salarie') {
-    verif(false, 'CTR-conjoint-salarie-sans-salaries', 'mineur',
+    verif(plat.includes('il·elle compte dans l\'effectif'), 'CTR-conjoint-salarie-sans-salaries', 'mineur',
       'Réponses incohérentes acceptées : « sans salarié » mais conjoint·e « salarié·e » — la fiche affiche AGS/CSP pour le conjoint sans signaler l\'incohérence', profil);
   }
 
