@@ -136,3 +136,61 @@ describe('Questionnaire — enregistrement impossible', () => {
     expect(stocke.reponses.situation).toBe('prevention');
   });
 });
+
+describe('Questionnaire — recherche de l’entreprise depuis le navigateur', () => {
+  const SIRET = '34963839500021';
+  function fetchSimule(persisted: boolean) {
+    return vi.fn(async (url: string, _init?: RequestInit) => {
+      if (String(url).startsWith('https://recherche-entreprises.api.gouv.fr/')) {
+        return new Response(
+          JSON.stringify({
+            results: [
+              {
+                nom_complet: 'ACME',
+                nature_juridique: '5710',
+                dirigeants: [{ nom: 'DUPONT' }],
+                siege: { siret: SIRET, code_postal: '75009', commune: '75109', libelle_commune: 'PARIS', latitude: '48.8' },
+              },
+            ],
+          }),
+          { status: 200 },
+        );
+      }
+      return { json: async () => ({ token: 'tok123', persisted }) } as unknown as Response;
+    });
+  }
+
+  async function repondreATout() {
+    for (let i = 0; i < 18; i++) {
+      const choix = screen.getAllByRole('button').filter((b) => b.getAttribute('aria-label'));
+      fireEvent.click(choix[0]);
+      await act(async () => { vi.advanceTimersByTime(300); });
+    }
+    await act(async () => { await Promise.resolve(); });
+  }
+
+  it('cherche dès l’arrivée, une seule fois, puis joint le résultat réduit à la création de la fiche', async () => {
+    const f = fetchSimule(true);
+    vi.stubGlobal('fetch', f);
+    render(<Questionnaire siret={SIRET} />);
+    const appelsApi = () => f.mock.calls.filter(([u]) => String(u).includes('recherche-entreprises'));
+    expect(appelsApi()).toHaveLength(1);
+    await repondreATout();
+    expect(appelsApi()).toHaveLength(1);
+    const envoi = f.mock.calls.find(([u]) => u === '/api/fiche');
+    const corps = JSON.parse(String(envoi?.[1]?.body));
+    expect(corps.siret).toBe(SIRET);
+    expect(corps.entreprise.siege).toEqual({ siret: SIRET, code_postal: '75009', commune: '75109', libelle_commune: 'PARIS' });
+    expect(corps.entreprise).not.toHaveProperty('dirigeants');
+    expect(window.location.href).toBe('/fiche/tok123');
+  });
+
+  it('fiche locale : le résultat est aussi gardé dans l’onglet', async () => {
+    vi.stubGlobal('fetch', fetchSimule(false));
+    render(<Questionnaire siret={SIRET} />);
+    await repondreATout();
+    expect(window.location.href).toBe('/fiche/local');
+    const stocke = JSON.parse(sessionStorage.getItem('solelis_fiche_locale') ?? 'null');
+    expect(stocke.entreprise.nom_complet).toBe('ACME');
+  });
+});

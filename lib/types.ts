@@ -59,6 +59,12 @@ export interface CompanyData {
    */
   siege?: { codePostal: string; ville: string; departement: string };
   fetched: boolean;
+  /**
+   * Provenance des données (absente sur une fiche générique ou ancienne) :
+   * recherche serveur, recherche faite par le navigateur du visiteur
+   * (repli quand le serveur est limité), ou API Sirene de l'INSEE.
+   */
+  source?: 'recherche-entreprises' | 'navigateur' | 'insee';
 }
 
 export interface AlerteSignal {

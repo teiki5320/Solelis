@@ -8,7 +8,11 @@ import {
   choisirNom,
   nettoyerNomComplet,
   DELAIS_REESSAI,
+  BUDGET_RECHERCHE_MS,
+  convertirResultatRecherche,
+  companyDepuisNavigateur,
 } from '../sirene';
+import { reduireResultatRecherche } from '../rechercheEntreprises';
 import { getDepartement } from '../organismes';
 import { getRegionFromDepartement } from '../aidesRegionales';
 import { getJuridiction, getFormeDetail } from '../strategie';
@@ -342,5 +346,125 @@ describe('fetchSirene (API recherche-entreprises simulée)', () => {
     expect(initInsee.headers['X-INSEE-Api-Key-Integration']).toBe('cle-de-test');
     expect(c.nom).toBe('ACME');
     expect(c.departement).toBe('75');
+  });
+});
+
+/* ─── Repli sur le résultat trouvé par le navigateur ─── */
+
+describe('fetchSirene : recherche serveur, puis navigateur, puis INSEE', () => {
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.unstubAllGlobals();
+    vi.unstubAllEnvs();
+  });
+
+  const SIRET = '34963839500021';
+  const brutApi = (ville: string, siret = SIRET) => ({
+    nom_complet: 'ACME (ACME)',
+    nature_juridique: '6598',
+    activite_principale: '01.11Z',
+    tranche_effectif_salarie: '01',
+    siege: { siret, code_postal: '35000', commune: '35238', libelle_commune: ville, departement: '35' },
+    matching_etablissements: [{ siret, code_postal: '35000', commune: '35238', libelle_commune: ville }],
+  });
+  const navigateur = reduireResultatRecherche(brutApi('RENNES'), SIRET)!;
+
+  /** fetch simulé : recherche-entreprises toujours 429, INSEE selon `insee`. */
+  function serveurLimite(insee?: () => Response) {
+    return vi.fn().mockImplementation(async (url: string) =>
+      url.includes('api.insee.fr') && insee ? insee() : new Response('', { status: 429 }),
+    );
+  }
+
+  it('conversion commune : même CompanyData pour le serveur et le navigateur (hors provenance)', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ results: [brutApi('RENNES')] }), { status: 200 })));
+    const serveur = await fetchSirene(SIRET);
+    const nav = companyDepuisNavigateur(navigateur, SIRET)!;
+    expect(serveur.source).toBe('recherche-entreprises');
+    expect(nav.source).toBe('navigateur');
+    expect({ ...nav, source: undefined }).toEqual({ ...serveur, source: undefined });
+    expect(nav).toMatchObject({ nom: 'ACME', ville: 'RENNES', departement: '35', fetched: true, formeJuridique: expect.stringContaining('EARL') });
+  });
+
+  it('le serveur a la priorité : un résultat navigateur différent est ignoré', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ results: [brutApi('DINAN')] }), { status: 200 })));
+    const c = await fetchSirene(SIRET, navigateur);
+    expect(c.ville).toBe('DINAN');
+    expect(c.source).toBe('recherche-entreprises');
+  });
+
+  it('serveur limité (429) : le résultat du navigateur est utilisé, sans appeler l’INSEE', async () => {
+    vi.useFakeTimers();
+    vi.stubEnv('INSEE_API_KEY', 'cle-de-test');
+    const f = serveurLimite(() => new Response('{}', { status: 200 }));
+    vi.stubGlobal('fetch', f);
+    const p = fetchSirene(SIRET, navigateur);
+    await vi.runAllTimersAsync();
+    const c = await p;
+    expect(c).toMatchObject({ fetched: true, source: 'navigateur', ville: 'RENNES', departement: '35', nom: 'ACME' });
+    expect(f.mock.calls.some(([u]) => String(u).includes('api.insee.fr'))).toBe(false);
+  });
+
+  it('SIRET du navigateur différent : refusé, repli INSEE puis fiche générique', async () => {
+    vi.useFakeTimers();
+    const autre = reduireResultatRecherche(brutApi('RENNES', '34963839500039'), '34963839500039');
+    expect(companyDepuisNavigateur(autre, SIRET)).toBeNull();
+    vi.stubGlobal('fetch', serveurLimite());
+    const p = fetchSirene(SIRET, autre);
+    await vi.runAllTimersAsync();
+    const c = await p;
+    expect(c.fetched).toBe(false);
+    expect(c.nom).toBe('Votre entreprise');
+    expect(c.source).toBeUndefined();
+  });
+
+  it('établissement secondaire trouvé par le navigateur : siège conservé pour le tribunal', () => {
+    const brut = {
+      ...brutApi('DINAN'),
+      siege: { siret: SIRET, code_postal: '22100', commune: '22050', libelle_commune: 'DINAN', departement: '22' },
+      matching_etablissements: [{ siret: '34963839500039', code_postal: '35000', commune: '35238', libelle_commune: 'RENNES' }],
+    };
+    const c = companyDepuisNavigateur(reduireResultatRecherche(brut, '34963839500039'), '34963839500039')!;
+    expect(c.departement).toBe('35');
+    expect(c.siege).toEqual({ codePostal: '22100', ville: 'DINAN', departement: '22' });
+  });
+
+  it('réessais serveur : pauses allongées, sous le budget total d’environ 6 s', async () => {
+    expect(DELAIS_REESSAI).toEqual([300, 800, 1500, 2500]);
+    expect(DELAIS_REESSAI.reduce((a, b) => a + b, 0)).toBeLessThan(BUDGET_RECHERCHE_MS);
+    vi.useFakeTimers();
+    const f = serveurLimite();
+    vi.stubGlobal('fetch', f);
+    const debut = Date.now();
+    const p = fetchSirene(SIRET);
+    await vi.runAllTimersAsync();
+    await p;
+    expect(Date.now() - debut).toBeLessThanOrEqual(BUDGET_RECHERCHE_MS);
+    expect(f.mock.calls.filter(([u]) => String(u).includes('recherche-entreprises'))).toHaveLength(1 + DELAIS_REESSAI.length);
+  });
+
+  it('réponses lentes : les réessais s’arrêtent avant de dépasser le budget', async () => {
+    vi.useFakeTimers();
+    // Chaque réponse 429 met 1,5 s à arriver.
+    const f = vi.fn().mockImplementation(
+      () => new Promise((r) => setTimeout(() => r(new Response('', { status: 429 })), 1500)),
+    );
+    vi.stubGlobal('fetch', f);
+    const debut = Date.now();
+    const p = fetchSirene(SIRET);
+    await vi.runAllTimersAsync();
+    await p;
+    expect(Date.now() - debut).toBeLessThanOrEqual(BUDGET_RECHERCHE_MS + 1500);
+    expect(f.mock.calls.length).toBeLessThan(1 + DELAIS_REESSAI.length);
+  });
+
+  it('convertirResultatRecherche : valeurs null de l’API tolérées', () => {
+    const c = convertirResultatRecherche(
+      { nom_complet: null, nom_raison_sociale: null, siege: null, matching_etablissements: null },
+      SIRET,
+      undefined,
+      'recherche-entreprises',
+    );
+    expect(c).toMatchObject({ nom: 'Votre entreprise', departement: '', ville: '', formeJuridique: 'Non renseignée', fetched: true });
   });
 });

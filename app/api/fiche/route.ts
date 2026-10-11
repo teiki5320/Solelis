@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { randomUUID } from 'node:crypto';
 import { fetchSirene } from '@/lib/sirene';
 import { saveFiche } from '@/lib/db';
-import { fichePayloadSchema } from '@/lib/schemas';
+import { fichePayloadSchema, TAILLE_MAX_CORPS_FICHE } from '@/lib/schemas';
 import type { Reponses } from '@/lib/types';
 
 export const runtime = 'nodejs';
@@ -10,7 +10,11 @@ export const runtime = 'nodejs';
 export async function POST(req: Request) {
   let body: unknown;
   try {
-    body = await req.json();
+    const texte = await req.text();
+    if (texte.length > TAILLE_MAX_CORPS_FICHE) {
+      return NextResponse.json({ error: 'Requête trop volumineuse' }, { status: 413 });
+    }
+    body = JSON.parse(texte);
   } catch {
     return NextResponse.json({ error: 'Corps de requête invalide (JSON attendu)' }, { status: 400 });
   }
@@ -24,9 +28,11 @@ export async function POST(req: Request) {
       );
     }
 
-    const { siret, reponses } = parsed.data;
+    const { siret, reponses, entreprise } = parsed.data;
 
-    const company_data = await fetchSirene(siret);
+    // Recherche serveur d'abord ; le résultat trouvé par le navigateur du
+    // visiteur ne sert qu'en repli, et seulement si son SIRET correspond.
+    const company_data = await fetchSirene(siret, entreprise);
     const token = randomUUID().replace(/-/g, '').slice(0, 24);
 
     const saved = await saveFiche({

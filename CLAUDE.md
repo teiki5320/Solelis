@@ -89,7 +89,8 @@ lib/
   bodacc.ts                   # Détection incohérences BODACC vs situation
   tone.ts                     # Présets de ton (combatif/épuisé/perdu)
   ics.ts                      # Génération fichiers ICS
-  sirene.ts                   # API gouv.fr + INSEE fallback
+  sirene.ts                   # API gouv.fr (serveur) → résultat du navigateur (SIRET exact) → INSEE → générique
+  rechercheEntreprises.ts     # Recherche recherche-entreprises depuis le navigateur (questionnaire) + réduction des champs
   db.ts                       # Accès à la base D1 (fiches, rappels, stats)
   resend.ts                   # Envoi d'emails
   googlePlaces.ts             # Recherche avocats via Google Places

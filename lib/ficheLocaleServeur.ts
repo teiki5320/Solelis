@@ -5,11 +5,16 @@ import type { Reponses } from './types';
 /** Valide des données de fiche locale venues du client (cookie, sessionStorage, ancien ?d=). */
 export function validerFicheLocale(brut: unknown): FicheLocaleData | null {
   if (!brut || typeof brut !== 'object') return null;
-  const objet = brut as { siret?: unknown; reponses?: unknown };
+  const objet = brut as { siret?: unknown; reponses?: unknown; entreprise?: unknown };
   const siret = String(objet.siret ?? '').replace(/\D/g, '');
-  const res = ficheLocaleSchema.safeParse({ siret, reponses: objet.reponses });
+  const res = ficheLocaleSchema.safeParse({ siret, reponses: objet.reponses, entreprise: objet.entreprise });
   if (!res.success) return null;
-  return { siret: res.data.siret, reponses: res.data.reponses as Reponses };
+  // Entreprise trouvée par le navigateur : ignorée si mal formée (voir le schéma).
+  return {
+    siret: res.data.siret,
+    reponses: res.data.reponses as Reponses,
+    ...(res.data.entreprise ? { entreprise: res.data.entreprise } : {}),
+  };
 }
 
 /** Lit la valeur (encodée) du cookie de fiche locale. */

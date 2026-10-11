@@ -8,6 +8,7 @@ import type {
   PgeEnCours, Rqth, ConjointStatut, CoGerants, Saisonnalite, Nationalite,
 } from '@/lib/types';
 import { enregistrerFicheLocale } from '@/lib/ficheLocale';
+import { rechercherEntrepriseNavigateur, type ResultatRechercheEntreprise } from '@/lib/rechercheEntreprises';
 
 interface Choice<T extends string> {
   value: T;
@@ -167,6 +168,26 @@ function clearDraft() {
   } catch {}
 }
 
+/** Attente maximale du résultat de la recherche navigateur à l'envoi (ms). */
+const ATTENTE_MAX_RECHERCHE_MS = 3000;
+
+async function resultatRecherche(
+  promesse: Promise<ResultatRechercheEntreprise | null> | undefined,
+): Promise<ResultatRechercheEntreprise | null> {
+  if (!promesse) return null;
+  let minuteur: ReturnType<typeof setTimeout> | undefined;
+  const delai = new Promise<null>((r) => {
+    minuteur = setTimeout(() => r(null), ATTENTE_MAX_RECHERCHE_MS);
+  });
+  try {
+    return await Promise.race([promesse, delai]);
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(minuteur);
+  }
+}
+
 export default function Questionnaire({ siret }: Props) {
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
@@ -176,6 +197,14 @@ export default function Questionnaire({ siret }: Props) {
   // Un useRef évite un re-render et permet une vérification synchrone.
   const lockedRef = useRef(false);
   const [transitioning, setTransitioning] = useState(false);
+
+  // Recherche de l'entreprise depuis le navigateur, dès l'arrivée : le
+  // serveur s'en sert en repli si sa propre recherche est limitée (429).
+  const rechercheRef = useRef<{ siret: string; promesse: Promise<ResultatRechercheEntreprise | null> } | null>(null);
+  useEffect(() => {
+    if (rechercheRef.current?.siret === siret) return;
+    rechercheRef.current = { siret, promesse: rechercherEntrepriseNavigateur(siret).catch(() => null) };
+  }, [siret]);
 
   useEffect(() => {
     const saved = loadSaved(siret);
@@ -282,12 +311,14 @@ export default function Questionnaire({ siret }: Props) {
     setSubmitting(true);
     clearDraft();
     const reponses = final as Reponses;
+    // Résultat de la recherche navigateur (attente bornée s'il n'est pas encore là).
+    const entreprise = await resultatRecherche(rechercheRef.current?.promesse);
 
     try {
       const res = await fetch('/api/fiche', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ siret, reponses }),
+        body: JSON.stringify({ siret, reponses, ...(entreprise ? { entreprise } : {}) }),
       });
       const json = await res.json();
       if (json?.token && json?.persisted) {
@@ -299,7 +330,7 @@ export default function Questionnaire({ siret }: Props) {
     // Enregistrement impossible : les réponses (dont des données sensibles —
     // RQTH, nationalité, dettes) restent dans l'onglet (sessionStorage) et un
     // cookie court ; rien n'est mis dans l'URL.
-    enregistrerFicheLocale({ siret, reponses });
+    enregistrerFicheLocale({ siret, reponses, ...(entreprise ? { entreprise } : {}) });
     window.location.href = '/fiche/local';
   }
 

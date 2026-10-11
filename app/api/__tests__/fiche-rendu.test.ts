@@ -6,7 +6,9 @@ const TOKEN = 'abcdef0123456789abcdef01';
 let company: CompanyData;
 
 let emailFiche: string | undefined;
+const updateFicheCompanyData = vi.hoisted(() => vi.fn(async (_t: string, _c: unknown) => true));
 vi.mock('@/lib/db', () => ({
+  updateFicheCompanyData,
   getFicheByToken: async () => ({ token: TOKEN, siret: company.siret, reponses: REPONSES, company_data: company, email: emailFiche }),
   getFicheByTokenMemo: async () => ({ token: TOKEN, siret: company.siret, reponses: REPONSES, company_data: company, email: emailFiche }),
 }));
@@ -28,6 +30,7 @@ const REPONSES = { situation: 'tresorie', probleme: 'urssaf', effectif: 'indepen
 
 import FichePage from '@/app/fiche/[token]/page';
 import SaveBanner from '@/components/fiche/SaveBanner';
+import { fetchSirene } from '@/lib/sirene';
 
 /** Parcourt l'arbre JSX renvoyé (sans rendre les composants) et rassemble textes et éléments. */
 function parcourir(n: ReactNode, textes: string[], elements: { type: unknown; props: Record<string, unknown> }[]) {
@@ -128,5 +131,36 @@ describe('fiche : entreprise introuvable et avocats', () => {
       departement: '40',
       nomDepartement: 'Landes',
     });
+  });
+});
+
+describe('fiche existante sans entreprise : nouvel essai à l’affichage', () => {
+  beforeEach(() => {
+    company = { ...BASE };
+    emailFiche = undefined;
+    updateFicheCompanyData.mockClear();
+    vi.mocked(fetchSirene).mockClear();
+  });
+
+  it('entreprise retrouvée : enregistrée en base (plus de nouvel essai ensuite)', async () => {
+    const retrouvee: CompanyData = { ...BASE, nom: 'ACME', ville: 'RENNES', departement: '35', fetched: true, source: 'recherche-entreprises' };
+    vi.mocked(fetchSirene).mockResolvedValueOnce(retrouvee);
+    const { texte } = await rendre();
+    expect(fetchSirene).toHaveBeenCalledWith(BASE.siret);
+    expect(updateFicheCompanyData).toHaveBeenCalledWith(TOKEN, retrouvee);
+    expect(texte).not.toContain("Nous n'avons pas trouvé votre entreprise");
+  });
+
+  it('toujours introuvable : rien n’est écrit en base', async () => {
+    await rendre();
+    expect(fetchSirene).toHaveBeenCalled();
+    expect(updateFicheCompanyData).not.toHaveBeenCalled();
+  });
+
+  it('entreprise déjà connue : ni recherche ni écriture', async () => {
+    company = { ...BASE, nom: 'ACME', fetched: true };
+    await rendre();
+    expect(fetchSirene).not.toHaveBeenCalled();
+    expect(updateFicheCompanyData).not.toHaveBeenCalled();
   });
 });
