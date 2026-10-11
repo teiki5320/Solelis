@@ -435,7 +435,7 @@ export function buildOrganismes(
     soc.push({
       nom: 'France Travail Indépendants',
       type: 'ATI · Allocation Travailleurs Indépendants',
-      telephone: '39 95',
+      telephone: '39 49',
       site: 'https://chomage-independant.francetravail.fr',
       badge: '19,73 à 26,30 €/jour · 182 jours',
     });
@@ -464,7 +464,7 @@ export function buildAidesPersonnelles(reponses: Reponses): GroupeOrganismes {
     cartes.push({
       nom: 'ATI · Allocation Travailleurs Indépendants',
       type: 'France Travail',
-      telephone: '39 95',
+      telephone: '39 49',
       site: 'https://chomage-independant.francetravail.fr',
       badge: '19,73 à 26,30 €/jour · 182 jours',
     });

@@ -2,27 +2,32 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { dureeEnAnnees } from '@/lib/format';
+import { montantJournalierAti } from '@/lib/ati';
 
 // ATI (Allocation des Travailleurs Indépendants)
 // Source : francetravail.fr / chomage-independant.francetravail.fr / Code du travail L5424-24 à L5424-26
-// Montant : de 19,73 à 26,30 €/jour selon les revenus des 2 années précédentes
-// (décret n° 2022-450), pendant 182 jours = 6 mois. Avec un revenu moyen
-// d'au moins 10 000 €/an, le montant maximal de 26,30 €/jour s'applique.
+// Montant (fiche Unédic ATI) : forfait de 26,30 €/jour (environ 800 €/mois),
+// réduit à la moyenne mensuelle des revenus d'activité des 2 années
+// précédentes si elle est plus basse, sans descendre sous 19,73 €/jour
+// (environ 600 €/mois), pendant 182 jours. Mayotte : 13,15 à 19,73 €/jour.
 // Plafond de ressources mensuelles : RSA pour une personne seule (revenus
 // personnels, ceux du conjoint ne comptent pas — fiche Unédic ATI).
 // Conditions cumulatives :
 // - 2 ans d'activité non salariée
 // - Cessation judiciaire (LJ, RJ avec plan imposant remplacement, ou activité économiquement non viable)
-// - Revenus antérieurs ≥ 10 000 €/an en moyenne sur les 2 années précédentes
+// - Revenus d'au moins 10 000 € sur l'une des 2 années précédentes (7 500 € à Mayotte)
 // - Ressources personnelles < RSA personne seule (651,69 € au 1er avril 2026)
 
-const MONTANT_JOURNALIER = 26.30;
 const DUREE_JOURS = 182;
 const MIN_REVENU_ANNUEL = 10000;
 const DUREE_ACTIVITE_MIN_MOIS = 24;
 
 function formatEuros(n: number): string {
   return Math.round(n).toLocaleString('fr-FR') + ' €';
+}
+
+function formatEurosCentimes(n: number): string {
+  return n.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
 }
 
 type TypeCessation =
@@ -35,13 +40,15 @@ interface Result {
   eligible: boolean;
   motifs: string[];
   blocages: string[];
+  montantJournalier: number;
   montantMensuel: number;
   montantTotal: number;
 }
 
 export default function AtiPage() {
   const [activiteMois, setActiviteMois] = useState(36);
-  const [revenuAnnuelMoyen, setRevenuAnnuelMoyen] = useState(20000);
+  const [revenuN1, setRevenuN1] = useState(20000);
+  const [revenuN2, setRevenuN2] = useState(20000);
   const [ressourcesMensuelles, setRessourcesMensuelles] = useState(0);
   const [typeCessation, setTypeCessation] = useState<TypeCessation>('liquidation');
   const [foyer, setFoyer] = useState(1);
@@ -62,10 +69,11 @@ export default function AtiPage() {
       blocages.push(`Activité de ${dureeEnAnnees(activiteMois)}, seuil légal minimum : 2 ans.`);
     }
 
-    if (revenuAnnuelMoyen >= MIN_REVENU_ANNUEL) {
-      motifs.push(`Revenu moyen de ${formatEuros(revenuAnnuelMoyen)}/an — seuil de 10 000 €/an respecté.`);
+    const meilleureAnnee = Math.max(revenuN1, revenuN2);
+    if (meilleureAnnee >= MIN_REVENU_ANNUEL) {
+      motifs.push(`Revenus de ${formatEuros(meilleureAnnee)} sur l'une des 2 dernières années — seuil de 10 000 € respecté.`);
     } else {
-      blocages.push(`Revenu annuel moyen : ${formatEuros(revenuAnnuelMoyen)}. Seuil légal : 10 000 €/an sur 2 ans.`);
+      blocages.push(`Revenus de ${formatEuros(meilleureAnnee)} au mieux sur les 2 dernières années. Seuil : 10 000 € sur l'une des 2 années.`);
     }
 
     const typeOk = typeCessation === 'liquidation' || typeCessation === 'redressement-remplacement' || typeCessation === 'non-viable';
@@ -90,15 +98,17 @@ export default function AtiPage() {
     }
 
     const eligible = blocages.length === 0;
+    const montantJournalier = montantJournalierAti(revenuN1, revenuN2);
 
     return {
       eligible,
       motifs,
       blocages,
-      montantMensuel: MONTANT_JOURNALIER * 30,
-      montantTotal: MONTANT_JOURNALIER * DUREE_JOURS,
+      montantJournalier,
+      montantMensuel: (montantJournalier * 365) / 12,
+      montantTotal: montantJournalier * DUREE_JOURS,
     };
-  }, [activiteMois, revenuAnnuelMoyen, ressourcesMensuelles, typeCessation, plafondRSA]);
+  }, [activiteMois, revenuN1, revenuN2, ressourcesMensuelles, typeCessation, plafondRSA]);
 
   const jsonLdHowTo = {
     '@context': 'https://schema.org',
@@ -114,8 +124,8 @@ export default function AtiPage() {
       },
       {
         '@type': 'HowToStep',
-        name: 'Saisir le revenu annuel moyen',
-        text: 'Indiquez votre revenu annuel moyen sur les 2 dernières années (seuil : 10 000 euros/an).',
+        name: 'Saisir vos revenus des 2 dernières années',
+        text: 'Indiquez vos revenus d\'activité de chacune des 2 dernières années (seuil : 10 000 euros sur l\'une des deux).',
       },
       {
         '@type': 'HowToStep',
@@ -187,19 +197,31 @@ export default function AtiPage() {
           </span>
         </label>
 
-        <label className="block text-sm text-navy">
-          Revenu annuel moyen sur les 2 dernières années (€)
-          <input
-            type="number"
-            min={0}
-            value={revenuAnnuelMoyen}
-            onChange={(e) => setRevenuAnnuelMoyen(Number(e.target.value))}
-            className="mt-1 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2"
-          />
-          <span className="mt-1 block text-[11px] text-navy/55">
-            Seuil légal : 10 000 €/an. Revenus déclarés à l&apos;administration fiscale.
-          </span>
-        </label>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <label className="block text-sm text-navy">
+            Revenus d&apos;activité de l&apos;an dernier (€)
+            <input
+              type="number"
+              min={0}
+              value={revenuN1}
+              onChange={(e) => setRevenuN1(Number(e.target.value))}
+              className="mt-1 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2"
+            />
+          </label>
+          <label className="block text-sm text-navy">
+            Revenus d&apos;activité de l&apos;année d&apos;avant (€)
+            <input
+              type="number"
+              min={0}
+              value={revenuN2}
+              onChange={(e) => setRevenuN2(Number(e.target.value))}
+              className="mt-1 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2"
+            />
+          </label>
+        </div>
+        <span className="-mt-2 block text-[11px] text-navy/55">
+          Seuil : 10 000 € sur l&apos;une des 2 années (7 500 € à Mayotte). Revenus déclarés à l&apos;administration fiscale ; le montant de l&apos;ATI dépend de leur moyenne.
+        </span>
 
         <label className="block text-sm text-navy">
           Type de cessation d&apos;activité
@@ -281,7 +303,7 @@ export default function AtiPage() {
             <div className="mt-4 grid gap-3 sm:grid-cols-3">
               <div className="rounded-xl bg-white/80 p-3 text-center">
                 <p className="text-[11px] uppercase text-navy/55">Montant / jour</p>
-                <p className="mt-1 font-display text-lg text-navy">{formatEuros(MONTANT_JOURNALIER)}</p>
+                <p className="mt-1 font-display text-lg text-navy">{formatEurosCentimes(result.montantJournalier)}</p>
               </div>
               <div className="rounded-xl bg-white/80 p-3 text-center">
                 <p className="text-[11px] uppercase text-navy/55">Montant / mois</p>
@@ -300,7 +322,7 @@ export default function AtiPage() {
         <p className="font-display text-base text-navy">Comment demander l&apos;ATI</p>
         <ol className="mt-2 space-y-1.5 pl-5">
           <li>
-            <strong>1.</strong> Inscrivez-vous à France Travail dès la cessation d&apos;activité.
+            <strong>1.</strong> Inscrivez-vous à France Travail dès la cessation d&apos;activité (au plus tard dans les 12 mois). Conseiller France Travail : 39 49.
           </li>
           <li>
             <strong>2.</strong> Joignez le jugement de liquidation (ou le plan de redressement), vos avis d&apos;imposition, la déclaration de cessation d&apos;activité.
@@ -318,7 +340,7 @@ export default function AtiPage() {
             .
           </li>
           <li>
-            <strong>4.</strong> L&apos;ATI peut être cumulée avec une nouvelle activité pendant 3 mois au plus ; au-delà, elle est suspendue.
+            <strong>4.</strong> L&apos;ATI peut être cumulée avec une nouvelle activité pendant 3 mois au plus ; au-delà, elle est suspendue. À Mayotte, elle va de 13,15 à 19,73 €/jour.
           </li>
         </ol>
       </div>

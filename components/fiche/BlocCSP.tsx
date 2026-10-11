@@ -33,8 +33,8 @@ export default function BlocCSP() {
     >
       <p className="text-sm text-navy/80">
         Le <strong>CSP</strong> est un contrat proposé aux salariés
-        licenciés pour motif économique. Il offre <strong>75 % du
-        salaire brut antérieur pendant 12 mois</strong> (Allocation de
+        licenciés pour motif économique. Il offre <strong>jusqu&apos;à 12 mois une allocation
+        de 75 % du salaire journalier de référence</strong> (avec au moins 1 an d&apos;ancienneté ; sinon le montant de l&apos;allocation chômage) (Allocation de
         Sécurisation Professionnelle, ASP), versée par France Travail,
         et un accompagnement renforcé. Il est <strong>obligatoire</strong>{' '}
         — s&apos;il n&apos;est pas proposé, France Travail le propose
@@ -57,9 +57,9 @@ export default function BlocCSP() {
             de reclassement.
           </li>
           <li>
-            <strong>Tout salarié</strong> totalisant au moins 88 jours ou
-            610 heures de travail sur les 24 derniers mois (36 mois pour
-            les salarié·e·s seniors) — soit la majorité (Unédic, France
+            <strong>Tout salarié</strong> totalisant au moins 130 jours ou
+            910 heures de travail sur les 24 derniers mois (36 mois à
+            partir de 55 ans) — soit la majorité (Unédic, France
             Travail).
           </li>
         </ul>

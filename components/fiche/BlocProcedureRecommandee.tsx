@@ -2,7 +2,7 @@
 import type { Reponses, CompanyData } from '@/lib/types';
 import type { SectorInfo } from '@/lib/secteur';
 import { getEffectifSeuils } from '@/lib/secteur';
-import { prpEnvisageable } from '@/lib/strategie';
+import { prpEnvisageable, estEnCessation, resolveStrategie } from '@/lib/strategie';
 import { useFiche } from '@/lib/FicheContext';
 import BlocAccordeon from './BlocAccordeon';
 
@@ -52,10 +52,14 @@ function buildProcedures(r: Reponses, c: CompanyData, s: SectorInfo): Procedure[
     });
   }
 
+  // Cap « Liquider proprement » (stratégie) : la liquidation doit figurer
+  // parmi les procédures, et le redressement n'est plus qu'une option.
+  const capLiquidation = estEnCessation(r) && resolveStrategie(r, c)?.main.axe === 'liquider';
+
   if (r.situation === 'redressement') {
     procs.push({
       nom: 'Redressement judiciaire',
-      pertinence: 'recommandee',
+      pertinence: capLiquidation ? 'possible' : 'recommandee',
       description: "Vous êtes en cessation. Le tribunal tente de sauver l’entreprise via un plan. Un administrateur est nommé.",
       conditions: "Cessation des paiements. Déclaration dans les 45 jours obligatoire.",
       lien: '/glossaire',
@@ -74,6 +78,16 @@ function buildProcedures(r: Reponses, c: CompanyData, s: SectorInfo): Procedure[
       pertinence: 'possible',
       description: "Si l’entreprise peut encore être sauvée. Le tribunal peut ordonner un plan de continuation ou un plan de cession.",
       conditions: 'Cessation des paiements.',
+      lien: '/glossaire',
+    });
+  }
+
+  if (estEnCessation(r)) {
+    procs.push({
+      nom: 'Liquidation judiciaire',
+      pertinence: capLiquidation ? 'recommandee' : 'possible',
+      description: "Si l’entreprise ne peut pas être sauvée : l’activité s’arrête, un liquidateur vend les actifs et règle les créanciers. Procédure simplifiée et plus rapide pour les petites entreprises sans immeuble.",
+      conditions: 'Cessation des paiements et redressement manifestement impossible (art. L640-1 C. com.).',
       lien: '/glossaire',
     });
   }

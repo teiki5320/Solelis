@@ -150,8 +150,8 @@ export default function StrategieHero() {
 
             <p className="text-xs text-navy/50">
               Cette stratégie est une synthèse automatique. Un avocat ou un
-              mandataire peut confirmer — souvent gratuitement en première
-              consultation.
+              mandataire peut confirmer — une première consultation gratuite
+              est possible dans un point-justice (3039).
             </p>
           </div>
         )}

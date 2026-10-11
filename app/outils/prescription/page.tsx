@@ -1,7 +1,7 @@
 'use client';
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { REGLES, calculerPrescription, type Categorie } from './calcul';
+import { REGLES, calculerPrescription, aideAnnee, type Categorie } from './calcul';
 
 function formatDateFR(d: Date): string {
   return d.toLocaleDateString('fr-FR', {
@@ -140,9 +140,9 @@ export default function PrescriptionPage() {
             onChange={(e) => setDateExig(e.target.value)}
             className="mt-1 w-full rounded-lg border border-navy/15 bg-white/90 px-3 py-2"
           />
-          {regle.finAnneeCivile && (
+          {aideAnnee(regle) && (
             <span className="mt-1 block text-[11px] text-navy/55">
-              Pour un impôt, seule l&apos;année compte : le délai court jusqu&apos;au 31 décembre de la {regle.duree}e année suivante.
+              {aideAnnee(regle)}
             </span>
           )}
         </label>

@@ -29,7 +29,7 @@ function buildExpandedContent(card: PriorityCardMeta, ctx: ContexteCartes): Reac
             retard.
           </p>
           <ul className="space-y-1.5">
-            <li className="flex gap-2"><span className="text-navy/40">→</span>Avocat / mandataire sous 48 h (premier RDV souvent gratuit)</li>
+            <li className="flex gap-2"><span className="text-navy/40">→</span>Avocat / mandataire sous 48 h (consultation gratuite possible en point-justice, 3039)</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Formulaire <strong>CERFA 10530</strong> sur service-public.fr</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Pièces : K-bis &lt; 3 mois, état actif/passif exigible, comptes annuels, trésorerie &lt; 1 mois, liste créanciers</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Dépôt au {tribunal}</li>
@@ -99,8 +99,8 @@ function buildExpandedContent(card: PriorityCardMeta, ctx: ContexteCartes): Reac
             <li className="flex gap-2"><span className="text-navy/40">→</span>Demander copie de chaque acte + fiche d&apos;information patrimoniale signée</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Disproportion au jour de la signature : art. <strong>2300 C. civ.</strong> (anciens art. L332-1 et L343-4 C. conso pour les cautions signées avant 2022)</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Information annuelle manquante : déchéance des intérêts (art. 2302 C. civ.)</li>
-            <li className="flex gap-2"><span className="text-navy/40">→</span>Vérifier la durée : beaucoup limitées à 10 ans sans mention expresse</li>
-            <li className="flex gap-2"><span className="text-navy/40">→</span>Avocat en droit bancaire — premier RDV souvent gratuit</li>
+            <li className="flex gap-2"><span className="text-navy/40">→</span>Vérifier la durée : à durée indéterminée, résiliable avec préavis pour l&apos;avenir (art. 2315 C. civ.)</li>
+            <li className="flex gap-2"><span className="text-navy/40">→</span>Avocat en droit bancaire — consultation gratuite possible en point-justice (3039)</li>
           </ul>
           <button type="button" onClick={() => scrollToId('patrimoine')} className="inline-flex text-sm font-medium text-jaune hover:underline">
             Lancer l&apos;audit caution ↓
@@ -118,9 +118,9 @@ function buildExpandedContent(card: PriorityCardMeta, ctx: ContexteCartes): Reac
           </p>
           <ul className="space-y-1.5">
             <li className="flex gap-2"><span className="text-navy/40">→</span>Prévisionnel 6 mois avec votre expert-comptable (2-4 h)</li>
-            <li className="flex gap-2"><span className="text-navy/40">→</span><strong>Médiation du crédit</strong> — Banque de France, gratuit, réponse sous 5 j (34 14)</li>
+            <li className="flex gap-2"><span className="text-navy/40">→</span><strong>Médiation du crédit</strong> — Banque de France, gratuit, contact sous 48 h (34 14)</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Délais de paiement : {ctx.cotisations.libelle} / SIE (messagerie de l&apos;espace professionnel) / bailleur (LRAR)</li>
-            <li className="flex gap-2"><span className="text-navy/40">→</span>CCSF si dettes fiscales ET sociales (guichet unique, CERFA 15772*02)</li>
+            <li className="flex gap-2"><span className="text-navy/40">→</span>CCSF si dettes fiscales ET sociales (guichet unique, dossier de saisine sur impots.gouv.fr)</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Affacturage / escompte pour accélérer les encaissements</li>
           </ul>
           <button type="button" onClick={() => scrollToId('echeances')} className="inline-flex text-sm font-medium text-jaune hover:underline">
@@ -276,7 +276,7 @@ function buildExpandedContent(card: PriorityCardMeta, ctx: ContexteCartes): Reac
           </p>
           <ul className="space-y-1.5">
             <li className="flex gap-2"><span className="text-navy/40">→</span>Vérifier les droits AGS et chômage selon le statut</li>
-            <li className="flex gap-2"><span className="text-navy/40">→</span>Conjoint collaborateur : durée plafonnée à 5 ans (loi 14 fév. 2022)</li>
+            <li className="flex gap-2"><span className="text-navy/40">→</span>Conjoint collaborateur : durée plafonnée à 5 ans (C. com. art. L121-4)</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Conjoint co-gérant : risque d&apos;extension de la responsabilité</li>
           </ul>
           <button type="button" onClick={() => scrollToId('patrimoine')} className="inline-flex text-sm font-medium text-jaune hover:underline">

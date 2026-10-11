@@ -157,7 +157,7 @@ function etapesTresorerie(): Etape[] {
       jour: 'Semaine 2-3',
       titre: 'Saisine médiation du crédit',
       description:
-        "Si votre banque refuse de discuter, saisissez gratuitement la médiation du crédit (réponse sous 5 jours).",
+        "Si votre banque refuse de discuter, saisissez gratuitement la médiation du crédit : le médiateur vous contacte sous 48 h, puis vos banques ont 5 jours ouvrés pour revoir leur position.",
       niveau: 'futur',
     },
     {

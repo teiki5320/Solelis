@@ -94,12 +94,13 @@ export default function PenalitesFiscalesPage() {
         <article className="glass card-top-line mt-5 p-6">
           <h3 className="font-display text-lg text-navy">2️⃣ Délai de paiement / échelonnement</h3>
           <p className="mt-2 text-sm text-navy/80">
-            Vous pouvez demander un échelonnement de votre dette fiscale, généralement sur 12 à 36 mois selon
-            les montants. Les intérêts de retard continuent de courir pendant l&apos;échelonnement.
+            Vous pouvez demander un échelonnement de votre dette fiscale. Il n&apos;est pas automatique : il suppose
+            des difficultés passagères, des déclarations à jour et, en principe, des garanties. Les intérêts de retard
+            continuent de courir pendant l&apos;échelonnement.
           </p>
           <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-navy/80">
             <li>Demande au SIE de votre département</li>
-            <li>Plan accepté si vous payez les échéances courantes</li>
+            <li>Plan maintenu tant que vous payez les échéances et vos impôts courants</li>
             <li>Si dettes fiscales ET sociales : passer par la <strong>CCSF</strong> (guichet unique)</li>
           </ul>
         </article>
@@ -108,10 +109,10 @@ export default function PenalitesFiscalesPage() {
           <h3 className="font-display text-lg text-navy">3️⃣ Contester une rectification</h3>
           <p className="mt-2 text-sm text-navy/80">
             Si vous estimez la pénalité injustifiée (manquement délibéré non caractérisé, manœuvres non
-            établies, abus de droit contestable), <strong>vous avez 2 ans pour contester</strong> (LPF art. R196-1).
+            établies, abus de droit contestable), <strong>vous pouvez contester jusqu&apos;au 31 décembre de la 2e année suivant la mise en recouvrement</strong> (3e année après une proposition de rectification ; LPF art. R196-1 et R196-3).
           </p>
           <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-navy/80">
-            <li>Réclamation écrite au SIE dans les 2 ans (jamais oublier ce délai)</li>
+            <li>Réclamation écrite au SIE dans le délai ci-dessus (ne jamais l&apos;oublier)</li>
             <li>Recours hiérarchique gratuit (au directeur du SIE)</li>
             <li>Conciliateur fiscal départemental : recours médiateur, gratuit</li>
             <li>Tribunal administratif : si désaccord persistant</li>

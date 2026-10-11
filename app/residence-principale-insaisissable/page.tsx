@@ -59,7 +59,7 @@ export default function ResidencePrincipalePage() {
         <p className="mt-3 text-sm text-navy/80">
           <strong>Renforcement :</strong> vous pouvez faire une <strong>déclaration d&apos;insaisissabilité</strong> chez
           notaire (art. L526-1 C. com.) qui rend votre résidence insaisissable pour les dettes <strong>professionnelles
-          futures</strong> uniquement. Coût : 300 à 500 € + frais notaire. Publication au Service de la publicité
+          futures</strong> uniquement. Acte notarié (émoluments du notaire et frais de publication). Publication au Service de la publicité
           foncière.
         </p>
       </article>
@@ -76,7 +76,7 @@ export default function ResidencePrincipalePage() {
         </p>
         <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li><strong>Proportionnalité</strong> : la caution doit être proportionnée à vos biens et revenus au jour de la signature (art. 2300 C. civ.)</li>
-          <li><strong>Information annuelle</strong> : la banque doit vous informer chaque année avant le 31 mars du montant restant dû (L313-22 C. mon. fin.)</li>
+          <li><strong>Information annuelle</strong> : la banque doit vous informer chaque année avant le 31 mars du montant restant dû (art. 2302 C. civ. ; ancien L313-22 C. mon. fin. pour les cautions antérieures à 2022)</li>
           <li><strong>Mention manuscrite</strong> : la caution doit comporter une mention manuscrite spécifique (art. 2297 C. civ.)</li>
         </ul>
         <p className="mt-3 text-sm text-navy/80">

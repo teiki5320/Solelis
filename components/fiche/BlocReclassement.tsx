@@ -49,7 +49,7 @@ export default function BlocReclassement() {
         </p>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
-            <strong>75 % du salaire brut antérieur</strong> pendant 12 mois
+            <strong>75 % du salaire journalier de référence</strong> pendant 12 mois au plus (avec au moins 1 an d&apos;ancienneté)
             (Allocation de Sécurisation Professionnelle — ASP), versée par
             France Travail.
           </li>
@@ -103,11 +103,11 @@ export default function BlocReclassement() {
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
             <strong>Voie majoritaire</strong> : accord collectif majoritaire{' '}
-            <strong>validé</strong> par la DREETS (15 jours).
+            <strong>validé</strong> par la DREETS (15 jours ; 8 jours en redressement ou liquidation judiciaire).
           </li>
           <li>
             <strong>Voie unilatérale</strong> : document unilatéral{' '}
-            <strong>homologué</strong> par la DREETS (21 jours).
+            <strong>homologué</strong> par la DREETS (21 jours ; 8 jours en redressement ou liquidation judiciaire).
           </li>
           <li>
             Consultation préalable du CSE obligatoire (2 réunions minimum).

@@ -83,7 +83,7 @@ function analyseRisque(c: CautionDetail): Risque {
 
   if (anciennete >= 10) {
     recos.push(
-      `Cette caution a ${anciennete} ans. Vérifiez sa durée contractuelle — beaucoup de cautions sont limitées à 10 ans au-delà de toute mention expresse.`
+      `Cette caution a ${anciennete} ans. Vérifiez sa durée dans l'acte : si elle est à durée indéterminée, vous pouvez la résilier pour l'avenir avec un préavis (art. 2315 C. civ.), en restant tenu·e des dettes nées avant.`
     );
   }
 

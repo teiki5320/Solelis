@@ -239,7 +239,7 @@ export default function AidejuridictionnellePage() {
         <ol className="mt-2 space-y-1.5 pl-5">
           <li>
             <strong>1.</strong> Téléchargez le formulaire CERFA n°16146*03 sur{' '}
-            <a href="https://www.service-public.fr/particuliers/vosdroits/F18074" target="_blank" rel="noreferrer" className="text-bleu-fonce underline">
+            <a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F18074" target="_blank" rel="noreferrer" className="text-bleu-fonce underline">
               service-public.fr
             </a>
             .
@@ -252,7 +252,9 @@ export default function AidejuridictionnellePage() {
           <li>
             <strong>3.</strong> Déposez au Bureau de l&apos;Aide
             Juridictionnelle (BAJ) du tribunal judiciaire le plus proche.
-            Décision en 2 à 6 semaines.
+            Aucun délai n&apos;est fixé : la décision est notifiée « dans les
+            meilleurs délais ». Si une audience approche avant la décision,
+            demandez l&apos;aide juridictionnelle provisoire.
           </li>
           <li>
             <strong>4.</strong> Vous pouvez choisir votre avocat (s&apos;il

@@ -84,8 +84,8 @@ export default function BlocArretLongueDuree() {
             à 2 ans), 96 120 € (2 ans et plus).
           </li>
           <li>
-            <strong>Délai de versement</strong> : l&apos;AGS verse sous
-            15 jours après transmission par le mandataire — un salarié
+            <strong>Délai de versement</strong> : l&apos;AGS verse les fonds
+            au mandataire 5 à 8 jours après réception des relevés de créances — un salarié
             en arrêt long peut donc rester sans complément pendant
             plusieurs semaines.
           </li>

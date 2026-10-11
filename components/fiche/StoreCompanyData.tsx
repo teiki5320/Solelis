@@ -35,6 +35,36 @@ export function activitePourCourrier(
   return secteurLabel && secteurLabel !== 'Autre' ? `${secteurLabel} (code NAF ${naf})` : `code NAF ${naf}`;
 }
 
+/** « 2015-03-12 » → « 12/03/2015 » ; toute autre valeur est rendue telle quelle. */
+function dateFrancaise(iso: string | undefined): string {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec((iso ?? '').trim());
+  return m ? `${m[3]}/${m[2]}/${m[1]}` : (iso ?? '').trim();
+}
+
+/**
+ * Champs des courriers préremplis depuis la fiche (clé « solelis_company »
+ * en sessionStorage). Un champ vide reste à compléter dans le formulaire.
+ */
+export function donneesCourrierEntreprise(
+  company: CompanyData,
+  tribunal?: string,
+  secteurLabel?: string,
+): Record<string, string> {
+  const effectif = (company.effectif ?? '').trim();
+  return {
+    NOM_ENTREPRISE: company.nom,
+    SIRET: company.siret,
+    ADRESSE: adresseComplete(company),
+    VILLE: company.ville,
+    NOM_DIRIGEANT: '',
+    FORME_JURIDIQUE: company.formeJuridique,
+    DATE_CREATION: dateFrancaise(company.dateCreation),
+    ACTIVITE: activitePourCourrier(company, secteurLabel),
+    ...(effectif && effectif !== 'Non renseigné' ? { EFFECTIF: effectif } : {}),
+    ...(tribunal ? { TRIBUNAL: tribunal } : {}),
+  };
+}
+
 interface Props {
   company: CompanyData;
   token: string;
@@ -50,17 +80,7 @@ export default function StoreCompanyData({ company, token, reponses, tribunal, s
     try {
       sessionStorage.setItem(
         'solelis_company',
-        JSON.stringify({
-          NOM_ENTREPRISE: company.nom,
-          SIRET: company.siret,
-          ADRESSE: adresseComplete(company),
-          VILLE: company.ville,
-          NOM_DIRIGEANT: '',
-          FORME_JURIDIQUE: company.formeJuridique,
-          DATE_CREATION: company.dateCreation,
-          ACTIVITE: activitePourCourrier(company, secteurLabel),
-          ...(tribunal ? { TRIBUNAL: tribunal } : {}),
-        })
+        JSON.stringify(donneesCourrierEntreprise(company, tribunal, secteurLabel))
       );
       if (reponses) {
         sessionStorage.setItem('solelis_reponses', JSON.stringify(reponses));

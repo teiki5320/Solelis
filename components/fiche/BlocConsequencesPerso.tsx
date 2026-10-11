@@ -19,7 +19,7 @@ const SECTIONS: Section[] = [
     intro:
       "Deux fichiers tenus par la Banque de France recensent les incidents de paiement. Une inscription n'est pas une sanction mais une information aux établissements bancaires.",
     points: [
-      { label: 'FICP', valeur: 'Fichier des Incidents de remboursement de Crédits aux Particuliers. Inscription en cas de 2 mensualités impayées (crédit à la conso) ou de 60 jours d\'impayé (crédit immobilier).' },
+      { label: 'FICP', valeur: 'Fichier des Incidents de remboursement de Crédits aux Particuliers. Inscription après un incident de paiement caractérisé (par exemple 2 mensualités impayées pour un crédit remboursé chaque mois), après un délai de 30 jours laissé pour régulariser.' },
       { label: 'FCC', valeur: "Fichier Central des Chèques. Inscription en cas de chèque sans provision non régularisé ou de retrait de carte bancaire pour usage abusif." },
       { label: 'Durée FICP', valeur: '5 ans maximum (levée possible avant si régularisation + notification par le créancier).' },
       { label: 'Durée FCC', valeur: "5 ans pour chèques ; 2 ans pour cartes. Levée immédiate après régularisation." },
@@ -72,7 +72,7 @@ const SECTIONS: Section[] = [
       { label: 'Faillite personnelle', valeur: "Interdiction de diriger toute entreprise pendant 15 ans max. Déclenchée pour fautes graves : poursuite abusive d'activité, détournement d'actif, comptabilité fictive." },
       { label: 'Interdiction de gérer', valeur: "Sanction plus large (jusqu'à 15 ans) pour manquements de bonne foi moins graves que la faillite personnelle (défaut de déclaration dans les 45 j, absence de coopération avec le mandataire)." },
       { label: 'Banqueroute (pénal)', valeur: "Délit passible de 5 ans de prison et 75 000 € d'amende. Suppose une procédure collective ET un comportement frauduleux (détournement, faux en écritures, augmentation frauduleuse du passif)." },
-      { label: 'Dettes sociales / fiscales', valeur: "L'administration peut engager la responsabilité solidaire du dirigeant (L267 LPF, L244-1 CSS) en cas de manœuvres frauduleuses ou d'inobservation grave et répétée." },
+      { label: 'Dettes sociales / fiscales', valeur: "L'administration peut engager la responsabilité solidaire du dirigeant (L267 LPF ; L243-3-2 CSS en cas de travail dissimulé) en cas de manœuvres frauduleuses ou d'inobservation grave et répétée." },
     ],
     actions: [
       "Déclarez la cessation des paiements dans les 45 jours — c'est la première protection",
@@ -85,7 +85,7 @@ const SECTIONS: Section[] = [
       'C. com. art. L651-2 (insuffisance d\'actif)',
       'C. com. art. L653-1 à L653-11 (faillite personnelle / interdiction de gérer)',
       'C. com. art. L654-1 à L654-6 (banqueroute)',
-      'LPF art. L267 (dettes fiscales) ; CSS art. L244-1 (dettes sociales)',
+      'LPF art. L267 (dettes fiscales) ; CSS art. L243-3-2 (dettes sociales)',
     ],
   },
   {
@@ -102,7 +102,7 @@ const SECTIONS: Section[] = [
       {
         label: 'Période suspecte — de la cessation des paiements au jugement (art. L631-8, L632-1 à L632-3 C. com.)',
         valeur:
-          "Le tribunal fixe une date de cessation des paiements, qui peut remonter jusqu'à 18 mois avant le jugement d'ouverture ; les actes accomplis entre cette date et le jugement peuvent être annulés. NULLITÉS DE DROIT : donation et acte à titre gratuit (y compris dans les 6 mois qui précèdent la cessation), contrat très déséquilibré (vente à prix dérisoire), paiement anticipé d'une dette, paiement par un moyen anormal (dation en paiement), sûreté pour une dette antérieure. NULLITÉS FACULTATIVES (à l'appréciation du juge) : paiements de dettes échues et actes à titre onéreux lorsque l'autre partie connaissait la cessation des paiements (par exemple un créancier « ami » payé en priorité). Le mandataire peut faire annuler ces actes pour récupérer des fonds.",
+          "Le tribunal fixe une date de cessation des paiements, qui peut remonter jusqu'à 18 mois avant le jugement d'ouverture ; les actes accomplis entre cette date et le jugement peuvent être annulés. NULLITÉS DE DROIT : donation et acte à titre gratuit (ceux des 6 mois qui précèdent la cessation peuvent aussi être annulés par le tribunal), contrat très déséquilibré (vente à prix dérisoire), paiement anticipé d'une dette, paiement par un moyen anormal (dation en paiement), sûreté pour une dette antérieure. NULLITÉS FACULTATIVES (à l'appréciation du juge) : paiements de dettes échues et actes à titre onéreux lorsque l'autre partie connaissait la cessation des paiements (par exemple un créancier « ami » payé en priorité). Le mandataire peut faire annuler ces actes pour récupérer des fonds.",
       },
       {
         label: 'Confusion de patrimoine — extension de procédure (art. L621-2 C. com.)',

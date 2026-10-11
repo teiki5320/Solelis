@@ -159,7 +159,7 @@ export default function AgsPage() {
           <li>Plafond 4 (16 PMSS) si le contrat a été conclu moins de 6 mois avant le jugement : 64 080 €.</li>
           <li>Plafond 5 (20 PMSS) si le contrat a été conclu entre 6 mois et 2 ans avant : 80 100 €.</li>
           <li>Plafond 6 (24 PMSS) si le contrat a au moins 2 ans : 96 120 €.</li>
-          <li>L&apos;AGS ne garantit pas les indemnités transactionnelles ni les rappels au-delà de 2 mois pré-jugement.</li>
+          <li>L&apos;AGS garantit les sommes dues à la date du jugement, dans la limite du plafond ; elle ne couvre pas les indemnités transactionnelles.</li>
         </ul>
       </div>
 

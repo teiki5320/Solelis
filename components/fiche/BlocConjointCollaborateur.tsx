@@ -63,7 +63,7 @@ export default function BlocConjointCollaborateur() {
             </li>
             <li>
               <strong>CSP obligatoire</strong> si licenciement éco — votre
-              conjoint y a droit comme tout salarié (75 % salaire brut, 12 mois).
+              conjoint y a droit comme tout salarié (75 % du salaire journalier de référence, 12 mois au plus).
             </li>
             <li>
               <strong>Cotisations</strong> : régime général (URSSAF + retraite
@@ -83,15 +83,15 @@ export default function BlocConjointCollaborateur() {
         <div className="mt-5 rounded-2xl border border-jaune/30 bg-jaune/5 p-4">
           <p className="font-display text-base text-jaune">Conjoint collaborateur</p>
           <p className="mt-2 text-sm text-navy/80">
-            Statut intermédiaire (loi PACTE 2019 + loi du 14 fév. 2022).
+            Statut intermédiaire (loi PACTE 2019 + loi de financement de la sécurité sociale pour 2022).
             Le conjoint participe sans rémunération mais est{' '}
             <strong>inscrit au RCS / RM</strong> et cotise pour sa
             retraite et la prévoyance.
           </p>
           <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-navy/80">
             <li>
-              <strong>Durée limitée à 5 ans cumulés</strong> (loi 14 fév.
-              2022) — au-delà, basculement obligatoire en salarié ou
+              <strong>Durée limitée à 5 ans cumulés</strong> (loi de
+              financement de la sécurité sociale pour 2022) — au-delà, basculement obligatoire en salarié ou
               associé. Vérifiez si vous approchez de la limite.
             </li>
             <li>
@@ -220,8 +220,8 @@ export default function BlocConjointCollaborateur() {
       <p className="mt-5 text-xs text-navy/50">
         Sources : C. com. art. L121-4 à L121-8 (statut du conjoint) ;
         loi n° 2005-882 du 2 août 2005 ; loi PACTE n° 2019-486 du 22
-        mai 2019 ; loi n° 2022-172 du 14 février 2022 (limite 5 ans
-        conjoint collaborateur) ; LPF art. L267 ; C. com. art. L651-2.
+        mai 2019 ; loi n° 2021-1754 du 23 décembre 2021 (limite 5 ans
+        conjoint collaborateur, C. com. art. L121-4) ; LPF art. L267 ; C. com. art. L651-2.
       </p>
     </BlocAccordeon>
   );

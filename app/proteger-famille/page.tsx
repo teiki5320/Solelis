@@ -326,8 +326,8 @@ export default function ProtegerFamillePage() {
       {/* Footer note */}
       <div className="dashed-band mt-12 p-6 text-center text-sm leading-relaxed text-navy/70">
         La protection du patrimoine familial est un sujet technique. Un notaire et
-        un avocat peuvent vous conseiller — la première consultation
-        est souvent gratuite.
+        un avocat peuvent vous conseiller — une première consultation
+        gratuite est possible dans un point-justice (3039).
       </div>
     </section>
   );

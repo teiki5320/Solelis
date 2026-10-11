@@ -1,6 +1,7 @@
 /** Règles du vérificateur de prescription (/outils/prescription). */
 export type Categorie =
   | 'urssaf'
+  | 'urssaf-independant'
   | 'fiscal-revenu'
   | 'fiscal-tva'
   | 'civil'
@@ -22,18 +23,38 @@ export interface Regle {
    * année suivant l'année de départ (LPF L169, L176), et non « date + N ans ».
    */
   finAnneeCivile?: boolean;
+  /**
+   * Cotisations des travailleurs indépendants : le délai court à compter du
+   * 30 juin de l'année qui suit l'année au titre de laquelle elles sont dues
+   * (CSS L244-3), soit jusqu'au 30 juin de la (N+1)-ième année suivante.
+   */
+  finTrenteJuin?: boolean;
 }
 
 export const REGLES: Regle[] = [
   {
     cle: 'urssaf',
-    label: 'Cotisations sociales (URSSAF, MSA, SSI)',
+    label: 'Cotisations sociales d\'un employeur (URSSAF, MSA)',
     duree: 3,
     base: 'Code de la Sécurité sociale',
     reference: 'CSS art. L244-3',
-    point: "Date d'exigibilité de la cotisation (échéance déclarative).",
+    point:
+      "Fin de l'année civile au titre de laquelle les cotisations sont dues ; le délai court jusqu'au 31 décembre de la 3e année qui suit.",
     interruption:
-      "Mise en demeure, contrainte signifiée, reconnaissance écrite de la dette par le débiteur.",
+      "Mise en demeure envoyée dans le délai (elle ouvre un nouveau délai pour le recouvrement), contrainte signifiée, reconnaissance écrite de la dette.",
+    finAnneeCivile: true,
+  },
+  {
+    cle: 'urssaf-independant',
+    label: 'Cotisations sociales d\'un·e travailleur·se indépendant·e',
+    duree: 3,
+    base: 'Code de la Sécurité sociale',
+    reference: 'CSS art. L244-3',
+    point:
+      "30 juin de l'année qui suit l'année au titre de laquelle les cotisations sont dues ; le délai court jusqu'au 30 juin de la 4e année qui suit.",
+    interruption:
+      "Mise en demeure envoyée dans le délai (elle ouvre un nouveau délai pour le recouvrement), contrainte signifiée, reconnaissance écrite de la dette.",
+    finTrenteJuin: true,
   },
   {
     cle: 'fiscal-revenu',
@@ -153,9 +174,11 @@ export function calculerPrescription(
   // Après une interruption, on garde le calcul « date + N ans »
   // (estimation, faute de règle unique selon l'acte interruptif).
   const echeance =
-    regle.finAnneeCivile && !interruption
-      ? new Date(base.getFullYear() + regle.duree, 11, 31)
-      : addYears(base, regle.duree);
+    regle.finTrenteJuin && !interruption
+      ? new Date(base.getFullYear() + regle.duree + 1, 5, 30)
+      : regle.finAnneeCivile && !interruption
+        ? new Date(base.getFullYear() + regle.duree, 11, 31)
+        : addYears(base, regle.duree);
   const today = new Date(maintenant);
   today.setHours(0, 0, 0, 0);
   return {
@@ -163,4 +186,11 @@ export function calculerPrescription(
     restants: daysBetween(today, echeance),
     departFutur: base.getTime() > today.getTime(),
   };
+}
+
+/** Phrase d'aide sous le champ date, pour les règles « à l'année ». */
+export function aideAnnee(regle: Regle): string | null {
+  if (regle.finTrenteJuin) return `Seule l'année compte : le délai court jusqu'au 30 juin de la ${regle.duree + 1}e année suivante.`;
+  if (regle.finAnneeCivile) return `Seule l'année compte : le délai court jusqu'au 31 décembre de la ${regle.duree}e année suivante.`;
+  return null;
 }

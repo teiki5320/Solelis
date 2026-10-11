@@ -61,7 +61,7 @@ export function buildDefaultActions(r: Reponses, c: CompanyData, s: SectorInfo):
     actions.push({ id: 'conjoint-statut', texte: 'Déclarer le statut de mon conjoint·e s\'il·elle travaille régulièrement dans l\'entreprise (à défaut, il·elle est réputé·e conjoint·e salarié·e — art. L121-4 C. com.)', done: false });
   }
   if (r.conjointStatut === 'collaborateur') {
-    actions.push({ id: 'conjoint-duree', texte: 'Vérifier la durée du statut de conjoint collaborateur (limite 5 ans — loi du 14 fév. 2022)', done: false });
+    actions.push({ id: 'conjoint-duree', texte: 'Vérifier la durée du statut de conjoint collaborateur (limite 5 ans — C. com. art. L121-4)', done: false });
   }
   if (r.coGerants === 'oui') {
     actions.push({ id: 'cogerance-pv', texte: 'Établir un PV de répartition des fonctions entre co-gérants (protection contre l\'action en comblement de passif)', done: false });

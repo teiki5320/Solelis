@@ -44,7 +44,7 @@ const SECTIONS: SectionFAQ[] = [
       {
         question: 'Que se passe-t-il si je ne la déclare pas à temps ?',
         reponse:
-          "Le non-respect du délai de 45 jours expose le dirigeant à une interdiction de gérer (article L653-8 du Code de commerce), pouvant aller jusqu'à 15 ans. Le tribunal peut aussi remonter la date de cessation des paiements jusqu'à 18 mois en arrière (période suspecte), ce qui annule certains paiements et garanties consentis pendant cette période. En cas de faute de gestion avérée, une action en responsabilité pour insuffisance d'actif est possible (article L651-2).",
+          "Ne pas déclarer sciemment la cessation des paiements dans les 45 jours expose le dirigeant à une interdiction de gérer (article L653-8 du Code de commerce), pouvant aller jusqu'à 15 ans. Le tribunal peut aussi remonter la date de cessation des paiements jusqu'à 18 mois en arrière (période suspecte), ce qui annule certains paiements et garanties consentis pendant cette période. En cas de faute de gestion avérée, une action en responsabilité pour insuffisance d'actif est possible (article L651-2).",
       },
       {
         question: 'Puis-je continuer à diriger mon entreprise ?',
@@ -95,7 +95,7 @@ const SECTIONS: SectionFAQ[] = [
       {
         question: "Puis-je négocier directement avec l'URSSAF ?",
         reponse:
-          "Oui. Vous pouvez demander des délais de paiement directement à l'URSSAF (36 98 pour les travailleurs indépendants, 39 57 pour les employeurs ; MSA pour les exploitants agricoles, CGSS outre-mer) ou via la Commission des chefs des services financiers (CCSF) de votre département, qui regroupe tous les créanciers publics (URSSAF, impôts, douanes). La CCSF peut accorder un plan d'échelonnement sur 12 à 36 mois. L'URSSAF peut aussi accorder une remise partielle des majorations de retard (article L243-5 du Code de la sécurité sociale).",
+          "Oui. Vous pouvez demander des délais de paiement directement à l'URSSAF (36 98 pour les travailleurs indépendants, 39 57 pour les employeurs ; MSA pour les exploitants agricoles, CGSS outre-mer) ou via la Commission des chefs des services financiers (CCSF) de votre département, qui regroupe tous les créanciers publics (URSSAF, impôts, douanes). La CCSF peut accorder un plan d'échelonnement dont elle fixe la durée. L'URSSAF peut aussi accorder une remise partielle des majorations de retard (article R243-20 du Code de la sécurité sociale).",
         liens: [
           { href: '/courriers/echelonnement-urssaf', label: 'Modèle courrier URSSAF' },
           { href: '/courriers/saisine-ccsf', label: 'Courrier de saisine CCSF' },
@@ -143,7 +143,7 @@ const SECTIONS: SectionFAQ[] = [
       {
         question: 'Quelles sont mes aides personnelles (ATI, RSA) ?',
         reponse:
-          "L'ATI (Allocation des travailleurs indépendants) est versée par France Travail aux indépendants après une liquidation judiciaire, un redressement judiciaire avec remplacement du dirigeant, ou l'arrêt d'une activité non viable attesté par un tiers de confiance. Conditions : 2 ans d'activité, au moins 10 000 euros de revenus par an sur les 2 dernières années, ressources personnelles inférieures au RSA. Elle va d'environ 600 à 800 euros par mois selon les revenus antérieurs, pendant 6 mois (décret n° 2022-450 du 30 mars 2022). Le RSA est accessible sous conditions de ressources. La CSS (Complémentaire santé solidaire) couvre vos frais de santé. APESA propose un soutien psychologique gratuit et confidentiel.",
+          "L'ATI (Allocation des travailleurs indépendants) est versée par France Travail aux indépendants après une liquidation judiciaire, un redressement judiciaire avec remplacement du dirigeant, ou l'arrêt d'une activité non viable attesté par un tiers de confiance. Conditions : 2 ans d'activité, au moins 10 000 euros de revenus sur l'une des 2 dernières années, ressources personnelles inférieures au RSA. Elle va d'environ 600 à 800 euros par mois selon les revenus antérieurs, pendant 6 mois (décret n° 2022-450 du 30 mars 2022). Le RSA est accessible sous conditions de ressources. La CSS (Complémentaire santé solidaire) couvre vos frais de santé. APESA propose un soutien psychologique gratuit et confidentiel.",
         liens: [
           { href: '/aides-personnelles', label: 'Toutes les aides personnelles' },
           { href: '/outils/ati', label: 'Simulateur ATI' },

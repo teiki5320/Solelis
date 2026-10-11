@@ -167,7 +167,7 @@ export const CSP_OBLIGATION: ObligationLicenciement = {
   sigle: 'CSP',
   nom: 'Contrat de Sécurisation Professionnelle',
   description:
-    "Obligatoire pour tout licenciement économique en entreprise de moins de 1 000 salariés. À proposer au salarié avant la notification du licenciement (délai de réflexion : 21 jours). En cas d'acceptation : indemnités à 75 % du salaire brut antérieur pendant 12 mois (sous conditions d'ancienneté), accompagnement personnalisé France Travail. S'il n'est pas proposé, France Travail le propose à la place de l'employeur, qui doit alors une contribution de 2 mois de salaire (3 mois si le salarié adhère).",
+    "Obligatoire pour tout licenciement économique en entreprise de moins de 1 000 salariés. À proposer au salarié avant la notification du licenciement (délai de réflexion : 21 jours). En cas d'acceptation : allocation de 75 % du salaire journalier de référence pendant 12 mois au plus (avec au moins 1 an d'ancienneté), accompagnement personnalisé France Travail. S'il n'est pas proposé, France Travail le propose à la place de l'employeur, qui doit alors une contribution de 2 mois de salaire (3 mois si le salarié adhère).",
   seuilMax: 1000,
   telephone: '39 49',
   site: 'https://www.francetravail.fr/employeur/vos-declarations-et-cotisations/la-fin-de-vos-contrats-de-travai/le-contrat-de-securisation-profe.html',

@@ -4,9 +4,8 @@ import Link from 'next/link';
 
 /**
  * Calculateur de valorisation des stocks en cas de cession ou
- * liquidation. Les taux de réfaction sont indicatifs et issus de la
- * pratique des mandataires liquidateurs (CNAJMJ) et des commissaires-
- * priseurs judiciaires (CSCPJ).
+ * liquidation. Les taux de réfaction sont des ordres de grandeur
+ * indicatifs, sans source officielle publiée.
  *
  * Objectif : donner au dirigeant une fourchette réaliste de ce qu'il
  * peut espérer tirer de ses stocks selon la voie (cession amiable,
@@ -21,7 +20,7 @@ interface RefactionRange {
   haut: number;
 }
 
-// Sources : pratique CNAJMJ + commissaires-priseurs judiciaires (CSCPJ)
+// Ordres de grandeur indicatifs (pas de barème officiel publié)
 // Fourchettes typiques observées sur dossiers TPE/PME 2022-2024.
 const REFACTIONS: Record<NatureStock, Record<Voie, RefactionRange>> = {
   'matieres-premieres': {
@@ -149,8 +148,8 @@ export default function ValorisationStocksPage() {
       <p className="mt-3 text-base text-navy/70">
         Estimez la valeur réelle que vous pouvez tirer de vos stocks
         selon la nature du stock et la voie de cession envisagée. Les
-        taux de réfaction sont issus de la pratique des mandataires
-        judiciaires et commissaires-priseurs.
+        taux de réfaction sont des ordres de grandeur indicatifs, sans
+        valeur officielle.
       </p>
 
       <div className="glass mt-8 p-6 sm:p-8">
@@ -248,8 +247,7 @@ export default function ValorisationStocksPage() {
           </li>
           <li>
             <strong>Plan de cession en RJ</strong> : le repreneur fixe son
-            prix en intégrant le stock à un prix décoté (souvent 40-60 %
-            du prix de revient pour des produits courants).
+            prix en intégrant le stock à un prix décoté.
           </li>
           <li>
             <strong>Liquidation à la cuve</strong> : le mandataire vend en
@@ -258,7 +256,7 @@ export default function ValorisationStocksPage() {
           </li>
           <li>
             <strong>Enchères judiciaires</strong> : ventes publiques en lots
-            par commissaire-priseur (CSCPJ). Valeurs les plus basses,
+            par un commissaire de justice. Valeurs les plus basses,
             mais transparence totale et rapidité.
           </li>
           <li>
@@ -274,9 +272,9 @@ export default function ValorisationStocksPage() {
       </div>
 
       <p className="mt-6 text-xs text-navy/50">
-        Sources : pratique CNAJMJ (mandataires judiciaires), CSCPJ
-        (commissaires-priseurs judiciaires) ; fourchettes observées sur
-        dossiers TPE/PME 2022-2024. Indications non opposables : la
+        Ordres de grandeur indicatifs, sans source officielle publiée :
+        ils ne remplacent pas l&apos;inventaire et l&apos;estimation faits
+        par un commissaire de justice ou par le mandataire. La
         valeur réelle dépend de l&apos;état des stocks, de la conjoncture
         sectorielle et de la qualité du repreneur ou de l&apos;acheteur en gros.
       </p>

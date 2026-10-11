@@ -95,8 +95,8 @@ export default function BlocNationaliteSejour() {
           <li>
             <strong>Avocat en droit des étrangers</strong> aussi tôt que
             possible — séparé de votre avocat en droit des entreprises.
-            Premier RDV souvent gratuit (consultation Cimade, GISTI,
-            ADDE).
+            Conseils gratuits possibles auprès d&apos;un point-justice (3039)
+            ou d&apos;associations (Cimade, GISTI, ADDE).
           </li>
           <li>
             <strong>Identifier un changement de statut possible</strong>{' '}

@@ -86,7 +86,7 @@ function verdict(inputs: Inputs, proj: Projection[]): {
     message: `À charges constantes, votre trésorerie passe en négatif au mois ${premierNegatif.mois}. Il vous reste ${premierNegatif.mois} mois pour agir — c'est jouable.`,
     actions: [
       'Obtenez un moratoire URSSAF / SIE (courriers Solelis)',
-      'Saisissez la médiation du crédit (Banque de France, gratuit, 5 j)',
+      'Saisissez la médiation du crédit (Banque de France, gratuit, contact sous 48 h)',
       'Réduisez les charges fixes non vitales (abonnements, loyers renégociables)',
       "Accélérez les encaissements clients (relances, affacturage, escompte)",
       'Si l\'écart reste négatif après ces actions : mandat ad hoc pour négocier globalement',

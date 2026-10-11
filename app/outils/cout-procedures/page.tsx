@@ -1,175 +1,120 @@
 'use client';
-import { useState, useMemo } from 'react';
 import Link from 'next/link';
 
-type Taille = 'tpe' | 'petite-pme' | 'moyenne-pme' | 'grande';
-
-interface Fourchette {
+interface Fiche {
   procedure: string;
   icone: string;
   couleur: string;
   type: 'amiable' | 'collective';
   confidentiel: boolean;
-  dureeMois: string;
+  duree: string;
   greffe: string;
   mandataire: string;
   avocat: string;
-  totalBas: number;
-  totalHaut: number;
   sources: string[];
 }
 
-const PROCEDURES: Record<Taille, Fourchette[]> = {
-  tpe: [
-    {
-      procedure: 'Mandat ad hoc',
-      icone: '🤝',
-      couleur: 'border-bleu/40 bg-bleu/5',
-      type: 'amiable',
-      confidentiel: true,
-      dureeMois: '3 à 6 mois',
-      greffe: 'Requête : environ 45 €',
-      mandataire: '3 000 à 8 000 €',
-      avocat: '0 à 3 000 € (optionnel)',
-      totalBas: 3000,
-      totalHaut: 11000,
-      sources: [
-        'C. com. art. L611-3',
-        "Décret 85-1389 relatif aux émoluments des mandataires",
-      ],
-    },
-    {
-      procedure: 'Conciliation',
-      icone: '🫱🏻‍🫲🏿',
-      couleur: 'border-vert/40 bg-vert/5',
-      type: 'amiable',
-      confidentiel: true,
-      dureeMois: '4 à 5 mois',
-      greffe: 'Environ 45 €',
-      mandataire: '5 000 à 15 000 €',
-      avocat: '1 500 à 5 000 €',
-      totalBas: 6500,
-      totalHaut: 20000,
-      sources: [
-        'C. com. art. L611-4 à L611-16',
-        'Décret 85-1389',
-      ],
-    },
-    {
-      procedure: 'Sauvegarde',
-      icone: '🛡️',
-      couleur: 'border-jaune/40 bg-jaune/5',
-      type: 'collective',
-      confidentiel: false,
-      dureeMois: '6 à 12 mois + plan (10 ans max)',
-      greffe: 'Environ 40 € (dépôt)',
-      mandataire: '8 000 à 20 000 €',
-      avocat: '3 000 à 10 000 €',
-      totalBas: 11000,
-      totalHaut: 30000,
-      sources: [
-        'C. com. art. L620-1 et s.',
-        'Décret 2006-1709 (émoluments mandataires)',
-      ],
-    },
-    {
-      procedure: 'Redressement judiciaire (RJ)',
-      icone: '⚖️',
-      couleur: 'border-rouge/30 bg-rouge/5',
-      type: 'collective',
-      confidentiel: false,
-      dureeMois: '6 à 18 mois + plan (10 ans max)',
-      greffe: 'Environ 40 €',
-      mandataire: '10 000 à 30 000 € (forfait + % passif)',
-      avocat: '3 000 à 12 000 €',
-      totalBas: 13000,
-      totalHaut: 42000,
-      sources: [
-        'C. com. art. L631-1 et s.',
-        'Décret 2006-1709 (émoluments proportionnels)',
-      ],
-    },
-    {
-      procedure: 'Liquidation judiciaire simplifiée',
-      icone: '🔚',
-      couleur: 'border-navy/30 bg-navy/5',
-      type: 'collective',
-      confidentiel: false,
-      dureeMois: '1 an max (simplifiée)',
-      greffe: 'Environ 40 €',
-      mandataire: '4 000 à 10 000 € (majorité imputée sur l\'actif)',
-      avocat: '0 à 3 000 €',
-      totalBas: 4000,
-      totalHaut: 13000,
-      sources: [
-        'C. com. art. L641-1, L644-1 à L644-6 (simplifiée)',
-        'Décret 2006-1709',
-      ],
-    },
-    {
-      procedure: 'Rétablissement professionnel (PRP)',
-      icone: '♻️',
-      couleur: 'border-vert/30 bg-vert/5',
-      type: 'collective',
-      confidentiel: false,
-      dureeMois: '4 mois',
-      greffe: 'Environ 40 €',
-      mandataire: '1 500 à 3 000 € (indemnisés sur fonds publics)',
-      avocat: '0 à 1 500 €',
-      totalBas: 1500,
-      totalHaut: 4500,
-      sources: [
-        'C. com. art. L645-1 à L645-12',
-      ],
-    },
-  ],
-  'petite-pme': [], // sera rempli comme un multiple
-  'moyenne-pme': [],
-  'grande': [],
-};
+// Aucun montant chiffré : les rémunérations dépendent du dossier. On indique
+// seulement qui les fixe et sur quelle base légale (sources officielles).
+const GREFFE_TARIF = 'Tarif réglementé (C. com. art. L444-1 et s.)';
+const AVOCAT_LIBRE = 'Honoraires libres, convention d\'honoraires écrite obligatoire (loi n° 71-1130, art. 10)';
+const REMUNERATION_AMIABLE =
+  'Fixée par le président du tribunal avec votre accord ; ni forfait d\'ouverture de dossier, ni pourcentage des abandons de créances (C. com. art. L611-14)';
+const REMUNERATION_COLLECTIVE =
+  'Tarif réglementé, à la charge de la procédure (C. com. art. L444-1 et R663-3 et s.)';
 
-function coeffTaille(t: Taille): number {
-  return { tpe: 1, 'petite-pme': 1.5, 'moyenne-pme': 2.5, 'grande': 4 }[t];
-}
-
-function formatEuros(n: number): string {
-  if (n >= 10000) return `${(n / 1000).toFixed(0)} k€`;
-  return Math.round(n).toLocaleString('fr-FR') + ' €';
-}
+const PROCEDURES: Fiche[] = [
+  {
+    procedure: 'Mandat ad hoc',
+    icone: '🤝',
+    couleur: 'border-bleu/40 bg-bleu/5',
+    type: 'amiable',
+    confidentiel: true,
+    duree: 'fixée par le président du tribunal',
+    greffe: GREFFE_TARIF,
+    mandataire: REMUNERATION_AMIABLE,
+    avocat: `${AVOCAT_LIBRE} — facultatif`,
+    sources: ['C. com. art. L611-3 et L611-14'],
+  },
+  {
+    procedure: 'Conciliation',
+    icone: '🫱🏻‍🫲🏿',
+    couleur: 'border-vert/40 bg-vert/5',
+    type: 'amiable',
+    confidentiel: true,
+    duree: '4 mois, 5 mois au plus avec prorogation',
+    greffe: GREFFE_TARIF,
+    mandataire: REMUNERATION_AMIABLE,
+    avocat: AVOCAT_LIBRE,
+    sources: ['C. com. art. L611-4 à L611-16'],
+  },
+  {
+    procedure: 'Sauvegarde',
+    icone: '🛡️',
+    couleur: 'border-jaune/40 bg-jaune/5',
+    type: 'collective',
+    confidentiel: false,
+    duree: 'observation de 6 mois renouvelable une fois (12 mois au plus), puis plan de 10 ans au plus',
+    greffe: GREFFE_TARIF,
+    mandataire: REMUNERATION_COLLECTIVE,
+    avocat: AVOCAT_LIBRE,
+    sources: ['C. com. art. L620-1, L621-3, L626-12'],
+  },
+  {
+    procedure: 'Redressement judiciaire (RJ)',
+    icone: '⚖️',
+    couleur: 'border-rouge/30 bg-rouge/5',
+    type: 'collective',
+    confidentiel: false,
+    duree: 'observation de 6 mois renouvelable (18 mois au plus), puis plan de 10 ans au plus',
+    greffe: GREFFE_TARIF,
+    mandataire: REMUNERATION_COLLECTIVE,
+    avocat: AVOCAT_LIBRE,
+    sources: ['C. com. art. L631-1, L631-7, L631-19'],
+  },
+  {
+    procedure: 'Liquidation judiciaire simplifiée',
+    icone: '🔚',
+    couleur: 'border-navy/30 bg-navy/5',
+    type: 'collective',
+    confidentiel: false,
+    duree: '6 mois ou 1 an selon la taille de l\'entreprise, prorogeable de 3 mois',
+    greffe: GREFFE_TARIF,
+    mandataire: `${REMUNERATION_COLLECTIVE} ; si l'actif est insuffisant, une indemnité est versée par un fonds dédié (art. L663-3)`,
+    avocat: AVOCAT_LIBRE,
+    sources: ['C. com. art. L641-1, L644-1 à L644-6, L663-3'],
+  },
+  {
+    procedure: 'Rétablissement professionnel (PRP)',
+    icone: '♻️',
+    couleur: 'border-vert/30 bg-vert/5',
+    type: 'collective',
+    confidentiel: false,
+    duree: '4 mois',
+    greffe: GREFFE_TARIF,
+    mandataire: 'Rémunération prélevée sur un fonds alimenté par les intérêts versés par la Caisse des dépôts (C. com. art. L663-3-1)',
+    avocat: AVOCAT_LIBRE,
+    sources: ['C. com. art. L645-1 à L645-12, L663-3-1'],
+  },
+];
 
 export default function CoutProceduresPage() {
-  const [taille, setTaille] = useState<Taille>('tpe');
-
-  const items = useMemo(() => {
-    const c = coeffTaille(taille);
-    return PROCEDURES.tpe.map((p) => ({
-      ...p,
-      totalBas: p.totalBas * c,
-      totalHaut: p.totalHaut * c,
-    }));
-  }, [taille]);
-
   const jsonLdHowTo = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
     name: 'Comparer le coût des procédures',
     description:
-      'Comparez les fourchettes de coût des procédures amiables et collectives (mandat ad hoc, conciliation, sauvegarde, RJ, LJ, PRP) selon la taille de votre entreprise.',
+      'Comparez qui fixe et qui paie les frais des procédures amiables et collectives (mandat ad hoc, conciliation, sauvegarde, RJ, LJ, PRP).',
     step: [
       {
         '@type': 'HowToStep',
-        name: 'Sélectionner la taille de l\'entreprise',
-        text: 'Choisissez parmi TPE, petite PME, PME ou ETI/grande entreprise pour ajuster les fourchettes de coût.',
-      },
-      {
-        '@type': 'HowToStep',
         name: 'Comparer les procédures',
-        text: 'Consultez les fourchettes de coût pour chaque procédure : frais de greffe, émoluments du mandataire, honoraires d\'avocat.',
+        text: 'Consultez pour chaque procédure la durée légale, les frais de greffe, la rémunération du mandataire et les honoraires d\'avocat.',
       },
       {
         '@type': 'HowToStep',
         name: 'Identifier les solutions de financement',
-        text: 'Vérifiez les options de prise en charge : aide juridictionnelle, consultation gratuite, fonds publics (PRP).',
+        text: 'Vérifiez les options de prise en charge : aide juridictionnelle, consultation gratuite, fonds dédié (PRP).',
       },
     ],
   };
@@ -202,36 +147,16 @@ export default function CoutProceduresPage() {
       </Link>
 
       <h1 className="font-display text-3xl text-navy sm:text-4xl">
-        Coût estimé des procédures
+        Coût des procédures
       </h1>
       <p className="mt-3 text-base text-navy/70">
-        Fourchettes indicatives des coûts réels (greffe, émoluments du
-        mandataire, honoraires d&apos;avocat). Les rémunérations des
-        mandataires sont encadrées par décret.
+        Qui fixe et qui paie les frais (greffe, mandataire, avocat) pour
+        chaque procédure. Les montants dépendent de votre dossier :
+        demandez une estimation écrite avant de vous engager.
       </p>
 
-      <div className="mt-6 flex flex-wrap gap-2 text-sm">
-        {([
-          { k: 'tpe', l: 'TPE (< 10 salariés / CA < 2 M€)' },
-          { k: 'petite-pme', l: 'Petite PME (< 50 salariés)' },
-          { k: 'moyenne-pme', l: 'PME (< 250 salariés)' },
-          { k: 'grande', l: 'ETI / grande' },
-        ] as const).map((t) => (
-          <button
-            key={t.k}
-            type="button"
-            onClick={() => setTaille(t.k)}
-            className={`rounded-full px-4 py-1.5 ${
-              taille === t.k ? 'bg-navy text-white' : 'bg-white/80 text-navy/80 hover:bg-white'
-            }`}
-          >
-            {t.l}
-          </button>
-        ))}
-      </div>
-
       <div className="mt-8 grid gap-4">
-        {items.map((p) => (
+        {PROCEDURES.map((p) => (
           <div key={p.procedure} className={`rounded-2xl border p-5 ${p.couleur}`}>
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
@@ -242,14 +167,8 @@ export default function CoutProceduresPage() {
                 <div className="mt-2 flex flex-wrap gap-2 text-[11px]">
                   <span className="pastille">{p.type === 'amiable' ? 'Procédure amiable' : 'Procédure collective'}</span>
                   <span className="pastille">{p.confidentiel ? 'Confidentielle' : 'Publique'}</span>
-                  <span className="pastille">Durée : {p.dureeMois}</span>
+                  <span className="pastille">Durée : {p.duree}</span>
                 </div>
-              </div>
-              <div className="text-right">
-                <p className="text-[11px] uppercase text-navy/55">Coût total estimé</p>
-                <p className="font-display text-xl text-navy">
-                  {formatEuros(p.totalBas)} — {formatEuros(p.totalHaut)}
-                </p>
               </div>
             </div>
 
@@ -283,22 +202,22 @@ export default function CoutProceduresPage() {
             <Link href="/outils/aide-juridictionnelle" className="ml-1 text-bleu-fonce underline">Vérifier mon éligibilité</Link>
           </li>
           <li>
-            <strong>Consultation gratuite</strong> : la plupart des avocats et mandataires proposent un premier RDV gratuit. Le CIP organise des RDV 100 % confidentiels et gratuits.
+            <strong>Consultation gratuite</strong> : une première consultation avec un avocat est possible gratuitement dans un point-justice (3039). Le CIP organise des entretiens confidentiels et gratuits.
           </li>
           <li>
-            <strong>Honoraires des mandataires</strong> : partiellement prélevés sur l&apos;actif de la procédure — vous n&apos;avancez pas la totalité dans les procédures collectives.
+            <strong>Rémunération des mandataires et administrateurs judiciaires</strong> : dans les procédures collectives, elle suit un tarif réglementé et fait partie des frais de la procédure.
           </li>
           <li>
-            <strong>PRP (Rétablissement Professionnel)</strong> : le mandataire est indemnisé sur fonds publics — procédure quasiment gratuite pour le débiteur.
+            <strong>PRP (Rétablissement Professionnel)</strong> : la rémunération du mandataire est prélevée sur un fonds dédié (C. com. art. L663-3-1).
           </li>
         </ul>
       </div>
 
       <p className="mt-6 text-xs text-navy/50">
-        Fourchettes indicatives issues des barèmes officiels (décrets
-        85-1389 et 2006-1709) et des observations CNAJMJ, IFPPC et CRA.
-        Les coûts réels dépendent de la taille du bilan, du nombre de
-        créanciers et de la complexité du dossier.
+        Sources : Code de commerce (articles cités sur chaque carte, à
+        consulter sur www.legifrance.gouv.fr) ; loi n° 71-1130 du 31
+        décembre 1971, art. 10. Les coûts réels dépendent de la taille du
+        bilan, du nombre de créanciers et de la complexité du dossier.
       </p>
     </section>
   );

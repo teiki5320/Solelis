@@ -36,7 +36,7 @@ export default function ModePerdu() {
     if (reponses.situation === 'assignation') {
       return {
         nom: 'Avocat en droit des entreprises en difficulté',
-        action: 'Premier RDV souvent gratuit · sous 48 h',
+        action: 'Sous 48 h · consultation gratuite possible en point-justice (3039)',
         tel: null as string | null,
         site: 'https://www.cnb.avocat.fr/annuaire-des-avocats-de-france',
         labelSite: 'Trouver un avocat',

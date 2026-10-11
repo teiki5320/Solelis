@@ -28,6 +28,109 @@ export interface PersonalizedCourrier {
   urgence?: 'normale' | 'elevee' | 'critique';
 }
 
+/**
+ * Libellé français de chaque champ « {{X}} » des modèles : affiché dans le
+ * formulaire et, tant que le champ est vide, dans l'aperçu (« [libellé] »).
+ */
+export const LIBELLES_CHAMPS: Record<string, string> = {
+  NOM_ENTREPRISE: 'Nom de l\'entreprise',
+  SIRET: 'SIRET',
+  NOM_DIRIGEANT: 'Nom du dirigeant',
+  QUALITE: 'Qualité (gérant, président…)',
+  ADRESSE: 'Adresse',
+  VILLE: 'Ville',
+  TRIBUNAL: 'Tribunal compétent (voir la carte « Organismes » de votre fiche)',
+  DATE: 'Date du courrier',
+  DUREE: 'Durée souhaitée (mois)',
+  MONTANT: 'Montant (€)',
+  TYPE_IMPOT: 'Nature de l\'impôt (TVA, IS…)',
+  DATE_ECHEANCE: 'Date d\'échéance initiale',
+  RAISON: 'Raison de la difficulté',
+  DATE_DEBUT: 'Date de début du plan',
+  NUM_FACTURE: 'Numéro de facture',
+  DUREE_RELATION: 'Durée de la relation commerciale',
+  MONTANT_1: 'Montant 1er versement (€)',
+  MONTANT_2: 'Montant 2e versement (€)',
+  MONTANT_3: 'Montant solde (€)',
+  DATE_1: 'Date 1er versement',
+  DATE_2: 'Date 2e versement',
+  DATE_3: 'Date solde',
+  NOM_ADVERSAIRE: 'Nom de l\'entreprise adverse',
+  SIRET_ADVERSAIRE: 'SIRET de l\'entreprise adverse',
+  NATURE_DIFFEREND: 'Nature du différend',
+  EXPOSE_FAITS: 'Exposé des faits',
+  TENTATIVES: 'Tentatives de résolution déjà faites',
+  NOM_BANQUE: 'Nom de votre banque',
+  AUTRE_MOTIF: 'Autre motif',
+  CONSEQUENCES: 'Conséquences pour l\'entreprise',
+  NB_SALARIES: 'Nombre de salariés',
+  CA: 'Chiffre d\'affaires annuel (€)',
+  FORME_JURIDIQUE: 'Forme juridique',
+  CAPITAL: 'Capital social (€)',
+  DATE_CESSATION: 'Date de cessation des paiements',
+  DATE_CREATION: 'Date de création',
+  ACTIVITE: 'Activité principale',
+  NATURE_DIFFICULTES: 'Nature des difficultés',
+  DISPONIBILITES: 'Vos disponibilités',
+  DESCRIPTION_DIFFICULTES: 'Description des difficultés',
+  LISTE_CREANCIERS: 'Liste des principaux créanciers',
+  MISSION_SOUHAITEE: 'Mission souhaitée pour le mandataire',
+  OBJECTIF_CONCILIATION: 'Objectif de la conciliation',
+  REFERENCE_DETTE: 'Référence de la dette',
+  PROPOSITION_ARRANGEMENT: 'Votre proposition d\'arrangement',
+  NUM_AFFILIATION: 'Numéro d\'affiliation SSI/CPAM',
+  STATUT: 'Statut (indépendant, auto-entrepreneur…)',
+  REVENUS: 'Revenus mensuels actuels (€)',
+  CHARGES: 'Charges fixes mensuelles (€)',
+  SITUATION_FAMILIALE: 'Situation familiale',
+  PERSONNES_A_CHARGE: 'Nombre de personnes à charge',
+  DESCRIPTION_SITUATION: 'Description de votre situation',
+  OBJECTIF_AIDE: 'Ce que l\'aide vous permettrait',
+  NUM_MED: 'Numéro de la mise en demeure',
+  DATE_MED: 'Date de la mise en demeure',
+  MOTIFS_CONTESTATION: 'Motifs de la contestation',
+  DATE_FIN: 'Date de fin de la période',
+  LISTE_PIECES: 'Liste des pièces justificatives',
+  ACTIONS_REDRESSEMENT: 'Actions déjà engagées pour redresser la situation',
+  AUTRES_PIECES: 'Autres pièces jointes',
+  AVOCAT_CHOISI: 'Avocat choisi (nom, barreau) ou « désignation par le bâtonnier »',
+  CAPITAL_RESTANT: 'Capital restant dû (€)',
+  CATEGORIE_ACTIVITE: 'Catégorie d\'activité (commerciale, artisanale, libérale…)',
+  COMPOSITION_FOYER: 'Composition du foyer fiscal',
+  COORDONNEES: 'Vos coordonnées (téléphone, e-mail)',
+  DATE_FIN_ACTUELLE: 'Date de fin actuelle du prêt',
+  DATE_PREMIER_VERSEMENT: 'Date du premier versement',
+  DATE_REPRISE_COURANT: 'Date depuis laquelle les cotisations courantes sont payées',
+  DATE_SOUSCRIPTION: 'Date de souscription du prêt',
+  DETAIL_DOSSIER: 'Détail du dossier (faits, adversaire, enjeu)',
+  DIFFERE_DEMANDE: 'Différé demandé (ex. : différé d\'amortissement de 12 mois)',
+  DUREE_DEMANDEE: 'Durée totale demandée (années)',
+  DUREE_PLAN: 'Durée souhaitée du plan (mois)',
+  EFFECTIF: 'Effectif (nombre de salariés)',
+  ETAT_PERSONNEL: 'Ce que vous traversez (en quelques mots)',
+  INDICATEURS_FINANCIERS: 'Indicateurs financiers (chiffre d\'affaires, trésorerie…)',
+  LOCALISATION: 'Ville / région',
+  MENSUALITE_ACTUELLE: 'Mensualité actuelle (€)',
+  MENSUALITE_CIBLE: 'Nouvelle mensualité souhaitée (€)',
+  MENSUALITE: 'Mensualité proposée (€)',
+  MONTANT_FISCAL: 'Montant des dettes fiscales (€)',
+  MONTANT_PGE: 'Montant initial du PGE (€)',
+  MONTANT_SOCIAL: 'Montant des dettes sociales (€)',
+  MONTANT_TOTAL: 'Montant total des dettes (€)',
+  NATURE_DIFFICULTE: 'Nature de la difficulté',
+  NATURE_PROCEDURE: 'Nature de la procédure (ex. : de redressement judiciaire)',
+  ORIGINES_DIFFICULTES: 'Origines des difficultés',
+  PATRIMOINE_FIN: 'Patrimoine financier (€)',
+  PATRIMOINE_IMMO: 'Patrimoine immobilier hors résidence principale (€)',
+  PREFERENCE_CONSULTATION: 'Préférence : rendez-vous sur place ou en visio',
+  REFERENCE_AGREMENT: 'Numéro ORIAS / agrément',
+  REFERENCE_PGE: 'Numéro du contrat de PGE',
+  RFR: 'Revenu fiscal de référence (€)',
+  SITUATION_ECONOMIQUE: 'Situation économique de l\'entreprise',
+  STADE_DIFFICULTE: 'Stade actuel des difficultés',
+  STATUT_DIRIGEANT: 'Votre statut (gérant·e, président·e…)',
+};
+
 export const COURRIERS: CourrierTemplate[] = [
   {
     slug: 'echelonnement-urssaf',
@@ -202,11 +305,9 @@ Pièces jointes (conformément à l'article R631-1 du Code de commerce) :
 8. Nombre de salariés et montant du chiffre d'affaires
 9. Copie pièce d'identité du dirigeant
 
-Je demande au Tribunal de bien vouloir ouvrir une procédure de redressement judiciaire.
+Je demande au Tribunal de bien vouloir ouvrir une procédure de redressement judiciaire (ou de liquidation judiciaire si le redressement est manifestement impossible).
 
-Fait à {{VILLE}}, le {{DATE}}
-
-Signature`,
+Fait à {{VILLE}}, le {{DATE}}`,
   },
   {
     slug: 'rdv-cci',
@@ -395,7 +496,7 @@ Important : ce courrier doit être envoyé en recommandé avec accusé de récep
     destinataire: 'Commission des chefs des services financiers — DDFiP',
     categorie: 'impots',
     icone: '🏛️',
-    description: 'Demande d\'échelonnement global de vos dettes fiscales ET sociales en un seul dossier (jusqu\'à 36 mois).',
+    description: 'Demande d\'échelonnement global de vos dettes fiscales ET sociales en un seul dossier.',
     objet: 'Demande de saisine de la CCSF — plan d\'apurement global',
     corps: `Madame, Monsieur,
 
@@ -409,7 +510,7 @@ SITUATION DE L'ENTREPRISE
 - Activité principale : {{ACTIVITE}}
 
 MONTANT DES DETTES À TRAITER
-- Dettes fiscales (TVA, IS, CFE, TVA…) : {{MONTANT_FISCAL}} €
+- Dettes fiscales (TVA, IS, CFE…) : {{MONTANT_FISCAL}} €
 - Dettes sociales (URSSAF, MSA…) : {{MONTANT_SOCIAL}} €
 - TOTAL : {{MONTANT_TOTAL}} €
 
@@ -426,7 +527,7 @@ PROPOSITION DE PLAN D'APUREMENT
 - Premier versement : {{DATE_PREMIER_VERSEMENT}}
 
 PIÈCES JOINTES
-- Formulaire Cerfa 15772*02 dûment complété
+- Dossier de saisine de la CCSF dûment complété (impots.gouv.fr)
 - Dernier bilan et liasse fiscale
 - Plan de trésorerie prévisionnel sur 12 mois
 - Attestation de paiement à jour des cotisations courantes
@@ -436,7 +537,7 @@ Je m'engage à respecter scrupuleusement ce plan et à maintenir le paiement des
 
 Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
 
-Important : ce courrier doit être adressé à la DDFiP de votre département (service CCSF). La saisine est gratuite et confidentielle. Délai de réponse : généralement 2 à 3 mois.`,
+Important : ce courrier doit être adressé à la DDFiP de votre département (service CCSF). La saisine est gratuite et confidentielle. La commission a 2 mois pour répondre ; sans réponse, la demande est considérée comme rejetée.`,
   },
   {
     slug: 'restructuration-pge',
@@ -474,13 +575,13 @@ PIÈCES JOINTES
 - Justificatifs des actions correctives engagées
 - Avis de votre expert-comptable
 
-Je vous remercie de bien vouloir examiner cette demande et de m'apporter votre réponse motivée par écrit dans les 15 jours, conformément au protocole.
+Je vous remercie de bien vouloir examiner cette demande et de m'apporter votre réponse motivée par écrit dans les meilleurs délais.
 
-À défaut de réponse positive sous ce délai, je me réserve le droit de saisir gratuitement la Médiation du crédit (34 14 / mediateur-credit.banque-france.fr), conformément au dispositif officiel.
+À défaut de réponse positive, je me réserve le droit de saisir gratuitement la Médiation du crédit (34 14 / mediateur-credit.banque-france.fr), conformément au dispositif officiel.
 
 Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
 
-Important : ce courrier doit être envoyé par LRAR ou e-mail avec accusé de réception à votre conseiller bancaire. En cas de refus ou silence > 15 jours : saisir la Médiation du crédit gratuitement.`,
+Important : ce courrier doit être envoyé par LRAR ou e-mail avec accusé de réception à votre conseiller bancaire. En cas de refus ou sans réponse : saisir la Médiation du crédit gratuitement.`,
   },
   {
     slug: 'demande-acpr',
@@ -603,7 +704,7 @@ PIÈCES JOINTES
 
 Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
 
-Important : à déposer au bureau d'aide juridictionnelle, installé au tribunal judiciaire. Délai de réponse : 1 à 3 mois. Barème 2026 pour une personne seule (service-public.gouv.fr) : l'AJ totale couvre 100 % des frais (RFR jusqu'à 12 957 €) ; l'AJ partielle couvre 55 % (RFR de 12 958 à 15 316 €) ou 25 % (RFR de 15 317 à 19 433 €).`,
+Important : à déposer au bureau d'aide juridictionnelle, installé au tribunal judiciaire. Aucun délai de réponse n'est fixé : la décision est notifiée « dans les meilleurs délais » ; si une audience approche, demandez l'aide juridictionnelle provisoire. Barème 2026 pour une personne seule (service-public.gouv.fr) : l'AJ totale couvre 100 % des frais (RFR jusqu'à 12 957 €) ; l'AJ partielle couvre 55 % (RFR de 12 958 à 15 316 €) ou 25 % (RFR de 15 317 à 19 433 €).`,
   },
 ];
 
@@ -718,7 +819,7 @@ function conseilCategorie(template: CourrierTemplate, ctx: CourrierContext): str
       return "Ce courrier engage votre entreprise. Faites-le relire par un avocat ou par un mandataire judiciaire avant envoi — la plupart proposent un premier échange gratuit.";
     case 'banque':
       if (ctx.situation === 'redressement' || ctx.situation === 'assignation') {
-        return "Joignez immédiatement la médiation du crédit (gratuit, 5 jours pour répondre). En cas de cessation des paiements, votre banque ne peut pas refuser de discuter sans motif sérieux.";
+        return "Joignez immédiatement la médiation du crédit (gratuit) : le médiateur vous contacte sous 48 h, puis vos banques ont 5 jours ouvrés pour revoir leur position.";
       }
       return "Sollicitez en parallèle la médiation du crédit (Banque de France). Service gratuit qui facilite le dialogue avec votre établissement.";
     case 'fournisseurs':

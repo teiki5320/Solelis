@@ -17,7 +17,7 @@ const procedures = [
       'Vous sentez que ça se dégrade, mais vous n’êtes pas encore en cessation',
     quiDecide: 'Vous — c’est volontaire',
     confidentialite: 'Totale — personne ne sait',
-    duree: '3 mois renouvelables',
+    duree: 'Pas de durée légale : fixée par le président du tribunal',
     controle: 'Oui, totalement',
     cout: 'Honoraires du mandataire (négociables)',
     ideal:

@@ -67,7 +67,7 @@ const MULTIPLES: Record<SecteurVal, Multiples> = {
     label: 'Santé / libéral',
     ebeBas: 3.5, ebeHaut: 6,
     caBas: 0.4, caHaut: 0.8,
-    note: "Patientèle transférable, compatibilité ordinale. Valorisation souvent cadrée par l\'Ordre.",
+    note: "Patientèle transférable, compatibilité ordinale.",
   },
   'transport': {
     label: 'Transport routier',
@@ -192,8 +192,8 @@ export default function ValorisationPage() {
       </h1>
       <p className="mt-3 text-base text-navy/70">
         Estimation par méthode des multiples sectoriels (EBE et CA).
-        Fourchettes indicatives issues des données Bpifrance Création et
-        CRA pour des TPE/PME. Un expert-comptable affinera selon vos
+        Ordres de grandeur de marché pour des TPE/PME, sans valeur
+        officielle. Un expert-comptable affinera selon vos
         spécificités.
       </p>
 
@@ -316,10 +316,10 @@ export default function ValorisationPage() {
       </div>
 
       <p className="mt-6 text-xs text-navy/50">
-        Sources : Bpifrance Création — « Valoriser son entreprise » ;
-        CRA (Cédants et Repreneurs d&apos;Affaires) — observatoire
-        annuel ; rapports Argos Index Mid-Market pour multiples M&A
-        PME. Cet outil ne remplace pas un expert-comptable.
+        Méthode des multiples (présentée notamment par Bpifrance
+        Création, « Valoriser son entreprise ») ; les multiples et
+        décotes affichés sont des ordres de grandeur, sans source
+        officielle. Cet outil ne remplace pas un expert-comptable.
       </p>
     </section>
   );

@@ -39,7 +39,7 @@ const financements: Financement[] = [
   {
     nom: 'Prêts d’honneur (Initiative France)',
     description:
-      '2 000 à 50 000 € à taux zéro, sans garantie. Avec mentorat.',
+      'Prêt personnel à taux zéro, sans garantie, dont le montant dépend du réseau et du projet. Avec mentorat.',
     url: 'https://initiative-france.fr',
     urlLabel: 'initiative-france.fr',
     badge: 'Taux zéro',

@@ -95,11 +95,11 @@ export default function BlocPGE() {
             durée totale ≤ 10 ans, différé éventuel.
           </li>
           <li>
-            <strong>RDV avec votre conseiller</strong> sous 15 jours.
-            La banque doit motiver son refus par écrit.
+            <strong>RDV avec votre conseiller</strong> : demandez une
+            réponse écrite et, en cas de refus, ses motifs.
           </li>
           <li>
-            <strong>En cas de refus ou silence &gt; 15 j</strong> :
+            <strong>En cas de refus ou sans réponse</strong> :
             saisir la Médiation du crédit (formulaire en ligne,
             entièrement gratuit). Le médiateur reprend contact avec
             votre banque sous 48 h.

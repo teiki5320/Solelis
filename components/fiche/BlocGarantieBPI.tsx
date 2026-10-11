@@ -141,12 +141,12 @@ export default function BlocGarantieBPI() {
           <li>
             <strong>Contacter votre conseiller bancaire</strong> en LRAR
             pour demander un réaménagement (moratoire, allongement,
-            différé). Sous 15 jours, la banque doit répondre par écrit.
+            différé). Demandez une réponse écrite.
           </li>
           <li>
             <strong>En parallèle, contacter la direction régionale
-            Bpifrance</strong> — son conseiller pourra confirmer si la banque
-            est tenue d&apos;accepter le réaménagement.
+            Bpifrance</strong> — son conseiller pourra vous dire si la
+            garantie permet ce réaménagement.
           </li>
           <li>
             <strong>Si refus</strong> : saisir la Médiation du crédit

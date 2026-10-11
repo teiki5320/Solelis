@@ -32,6 +32,8 @@ import {
   getJuridiction,
   getFormeDetail,
   estEnCessation,
+  nomTribunalPourCourrier,
+  AXE_META,
   type Strategie,
 } from '@/lib/strategie';
 import { scorePriorityCards } from '@/lib/priorites';
@@ -52,7 +54,8 @@ import {
 } from '@/lib/secteur';
 import { getOpcoFromNaf } from '@/lib/opco';
 import { getAidesRegionales } from '@/lib/aidesRegionales';
-import { COURRIERS, personalizeCourrier } from '@/lib/courriers';
+import { COURRIERS, personalizeCourrier, champsCourrier, remplirChamps, LIBELLES_CHAMPS } from '@/lib/courriers';
+import { donneesCourrierEntreprise } from '@/components/fiche/StoreCompanyData';
 import { computeAlertes } from '@/lib/bodacc';
 import { buildIcs } from '@/lib/ics';
 import { getTonePreset } from '@/lib/tone';
@@ -263,6 +266,39 @@ function controlesTexte(texte: string, profil: string, origine: string, opts: { 
   verif(!/ {2,}-  | - (?=[a-zé])/.test(t), 'TXT-tiret', 'mineur', `Tiret simple entouré d'espaces au lieu d'un tiret cadratin (${origine})`, profil, contexte(t, / - /));
 }
 
+// Mots anglais qui n'existent pas en français (les anglicismes d'usage comme
+// « business » ou « contact » ne sont pas visés).
+const MOTS_ANGLAIS = /\b(the|and|with|your|you|this|from|please|click|here|loading|error|warning|submit|download|upload|copied|cancel|yes|true|false|steps?|tips|today|tomorrow|week|month|year|days|hours|help|company|debt|lawyer|payment|court of|learn more|read more|coming soon|todo|lorem)\b/i;
+
+function controleAnglais(texte: string, profil: string, origine: string) {
+  const t = texte.replace(/https?:\/\/\S+|[\w.-]+\.(fr|com|org|eu|net|io|nc|pf)\S*/g, '');
+  const m = MOTS_ANGLAIS.exec(t);
+  verif(!m, 'TXT-anglais', 'texte', `Mot anglais dans un texte en français (${origine})`, profil, m ? contexte(t, new RegExp(`\\b${m[0]}\\b`, 'i')) : '');
+}
+
+/**
+ * Organismes nationaux joignables à un numéro unique : dans une même fiche,
+ * ils ne doivent jamais apparaître avec deux numéros différents.
+ */
+const ORGANISMES_NUMERO_UNIQUE: { nom: string; re: RegExp }[] = [
+  { nom: 'France Travail (demandeurs d\'emploi)', re: /France Travail(?! — Service Employeur| entreprises)|ATI\b|ARCE\b|\bASS\b/g },
+  { nom: 'Banque de France / Médiation du crédit', re: /Banque de France|Médiation du crédit|médiateur du crédit|BdF\b/g },
+  { nom: 'Assurance Maladie', re: /Assurance Maladie|CPAM(?! \/ SSI)/g },
+  { nom: 'CAF', re: /\bCAF\b/g },
+  { nom: 'Prévention du suicide', re: /prévention du suicide/g },
+];
+
+const MOIS_FR = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+
+/** « Avant le 3 novembre » (sans année) → prochaine occurrence ≥ aujourd'hui − 1 an. */
+function dateSansAnnee(jour: number, mois: number, maintenant: Date): Date {
+  const d = new Date(maintenant.getFullYear(), mois, jour);
+  const aujourdhui = new Date(maintenant.getFullYear(), maintenant.getMonth(), maintenant.getDate());
+  // Une date « sans année » plus de 6 mois avant aujourd'hui désigne l'an prochain.
+  if (d.getTime() < aujourdhui.getTime() - 183 * 86400000) d.setFullYear(d.getFullYear() + 1);
+  return d;
+}
+
 function contexte(t: string, re: RegExp): string {
   const m = re.exec(t);
   if (!m) return '';
@@ -423,6 +459,12 @@ function controlerMoteur(r: Reponses, c: CompanyData) {
   }
   verif(cartes.length === 4, 'CARTES-pas-4', 'mineur', 'Moins de 4 cartes prioritaires (grille prévue pour 4)', profil, cartes.map((x) => x.id).join(', '));
   verif(new Set(cartes.map((x) => x.id)).size === cartes.length, 'CARTES-doublon', 'bloquant', 'Carte prioritaire en double', profil, cartes.map((x) => x.id).join(', '));
+  // Carte « Votre cap » = stratégie principale (même axe, même titre)
+  const carteStrat = cartes.find((x) => x.id === 'strategie');
+  if (carteStrat) {
+    verif(carteStrat.valeur === AXE_META[main.axe].label && carteStrat.detail === main.titre, 'CTR-carte-strategie', 'contradiction',
+      'La carte prioritaire « Votre cap » ne reprend pas la stratégie principale', profil, `${carteStrat.valeur} / ${carteStrat.detail} ≠ ${AXE_META[main.axe].label} / ${main.titre}`);
+  }
   const carteCess = cartes.find((x) => x.id === 'cessation');
   if (carteCess) verif(estEnCessation(r), 'CARTES-cessation-hors', 'contradiction', 'Carte « 45 jours » hors cessation', profil);
   if (cartes.some((x) => x.id === 'cautions')) verif(r.caution === 'oui', 'CARTES-caution', 'contradiction', 'Carte cautions sans caution déclarée', profil);
@@ -435,6 +477,13 @@ function controlerMoteur(r: Reponses, c: CompanyData) {
   if (juridiction === 'TJ' && carteTrib) {
     verif(!/^Tribunal de commerce|Tribunal mixte de commerce/.test(carteTrib.nom), 'CTR-carte-tribunal-TJ', 'contradiction',
       'Débiteur relevant du tribunal judiciaire mais carte « tribunal de commerce »', profil, carteTrib.nom);
+  }
+  // Tribunal prérempli dans les courriers = tribunal de la carte Organismes
+  const tribunalCourrier = nomTribunalPourCourrier(c);
+  if (tribunalCourrier && carteTrib) {
+    const norm = (x: string) => x.toLowerCase().replace(/[^a-zà-ÿ0-9]+/g, ' ').trim();
+    verif(norm(carteTrib.nom).startsWith(norm(tribunalCourrier)), 'CTR-tribunal-courrier-fiche', 'contradiction',
+      'Le tribunal prérempli dans les courriers ({{TRIBUNAL}}) diffère de celui de la carte Organismes', profil, `${tribunalCourrier} ≠ ${carteTrib.nom}`);
   }
   const social = groupesBase.find((g) => g.cle === 'social');
   const ags = !!social?.cartes.some((x) => x.nom === 'AGS');
@@ -452,6 +501,18 @@ function controlerMoteur(r: Reponses, c: CompanyData) {
   if (r.effectif === 'independant') {
     // ATI / CSP / AGS
     verif(!groupes.some((g) => g.cartes.some((x) => /^AGS$/.test(x.nom))), 'ORG-AGS-indep', 'contradiction', 'AGS dans les organismes d\'un·e indépendant·e sans salarié', profil);
+  }
+
+  // Même organisme (même nom) : même numéro partout dans la fiche
+  const telParNom = new Map<string, Set<string>>();
+  for (const g of groupes) for (const x of g.cartes) {
+    if (!x.telephone) continue;
+    const set = telParNom.get(x.nom) ?? new Set<string>();
+    set.add(x.telephone.replace(/[\s.]/g, ''));
+    telParNom.set(x.nom, set);
+  }
+  for (const [nom, set] of telParNom) {
+    verif(set.size === 1, 'TEL-meme-organisme', 'contradiction', 'Même organisme avec deux numéros différents dans les cartes de la fiche', profil, `${nom} : ${[...set].join(' / ')}`);
   }
 
   for (const g of groupes) {
@@ -488,6 +549,7 @@ function controlerMoteur(r: Reponses, c: CompanyData) {
     opco.description,
   ].join('\n');
   controlesTexte(textes, profil, 'moteur');
+  controleAnglais(textes, profil, 'moteur');
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -540,6 +602,34 @@ function controlerRendu(r: Reponses, c: CompanyData) {
   const texte = texteVisible(html);
   const plat = texte.replace(/\s+/g, ' ');
   controlesTexte(plat, profil, 'fiche rendue');
+  controleAnglais(plat, profil, 'fiche rendue');
+
+  // Téléphones : un organisme national à numéro unique n'a qu'un numéro dans la fiche
+  const numerosParOrganisme = new Map<string, Set<string>>();
+  for (const m of html.matchAll(/href="tel:([^"]*)"/g)) {
+    const avant = texteVisible(html.slice(Math.max(0, m.index! - 700), m.index!)).replace(/\s+/g, ' ').slice(-170);
+    let meilleur: { nom: string; pos: number } | null = null;
+    for (const o of ORGANISMES_NUMERO_UNIQUE) {
+      for (const x of avant.matchAll(o.re)) if (!meilleur || x.index! > meilleur.pos) meilleur = { nom: o.nom, pos: x.index! };
+    }
+    // Un autre organisme cité après lui (ex. DDFiP, URSSAF) : le numéro n'est pas le sien.
+    if (!meilleur || /URSSAF|DDFiP|CCI|CMA|Bpifrance|SSI|MSA|France Travail — Service Employeur/.test(avant.slice(meilleur.pos + 3))) continue;
+    const set = numerosParOrganisme.get(meilleur.nom) ?? new Set<string>();
+    set.add(m[1]);
+    numerosParOrganisme.set(meilleur.nom, set);
+  }
+  for (const [nom, set] of numerosParOrganisme) {
+    verif(set.size === 1, 'TEL-organisme-incoherent', 'contradiction', 'Un même organisme national apparaît avec deux numéros différents dans la fiche', profil, `${nom} : ${[...set].join(' / ')}`);
+  }
+
+  // Calendrier : aucune échéance « Avant le … » dans le passé ni à plus d'un mois
+  const maintenant = new Date();
+  const aujourdhui = new Date(maintenant.getFullYear(), maintenant.getMonth(), maintenant.getDate());
+  for (const m of plat.matchAll(/Avant le (1er|\d{1,2}) (janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)(?! \d{4})/g)) {
+    const d = dateSansAnnee(m[1] === '1er' ? 1 : Number(m[1]), MOIS_FR.indexOf(m[2]), maintenant);
+    const ecart = (d.getTime() - aujourdhui.getTime()) / 86400000;
+    verif(ecart >= 0 && ecart <= 31, 'DATE-echeance-hors-delai', 'contradiction', 'Échéance du calendrier passée ou à plus d\'un mois', profil, `${m[0]} (écart ${Math.round(ecart)} j)`);
+  }
 
   // Mots collés par JSX (« </strong>équivalente »)
   for (const [re, code, msg] of [
@@ -669,6 +759,19 @@ function controlerRendu(r: Reponses, c: CompanyData) {
 
   // Stratégie ↔ procédures recommandées
   const strat = resolveStrategie(r, c)!;
+  const iProc = plat.indexOf('Procédures et options pour votre situation');
+  const blocProc = iProc >= 0 ? plat.slice(iProc, plat.indexOf('Ces recommandations sont indicatives', iProc)) : '';
+  const ATTENDU: Partial<Record<Strategie['axe'], RegExp>> = {
+    rebondir: /Rétablissement professionnel \(PRP\)/,
+    ceder: /Cession de fonds de commerce|Plan de cession/,
+    sauvegarder: /Sauvegarde/,
+    liquider: /Liquidation judiciaire/,
+  };
+  const attendu = ATTENDU[strat.main.axe];
+  if (attendu && blocProc) {
+    verif(attendu.test(blocProc), 'CTR-strategie-absente-procedures', 'contradiction',
+      `Le cap « ${strat.main.titre} » n'apparaît pas parmi les procédures et options de la même fiche`, profil, blocProc.slice(0, 300));
+  }
   if (['liquider', 'rebondir'].includes(strat.main.axe) && !estEnCessation(r)) {
     const proc = r.situation === 'prevention' ? 'Mandat ad hoc' : 'Conciliation';
     verif(false, 'CTR-strategie-vs-procedures', 'contradiction',
@@ -679,6 +782,53 @@ function controlerRendu(r: Reponses, c: CompanyData) {
 // ─────────────────────────────────────────────────────────────
 // 3. Courriers, BODACC, ICS
 // ─────────────────────────────────────────────────────────────
+
+const LIBELLES = new Set(Object.values(LIBELLES_CHAMPS));
+
+function controlerChampsCourriers() {
+  // Une entreprise par grand type de territoire + une sans données.
+  const entreprises: (CompanyData | null)[] = [
+    null,
+    company(1, formatForme('5499'), '43.21A', '75'),
+    company(2, formatForme('1000'), '01.11Z', '2B'),
+    company(3, formatForme('5710'), '62.01Z', '67'),
+    company(4, formatForme('9220'), '94.99Z', '971'),
+    company(5, formatForme('5485'), '69.10Z', '976'),
+    company(6, 'Micro-entrepreneur', '96.02A', '988'),
+    { ...company(7, formatForme('5599'), '', '13'), fetched: false, nom: '', adresse: '', ville: '', codePostal: '', dateCreation: '', effectif: '' },
+  ];
+  for (const t of COURRIERS) {
+    // L'impression ajoute son propre bloc « Signature : » (CourrierDetail).
+    verif(!/\n\s*Signature\s*:?\s*$/i.test(t.corps), 'COUR-signature-double', 'texte', 'Le modèle se termine par « Signature » alors que l\'impression ajoute déjà un bloc de signature (doublon, page orpheline)', `courrier ${t.slug}`);
+    for (const champ of champsCourrier(t.objet + '\n' + t.corps)) {
+      verif(!!LIBELLES_CHAMPS[champ], 'COUR-champ-sans-libelle', 'texte', 'Champ de courrier sans libellé français (le formulaire affiche le nom technique)', `courrier ${t.slug}`, champ);
+    }
+    for (const c of entreprises) for (const ctx of [{}, { situation: 'assignation' as const, moral: 'perdu' as const, effectif: 'salaries' as const, probleme: 'urssaf' as const }]) {
+      compteurs.courriers++;
+      const profil = `courrier ${t.slug} · ${c ? `${c.formeJuridique || 'forme ∅'} · dép. ${c.departement}${c.fetched ? '' : ' (introuvable)'}` : 'sans données d\'entreprise'} · ${Object.keys(ctx).length ? 'avec réponses' : 'sans réponses'}`;
+      const p = personalizeCourrier(t, ctx);
+      const valeurs: Record<string, string> = {
+        ...(c ? donneesCourrierEntreprise(c, nomTribunalPourCourrier(c), getSectorInfo(c).label) : {}),
+        DATE: '11 octobre 2026',
+      };
+      const rendu = (x: string) => remplirChamps(x, (k) => valeurs[k] || `[${LIBELLES_CHAMPS[k] ?? k}]`);
+      const tout = [rendu(p.objet), rendu(p.corps), p.conseil ?? ''].join('\n');
+      verif(!/\{\{|\}\}/.test(tout), 'COUR-moustaches-visibles', 'texte', 'Champ « {{…}} » visible dans le courrier affiché', profil, contexte(tout, /\{\{|\}\}/));
+      const brut = [...tout.matchAll(/\[([A-Z][A-Z0-9_]{2,})\]/g)].find((x) => !LIBELLES.has(x[1]));
+      verif(!brut, 'COUR-nom-technique', 'texte', 'Nom technique de champ (« [MONTANT_TOTAL] ») visible dans le courrier', profil, brut ? contexte(tout, new RegExp(`\\[${brut[1]}\\]`)) : '');
+      controlesTexte(tout, profil, `courrier ${t.slug} rendu`);
+      controleAnglais(tout, profil, `courrier ${t.slug}`);
+      if (c?.fetched) {
+        for (const k of ['NOM_ENTREPRISE', 'SIRET', 'ADRESSE'] as const) {
+          if (t.corps.includes(`{{${k}}}`) || t.objet.includes(`{{${k}}}`)) {
+            verif(tout.includes(valeurs[k]) && !tout.includes(`[${LIBELLES_CHAMPS[k]}]`), 'COUR-prerempli-absent', 'texte', 'Donnée d\'entreprise connue non préremplie dans le courrier', profil, k);
+          }
+        }
+        verif(!/\d{4}-\d{2}-\d{2}/.test(tout), 'COUR-date-iso', 'mineur', 'Date au format AAAA-MM-JJ dans un courrier en français', profil, contexte(tout, /\d{4}-\d{2}-\d{2}/));
+      }
+    }
+  }
+}
 
 function controlerCourriers() {
   const details = [undefined, 'Oui, moins de 5', 'Oui, 5 ou plus', 'Non, seul·e'];
@@ -807,6 +957,11 @@ describe('Simulation — courriers, BODACC, ICS', () => {
   it('personnalise les 17 courriers pour tous les contextes', () => {
     controlerCourriers();
     expect(compteurs.courriers).toBe(COURRIERS.length * 4 * 3 * 2 * 4 * 4);
+  });
+  it('remplit les 17 courriers avec et sans données d\'entreprise (aucun champ brut)', () => {
+    const avant = compteurs.courriers;
+    controlerChampsCourriers();
+    expect(compteurs.courriers - avant).toBe(COURRIERS.length * 8 * 2);
   });
   it('calcule les alertes BODACC', () => {
     controlerBodacc();

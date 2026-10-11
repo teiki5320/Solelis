@@ -98,7 +98,7 @@ const PROCEDURES: Procedure[] = [
     confidentiel: 'non',
     cessationPaiement: 'oui',
     duree: '6 mois renouvelable (jusqu\'à 18 mois)',
-    conditionsCle: 'Cessation des paiements depuis ≤ 45 jours. Sauvetage encore possible.',
+    conditionsCle: 'Cessation des paiements (à déclarer dans les 45 jours). Sauvetage encore possible.',
     dirigeantReste: 'oui-controle',
     cout: 'eleve',
     protection: 'totale',
@@ -270,7 +270,7 @@ export default function ProceduresComparaisonPage() {
         </ul>
         <p className="mt-4 text-sm text-navy/70">
           Dans tous les cas, consultez un avocat en droit des entreprises en difficulté avant de choisir.
-          Le premier rendez-vous est souvent gratuit.
+          Une première consultation gratuite est possible dans un point-justice (3039).
         </p>
       </div>
 

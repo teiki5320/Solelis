@@ -22,7 +22,7 @@ export function buildAlertes(
     alertes.push({
       texte: 'Les cotisations URSSAF se prescrivent par 3 ans',
       detail:
-        'Si vous avez des dettes URSSAF datant de plus de 3 ans, elles sont potentiellement prescrites. Vérifiez les dates exactes avec un avocat — cela pourrait réduire significativement votre dette.',
+        'Le délai court à partir de la fin de l\'année au titre de laquelle les cotisations sont dues, sauf mise en demeure envoyée dans ce délai (art. L244-3 du Code de la sécurité sociale). Des cotisations anciennes peuvent donc être prescrites : vérifiez les dates exactes avec un avocat.',
       urgence: 'attention',
     });
     alertes.push({

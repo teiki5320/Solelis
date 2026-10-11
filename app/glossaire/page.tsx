@@ -40,7 +40,7 @@ const terms: Term[] = [
       "Le tribunal vous protège de vos créanciers pendant que vous restructurez. Vous gardez le contrôle de l'entreprise, avec l'aide d'un administrateur.",
     pourQui:
       "Un dirigeant qui n'est PAS encore en cessation des paiements, mais qui ne peut pas surmonter ses difficultés seul.",
-    duree: 'Période d’observation de 6 mois, renouvelable une fois 6 mois (art. L621-3 C. com.).',
+    duree: 'Période d’observation de 6 mois, renouvelable une fois 6 mois : 12 mois au maximum (art. L621-3 C. com.).',
   },
   {
     name: 'Sauvegarde accélérée',
@@ -181,10 +181,10 @@ const terms: Term[] = [
   {
     name: 'CCSF (Commission des chefs des services financiers)',
     enClair:
-      "Guichet unique qui regroupe vos dettes fiscales (SIE) et sociales (URSSAF) pour un échéancier global. Saisine confidentielle via la DDFiP, formulaire Cerfa 15772.",
+      "Guichet unique qui regroupe vos dettes fiscales (SIE) et sociales (URSSAF) pour un échéancier global. Saisine confidentielle via la DDFiP (dossier de saisine sur impots.gouv.fr).",
     pourQui:
       "Dirigeants avec dettes fiscales ET sociales — sauf en RJ/LJ.",
-    duree: 'Plan d’apurement jusqu’à 36 mois.',
+    duree: 'Durée du plan fixée par la commission ; réponse sous 2 mois, sinon la demande est rejetée.',
   },
   {
     name: 'CRP (Commissaire aux Restructurations et à la Prévention)',
@@ -208,12 +208,12 @@ const terms: Term[] = [
       "L’AGS garantit le paiement des salaires et indemnités quand l’entreprise est en procédure collective et ne peut plus payer. Plafonds 2026 : 64 080 €, 80 100 € ou 96 120 € selon l’ancienneté du contrat de travail (4, 5 ou 6 fois le plafond mensuel retenu pour les contributions d’assurance chômage (lui-même égal à 4 plafonds mensuels de la Sécurité sociale), art. D3253-5 C. trav.).",
     pourQui:
       "Tous les salariés d’une entreprise en RJ ou LJ.",
-    duree: 'Versement sous 15 jours après transmission par le mandataire.',
+    duree: 'Fonds versés au mandataire 5 à 8 jours après réception des relevés de créances (C. trav. L3253-21).',
   },
   {
     name: 'CSP (Contrat de Sécurisation Professionnelle)',
     enClair:
-      "Document obligatoire à remettre à chaque salarié licencié pour motif économique dans une entreprise < 1 000 salariés (ou en RJ/LJ). Le salarié touche 75 % du salaire brut antérieur pendant 12 mois (ASP).",
+      "Document obligatoire à remettre à chaque salarié licencié pour motif économique dans une entreprise < 1 000 salariés (ou en RJ/LJ). Le salarié touche jusqu’à 12 mois une allocation (ASP) de 75 % de son salaire journalier de référence s’il a au moins 1 an d’ancienneté (sinon le montant de l’allocation chômage).",
     pourQui:
       "Employeurs en licenciement économique, sous peine de devoir 2 mois de salaire à France Travail par salarié non informé.",
     duree: 'Le salarié a 21 jours pour accepter ou refuser.',
@@ -229,7 +229,7 @@ const terms: Term[] = [
   {
     name: 'ATI (Allocation des Travailleurs Indépendants)',
     enClair:
-      "Allocation chômage spécifique aux indépendants : de 19,73 à 26,30 €/jour (environ 600 à 800 €/mois) selon vos revenus antérieurs, pendant 6 mois. Conditions : 2 ans d’activité dans la même entreprise, au moins 10 000 € de revenus d’activité par an sur les 2 dernières années, ressources personnelles inférieures au RSA d’une personne seule.",
+      "Allocation chômage spécifique aux indépendants : de 19,73 à 26,30 €/jour (environ 600 à 800 €/mois) selon vos revenus antérieurs, pendant 6 mois. Conditions : 2 ans d’activité dans la même entreprise, au moins 10 000 € de revenus d’activité sur l’une des 2 dernières années, ressources personnelles inférieures au RSA d’une personne seule.",
     pourQui:
       "Indépendants (EI, micro, gérant majoritaire) après une liquidation judiciaire, un redressement judiciaire avec remplacement du dirigeant, ou l’arrêt d’une activité non viable attesté par un tiers de confiance.",
     duree: '6 mois maximum.',
@@ -237,7 +237,7 @@ const terms: Term[] = [
   {
     name: 'ACRE / ARCE',
     enClair:
-      "ACRE = exonération partielle de cotisations sociales pendant 1 an pour les créateurs et repreneurs (depuis 2026 : un quart des cotisations visées hors micro, et 25 % de réduction pour les micro-entreprises créées depuis le 1er juillet 2026 ; demande à l’Urssaf sous 60 jours). ARCE = versement en capital de l’allocation chômage (60 % des droits restants, moins 3 % pour la retraite complémentaire) si vous étiez salarié·e auparavant et que vous créez/reprenez.",
+      "ACRE = exonération partielle de cotisations sociales pendant 1 an pour les créateurs et repreneurs (depuis 2026 : un quart des cotisations visées hors micro, et 25 % de réduction pour les micro-entreprises créées depuis le 1er juillet 2026 ; demande à l’Urssaf sous 60 jours). ARCE = versement en capital de l’allocation chômage (60 % des droits restants, moins 3 % pour la retraite complémentaire) si vous percevez l’ARE et avez obtenu l’ACRE, et que vous créez/reprenez.",
     pourQui:
       "Toute personne créant ou reprenant une activité — particulièrement utile pour rebondir.",
     duree: 'ACRE : 12 mois. ARCE : versement en 2 fois.',
@@ -264,7 +264,7 @@ const terms: Term[] = [
       "Service gratuit et confidentiel de la Banque de France pour aider les entreprises confrontées à un refus bancaire (prêt, découvert, restructuration PGE).",
     pourQui:
       "Tout dirigeant face à une difficulté bancaire.",
-    duree: 'Réponse sous 5 jours.',
+    duree: 'Le médiateur vous contacte sous 48 h ; vos banques ont ensuite 5 jours ouvrés pour revoir leur position.',
   },
   {
     name: 'Médiation des entreprises',

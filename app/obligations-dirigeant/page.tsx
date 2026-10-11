@@ -80,7 +80,7 @@ const OBLIGATIONS_NE_PAS_FAIRE: Obligation[] = [
     titre: 'Ne pas faire de donation ou de vente à un proche',
     description: 'Donations à un enfant/conjoint, vente d\'un immeuble à prix anormalement bas à un proche, changement de régime matrimonial : tout cela est annulable rétroactivement.',
     reference: 'C. com. art. L632-1 ; C. civ. art. 1341-2 (action paulienne)',
-    sanction: 'En procédure collective : nullité de droit des actes à titre gratuit faits pendant la période suspecte, ou dans les 6 mois qui la précèdent (L632-1). Hors de ces délais : action paulienne d\'un créancier, qui doit prouver la fraude (prescription 5 ans).',
+    sanction: 'En procédure collective : nullité de droit des actes à titre gratuit faits pendant la période suspecte ; ceux des 6 mois qui la précèdent peuvent aussi être annulés par le tribunal (L632-1). Hors de ces délais : action paulienne d\'un créancier, qui doit prouver la fraude (prescription 5 ans).',
     conseil: 'Avant tout acte significatif (mariage, divorce, donation, succession), consultez un avocat ET un notaire pour analyser l\'impact procédure.',
   },
   {

@@ -63,7 +63,7 @@ export default function BlocAidesEtat() {
       cle: 'ccsf',
       nom: 'CCSF — Commission des chefs des services financiers',
       description:
-        "Plan d'apurement unique couvrant à la fois vos dettes fiscales (impôts, TVA, IS) et sociales (URSSAF, retraite). Échelonnement jusqu'à 36 mois. Saisine via la DDFiP.",
+        "Plan d'apurement unique couvrant à la fois vos dettes fiscales (impôts, TVA, IS) et sociales (URSSAF, retraite). Durée fixée par la commission. Saisine via la DDFiP.",
       telephone: '0 809 401 401',
       site: 'https://www.impots.gouv.fr/professionnel/accompagnement-individualise-en-cas-de-difficultes-economiques-et-financieres',
       badge: 'Dettes fiscales + sociales',

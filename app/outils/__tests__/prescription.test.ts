@@ -35,6 +35,17 @@ describe('vérificateur de prescription', () => {
     expect(regle('penal-amende').base).toBe('Code pénal');
   });
 
+  it('URSSAF employeur : 31 décembre de la 3e année suivant l’année des cotisations (CSS L244-3)', () => {
+    const r = calculerPrescription(regle('urssaf'), '2023-03-15', null, AUJOURDHUI)!;
+    expect([r.echeance.getFullYear(), r.echeance.getMonth(), r.echeance.getDate()]).toEqual([2026, 11, 31]);
+    expect(r.restants).toBeGreaterThan(0);
+  });
+
+  it('URSSAF indépendant : 30 juin de la 4e année suivante (CSS L244-3)', () => {
+    const r = calculerPrescription(regle('urssaf-independant'), '2022-11-01', null, AUJOURDHUI)!;
+    expect([r.echeance.getFullYear(), r.echeance.getMonth(), r.echeance.getDate()]).toEqual([2026, 5, 30]);
+  });
+
   it('sans date : pas de résultat', () => {
     expect(calculerPrescription(regle('urssaf'), '', null, AUJOURDHUI)).toBeNull();
   });

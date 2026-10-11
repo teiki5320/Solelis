@@ -12,7 +12,7 @@ import BlocAccordeon from './BlocAccordeon';
  * VTC ; 53.20Z = livraison autre que poste).
  *
  * Couvre : statut juridique, ARPE, charte sociale, DGCCRF, registre
- * VTC, prestation services au plus juste prix (loi du 7 mars 2024),
+ * VTC, prestation services au plus juste prix (loi du 7 février 2022),
  * différentes lignes de défense en cas de requalification en salariat.
  */
 export default function BlocPlateformes() {
@@ -37,7 +37,7 @@ export default function BlocPlateformes() {
         Si vous travaillez via une plateforme (Uber, Bolt, Heetch,
         Deliveroo, Uber Eats, Stuart, Yoojo…), votre situation comporte
         des protections récentes mais aussi des risques juridiques
-        particuliers. La loi du 7 mars 2024 et l&apos;ordonnance du 21 avril
+        particuliers. La loi du 7 février 2022 et l&apos;ordonnance du 21 avril
         2021 ont créé des garanties spécifiques.
       </p>
 
@@ -170,7 +170,7 @@ export default function BlocPlateformes() {
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li>
             <strong>ATI</strong> — Allocation Travailleurs Indépendants
-            (592 à 789 €/mois pendant 6 mois) si cessation involontaire
+            (environ 600 à 800 €/mois pendant 6 mois) si cessation involontaire
             et conditions d&apos;activité remplies.
           </li>
           <li>
@@ -236,7 +236,7 @@ export default function BlocPlateformes() {
 
       <p className="mt-5 text-xs text-navy/50">
         Sources : ord. n° 2021-484 du 21 avril 2021 (création ARPE) ;
-        loi n° 2022-139 du 7 mars 2024 ; art. L7341-1 à L7342-7 et
+        loi n° 2022-139 du 7 février 2022 ; art. L7341-1 à L7342-7 et
         L8221-3 C. trav. ; arrêts Cass. soc. 28 nov. 2018 (Take Eat Easy)
         et 4 mars 2020 (Uber).
       </p>

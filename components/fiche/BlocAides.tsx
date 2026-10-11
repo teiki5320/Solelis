@@ -28,7 +28,7 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
     const cot = contactCotisations(s, r.effectif, dep);
     specifiques.push({
       nom: cot.org === 'URSSAF' ? 'Échelonnement URSSAF' : `Échelonnement · ${cot.org}`,
-      description: `Demandez un échéancier auprès de ${cot.orgAvecArticle}${cot.tel ? '' : ` (${cot.telLibelle})`}. Les cotisations de plus de 3 ans sont potentiellement prescrites.`,
+      description: `Demandez un échéancier auprès de ${cot.orgAvecArticle}${cot.tel ? '' : ` (${cot.telLibelle})`}. Des cotisations anciennes peuvent être prescrites (3 ans, sauf mise en demeure envoyée à temps — art. L244-3 CSS).`,
       telephone: cot.tel ?? undefined,
       site: cot.site,
       badge: 'Prioritaire pour vous',
@@ -198,13 +198,13 @@ function buildAides(r: Reponses, c: CompanyData, s: SectorInfo): { titre: string
   const personnelles: Aide[] = [
     {
       nom: 'ATI · Allocation Travailleurs Indépendants',
-      description: 'Chômage spécifique indépendants : 592 à 789 €/mois pendant 6 mois après cessation involontaire.',
+      description: 'Chômage spécifique indépendants : environ 600 à 800 €/mois (19,73 à 26,30 €/jour) pendant 6 mois après cessation involontaire.',
       site: 'https://chomage-independant.francetravail.fr',
       badge: '6 mois',
     },
     {
       nom: 'CSS · Complémentaire Santé Solidaire',
-      description: 'Mutuelle gratuite si vos revenus ont fortement baissé (< 10 166 €/an).',
+      description: 'Mutuelle gratuite si vos revenus ont fortement baissé (moins de 10 421 €/an pour une personne seule en métropole).',
       telephone: '3646',
       site: 'https://www.complementaire-sante-solidaire.gouv.fr',
       badge: 'Gratuit',

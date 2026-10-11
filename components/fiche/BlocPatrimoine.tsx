@@ -47,7 +47,7 @@ export function buildPoches(r: Reponses, c: CompanyData): Poche[] {
         niveau: 'mixte',
         analyse:
           "L'insaisissabilité de droit des EI ne joue pas contre un créancier pour lequel vous avez signé une caution personnelle ou hypothécaire.",
-        action: "Faites vérifier par un avocat chacune de vos cautions — certaines sont annulables (disproportion, art. 2300 C. civ.).",
+        action: "Faites vérifier par un avocat chacune de vos cautions — une caution disproportionnée peut être réduite (art. 2300 C. civ.).",
       });
     } else if (resp.illimitee) {
       poches.push({
@@ -67,7 +67,7 @@ export function buildPoches(r: Reponses, c: CompanyData): Poche[] {
         analyse:
           "Les dettes de la société ne sont pas les vôtres : votre résidence n'en répond que si vous avez signé une caution (personnelle ou hypothécaire) ou si le tribunal vous condamne pour faute de gestion (insuffisance d'actif, art. L651-2 C. com.). La déclaration notariée d'insaisissabilité est réservée aux entrepreneur·e·s individuel·le·s (art. L526-1 C. com.).",
         action: aCaution
-          ? "Faites vérifier par un avocat chacune de vos cautions — certaines sont annulables (disproportion, art. 2300 C. civ.)."
+          ? "Faites vérifier par un avocat chacune de vos cautions — une caution disproportionnée peut être réduite (art. 2300 C. civ.)."
           : "Ne signez aucune nouvelle caution ni hypothèque sur ce bien sans l'avis d'un avocat.",
       });
     } else {
@@ -155,7 +155,7 @@ export function buildPoches(r: Reponses, c: CompanyData): Poche[] {
         analyse:
           "En régime de communauté, les biens communs (salaires, comptes joints, immobilier commun) répondent des dettes de l'entreprise.",
         action:
-          "Un changement de régime (séparation de biens) est possible — 1 500 à 3 000 € chez le notaire — mais n'est opposable aux créanciers que pour les dettes FUTURES. Ne tardez pas.",
+          "Un changement de régime (séparation de biens) est possible par acte notarié — demandez le coût au notaire — mais n'est opposable aux créanciers que pour les dettes FUTURES. Ne tardez pas.",
       });
     } else if (separation) {
       poches.push({
