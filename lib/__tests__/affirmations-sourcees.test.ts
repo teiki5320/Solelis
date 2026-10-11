@@ -78,6 +78,9 @@ const INTERDITS: { re: RegExp; pourquoi: string }[] = [
   { re: /moins de 250 salarié[^.]{0,80}informez|informez[^.]{0,80}moins de 250 salarié/, pourquoi: 'information des salarié·e·s (vente) : plus de seuil de 250 depuis la loi n° 2026-403 (C. com. L141-23, L23-10-1)' },
   { re: /Daniel-Martin|DIECCTE/, pourquoi: 'IEDOM Guadeloupe : boulevard Daniel-Marsin (iedom.fr) ; DIECCTE supprimée (DEETS / DGCOPOP)' },
   { re: /même si interdit bancaire/, pourquoi: 'Adie : rien sur les interdits bancaires (adie.org)' },
+  // Tour 5, 2e contre-vérification
+  { re: /entrepreneur individuel, immatriculé ou non/, pourquoi: 'L526-1 C. com. (en vigueur depuis le 1er janvier 2023) : personne physique immatriculée au registre national des entreprises' },
+  { re: /paiements de\{' '\}\s*<strong>allonger/, pourquoi: 'BlocPGE : « d’allonger »' },
 ];
 
 describe('contre-audit : affirmations retirées', () => {

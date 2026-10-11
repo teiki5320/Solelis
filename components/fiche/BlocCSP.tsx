@@ -59,7 +59,8 @@ export default function BlocCSP() {
           <li>
             <strong>Tout salarié</strong> totalisant au moins 88 jours ou
             610 heures de travail (4 mois) sur les 24 derniers mois (36
-            mois à partir de 55 ans depuis le 1er avril 2025) — soit la majorité (Unédic, France
+            mois à partir de 55 ans, pour un licenciement engagé depuis le
+            1er avril 2025 ; avenant n° 10 du 20 mars 2025) — soit la majorité (Unédic, France
             Travail).
           </li>
         </ul>

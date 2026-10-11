@@ -132,12 +132,14 @@ export function institutionEmission(departement?: string): {
   /** « la Banque de France », « l'IEDOM », « l'IEOM ». */
   avecArticle: string;
   telephone: string;
+  /** Site de l'institution (accompagnement des entreprises). */
+  site: string;
 } {
   const code = departement ?? '';
   const tel = DATA[code]?.banqueDeFrance?.telephone;
-  if (/^97[1-8]$/.test(code)) return { nom: 'IEDOM', avecArticle: "l'IEDOM", telephone: tel ?? '34 14' };
-  if (/^98[678]$/.test(code)) return { nom: 'IEOM', avecArticle: "l'IEOM", telephone: tel ?? '34 14' };
-  return { nom: 'Banque de France', avecArticle: 'la Banque de France', telephone: '34 14' };
+  if (/^97[1-8]$/.test(code)) return { nom: 'IEDOM', avecArticle: "l'IEDOM", telephone: tel ?? '34 14', site: 'https://www.iedom.fr' };
+  if (/^98[678]$/.test(code)) return { nom: 'IEOM', avecArticle: "l'IEOM", telephone: tel ?? '34 14', site: 'https://www.ieom.fr' };
+  return { nom: 'Banque de France', avecArticle: 'la Banque de France', telephone: '34 14', site: 'https://entreprises.banque-france.fr' };
 }
 
 /** Nom de commune comparable à la base officielle des codes postaux (« ST QUENTIN »). */
@@ -478,7 +480,7 @@ export function buildOrganismes(
     nom: `Correspondant TPE-PME ${emission.nom}`,
     type: 'Diagnostic financier confidentiel',
     telephone: emission.telephone || undefined,
-    site: 'https://entreprises.banque-france.fr',
+    site: emission.site,
     badge: 'Gratuit · confidentiel',
   });
   if (reponses.probleme === 'banque' && dep?.banqueDeFrance) {

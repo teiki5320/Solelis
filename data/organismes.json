@@ -2992,7 +2992,7 @@
       ]
     },
     "cci": {
-      "nom": "CCI du Doubs",
+      "nom": "CCI Saône-Doubs (Besançon)",
       "type": "Chambre de commerce et d’industrie",
       "adresse": "46 avenue Villarceau, 25042 Besançon Cedex",
       "telephone": "03 81 25 25 70",
@@ -3130,7 +3130,7 @@
       {
         "nom": "Tribunal de commerce de Belfort",
         "type": "Tribunal de commerce",
-        "adresse": "1 rue Morimont, BP 781, 90020 Belfort Cedex",
+        "adresse": "1 rue de Morimont, 90000 Belfort",
         "site": "https://www.justice.fr/recherche/annuaires",
         "telephone": "03 84 28 05 57",
         "codesPostaux": [
@@ -3352,7 +3352,7 @@
     "tribunal": {
       "nom": "Tribunal de commerce d'Évreux",
       "type": "Tribunal de commerce",
-      "adresse": "7 rue de la Petite Cité, BP 382, 27003 Évreux Cedex",
+      "adresse": "7 rue de la Petite-Cité, BP 382, 27003 Évreux",
       "telephone": "02 32 22 37 20",
       "site": "https://www.justice.fr/recherche/annuaires",
       "codesPostaux": [
@@ -7502,9 +7502,9 @@
       "site": "https://www.justice.fr/recherche/annuaires"
     },
     "cci": {
-      "nom": "CCI de Lot-et-Garonne (Agen)",
+      "nom": "CCI de Lot-et-Garonne",
       "type": "Chambre de commerce et d’industrie",
-      "adresse": "52 cours Gambetta, BP 90279, 47007 Agen Cedex",
+      "adresse": "379 allée de Métalé, 47310 Sainte-Colombe-en-Bruilhois",
       "telephone": "05 53 77 10 00",
       "site": "https://www.nouvelle-aquitaine.cci.fr"
     },
@@ -9140,7 +9140,7 @@
     "cci": {
       "nom": "CCI Meuse Haute-Marne (site de Bar-le-Duc)",
       "type": "Chambre de commerce et d’industrie",
-      "adresse": "6 rue Antoine-Durenne, 55014 Bar-le-Duc Cedex",
+      "adresse": "Les Roises, route du Pont-de-Dammarie, 55000 Savonnières-devant-Bar",
       "telephone": "03 29 76 83 00",
       "site": "https://www.grandest.cci.fr"
     },
@@ -11815,7 +11815,7 @@
     "tribunal": {
       "nom": "Tribunal de commerce de Tarbes",
       "type": "Tribunal de commerce",
-      "adresse": "Palais de Justice, 6B rue du Maréchal Foch, 65013 Tarbes Cedex",
+      "adresse": "Palais de justice, 6 bis rue du Maréchal-Foch, 65000 Tarbes",
       "telephone": "05 62 51 77 77",
       "site": "https://www.justice.fr/recherche/annuaires"
     },
@@ -13063,9 +13063,9 @@
       "site": "https://www.justice.fr/recherche/annuaires"
     },
     "cci": {
-      "nom": "CCI de la Haute-Saône",
+      "nom": "CCI Saône-Doubs (site de Vesoul)",
       "type": "Chambre de commerce et d’industrie",
-      "adresse": "Zone Technologia, 1 rue Victor-Dolli, 70000 Vesoul",
+      "adresse": "Zone Technologia, 1 rue Victor-Dolle, 70000 Vesoul",
       "telephone": "03 81 25 25 70",
       "site": "https://www.bourgognefranchecomte.cci.fr"
     },
@@ -13671,7 +13671,7 @@
     "cci": {
       "nom": "CCI de la Savoie",
       "type": "Chambre de commerce et d’industrie",
-      "adresse": "5 rue Salteur, CS 22416, 73024 Chambéry Cedex",
+      "adresse": "13 allée du Lac-de-Constance, 73370 Le Bourget-du-Lac",
       "telephone": "04 57 73 73 73",
       "site": "https://www.auvergne-rhone-alpes.cci.fr"
     },
@@ -16290,7 +16290,7 @@
     "cci": {
       "nom": "CCI de la Vienne",
       "type": "Chambre de commerce et d’industrie",
-      "adresse": "7 avenue du Tour-de-France, Chasseneuil, 86961 Futuroscope Cedex",
+      "adresse": "Campus 120, ZI République, 120 rue du Porteau, CS 80495, 86000 Poitiers",
       "telephone": "05 49 60 98 00",
       "site": "https://www.nouvelle-aquitaine.cci.fr"
     },
@@ -16970,7 +16970,7 @@
     "tribunal": {
       "nom": "Tribunal de commerce de Belfort",
       "type": "Tribunal de commerce",
-      "adresse": "1 rue Morimont, BP 781, 90020 Belfort Cedex",
+      "adresse": "1 rue de Morimont, 90000 Belfort",
       "telephone": "03 84 28 05 57",
       "site": "https://www.justice.fr/recherche/annuaires"
     },
@@ -18117,6 +18117,7 @@
       "type": "Caisse Générale de Sécurité Sociale (URSSAF + CPAM + CARSAT)",
       "adresse": "Espace Turenne Radamonthe, Route de Raban, 97300 Cayenne",
       "telephone": "3957",
+      "telephoneNote": "Employeurs : 39 57 (service 0,12 €/min + prix d’appel) ; travailleurs indépendants : 36 98 (service gratuit + prix d’appel)",
       "site": "https://www.urssaf.fr"
     },
     "cgss": {
@@ -20317,7 +20318,7 @@
     "tribunal": {
       "nom": "Tribunal de commerce d'Aubenas",
       "type": "Tribunal de commerce",
-      "adresse": "Le château, place de l'Hôtel de Ville, 07200 Aubenas",
+      "adresse": "10 rue Georges-Couderc, 07200 Aubenas",
       "telephone": "04 75 89 21 80",
       "site": "https://www.justice.fr/recherche/annuaires"
     },
@@ -20914,7 +20915,7 @@
     "tribunal": {
       "nom": "Tribunal de commerce de Bastia",
       "type": "Tribunal de commerce",
-      "adresse": "10 boulevard Auguste Gaudin, 20297 Bastia Cedex",
+      "adresse": "10 boulevard Auguste-Gaudin, 20200 Bastia Cedex",
       "telephone": "04 95 34 84 70",
       "site": "https://www.justice.fr/recherche/annuaires"
     },

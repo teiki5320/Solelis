@@ -1,5 +1,6 @@
 'use client';
 import { useFiche } from '@/lib/FicheContext';
+import { institutionEmission } from '@/lib/organismes';
 import BlocAccordeon from './BlocAccordeon';
 
 interface DispositifEtat {
@@ -45,13 +46,15 @@ export default function BlocAidesEtat() {
 
   // BdF TPE-PME : si problème bancaire ou trésorerie
   if (reponses.probleme === 'banque' || reponses.situation === 'tresorie') {
+    // Banque de France en métropole, IEDOM / IEOM outre-mer (iedom.fr, ieom.fr).
+    const emission = institutionEmission(company.departement);
     dispositifs.push({
       cle: 'bdf',
-      nom: 'Banque de France · Correspondant TPE-PME',
+      nom: `${emission.nom} · Correspondant TPE-PME`,
       description:
         "Numéro unique pour les dirigeants face à une difficulté bancaire, de trésorerie ou de financement. Un référent local vous oriente vers la médiation du crédit ou un dispositif adapté.",
-      telephone: '34 14',
-      site: 'https://entreprises.banque-france.fr',
+      telephone: emission.telephone || undefined,
+      site: emission.site,
       badge: 'Gratuit · confidentiel',
       accent: 'bleu',
     });

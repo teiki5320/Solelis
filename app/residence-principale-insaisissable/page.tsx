@@ -58,8 +58,8 @@ export default function ResidencePrincipalePage() {
         </p>
         <p className="mt-3 text-sm text-navy/80">
           <strong>Attention :</strong> l&apos;insaisissabilité de l&apos;art. L526-1 C. com. (et la <strong>déclaration
-          d&apos;insaisissabilité</strong> chez notaire) est réservée aux <strong>personnes physiques</strong> qui exercent
-          elles-mêmes une activité professionnelle (entrepreneur individuel, immatriculé ou non) et ne protège que
+          d&apos;insaisissabilité</strong> chez notaire) est réservée aux <strong>personnes physiques</strong> immatriculées
+          au registre national des entreprises (entrepreneur individuel) et ne protège que
           contre les créanciers professionnels. En tant que dirigeant·e de société, vous ne pouvez pas l&apos;utiliser pour
           protéger votre résidence contre une banque dont vous êtes caution.
         </p>

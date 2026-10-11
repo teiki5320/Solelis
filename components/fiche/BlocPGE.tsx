@@ -59,8 +59,7 @@ export default function BlocPGE() {
           prolongé jusqu&apos;au 31 décembre 2026, permet aux TPE et PME
           dont les PGE totalisent au plus 50 000 € à l&apos;octroi (au-delà,
           seulement par exception) et qui ne sont pas en cessation des
-          paiements de{' '}
-          <strong>allonger le PGE de 2 ans au plus</strong> par rapport à
+          paiements d&apos;<strong>allonger le PGE de 2 ans au plus</strong> par rapport à
           l&apos;échéancier initial (4 ans au plus si c&apos;est
           particulièrement justifié, soit 10 ans au total au maximum) dans le cadre de la Médiation du
           crédit, <strong>sans perte de la garantie d&apos;État</strong>.
