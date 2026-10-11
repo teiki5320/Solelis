@@ -208,12 +208,14 @@ export function departementDepuisCommune(code: string | undefined): string {
  * Département à partir du code postal, à défaut de code commune :
  * - 97xxx / 98xxx → 3 chiffres (971 Guadeloupe … 988 Nouvelle-Calédonie) ;
  * - Corse : 200xx et 201xx → 2A (Corse-du-Sud), 202xx à 206xx → 2B (Haute-Corse).
- * Limite : Saint-Barthélemy (97133) et Saint-Martin (97150) ont un code
- * postal en 971 — seul le code commune (977xx / 978xx) les distingue.
+ * - Saint-Barthélemy (97133) et Saint-Martin (97150) : codes postaux en 971,
+ *   mais collectivités 977 et 978.
  */
 export function departementDepuisCodePostal(codePostal: string | undefined): string {
   const c = (codePostal ?? '').trim();
   if (!/^\d{5}$/.test(c)) return '';
+  if (c === '97133') return '977';
+  if (c === '97150') return '978';
   if (/^9[78]/.test(c)) return c.slice(0, 3);
   if (c.startsWith('20')) return c[2] === '0' || c[2] === '1' ? '2A' : '2B';
   return c.slice(0, 2);

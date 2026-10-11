@@ -132,6 +132,11 @@ describe('département depuis le code commune INSEE', () => {
 
 describe('département depuis le code postal', () => {
   it('Corse-du-Sud (200xx, 201xx) et Haute-Corse (202xx à 206xx)', () => {
+    expect(departementDepuisCodePostal('98800')).toBe('988'); // Nouméa
+    expect(departementDepuisCodePostal('98714')).toBe('987'); // Papeete
+    expect(departementDepuisCodePostal('97133')).toBe('977'); // Saint-Barthélemy
+    expect(departementDepuisCodePostal('97150')).toBe('978'); // Saint-Martin
+    expect(departementDepuisCodePostal('97110')).toBe('971'); // Pointe-à-Pitre
     expect(departementDepuisCodePostal('20000')).toBe('2A'); // Ajaccio
     expect(departementDepuisCodePostal('20137')).toBe('2A'); // Porto-Vecchio
     expect(departementDepuisCodePostal('20200')).toBe('2B'); // Bastia
@@ -152,13 +157,17 @@ describe('département depuis le code postal', () => {
   });
   it('le code commune prime sur le code postal (Saint-Barthélemy 97133)', () => {
     expect(determinerDepartement('97701', '97133')).toBe('977');
-    expect(determinerDepartement(undefined, '97133')).toBe('971');
+    expect(determinerDepartement(undefined, '97133')).toBe('977');
   });
   it('les clés produites existent dans data/organismes.json et lib/aidesRegionales.ts', () => {
     for (const cp of ['20000', '20200', '97100', '97200', '97300', '97400', '97600', '75001']) {
       const dep = departementDepuisCodePostal(cp);
       expect(getDepartement(dep), dep).not.toBeNull();
       expect(getRegionFromDepartement(dep), dep).not.toBeNull();
+    }
+    // Collectivités d'outre-mer : organismes connus (pas de région).
+    for (const cp of ['97133', '97150', '98800']) {
+      expect(getDepartement(departementDepuisCodePostal(cp)), cp).not.toBeNull();
     }
   });
 });

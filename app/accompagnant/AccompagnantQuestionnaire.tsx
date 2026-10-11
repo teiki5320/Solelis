@@ -2,6 +2,7 @@
 import { useState, useMemo } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import data from '@/data/organismes.json';
+import { departementDepuisCodePostal } from '@/lib/sirene';
 
 interface OrganismeLocal {
   nom: string;
@@ -34,17 +35,9 @@ interface DepartementData {
 
 const ORGANISMES = data as Record<string, DepartementData>;
 
+/** Département (ou collectivité d'outre-mer) d'un code postal : même règle que la fiche. */
 function codePostalVersDepartement(cp: string): string | null {
-  if (!/^\d{5}$/.test(cp)) return null;
-  const prefix = cp.substring(0, 2);
-  // Corse : 20000-20190 = 2A, 20200+ = 2B
-  if (prefix === '20') {
-    const num = parseInt(cp, 10);
-    return num < 20200 ? '2A' : '2B';
-  }
-  // DOM-TOM : 97x
-  if (prefix === '97') return cp.substring(0, 3);
-  return prefix;
+  return departementDepuisCodePostal(cp) || null;
 }
 
 type Lien = 'conjoint' | 'associe' | 'ami' | 'comptable' | 'autre';
