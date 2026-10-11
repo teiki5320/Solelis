@@ -192,7 +192,9 @@ const SECTOR_DATA: Record<Secteur, Omit<SectorInfo, 'secteur'>> = {
       { nom: 'Chambre d\'agriculture', role: 'Conseil technique et économique', site: 'https://chambres-agriculture.fr' },
     ],
     aidesSpecifiques: [
-      { nom: 'Aide d\'urgence MSA', description: 'Action sociale pour exploitants en difficulté. Aide financière directe possible.', site: 'https://www.msa.fr', badge: 'Gratuit' },
+      // Pas de numéro national MSA : lien vers la page officielle « Nous
+      // contacter » (choix de sa caisse et coordonnées), jamais un faux numéro.
+      { nom: 'Aide d\'urgence MSA', description: 'Action sociale de votre caisse de MSA pour les exploitant·e·s en difficulté : aides financières, prise en charge partielle de cotisations ou échéancier, au cas par cas. Pas de numéro national : coordonnées de votre caisse sur msa.fr.', site: 'https://www.msa.fr/lfp/web/msa/contact', badge: 'Gratuit' },
       { nom: 'Aide à la relance agricole', description: 'Prêts bonifiés et subventions régionales pour exploitations en difficulté.', site: 'https://www.agriculture.gouv.fr' },
       { nom: 'Fonds d\'allègement des charges', description: 'Prise en charge partielle des cotisations MSA et des prêts bancaires.', site: 'https://www.agriculture.gouv.fr', badge: 'Sous conditions' },
       { nom: 'AREA (Aide à la Relance des Exploitations Agricoles)', description: 'Dispositif national pour exploitations viables mais en difficulté. Audit + plan de redressement financés.', site: 'https://www.agriculture.gouv.fr', badge: 'Sur dossier' },
@@ -220,7 +222,7 @@ const SECTOR_DATA: Record<Secteur, Omit<SectorInfo, 'secteur'>> = {
       titre: 'Secteur agricole sous tension durable',
       message:
         'Vous n\'êtes pas seul·e : le secteur agricole cumule hausse des charges, aléas climatiques et pression sur les prix. Des dispositifs nationaux et MSA existent spécifiquement pour cette crise.',
-      ressource: { label: 'Aide d\'urgence MSA', url: 'https://www.msa.fr' },
+      ressource: { label: 'Aides de la MSA en cas de difficultés', url: 'https://www.msa.fr/lfp/web/msa/exploitant/aides-au-paiement-des-cotisations' },
     },
   },
   peche: {
@@ -831,6 +833,15 @@ function ajusterTransport(
   return { syndicats: sauf('FNTR') };
 }
 
+/**
+ * Forme juridique propre à l'exploitation agricole : EARL, GAEC, SCEA
+ * (libellés INSEE 6598, 6533, 6597, ou sigles saisis tels quels).
+ */
+export function estFormeAgricole(formeJuridique: string | undefined): boolean {
+  const f = (formeJuridique ?? '').toLowerCase();
+  return /\bearl\b|\bgaec\b|\bscea\b|exploitation agricole|groupement agricole d.exploitation/.test(f);
+}
+
 export function getSectorInfo(company: CompanyData): SectorInfo {
   const naf = company.naf || '';
   const section = sectionFromNaf(naf);
@@ -841,6 +852,13 @@ export function getSectorInfo(company: CompanyData): SectorInfo {
   const nafPrefix = nafCompact.slice(0, 2);
   if (nafPrefix === '03') {
     secteur = 'peche';
+  }
+
+  // Formes réservées à l'exploitation agricole (EARL, GAEC, SCEA : Code rural,
+  // livre III) : régime agricole (MSA) même si le code NAF est absent ou
+  // classé ailleurs. La pêche (NAF 03) garde son secteur (ENIM).
+  if (secteur !== 'peche' && estFormeAgricole(company.formeJuridique)) {
+    secteur = 'agriculture';
   }
 
   // Associations et organisations (NAF 94.xx) : ESS, pas artisanat —

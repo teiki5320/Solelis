@@ -305,6 +305,54 @@ export function carteTribunal(
   };
 }
 
+/** msa.fr : aides en cas de difficultés de paiement des cotisations (prise en charge partielle, échéancier…). */
+export const MSA_AIDES_PAIEMENT = 'https://www.msa.fr/lfp/web/msa/exploitant/aides-au-paiement-des-cotisations';
+/** msa.fr, « Nous contacter » : choix de sa caisse et coordonnées (pas de numéro national). */
+export const MSA_CONTACT = 'https://www.msa.fr/lfp/web/msa/contact';
+/** urssaf.fr : « Comment solliciter l'action sanitaire et sociale du CPSTI ? ». */
+export const URSSAF_ACTION_SOCIALE_CPSTI =
+  'https://www.urssaf.fr/accueil/services/services-independants/solliciter-action-sociale-cpsti.html';
+
+/**
+ * L'action sociale du CPSTI (Urssaf, 36 98) ne concerne que les travailleurs
+ * indépendants du régime général : pas les exploitant·e·s agricoles (MSA)
+ * ni les marins-pêcheurs (ENIM).
+ */
+export function relevantDuCpsti(sectorKey?: string): boolean {
+  return sectorKey !== 'agriculture' && sectorKey !== 'peche';
+}
+
+/**
+ * Carte « action sociale » d'un·e non-salarié·e en difficulté :
+ * - régime général : action sociale du CPSTI, demandée à l'Urssaf (la
+ *   « Sécurité sociale des indépendants » a disparu le 1er janvier 2020) ;
+ * - exploitant·e agricole (métropole) : sa caisse de MSA (prise en charge
+ *   partielle de cotisations, échéancier — msa.fr, « Aides pour les
+ *   agriculteurs en cas de difficultés de paiement ») ;
+ * - agriculture outre-mer (caisse locale, voir contactCotisations) et
+ *   pêche (ENIM) : pas de carte plutôt qu'une orientation erronée.
+ */
+export function carteActionSocialeNonSalarie(sectorKey?: string, departement?: string): OrganismeCard | null {
+  if (relevantDuCpsti(sectorKey)) {
+    return {
+      nom: 'Urssaf · Action sociale du CPSTI',
+      type: 'Aides aux indépendant·e·s en difficulté (cotisations, aide financière exceptionnelle)',
+      telephone: '3698',
+      site: URSSAF_ACTION_SOCIALE_CPSTI,
+      badge: 'Sur demande · au cas par cas',
+    };
+  }
+  if (sectorKey === 'agriculture' && !/^9[78]/.test(departement ?? '')) {
+    return {
+      nom: 'MSA · aides aux exploitant·e·s en difficulté',
+      type: 'Prise en charge partielle de cotisations, échéancier de paiement (votre caisse de MSA)',
+      site: MSA_AIDES_PAIEMENT,
+      badge: 'Sur demande · au cas par cas',
+    };
+  }
+  return null;
+}
+
 export function buildOrganismes(
   dep: DepartementData | null,
   reponses: Reponses,
@@ -441,7 +489,8 @@ export function buildOrganismes(
     fin.push({
       nom: 'MSA · caisse de votre département',
       type: 'MSA (Mutualité Sociale Agricole)',
-      site: 'https://www.msa.fr',
+      // Pas de numéro national : coordonnées de sa caisse sur msa.fr.
+      site: MSA_CONTACT,
       badge: 'Échelonnement possible',
     });
   } else if (reponses.probleme === 'urssaf' && sectorKey === 'peche') {
@@ -542,17 +591,8 @@ export function buildOrganismes(
     }
   }
   if (reponses.effectif === 'independant') {
-    // La « Sécurité sociale des indépendants » (SSI) a disparu le 1er janvier
-    // 2020 : l'action sociale des indépendant·e·s est celle du CPSTI, demandée
-    // à l'Urssaf (urssaf.fr, « Comment solliciter l'action sanitaire et sociale
-    // du CPSTI ? »).
-    soc.push({
-      nom: 'Urssaf · Action sociale du CPSTI',
-      type: 'Aides aux indépendant·e·s en difficulté (cotisations, aide financière exceptionnelle)',
-      telephone: '3698',
-      site: 'https://www.urssaf.fr/accueil/services/services-independants/solliciter-action-sociale-cpsti.html',
-      badge: 'Sur demande · au cas par cas',
-    });
+    const actionSociale = carteActionSocialeNonSalarie(sectorKey, dep?.code);
+    if (actionSociale) soc.push(actionSociale);
     soc.push({
       nom: 'France Travail Indépendants',
       type: 'ATI · Allocation Travailleurs Indépendants',
