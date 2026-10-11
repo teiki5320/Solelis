@@ -10,17 +10,9 @@ import {
   loadContextFromStorage,
   type CourrierContext,
   type PersonalizedCourrier,
+  champsCourrier,
+  remplirChamps,
 } from '@/lib/courriers';
-
-function extractFields(text: string): string[] {
-  const set = new Set<string>();
-  const re = /\{\{([A-Z_]+)\}\}/g;
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(text)) !== null) {
-    set.add(m[1]);
-  }
-  return Array.from(set);
-}
 
 const FIELD_LABELS: Record<string, string> = {
   NOM_ENTREPRISE: 'Nom de l\'entreprise',
@@ -116,7 +108,7 @@ export default function CourrierDetail({ slug }: { slug: string }) {
   );
 
   const allFields = useMemo(
-    () => template ? extractFields(template.objet + '\n' + template.corps) : [],
+    () => template ? champsCourrier(template.objet + '\n' + template.corps) : [],
     [template]
   );
 
@@ -124,7 +116,7 @@ export default function CourrierDetail({ slug }: { slug: string }) {
   if (!template) return null;
 
   function rendered(text: string): string {
-    return text.replace(/\{\{([A-Z_]+)\}\}/g, (_, key) => {
+    return remplirChamps(text, (key) => {
       const v = values[key];
       return v ? v : `[${FIELD_LABELS[key] ?? key}]`;
     });

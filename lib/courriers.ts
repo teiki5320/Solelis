@@ -774,6 +774,19 @@ function injectFragments(corps: string, preambule?: string, closing?: string): s
   return blocks.join('\n\n');
 }
 
+/**
+ * Champs à compléter d'un modèle : « {{NOM}} », « {{DATE_1}} »… (lettres
+ * majuscules, chiffres et « _ »). Source unique pour la page du courrier.
+ */
+export function champsCourrier(text: string): string[] {
+  return Array.from(new Set(Array.from(text.matchAll(/\{\{([A-Z0-9_]+)\}\}/g), (m) => m[1])));
+}
+
+/** Remplace chaque champ « {{X}} » par `remplacement(X)`. */
+export function remplirChamps(text: string, remplacement: (champ: string) => string): string {
+  return text.replace(/\{\{([A-Z0-9_]+)\}\}/g, (_, champ: string) => remplacement(champ));
+}
+
 export function personalizeCourrier(
   template: CourrierTemplate,
   ctx: CourrierContext

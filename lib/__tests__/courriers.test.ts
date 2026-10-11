@@ -4,6 +4,8 @@ import {
   getCourrier,
   personalizeCourrier,
   CATEGORIES,
+  champsCourrier,
+  remplirChamps,
   type CourrierTemplate,
   type CourrierContext,
 } from '../courriers';
@@ -192,6 +194,18 @@ describe('CATEGORIES', () => {
       expect(CATEGORIES[cat]).toBeDefined();
       expect(CATEGORIES[cat].label.length).toBeGreaterThan(0);
       expect(CATEGORIES[cat].couleur.length).toBeGreaterThan(0);
+    }
+  });
+});
+
+describe('champs à compléter', () => {
+  it('reconnaît les champs numérotés ({{DATE_1}}, {{MONTANT_3}}) : aucun « {{ » ne reste', () => {
+    const delai = getCourrier('delai-fournisseur')!;
+    expect(champsCourrier(delai.corps)).toEqual(expect.arrayContaining(['DATE_1', 'MONTANT_1', 'DATE_3', 'MONTANT_3']));
+    for (const c of COURRIERS) {
+      const p = personalizeCourrier(c, {});
+      const rempli = remplirChamps(p.objet + '\n' + p.corps, (k) => `[${k}]`);
+      expect(rempli, c.slug).not.toMatch(/\{\{|\}\}/);
     }
   });
 });
