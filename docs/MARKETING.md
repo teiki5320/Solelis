@@ -54,5 +54,5 @@ Exclusions par design : pas de publicité display, pas de paywall sur la fiche, 
 ## Les 3 priorités
 
 - Vérifier en production le parcours complet : création d'une fiche, lien magique reçu (et pas en indésirables) depuis Resend, rappel du cron, avocats locaux — et confirmer que solelis@toakeur.com reçoit bien les messages, puisque c'est l'adresse de suppression des fiches (RGPD)
-- Déclarer solelis.com et son sitemap dans Google Search Console
+- Faire indexer par Google les pages encore absentes : solelis.com est déclaré dans Search Console, mais seules 28 pages sur 69 y figurent (suivi dans l'onglet Indexation du Studio)
 - Activer la mesure d'audience (Plausible : souscrire puis définir `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`) avant tout effort d'acquisition
