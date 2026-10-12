@@ -71,8 +71,8 @@ const terms: Term[] = [
     enClair:
       "Version plus rapide et moins coûteuse de la liquidation, pour les petites entreprises. Même effet, procédure allégée.",
     pourQui:
-      "Obligatoire si : aucun bien immobilier, 5 salariés au plus sur les 6 mois précédant l'ouverture et chiffre d'affaires hors taxes de 750 000 € au plus (art. L641-2 et D641-10 C. com.).",
-    duree: 'Clôture dans les 6 mois (1 salarié au plus et CA HT de 300 000 € au plus) ou dans l’année sinon, prorogeable de 3 mois maximum (art. L644-5 et D641-10 C. com.).',
+      "Obligatoire si : aucun bien immobilier, 5 salariés au plus sur les 6 mois précédant l'ouverture et chiffre d'affaires hors taxes de 750 000 € au plus (art. L641-2 et D641-10 C. com.). Pour un·e entrepreneur·e individuel·le (personne physique), seule l'absence de bien immobilier compte, et la résidence principale n'y fait pas obstacle.",
+    duree: 'Clôture dans les 6 mois, portés à un an seulement si l’entreprise dépasse à la fois 1 salarié et 300 000 € de CA HT ; prorogeable de 3 mois maximum (art. L644-5 et D641-10 C. com.).',
   },
   {
     name: 'Plan de continuation',

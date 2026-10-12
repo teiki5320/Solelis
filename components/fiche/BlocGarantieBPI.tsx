@@ -91,10 +91,12 @@ export default function BlocGarantieBPI() {
           <li>
             <strong>Caution personnelle sur un prêt garanti par Bpifrance</strong> : si vous avez signé
             une caution personnelle pour la part NON garantie, vérifiez
-            sa proportionnalité et l&apos;information annuelle — art. 2300
-            et 2302 du code civil pour les cautions signées depuis 2022,
-            anciens art. L332-1 et L333-2 C. conso (ex-L341-4 et L341-6)
-            pour les plus anciennes. Certaines sont contestables.
+            sa proportionnalité (art. 2300 du code civil pour les cautions
+            signées depuis 2022, ancien art. L332-1 C. conso, ex-L341-4,
+            pour les plus anciennes) et l&apos;information annuelle (art. 2302
+            du code civil, applicable à toutes les cautions depuis 2022,
+            même anciennes : ordonnance 2021-1192, art. 37 III). Certaines
+            sont contestables.
           </li>
         </ul>
       </div>

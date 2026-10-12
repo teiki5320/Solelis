@@ -36,7 +36,7 @@ const SECTIONS: SectionFAQ[] = [
       {
         question: 'Quel est le délai pour la déclarer ?',
         reponse:
-          "Vous disposez de 45 jours maximum après la date de cessation des paiements pour la déclarer au greffe du tribunal de commerce (article L631-4 du Code de commerce). Ce délai court à partir du moment où vous ne pouvez plus payer vos dettes échues — pas à partir du moment où vous en prenez conscience. La déclaration se fait via le formulaire Cerfa n°10530, accompagné des documents comptables.",
+          "Vous disposez de 45 jours maximum après la date de cessation des paiements pour la déclarer au greffe du tribunal de commerce (article L631-4 du Code de commerce). Ce délai court à partir du moment où vous ne pouvez plus payer vos dettes échues — pas à partir du moment où vous en prenez conscience. La déclaration se fait via le formulaire Cerfa n°10530*02, accompagné des documents comptables.",
         liens: [
           { href: '/courriers', label: 'Modèles de courriers' },
         ],
@@ -159,7 +159,7 @@ const SECTIONS: SectionFAQ[] = [
       {
         question: 'Puis-je recréer une entreprise après une liquidation ?',
         reponse:
-          "Oui, sauf si le tribunal a prononcé une interdiction de gérer (article L653-8 du Code de commerce), ce qui est réservé aux cas de faute de gestion grave. Après clôture de la liquidation, vous êtes libre de recréer une entreprise immédiatement. À la clôture pour insuffisance d'actif, les créanciers ne retrouvent pas, sauf exceptions (fraude, faillite personnelle, banqueroute…), le droit de vous poursuivre (article L643-11) ; mais les cautions et coobligés qui ont payé à votre place peuvent, eux, agir contre vous. Pour les dirigeants de société, la clôture met fin à la procédure mais pas aux cautions personnelles.",
+          "Oui, sauf si le tribunal a prononcé une interdiction de gérer (article L653-8 du Code de commerce), ce qui est réservé aux cas de faute de gestion grave. Vous n'avez pas à attendre la clôture de la liquidation pour recréer une entreprise ; un entrepreneur individuel peut même exercer une nouvelle activité pendant sa liquidation, avec un nouveau patrimoine professionnel non concerné par la procédure (article L681-2). À la clôture pour insuffisance d'actif, les créanciers ne retrouvent pas, sauf exceptions (fraude, faillite personnelle, banqueroute…), le droit de vous poursuivre (article L643-11) ; mais les cautions et coobligés qui ont payé à votre place peuvent, eux, agir contre vous. Pour les dirigeants de société, la clôture met fin à la procédure mais pas aux cautions personnelles.",
         liens: [
           { href: '/rebond', label: 'Guide du rebond' },
         ],
