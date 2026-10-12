@@ -40,7 +40,7 @@ C'est souvent la solution la plus discrète et la plus souple pour reprendre la 
 
 Selon service-public.fr, **toutes les entreprises**, quelle que soit leur taille, y compris les micro-entrepreneur·e·s, qui rencontrent des difficultés économiques, financières ou sociales.
 
-La condition clé : **ne pas être en cessation des paiements**, c'est-à-dire être encore capable de payer les dettes échues avec sa trésorerie disponible. Si votre entreprise est en cessation des paiements depuis moins de 45 jours, c'est la **conciliation** qu'il faut envisager : voir [La conciliation : une procédure confidentielle](/conseils/procedure-de-conciliation).
+La condition clé : **ne pas être en cessation des paiements**, c'est-à-dire être encore capable de payer les dettes échues avec sa trésorerie disponible. Si votre entreprise est en cessation des paiements depuis 45 jours au plus, c'est la **conciliation** qu'il faut envisager : voir [La conciliation : une procédure confidentielle](/conseils/procedure-de-conciliation).
 
 Situations typiques :
 

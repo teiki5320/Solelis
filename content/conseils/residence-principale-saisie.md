@@ -10,6 +10,10 @@ sources:
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044056367
   - titre: "Code de commerce, art. L622-28 (suspension des poursuites contre les cautions personnes physiques)"
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032042779
+  - titre: "Code de commerce, art. L631-14 (règles de la sauvegarde applicables au redressement judiciaire)"
+    url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044052869
+  - titre: "Code de commerce, art. L626-11 (la caution personne physique peut se prévaloir du plan de sauvegarde)"
+    url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000019984663
   - titre: "Code civil, art. 1415 (cautionnement souscrit par un seul époux)"
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006439364
   - titre: "Code de la consommation, art. L711-1 (définition du surendettement, y compris pour une caution)"
@@ -36,7 +40,7 @@ liens:
 ---
 Votre logement ne peut pas être saisi pour n’importe quelle dette. **Les dettes de l’entreprise ne suffisent pas, en principe** ; ce sont surtout vos engagements personnels (caution, prêt immobilier, impôts personnels) qui exposent la maison.
 
-Les règles de protection elles-mêmes (insaisissabilité de droit pour l’entrepreneur·e individuel·e, déclaration chez le notaire, régime matrimonial) sont détaillées sur la page [Résidence principale insaisissable](/residence-principale-insaisissable). Cet article répond à une autre question, très concrète : **qui peut réellement saisir, comment cela se passe, et comment gagner du temps.**
+Les règles de protection elles-mêmes (insaisissabilité de droit pour l’entrepreneur·e individuel·le, déclaration chez le notaire, régime matrimonial) sont détaillées sur la page [Résidence principale insaisissable](/residence-principale-insaisissable). Cet article répond à une autre question, très concrète : **qui peut réellement saisir, comment cela se passe, et comment gagner du temps.**
 
 ## Qui peut saisir votre logement ?
 
@@ -80,7 +84,7 @@ Ce calendrier laisse plusieurs mois pour agir. Ne le laissez pas filer.
 
 ## Comment freiner ou éviter la saisie ?
 
-**Si vous êtes caution et que l’entreprise entre en procédure.** Le jugement qui ouvre une sauvegarde suspend les poursuites contre les cautions personnes physiques jusqu’au jugement qui arrête le plan ou prononce la liquidation (art. L622-28 du Code de commerce). Depuis le 1er octobre 2021, cette protection s’applique aussi au redressement judiciaire. Ensuite, le tribunal peut vous accorder des délais ou un report de paiement, dans la limite de 2 ans. Agir tôt, avant la cessation des paiements, protège donc aussi la caution.
+**Si vous êtes caution et que l’entreprise entre en procédure.** Le jugement qui ouvre une sauvegarde suspend les poursuites contre les cautions personnes physiques jusqu’au jugement qui arrête le plan ou prononce la liquidation (art. L622-28 du Code de commerce). La même règle s’applique en redressement judiciaire (art. L631-14), mais pas en liquidation, où la banque peut poursuivre la caution sans attendre. Ensuite, le tribunal peut vous accorder des délais ou un report de paiement, dans la limite de 2 ans. En sauvegarde, vous pouvez en plus profiter des délais et remises du plan (art. L626-11) : agir tôt, avant la cessation des paiements, protège donc aussi la caution.
 
 **Si vos dettes personnelles vous dépassent.** Le surendettement concerne les particuliers de bonne foi, et la loi précise que l’impossibilité de faire face à un engagement de caution pour la dette d’une société ou d’un entrepreneur individuel caractérise aussi une situation de surendettement (art. L711-1 du Code de la consommation). Dès la remise du commandement de payer, vous pouvez demander à la commission de surendettement de **suspendre** la saisie immobilière.
 

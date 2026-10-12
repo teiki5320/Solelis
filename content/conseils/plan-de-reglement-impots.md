@@ -54,7 +54,7 @@ Le plan n'est donc pas un droit. Mais une entreprise qui déclare correctement, 
 
 **Où ?** Auprès du SIE dont dépend l'entreprise.
 
-**Comment ?** Impots.gouv.fr recommande la **messagerie sécurisée** de votre espace professionnel. Pour la TVA, le chemin indiqué est : « Paiement, suivi d'un remboursement » > « Délai de paiement (sur une taxe ou un impôt) » > « Problème de paiement sur la TVA et taxes annexes ». Vous pouvez aussi écrire, ou vous rendre au service.
+**Comment ?** Impots.gouv.fr recommande la **messagerie sécurisée** de votre espace professionnel. Pour la TVA, la demande doit être écrite, et le chemin indiqué est : « Paiement, suivi d'un remboursement » > « Délai de paiement (sur une taxe ou un impôt) » > « Problème de paiement sur la TVA et taxes annexes ». Pour les autres impôts, vous pouvez aussi écrire par courrier ou vous rendre au service.
 
 **Quoi ?** Votre demande doit contenir :
 
@@ -85,9 +85,9 @@ Notre [calendrier fiscal](/outils/calendrier-fiscal) vous aide à anticiper les 
 
 ## Le plan supprime-t-il les pénalités ?
 
-Non. Selon impots.gouv.fr, le plan de règlement ne fait pas obstacle aux **intérêts de retard de recouvrement**, qui sont à payer après les dettes comprises dans le plan.
+Non. Selon impots.gouv.fr, le plan de règlement ne fait pas obstacle aux **intérêts de retard de recouvrement**, qui sont à payer après les dettes comprises dans le plan. Ces intérêts ne peuvent pas faire l'objet d'une remise.
 
-Les majorations et amendes peuvent, elles, faire l'objet d'une **demande de remise gracieuse** (art. L247 du Livre des procédures fiscales). C'est une faculté de l'administration, pas un droit. Notre page [Pénalités fiscales](/penalites-fiscales) détaille les différentes majorations et la manière de demander une remise.
+Les autres pénalités (majorations, amendes) peuvent, elles, faire l'objet d'une **demande de remise gracieuse** (art. L247 du Livre des procédures fiscales). C'est une faculté de l'administration, pas un droit. Notre page [Pénalités fiscales](/penalites-fiscales) détaille les différentes majorations et la manière de demander une remise.
 
 ## Peut-on obtenir l'abandon de la dette elle-même ?
 

@@ -28,6 +28,10 @@ sources:
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000045178099
   - titre: Code de commerce, art. L631-12 (mission de l'administrateur)
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006238111
+  - titre: Code de commerce, art. L631-14 (effets de la sauvegarde applicables au redressement)
+    url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044052869
+  - titre: Code de commerce, art. L622-28 (intérêts et cautions personnes physiques)
+    url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032042779
   - titre: Code de commerce, art. L631-15 (bilan à deux mois, liquidation en cours de route)
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044052884
   - titre: Code de commerce, art. L631-19-1 (remplacement du dirigeant)
@@ -90,7 +94,7 @@ Dès ce jugement, les mêmes protections qu'en sauvegarde s'appliquent :
 - arrêt des poursuites et des saisies pour ces dettes ;
 - arrêt des intérêts, sauf pour les prêts d'un an ou plus.
 
-Selon Service-public.fr, une caution ne peut pas être poursuivie pendant la période d'observation.
+Si vous êtes caution personne physique des dettes de l'entreprise, les poursuites contre vous sont suspendues jusqu'au jugement qui arrête le plan ou prononce la liquidation (art. L622-28, applicable au redressement par l'art. L631-14). Vous profitez aussi de l'arrêt des intérêts, sauf pour les prêts d'un an ou plus.
 
 ## Qui dirige l'entreprise pendant le redressement ?
 

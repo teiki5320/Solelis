@@ -42,7 +42,7 @@ Recevoir ce courrier fait peur. Il est pourtant fréquent, et il se règle souve
 
 ## Qu'est-ce qu'une mise en demeure de l'URSSAF ?
 
-C'est une lettre officielle qui vous demande de régulariser des cotisations ou contributions sociales impayées. La loi impose cet avertissement avant toute poursuite (art. L244-2 du Code de la sécurité sociale), et urssaf.fr rappelle que vous devez payer dans un délai d'un mois à compter de sa réception.
+C'est une lettre officielle qui vous demande de régulariser des cotisations ou contributions sociales impayées. La loi impose cet avertissement avant toute poursuite (art. L244-2 du Code de la sécurité sociale). Si vous ne payez pas dans le mois qui suit sa notification, l'URSSAF peut passer à l'étape suivante (art. R133-3).
 
 Elle doit être précise. Selon l'art. R244-1 du Code de la sécurité sociale, elle indique :
 
@@ -102,7 +102,7 @@ Si la mise en demeure vous paraît fausse (cotisations déjà payées, période 
 
 Un [modèle de contestation de mise en demeure](/courriers/contestation-urssaf) vous aide à structurer votre lettre.
 
-Sans réponse de la commission dans les 2 mois suivant la réception de votre recours, vous pouvez considérer votre demande comme rejetée (art. R142-6 du Code de la sécurité sociale). Vous pouvez alors saisir le pôle social du tribunal judiciaire, dans le délai indiqué par la décision ou par l'accusé de réception (2 mois en principe, art. R142-1-A).
+Sans réponse de la commission dans les 2 mois suivant la réception de votre recours, vous pouvez considérer votre demande comme rejetée (art. R142-6 du Code de la sécurité sociale). Attention : si vous envoyez des pièces après coup, ce délai de 2 mois ne court qu'à partir de leur réception. Mieux vaut donc tout envoyer en une fois. Vous pouvez alors saisir le pôle social du tribunal judiciaire, dans le délai indiqué par la décision ou par l'accusé de réception (2 mois en principe, art. R142-1-A).
 
 Pensez aussi aux cotisations anciennes. Elles se prescrivent par 3 ans à compter de la fin de l'année civile au titre de laquelle elles sont dues ; pour les indépendant·e·s, à compter du 30 juin de l'année suivante (art. L244-3 du Code de la sécurité sociale). Notre [vérificateur de prescription](/outils/prescription) vous aide à repérer les périodes à examiner.
 

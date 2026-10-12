@@ -16,10 +16,16 @@ sources:
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044052950
   - titre: Code de commerce, art. L641-3 (effets du jugement, déclaration des créances)
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000038587562
+  - titre: Code de commerce, art. L622-28 (suspension des poursuites contre les cautions, non reprise en liquidation)
+    url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032042779
   - titre: Code de commerce, art. L641-4 (vérification des créances)
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000045178151
   - titre: Code de commerce, art. L641-9 (dessaisissement)
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000045178146
+  - titre: Code de commerce, art. L681-2 (nouvelle activité de l'entrepreneur individuel pendant la liquidation)
+    url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000045170929
+  - titre: Code de commerce, art. L643-8 (ordre de paiement des créanciers)
+    url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000048248749
   - titre: Code de commerce, art. L641-10 (maintien de l'activité)
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000028724220
   - titre: Code de commerce, art. R641-18 (durée du maintien de l'activité)
@@ -30,6 +36,8 @@ sources:
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046811404
   - titre: Code de commerce, art. L643-13 (reprise de la procédure)
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000029506861
+  - titre: Code du travail, art. L3253-8 (garantie AGS et délais de rupture en liquidation)
+    url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033812421
   - titre: Code de commerce, art. R622-24 (délai de déclaration des créances)
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000029175247
   - titre: Code de commerce, art. L653-8 (interdiction de gérer)
@@ -80,7 +88,7 @@ Le jugement est publié au BODACC. Vos créanciers ont alors **deux mois** pour 
 
 Dès le jugement, il est interdit de payer les dettes nées avant lui. Les créanciers ne peuvent plus agir en justice ni saisir pour ces dettes. Les intérêts s'arrêtent, sauf pour les prêts d'un an ou plus (art. L641-3).
 
-En revanche, **la protection des cautions qui existe en sauvegarde et en redressement ne joue pas en liquidation**. Selon Service-public.fr, le créancier peut poursuivre la caution sans attendre. Si vous êtes caution des dettes de votre société, lisez [ce que risque le dirigeant caution](/conseils/caution-personnelle-dirigeant).
+En revanche, **la protection des cautions qui existe en sauvegarde et en redressement ne joue pas en liquidation** : l'article L641-3, qui fixe les effets du jugement de liquidation, ne reprend pas la suspension des poursuites contre les cautions prévue par l'article L622-28. La fiche Service-public.fr « Liquidation judiciaire d'une société » le confirme : le créancier peut poursuivre la caution sans attendre. Si vous êtes caution des dettes de votre société, lisez [ce que risque le dirigeant caution](/conseils/caution-personnelle-dirigeant).
 
 ## Étape 2 : le liquidateur prend la main
 
@@ -89,7 +97,7 @@ En revanche, **la protection des cautions qui existe en sauvegarde et en redress
 Concrètement :
 
 - **En société**, le liquidateur représente l'entreprise. Selon Service-public.fr, le ou la dirigeant·e peut rester en fonction, mais ne peut plus vendre de biens, encaisser de l'argent ni résilier de contrats.
-- **En entreprise individuelle**, le dessaisissement porte sur le patrimoine engagé par l'activité. Pendant la liquidation, l'exercice d'une activité indépendante est en principe interdit ou très encadré (art. L641-9) : parlez-en au liquidateur avant tout nouveau projet.
+- **En entreprise individuelle**, le dessaisissement porte sur le patrimoine professionnel. Depuis le 15 mai 2022, vous pouvez exercer une nouvelle activité pendant la liquidation : elle forme un nouveau patrimoine professionnel, que la procédure ne touche pas. Ce n'est pas possible si vous avez déjà eu, depuis moins de 5 ans, une liquidation clôturée pour insuffisance d'actif ou un rétablissement professionnel clôturé (art. L681-2). Prévenez le liquidateur avant de vous lancer.
 
 Votre rôle reste important. Vous devez remettre au liquidateur la liste de vos créanciers, vos documents comptables et toutes les informations utiles. Ne pas le faire de mauvaise foi dans le mois qui suit le jugement peut entraîner une interdiction de gérer (art. L653-8).
 
@@ -99,7 +107,7 @@ En principe, l'activité cesse dès le jugement.
 
 Le tribunal peut autoriser son maintien si une cession de l'entreprise est envisageable ou si l'intérêt public ou celui des créanciers l'exige (art. L641-10). Ce maintien dure **3 mois au plus**, renouvelable une fois à la demande du procureur (art. R641-18).
 
-Les salarié·e·s sont licencié·e·s par le liquidateur. Leurs salaires et indemnités impayés peuvent être pris en charge par l'AGS, que le liquidateur doit saisir. Selon Service-public.fr, les contrats doivent être rompus dans les 15 jours qui suivent le jugement, ou 21 jours si un plan de sauvegarde de l'emploi est nécessaire. Voir [l'annuaire des AGS](/annuaires/ags) et [payer les salaires quand l'entreprise ne peut plus](/conseils/ags-salaires-entreprise-en-difficulte).
+Les salarié·e·s sont licencié·e·s par le liquidateur. Leurs salaires et indemnités impayés peuvent être pris en charge par l'AGS, que le liquidateur doit saisir. Pour que l'AGS garantisse les indemnités de rupture, les contrats doivent être rompus dans les 15 jours qui suivent le jugement, ou 21 jours si un plan de sauvegarde de l'emploi est élaboré ; en cas de maintien de l'activité, le délai court à partir de la fin de ce maintien (art. L3253-8 du Code du travail). Voir [l'annuaire des AGS](/annuaires/ags) et [payer les salaires quand l'entreprise ne peut plus](/conseils/ags-salaires-entreprise-en-difficulte).
 
 ## Étape 4 : la vente des biens et le paiement des créanciers
 
@@ -108,7 +116,7 @@ La liquidation sert à réaliser le patrimoine du débiteur, par une cession glo
 - **céder l'entreprise ou une branche d'activité** à un repreneur ;
 - **vendre les biens un par un** : stock, matériel, véhicules, fonds de commerce.
 
-Il vérifie en parallèle les créances déclarées, puis répartit l'argent entre les créanciers selon leur rang : les frais de justice et les créances privilégiées passent avant les créanciers ordinaires, dits « chirographaires » (art. L641-4).
+Il vérifie en parallèle les créances déclarées (art. L641-4), puis répartit l'argent entre les créanciers selon un ordre fixé par la loi : les salaires garantis par le « superprivilège », certains frais de justice et les créances privilégiées passent avant les créanciers ordinaires, dits « chirographaires », qui sont payés en dernier, au prorata (art. L643-8).
 
 ## Étape 5 : la clôture
 

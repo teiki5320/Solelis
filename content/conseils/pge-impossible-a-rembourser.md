@@ -4,7 +4,7 @@ description: "Allonger son PGE jusqu’à 10 ans via la Médiation du crédit, c
 date: 2026-10-12
 miseAJour: 2026-10-12
 theme: dettes
-resume: "Si vous ne pouvez plus payer les échéances de votre PGE, parlez-en à votre banque avant le premier impayé. La Médiation du crédit peut organiser une restructuration qui allonge le prêt de 2 à 4 ans (jusqu’à 10 ans au total) en gardant la garantie de l’État, une seule fois et jusqu’au 31 décembre 2026 selon l’accord de place en vigueur. Si cela ne suffit pas, une conciliation, une sauvegarde ou un redressement judiciaire permettent aussi d’étaler le PGE."
+resume: "Si vous ne pouvez plus payer les échéances de votre PGE, parlez-en à votre banque avant le premier impayé. La Médiation du crédit peut organiser une restructuration qui allonge le prêt de 2 ans en général, 4 ans au plus (10 ans au total), en gardant la garantie de l’État, une seule fois et jusqu’au 31 décembre 2026 selon l’accord de place en vigueur. Si cela ne suffit pas, une conciliation, une sauvegarde ou un redressement judiciaire permettent aussi d’étaler le PGE."
 sources:
   - titre: "Arrêté du 23 mars 2020 accordant la garantie de l’État (art. 1, 2 et 6)"
     url: https://www.legifrance.gouv.fr/loda/id/JORFTEXT000041746813
@@ -14,6 +14,8 @@ sources:
     url: https://entreprendre.service-public.gouv.fr/vosdroits/F35201
   - titre: "Banque de France — L’accord de place sur les restructurations de PGE dans le cadre de la Médiation du crédit est prolongé jusqu’en 2026 (communiqué du 8 janvier 2024)"
     url: https://www.banque-france.fr/fr/espace-presse/communiques-de-presse/laccord-de-place-sur-les-restructurations-de-prets-garantis-par-letat-pge-dans-le-cadre-de-la
+  - titre: "Banque de France — Accord de place du 19 janvier 2022 sur les restructurations de PGE (texte de l’accord, art. 3 à 6)"
+    url: https://www.banque-france.fr/system/files/2024-10/accord-de-place-du-19-janvier-2022.pdf
   - titre: "Banque de France — Saisir la Médiation du crédit (consulté le 12 octobre 2026)"
     url: https://www.banque-france.fr/fr/a-votre-service/entreprises/saisir-mediation-credit
   - titre: "Direction générale du Trésor — Prêt garanti par l’État : mode d’emploi (FAQ mise à jour le 25 mars 2026)"
@@ -44,19 +46,24 @@ Concrètement, un impayé est un « événement de crédit » : la banque peut a
 
 Un accord de place signé le 19 janvier 2022 par le ministère de l’Économie, la Banque de France et la Fédération bancaire française permet de restructurer un PGE sous l’égide de la Médiation du crédit. La Banque de France l’a prolongé **jusqu’au 31 décembre 2026**.
 
-**Ce que vous pouvez obtenir** (fiche Service-public.fr PGE) :
-- un allongement de **2 à 4 ans**, soit jusqu’à **10 ans** de durée totale au lieu de 6 ;
-- le **maintien de la garantie de l’État** pendant la durée supplémentaire ;
-- selon les cas, l’étalement de vos autres crédits bancaires et l’absence de prime de garantie sur la durée supplémentaire.
+**Ce que vous pouvez obtenir** (accord de place, art. 6, et fiche Service-public.fr PGE) :
+- un allongement du PGE de **2 ans au plus** dans le cas général, et de **4 ans au plus** si votre situation le justifie particulièrement, soit une durée totale de 8 ans en général et de **10 ans au maximum**, au lieu de 6 ;
+- le **maintien de la garantie de l’État** sur le nouvel échéancier ;
+- selon Service-public.fr, l’absence de prime de garantie sur la durée supplémentaire.
+
+La restructuration ne peut pas réduire le montant du PGE : pas d’abandon de créance, seulement plus de temps. Elle porte aussi sur vos autres crédits bancaires à échéance (hors crédit-bail, affacturage et découvert).
 
 **Les conditions** (toutes requises) :
+- une entreprise de moins de 250 salarié·e·s (chiffre d’affaires de 50 millions d’euros au plus ou total de bilan inférieur à 43 millions) ;
 - des difficultés de trésorerie et de remboursement confirmées par un expert-comptable ou un commissaire aux comptes ;
 - ne pas être en cessation des paiements, et la restructuration doit permettre de redresser l’entreprise ;
 - ne jamais avoir déjà restructuré votre PGE.
 
+**Un effet à connaître :** selon l’accord de place, l’entreprise est ensuite classée « en défaut » par ses banques, comme après une sauvegarde ou un redressement. Obtenir un nouveau crédit devient plus difficile pendant au moins un an.
+
 **La marche à suivre dépend du montant :**
-- **PGE de 50 000 € ou moins** : adressez-vous d’abord à votre banque. Si la situation le justifie, elle vous oriente vers la Médiation du crédit, où vous déposez le dossier en ligne.
-- **PGE de plus de 50 000 €** : contactez le conseiller départemental aux entreprises en difficulté (Finances publiques), qui vous oriente vers la Médiation du crédit ou vers le tribunal.
+- **PGE de 50 000 € ou moins au total** : adressez-vous d’abord à votre banque. Si la situation le justifie, elle vous oriente vers la Médiation du crédit, où vous déposez le dossier en ligne.
+- **PGE de plus de 50 000 €** : la procédure n’est ouverte que par exception. Contactez le conseiller départemental aux entreprises en difficulté (Finances publiques), qui peut vous orienter vers la Médiation du crédit si votre situation le justifie, ou vers le tribunal.
 
 **Le dossier comprend** : l’attestation de l’expert-comptable, un plan de trésorerie à 12 mois, l’état des dettes fiscales et sociales, un élément montrant votre capacité à rebondir (carnet de commandes par exemple) et le document de la banque qui vous oriente vers la médiation.
 
