@@ -47,7 +47,7 @@ Le salarié qui accepte n’est pas « licencié » au sens classique : son cont
 
 **Le salarié**, s’il remplit notamment ces conditions (Unédic) :
 - être visé par un licenciement pour motif économique ;
-- avoir travaillé au moins **88 jours ou 610 heures** au cours des 24 derniers mois (36 derniers mois pour les salarié·e·s de plus de 53 ans, selon l’Unédic) ;
+- avoir travaillé au moins **88 jours ou 610 heures** au cours des 24 derniers mois (36 derniers mois pour les salarié·e·s de 55 ans ou plus, depuis le 1er avril 2025 ; certaines pages de l’Unédic indiquent encore 53 ans, faites confirmer par France Travail) ;
 - ne pas avoir atteint l’âge de la retraite à taux plein et être apte à travailler.
 
 Le CSP ne concerne pas les ruptures conventionnelles. En cas de doute sur la situation d’un·e salarié·e, posez la question à France Travail avant l’entretien.

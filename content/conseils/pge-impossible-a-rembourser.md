@@ -59,7 +59,7 @@ La restructuration ne peut pas réduire le montant du PGE : pas d’abandon de c
 - ne pas être en cessation des paiements, et la restructuration doit permettre de redresser l’entreprise ;
 - ne jamais avoir déjà restructuré votre PGE.
 
-**Un effet à connaître :** selon l’accord de place, l’entreprise est ensuite classée « en défaut » par ses banques, comme après une sauvegarde ou un redressement. Obtenir un nouveau crédit devient plus difficile pendant au moins un an.
+**Un effet à connaître :** selon l’accord de place, l’entreprise est ensuite classée « en défaut » par ses banques, comme après une sauvegarde ou un redressement. Obtenir un nouveau crédit peut alors devenir plus difficile.
 
 **La marche à suivre dépend du montant :**
 - **PGE de 50 000 € ou moins au total** : adressez-vous d’abord à votre banque. Si la situation le justifie, elle vous oriente vers la Médiation du crédit, où vous déposez le dossier en ligne.
