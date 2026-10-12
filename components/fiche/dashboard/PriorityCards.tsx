@@ -30,7 +30,7 @@ function buildExpandedContent(card: PriorityCardMeta, ctx: ContexteCartes): Reac
           </p>
           <ul className="space-y-1.5">
             <li className="flex gap-2"><span className="text-navy/40">→</span>Avocat / mandataire sous 48 h (consultation gratuite possible en point-justice, 3039)</li>
-            <li className="flex gap-2"><span className="text-navy/40">→</span>Formulaire <strong>CERFA 10530</strong> sur service-public.fr</li>
+            <li className="flex gap-2"><span className="text-navy/40">→</span>Formulaire <strong>CERFA 10530*02</strong> sur service-public.fr</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Pièces : K-bis &lt; 3 mois, état actif/passif exigible, comptes annuels, trésorerie &lt; 1 mois, liste créanciers</li>
             <li className="flex gap-2"><span className="text-navy/40">→</span>Dépôt au {tribunal}</li>
           </ul>

@@ -56,7 +56,7 @@ function buildVerdict(dateCessation: Date): Verdict {
         "L'article L631-4 du Code de commerce imposait de demander l'ouverture d'une procédure sous 45 jours (sauf conciliation demandée dans ce délai). Avoir omis sciemment de le faire expose à une interdiction de gérer (art. L653-8) ; en liquidation, le retard peut aussi être retenu comme faute de gestion (art. L651-2). Régularisez SANS attendre : plus le retard s'allonge, plus le risque augmente.",
       actions: [
         "Consultez un avocat ou un mandataire judiciaire dans les 24 h",
-        "Préparez immédiatement la déclaration (formulaire CERFA n°10530)",
+        "Préparez immédiatement la déclaration (formulaire CERFA n°10530*02)",
         "Documentez les raisons du retard (négociations en cours, accident, etc.) — un retard justifié réduit la portée des sanctions",
         "Aucune décision d'engagement ne doit plus être prise sans l'avis du conseil",
       ],
@@ -73,7 +73,7 @@ function buildVerdict(dateCessation: Date): Verdict {
       message: `La déclaration de cessation des paiements doit être déposée au plus tard le ${formatDateFR(echeance)}. Au-delà, une interdiction de gérer peut être prononcée (art. L653-8 C. com.) et le retard peut être retenu comme faute de gestion (art. L651-2).`,
       actions: [
         "Prenez rendez-vous avec un avocat ou un mandataire judiciaire dès aujourd'hui",
-        "Téléchargez le formulaire CERFA 10530 (déclaration de cessation)",
+        "Téléchargez le formulaire CERFA 10530*02 (déclaration de cessation)",
         "Rassemblez : K-bis < 3 mois, état du passif exigible, état de l'actif disponible, comptes annuels, situation de trésorerie < 1 mois",
         "Décidez de la procédure visée (RJ ou LJ) avec votre conseil",
       ],

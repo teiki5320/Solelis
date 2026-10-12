@@ -198,7 +198,7 @@ export default function CoutProceduresPage() {
         <p className="font-display text-base text-navy">Comment financer ces frais</p>
         <ul className="mt-2 list-disc space-y-1.5 pl-5">
           <li>
-            <strong>Aide juridictionnelle</strong> (AJ) : si vos revenus sont faibles, l&apos;avocat est pris en charge totalement ou partiellement.
+            <strong>Aide juridictionnelle</strong> (AJ) : si vos revenus sont faibles, l&apos;avocat est pris en charge totalement ou partiellement. Elle est réservée aux personnes physiques (entrepreneur individuel, ou dirigeant pour ses procédures personnelles) : une société commerciale n&apos;y a pas droit (loi 91-647, art. 2).
             <Link href="/outils/aide-juridictionnelle" className="ml-1 text-bleu-fonce underline">Vérifier mon éligibilité</Link>
           </li>
           <li>

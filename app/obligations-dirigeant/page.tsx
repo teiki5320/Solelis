@@ -25,7 +25,7 @@ interface Obligation {
 const OBLIGATIONS_FAIRE: Obligation[] = [
   {
     titre: 'Déclarer la cessation des paiements dans les 45 jours',
-    description: 'Dès que vous constatez l\'impossibilité de payer vos dettes échues avec votre actif disponible, vous avez 45 jours pour le déclarer au greffe du tribunal (Cerfa 10530).',
+    description: 'Dès que vous constatez l\'impossibilité de payer vos dettes échues avec votre actif disponible, vous avez 45 jours pour le déclarer au greffe du tribunal (Cerfa 10530*02).',
     reference: 'C. com. art. L631-4',
     sanction: 'Si l\'omission est volontaire (« sciemment ») et qu\'aucune conciliation n\'a été demandée : interdiction de gérer jusqu\'à 15 ans (L653-8, L653-11). Le retard peut aussi être retenu comme faute de gestion dans une action en responsabilité pour insuffisance d\'actif (L651-2).',
     delai: '45 jours',
