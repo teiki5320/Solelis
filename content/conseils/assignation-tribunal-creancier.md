@@ -56,7 +56,7 @@ La bonne nouvelle, c'est qu'il reste presque toujours quelque chose à faire ava
 
 Une assignation est un acte remis par un commissaire de justice (anciennement huissier). Elle indique le tribunal, la date et l'heure de l'audience, et surtout **ce que le créancier demande**. Deux cas reviennent le plus souvent.
 
-**1. Une assignation en paiement.** Le créancier demande au tribunal de vous condamner à lui payer une somme. C'est une action classique en recouvrement. Elle est portée devant le tribunal de commerce si vous êtes commerçant·e ou si votre entreprise est une société commerciale, et devant le tribunal judiciaire dans les autres cas (justice.fr).
+**1. Une assignation en paiement.** Le créancier demande au tribunal de vous condamner à lui payer une somme. C'est une action classique en recouvrement. Elle est portée devant le tribunal de commerce si vous êtes commerçant·e ou si votre entreprise est une société commerciale, et en principe devant le tribunal judiciaire dans les autres cas (justice.fr). Dans les 12 villes dotées d'un tribunal des activités économiques depuis 2025, c'est lui qui remplace le tribunal de commerce. Le tribunal saisi est de toute façon indiqué sur l'acte.
 
 **2. Une assignation en redressement ou en liquidation judiciaire.** Le créancier ne demande pas directement à être payé. Il demande au tribunal d'ouvrir une procédure collective, parce qu'il estime que vous êtes en cessation des paiements. La loi l'y autorise, quelle que soit la nature de sa créance (art. L631-5 et L640-5 du Code de commerce). L'acte doit préciser la nature et le montant de la créance et contenir des éléments de preuve de la cessation des paiements (art. R631-2).
 
@@ -72,7 +72,7 @@ En cas d'urgence, le président du tribunal peut réduire ces délais. Dans tous
 
 Le juge statue quand même sur le fond (art. 472 du Code de procédure civile).
 
-Depuis le 1er octobre 2026, une règle nouvelle renforce ce risque. Lorsque l'acte vous a été remis **en mains propres**, le juge peut, en première instance et sauf exceptions, donner raison au créancier dès lors que sa demande est recevable et ne heurte ni l'ordre public ni un droit fondamental (art. 472, pour les instances introduites depuis cette date).
+Depuis le 1er octobre 2026, une règle nouvelle renforce ce risque. Lorsque l'acte vous a été remis **en mains propres**, le juge peut, en première instance et sauf exceptions, donner raison au créancier dès lors que sa demande est recevable et ne heurte ni l'ordre public, ni une liberté protégée, ni un droit fondamental, sans être tenu de vérifier qu'elle est bien fondée (art. 472 modifié par le décret du 27 juillet 2026, pour les instances introduites depuis cette date).
 
 En clair : votre absence peut suffire à vous faire perdre. Venez, ou faites-vous représenter.
 

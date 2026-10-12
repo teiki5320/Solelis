@@ -4,7 +4,7 @@ description: "Délais Urssaf et impôts, CCSF, action sociale du CPSTI, MSA, act
 date: 2026-11-04
 miseAJour: 2026-11-04
 theme: aides
-resume: "Il n’existe plus de grande aide générale comme pendant le Covid : le prêt garanti par l’État n’est plus accordé depuis le 30 juin 2022. Les leviers qui restent ouverts sont surtout des délais de paiement (Urssaf, impôts, CCSF), des aides au cas par cas pour les indépendant·e·s (action sociale du CPSTI, MSA), l’activité partielle pour les salarié·e·s, la médiation du crédit et, pour les dossiers plus lourds, le CODEFI."
+resume: "Il n’existe plus de grande aide générale comme pendant le Covid : le prêt garanti par l’État n’est plus accordé depuis le 30 juin 2022, ni le PGE Résilience depuis le 31 décembre 2023. Les leviers qui restent ouverts sont surtout des délais de paiement (Urssaf, impôts, CCSF), des aides au cas par cas pour les indépendant·e·s (action sociale du CPSTI, MSA), l’activité partielle pour les salarié·e·s, la médiation du crédit et, pour les dossiers plus lourds, le CODEFI."
 sources:
   - titre: "Service-public.fr — Demander une aide du conseil de la protection sociale des travailleurs indépendants (CPSTI) (vérifié le 12 octobre 2026)"
     url: https://entreprendre.service-public.gouv.fr/vosdroits/F38677
@@ -40,19 +40,19 @@ liens:
 ---
 La plupart des « aides d’urgence » ne sont pas des chèques : ce sont **des délais pour payer, des prises en charge de cotisations au cas par cas, ou une aide pour renégocier avec la banque**. Elles sont gratuites, souvent confidentielles, et d’autant plus efficaces que vous les demandez tôt.
 
-Voici ce qui est ouvert à l’automne 2026, d’après les sources officielles vérifiées. Le prêt garanti par l’État (PGE), lui, n’est plus accordé depuis le 30 juin 2022.
+Voici ce qui est ouvert à l’automne 2026, d’après les sources officielles vérifiées. Le prêt garanti par l’État (PGE), lui, n’est plus accordé depuis le 30 juin 2022, et le PGE Résilience depuis le 31 décembre 2023 (fiche Service-public.fr sur le PGE).
 
 ## Étaler vos dettes Urssaf et fiscales
 
 **Cotisations Urssaf.** Vous pouvez demander un échéancier :
-- **entrepreneur·e individuel·le** : en ligne depuis votre espace Urssaf (réponse sous 48 heures d’après Service-public.fr) ou par téléphone au **36 98** (réponse sous 15 jours). Si vous êtes au régime réel, votre déclaration de revenus doit être à jour. La demande de délai vaut aussi demande de remise des majorations de retard ;
+- **entrepreneur·e individuel·le** : en ligne depuis votre espace Urssaf (réponse sous 48 heures d’après Service-public.fr) ou par téléphone au **36 98** ou par courrier (réponse sous 15 jours). Les micro-entrepreneur·e·s ont une fiche Service-public.fr dédiée, mais la demande se fait aussi auprès de l’Urssaf. Si vous êtes au régime réel, votre déclaration de revenus doit être à jour. La demande de délai vaut aussi demande de remise des majorations de retard ;
 - **employeur** : contactez l’Urssaf au **39 57** pour les cotisations de vos salarié·e·s.
 
 Pour les exploitant·e·s agricoles, c’est la **MSA** (caisse locale) qui est compétente ; outre-mer, la **CGSS**.
 
 **Impôts professionnels.** Demandez un plan de règlement par la messagerie sécurisée de votre espace professionnel sur impots.gouv.fr, en joignant les justificatifs. L’administration l’accorde à titre exceptionnel, si vous êtes à jour de vos déclarations et que la difficulté est passagère ; des intérêts de retard restent dus.
 
-**Dettes fiscales et sociales en même temps : la CCSF.** La commission des chefs des services financiers examine en une seule fois un plan pour vos dettes d’impôts et de cotisations. Conditions : être à jour de vos déclarations et de la part salariale des cotisations. La saisine est gratuite et confidentielle ; la décision est prise dans les 2 mois, et le silence vaut refus. La fiche officielle sur la CCSF ne vise pas les micro-entrepreneur·e·s : adressez-vous d’abord à l’Urssaf et à votre service des impôts.
+**Dettes fiscales et sociales en même temps : la CCSF.** La commission des chefs des services financiers examine en une seule fois un plan pour vos dettes d’impôts et de cotisations. Conditions : être à jour de vos déclarations et de la part salariale des cotisations. La saisine est gratuite et confidentielle ; la décision est prise dans les 2 mois, et le silence vaut refus. La fiche Service-public.fr sur la CCSF indique qu’elle ne concerne pas les micro-entrepreneur·e·s : dans ce cas, demandez d’abord un délai à l’Urssaf et à votre service des impôts.
 
 Les démarches pas à pas sont dans [Comment demander un échéancier à l’Urssaf ?](/conseils/echeancier-urssaf), [Dettes fiscales : obtenir un plan de règlement](/conseils/plan-de-reglement-impots) et [La CCSF](/conseils/ccsf-etaler-dettes-fiscales-sociales).
 
@@ -64,7 +64,7 @@ L’Urssaf gère, pour le compte du CPSTI, des aides attribuées au cas par cas 
 - **aide financière exceptionnelle (AFE)** : après un événement grave et imprévu (incendie, accident, perte d’un marché, gros client qui ne paie pas…) ;
 - **aide d’urgence CPSTI** : si votre activité se trouve dans une zone touchée par une catastrophe ou des intempéries, même sans reconnaissance de catastrophe naturelle.
 
-La demande se fait avec le formulaire de l’aide concernée, envoyé depuis la messagerie de votre espace Urssaf. Le [modèle de courrier d’aide d’urgence](/courriers/aide-urgence-social) vous aide à présenter votre situation.
+La demande se fait avec le formulaire de l’aide concernée (ACED, AFE ou aide d’urgence), disponible sur Service-public.fr, à adresser à votre Urssaf avec les justificatifs. La commission décide au cas par cas : ce n’est pas un droit automatique. Le [modèle de courrier d’aide d’urgence](/courriers/aide-urgence-social) vous aide à présenter votre situation.
 
 **Exploitant·e agricole :** la MSA propose une prise en charge partielle de cotisations, des échéanciers et une modulation des appels de cotisations, à demander à votre caisse.
 

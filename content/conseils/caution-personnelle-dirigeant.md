@@ -75,14 +75,14 @@ Votre exposition dépend beaucoup de la procédure dans laquelle se trouve l'ent
 **En sauvegarde.** C'est la situation la plus protectrice :
 
 - pendant la période d'observation, aucune action ne peut être engagée contre vous en tant que caution personne physique (art. L622-28 du Code de commerce) ;
-- vous profitez de l'arrêt des intérêts ;
+- vous profitez de l'arrêt du cours des intérêts, mais seulement pour les prêts de moins d'un an : les intérêts des prêts d'un an ou plus (c'est souvent le cas des crédits bancaires) continuent de courir (art. L622-28) ;
 - une fois le plan adopté, vous pouvez vous prévaloir de ses délais et remises (art. L626-11).
 
 À la fin de l'observation, le tribunal peut encore vous accorder des délais, dans la limite de deux ans (art. L622-28).
 
-**En redressement judiciaire.** Les mêmes règles de suspension et d'arrêt des intérêts s'appliquent pendant la période d'observation (art. L631-14, qui renvoie à l'art. L622-28). Service-public.fr le confirme : la caution ne peut pas être poursuivie pendant cette période.
+**En redressement judiciaire.** Les mêmes règles de suspension des poursuites et d'arrêt des intérêts (avec la même limite pour les prêts d'un an ou plus) s'appliquent pendant la période d'observation (art. L631-14, qui renvoie à l'art. L622-28). La suspension dure jusqu'au jugement qui arrête le plan ou prononce la liquidation.
 
-**En liquidation judiciaire.** La protection disparaît : le texte qui fixe les effets de la liquidation ne reprend ni la suspension des poursuites contre les cautions, ni la possibilité pour elles de profiter de l'arrêt des intérêts (art. L641-3). Selon Service-public.fr, la banque peut vous poursuivre sans attendre. Et la clôture pour insuffisance d'actif ne vous libère pas : la caution reste due.
+**En liquidation judiciaire.** La protection disparaît : le texte qui fixe les effets de la liquidation ne reprend ni la suspension des poursuites contre les cautions, ni la possibilité pour elles de profiter de l'arrêt des intérêts (art. L641-3). La banque peut donc vous poursuivre sans attendre la fin de la liquidation. Et la clôture pour insuffisance d'actif ne vous libère pas : la caution reste due.
 
 Conclusion pratique : **demander une sauvegarde à temps** protège à la fois l'entreprise et le ou la dirigeant·e caution. Voir [la procédure de sauvegarde](/conseils/procedure-de-sauvegarde).
 

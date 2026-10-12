@@ -59,7 +59,7 @@ Attention : si l’entreprise sort du redressement avec un plan, les salaires de
 
 **En liquidation judiciaire** :
 - les sommes dues au jour du jugement ;
-- les ruptures prononcées dans les **15 jours** qui suivent le jugement de liquidation (21 jours si un plan de sauvegarde de l’emploi est élaboré), ou dans les mêmes délais après la fin d’un maintien provisoire de l’activité ;
+- les ruptures prononcées dans les **15 jours** qui suivent le jugement de liquidation (21 jours si un plan de sauvegarde de l’emploi est élaboré), ou pendant un maintien provisoire de l’activité autorisé par le tribunal et dans les mêmes délais après sa fin ;
 - les sommes dues pendant la période d’observation et ces quelques jours, dans la limite d’un mois et demi de travail.
 
 Ces délais sont décisifs : un licenciement prononcé trop tard par le liquidateur peut faire perdre la garantie pour les indemnités.
@@ -82,8 +82,8 @@ Pour estimer les indemnités de votre équipe et les comparer à ces plafonds, u
 
 ## Comment l’argent arrive-t-il aux salarié·e·s ?
 
-1. **Paiement rapide si l’entreprise a un peu de trésorerie.** Les salaires protégés par le « superprivilège » doivent être payés, sur ordonnance du juge-commissaire, dans les **10 jours** du jugement d’ouverture si les fonds le permettent. Avant même que les montants soient vérifiés, une avance d’un mois de salaire peut être versée (art. L625-8 du Code de commerce).
-2. **Sinon, le relevé de créances.** Le mandataire judiciaire établit le relevé des créances salariales, signé avec le représentant des salariés et visé par le juge-commissaire, puis l’envoie à l’AGS.
+1. **Paiement rapide si l’entreprise a un peu de trésorerie.** Les salaires protégés par le « superprivilège » doivent être payés, sur ordonnance du juge-commissaire, dans les **10 jours** du jugement d’ouverture si les fonds le permettent. Avant même que les montants soient vérifiés, une avance d’un mois de salaire impayé doit être versée, avec l’autorisation du juge-commissaire et dans la mesure des fonds disponibles (art. L625-8 du Code de commerce).
+2. **Sinon, le relevé de créances.** Le mandataire judiciaire établit le relevé des créances salariales. Il est signé par le mandataire et par le représentant des salariés, visé par le juge-commissaire, puis transmis à l’AGS.
 3. **L’AGS paie le mandataire** dans les **5 jours** suivant la réception du relevé pour les salaires et congés payés (8 jours pour les mesures d’un plan de sauvegarde de l’emploi).
 4. **Le mandataire reverse immédiatement** les sommes aux salarié·e·s.
 

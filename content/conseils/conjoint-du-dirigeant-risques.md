@@ -58,7 +58,7 @@ C’est souvent là que tout se joue : un simple accord écrit du conjoint, au m
 
 **Séparation de biens.** Chacun reste propriétaire de ses biens et répond seul de ses dettes, à l’exception des dettes de la vie courante du ménage, pour lesquelles les époux restent solidaires quel que soit leur régime. Attention aux biens achetés ensemble : ils sont en indivision. Vos créanciers personnels ne peuvent pas saisir directement votre part, mais ils peuvent provoquer le partage en votre nom (art. 815-17 du Code civil) ; votre conjoint peut l’arrêter en payant la dette à votre place.
 
-**Pacs.** Depuis 2007, sauf choix contraire, les partenaires sont en séparation des patrimoines. Vous êtes solidaires des dettes de la vie courante (sauf dépenses manifestement excessives), mais pas des dettes professionnelles ni des emprunts importants souscrits sans votre accord (fiche Service-public.fr « Effets d’un Pacs »).
+**Pacs.** Depuis 2007, sauf choix contraire, les partenaires sont en séparation des patrimoines. Vous êtes solidaires des dettes contractées pour les besoins de la vie courante (sauf dépenses manifestement excessives). Pour un emprunt, vous n’êtes solidaire que s’il porte sur une somme modeste nécessaire à la vie courante ou si vous avez donné votre accord (fiche Service-public.fr « Effets d’un Pacs »). Les dettes de l’entreprise de votre partenaire ne font pas partie de ces dettes de la vie courante.
 
 **Concubinage.** Il n’y a pas de solidarité entre concubins : chacun ne répond que des dettes pour lesquelles il s’est engagé (fiche Service-public.fr F14485).
 
@@ -70,7 +70,7 @@ Les époux et les partenaires de Pacs imposés ensemble forment un seul foyer fi
 
 Oui. Service-public.fr distingue trois statuts pour le conjoint (ou partenaire de Pacs, ou concubin) qui travaille régulièrement dans l’entreprise :
 
-- **Conjoint collaborateur** : il n’est pas rémunéré et n’a pas de responsabilité financière dans l’entreprise. Ce statut est limité à 5 ans. Ceux qui l’ont obtenu entre 2017 et 2022 peuvent le garder au plus tard jusqu’au **31 décembre 2026** (une dérogation existe pour les personnes nées en 1964 ou avant) : si c’est votre cas, faites le point dès maintenant sur le statut qui suivra.
+- **Conjoint collaborateur** : il n’est pas rémunéré et n’a pas de responsabilité financière dans l’entreprise. Ce statut est limité à 5 ans. Ceux qui l’ont obtenu entre 2017 et 2022 peuvent le garder au plus tard jusqu’au **31 décembre 2026** (les personnes nées en 1964 ou avant peuvent le garder jusqu’à 67 ans). Sans nouveau choix, le conjoint passe automatiquement au statut de **conjoint salarié**, ce qui suppose un salaire et des cotisations : si c’est votre cas, faites le point dès maintenant sur le statut qui suivra.
 - **Conjoint salarié** : il a un contrat de travail et un salaire. Il n’a pas de responsabilité financière et, comme tout salarié, il peut bénéficier de l’assurance chômage. En cas de procédure collective, ses salaires impayés peuvent être avancés par l’AGS (voir [Payer les salaires quand l’entreprise ne peut plus : l’AGS](/conseils/ags-salaires-entreprise-en-difficulte)).
 - **Conjoint associé** : sa responsabilité est limitée à son apport au capital, sauf dans une société en nom collectif (SNC), où elle est illimitée.
 

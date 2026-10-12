@@ -94,7 +94,7 @@ Selon Service-public.fr, si vos dettes personnelles sont bien distinctes, elles 
 Deux règles vous concernent directement :
 
 - en liquidation, une procédure **simplifiée** s'applique dès lors que vous n'avez pas de bien immobilier, et votre résidence principale n'y fait pas obstacle (art. L641-2) ;
-- si votre actif est très faible et que vous n'avez pas eu de salarié depuis 6 mois, le **rétablissement professionnel** peut effacer vos dettes sans liquidation.
+- si votre actif est très faible et que vous n'avez pas eu de salarié depuis 6 mois, le **rétablissement professionnel** peut effacer la plupart de vos dettes professionnelles sans liquidation.
 
 ## Que faire maintenant ?
 

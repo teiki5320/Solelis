@@ -4,7 +4,7 @@ description: "Qui doit le proposer, quand, à qui, ce qu’il coûte à l’entr
 date: 2026-11-02
 miseAJour: 2026-11-02
 theme: salaries
-resume: "Le CSP doit être proposé à chaque salarié·e licencié·e pour motif économique dans une entreprise de moins de 1 000 salarié·e·s, ou dans toute entreprise en redressement ou en liquidation judiciaire. La personne a 21 jours pour l’accepter : son contrat prend alors fin sans préavis, et France Travail lui verse pendant 12 mois au plus une allocation de 75 % de son salaire journalier de référence si elle a au moins un an d’ancienneté. Oublier de le proposer coûte 2 à 3 mois de salaire à l’entreprise."
+resume: "Le CSP doit être proposé à chaque salarié·e licencié·e pour motif économique dans une entreprise de moins de 1 000 salarié·e·s, ou dans toute entreprise en redressement ou en liquidation judiciaire. La personne a 21 jours pour l’accepter : son contrat prend alors fin sans préavis, et France Travail lui verse pendant 12 mois (sauf prolongation dans certains cas) une allocation de 75 % de son salaire journalier de référence si elle a au moins un an d’ancienneté. Oublier de le proposer coûte 2 à 3 mois de salaire à l’entreprise."
 sources:
   - titre: "Code du travail, art. L1233-66 (proposition du CSP, contribution en cas d’oubli)"
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000031013988
@@ -47,7 +47,7 @@ Le salarié qui accepte n’est pas « licencié » au sens classique : son cont
 
 **Le salarié**, s’il remplit notamment ces conditions (Unédic) :
 - être visé par un licenciement pour motif économique ;
-- avoir travaillé au moins **88 jours ou 610 heures** au cours des 24 derniers mois (la période de référence est plus longue pour les salarié·e·s âgé·e·s : France Travail vous confirmera la règle applicable) ;
+- avoir travaillé au moins **88 jours ou 610 heures** au cours des 24 derniers mois (36 derniers mois pour les salarié·e·s de plus de 53 ans, selon l’Unédic) ;
 - ne pas avoir atteint l’âge de la retraite à taux plein et être apte à travailler.
 
 Le CSP ne concerne pas les ruptures conventionnelles. En cas de doute sur la situation d’un·e salarié·e, posez la question à France Travail avant l’entretien.

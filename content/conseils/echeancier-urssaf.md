@@ -16,6 +16,8 @@ sources:
     url: https://www.urssaf.fr/accueil/aide-cas-difficultes/demander-remise-majoration.html
   - titre: "Code de la sécurité sociale, art. R243-16 (majorations de retard)"
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000039222580
+  - titre: "Service-public.fr — Obtenir des délais de paiement pour ses cotisations sociales personnelles (entrepreneur individuel) (vérifié le 12 octobre 2026)"
+    url: https://entreprendre.service-public.gouv.fr/vosdroits/F38672
   - titre: "Service-public.fr — Obtenir des délais de paiement auprès de la CCSF (vérifié le 12 octobre 2026)"
     url: https://entreprendre.service-public.gouv.fr/vosdroits/F38326
 liens:
@@ -89,9 +91,11 @@ Si votre dossier est incomplet, l'URSSAF vous recontacte dans le même délai po
 
 ## Un échéancier supprime-t-il les majorations ?
 
-Non. L'accord de délai ne vous dispense pas des **majorations de retard** : 5 % des cotisations dues, plus 0,20 % par mois ou fraction de mois (art. R243-16 du Code de la sécurité sociale).
+Pas automatiquement. En principe, un retard entraîne des **majorations de retard** : 5 % des cotisations dues, plus 0,20 % par mois ou fraction de mois (art. R243-16 du Code de la sécurité sociale).
 
-Vous pouvez en revanche demander leur **remise** en même temps que le délai. Selon urssaf.fr, elle sera examinée quand toutes vos cotisations auront été payées. Si vous ne la demandez pas, ces sommes restent dues.
+Il existe toutefois une exception, au titre du « droit à l'erreur ». Selon urssaf.fr, aucune majoration n'est appliquée si toutes ces conditions sont remplies : vos déclarations sont à jour, vous n'avez eu aucun retard de paiement dans les 24 derniers mois, le montant des pénalités et majorations est inférieur au plafond mensuel de la Sécurité sociale, et vous payez dans les 30 jours ou obtenez un délai de paiement.
+
+Sinon, vous pouvez demander la **remise** des majorations en même temps que le délai. Selon urssaf.fr, elle sera examinée quand toutes vos cotisations auront été payées ; si vous ne la demandez pas, ces sommes restent dues. Pour les entrepreneur·e·s individuel·le·s, Service-public.fr précise que la demande de délai vaut aussi demande de remise : la mentionner expressément ne coûte rien.
 
 Autre point à connaître : l'URSSAF peut vous adresser une mise en demeure même après un accord. Cela ne remet pas en cause votre échéancier : c'est une garantie pour elle.
 

@@ -40,7 +40,7 @@ Elle examine votre situation avec chaque créancier public et arrête un **plan 
 
 Selon service-public.fr, toute entreprise, société ou entreprise individuelle, qui exerce une activité commerciale, artisanale, libérale ou agricole. Un mandataire peut aussi le faire pour elle.
 
-La fiche officielle précise qu'elle ne concerne pas les micro-entrepreneur·e·s. Si vous êtes dans ce cas, adressez-vous directement à l'URSSAF (36 98) et à votre service des impôts.
+La fiche de service-public.fr sur la CCSF indique qu'elle ne concerne pas les micro-entrepreneur·e·s. Si vous êtes dans ce cas, le plus simple est de demander d'abord un délai directement à l'URSSAF (36 98) et à votre service des impôts.
 
 ## Quelles sont les conditions ?
 

@@ -36,6 +36,8 @@ sources:
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000037823269
   - titre: Code de commerce, art. R661-1 (exécution provisoire)
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000039624420
+  - titre: "economie.gouv.fr — Dirigeant : dans quels cas votre responsabilité civile ou pénale peut-elle être engagée ? (consulté le 12 octobre 2026)"
+    url: https://www.economie.gouv.fr/entreprises/gerer-son-entreprise-au-quotidien/dirigeant-dans-quels-cas-votre-responsabilite-civile
   - titre: Service-public.fr — Redressement judiciaire d'une société (vérifié le 12 octobre 2026)
     url: https://entreprendre.service-public.gouv.fr/vosdroits/F37434
 liens:
@@ -74,7 +76,7 @@ Les dirigeant·e·s « de fait », qui dirigeaient sans en avoir le titre, sont 
 
 Depuis 2022, la règle vaut aussi pour l'entrepreneur·e individuel·le en liquidation : la somme mise à sa charge est alors payée sur son patrimoine personnel. Voir [entrepreneur individuel : votre patrimoine est-il protégé ?](/conseils/entrepreneur-individuel-patrimoine-protege).
 
-À titre d'exemple, Service-public.fr cite la déclaration tardive de la cessation des paiements qui a aggravé le passif.
+À titre d'exemple, economie.gouv.fr rappelle que la Cour de cassation considère que ne pas déclarer la cessation des paiements constitue bien une faute de gestion (arrêts du 5 février 2020 et du 3 février 2021). Encore faut-il, pour qu'une condamnation soit possible, que cette faute ait contribué à l'insuffisance d'actif.
 
 Quelques repères :
 
