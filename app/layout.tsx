@@ -73,6 +73,7 @@ const JSON_LD = {
 const PLAUSIBLE_INIT = `window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)};(function(){var d;function v(){var p=location.pathname.replace(/^\\/fiche\\/[^/]+/,'/fiche/[token]');var u=location.origin+p;if(u===d)return;d=u;window.plausible('pageview',{u:u})}var h=history,a=h.pushState,b=h.replaceState;h.pushState=function(){a.apply(h,arguments);v()};h.replaceState=function(){b.apply(h,arguments);v()};window.addEventListener('popstate',v);v()})();`;
 
 const PIED_DE_PAGE = [
+  { href: '/conseils', label: 'Conseils' },
   { href: '/confidentialite', label: 'Confidentialité' },
   { href: '/parler', label: 'Parler à quelqu\'un' },
   { href: '/temoignages', label: 'Exemples de parcours' },

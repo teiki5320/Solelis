@@ -22,6 +22,8 @@ const config = [
       'test-results/**',
       'next-env.d.ts',
       'public/sw.js',
+      // Généré au build depuis content/conseils/*.md (npm run conseils).
+      'lib/conseils/donnees.generated.ts',
       // Copies de travail des assistants (déjà exclues des tests et du typage).
       '.claude/**',
     ],

@@ -28,9 +28,9 @@ describe('sitemap', () => {
     for (const c of COURRIERS) expect(urls).toContain(`https://solelis.com/courriers/${c.slug}`);
   });
 
-  it('exclut /questionnaire et utilise une date fixe', () => {
+  it('exclut /questionnaire et utilise une date fixe (hors articles Conseils, datés un par un)', () => {
     expect(urls).not.toContain('https://solelis.com/questionnaire');
-    const dates = new Set(sitemap().map((e) => String(e.lastModified)));
+    const dates = new Set(sitemap().filter((e) => !e.url.includes('/conseils')).map((e) => String(e.lastModified)));
     expect(dates.size).toBe(1);
   });
 });
