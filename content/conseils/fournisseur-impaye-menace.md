@@ -54,14 +54,16 @@ Plusieurs étapes, de la plus douce à la plus lourde.
 
 Ne la laissez pas de côté. Vous disposez d'**un mois** à compter de la signification de l'ordonnance pour former **opposition** (art. 1416 du Code de procédure civile).
 
-Selon justice.fr, l'opposition se fait auprès de la juridiction qui a rendu l'ordonnance :
+Si l'ordonnance ne vous a pas été remise en main propre, le délai part du premier acte qui vous est signifié à personne ou, à défaut, de la première saisie qui bloque vos biens (même article).
 
-- au **tribunal de commerce** : par formulaire ou lettre simple, via le service en ligne Tribunal digital, par lettre recommandée avec accusé de réception, ou par dépôt au greffe ;
-- au **tribunal judiciaire** : par formulaire Cerfa n° 15602 ou lettre simple, en recommandé ou au greffe.
+Selon justice.fr, l'opposition se fait auprès du greffe de la juridiction qui a rendu l'ordonnance, sur le formulaire prévu ou sur papier libre :
+
+- au **tribunal de commerce** : envoyée en recommandé avec accusé de réception, déposée au greffe contre récépissé, ou transmise en ligne via le service Tribunal digital ;
+- au **tribunal judiciaire** : avec le formulaire Cerfa n° 15602, envoyé en recommandé avec accusé de réception ou déposé au greffe.
 
 Joignez la copie de l'ordonnance et de l'acte de signification. L'opposition est suspensive : vous n'avez pas à payer tant qu'elle est en cours. Une audience est ensuite organisée, où chacun s'explique.
 
-Sans opposition, le fournisseur peut faire rendre l'ordonnance exécutoire et engager des saisies.
+Sans opposition dans le délai, le fournisseur peut demander que l'ordonnance soit rendue exécutoire, puis engager des saisies.
 
 Faire opposition n'a de sens que si vous contestez la dette, son montant ou les pénalités, ou si vous voulez demander des délais au juge. C'est souvent le moment de proposer un échéancier.
 
@@ -88,7 +90,7 @@ Le bon réflexe : faire le point sur l'ensemble de vos dettes avant de choisir q
 C'est un signal à prendre au sérieux. Deux outils permettent de négocier avec **tous les créanciers à la fois**, dans un cadre confidentiel :
 
 - le **mandat ad hoc**, si l'entreprise n'est pas en cessation des paiements : voir [Mandat ad hoc : pour qui, comment, combien ça coûte ?](/conseils/mandat-ad-hoc) ;
-- la **conciliation**, possible même en cessation des paiements depuis moins de 45 jours. Pendant une conciliation, un créancier ne peut pas demander l'ouverture d'un redressement ou d'une liquidation judiciaire (art. L631-5 et L640-5 du Code de commerce). Voir [La conciliation : une procédure confidentielle](/conseils/procedure-de-conciliation).
+- la **conciliation**, possible même en cessation des paiements depuis 45 jours au plus. Pendant une conciliation, un créancier ne peut pas demander l'ouverture d'un redressement ou d'une liquidation judiciaire (art. L631-5 et L640-5 du Code de commerce). Voir [La conciliation : une procédure confidentielle](/conseils/procedure-de-conciliation).
 
 Si vous ne pouvez plus payer vos dettes exigibles, lisez [Cessation des paiements : définition et délai de 45 jours](/conseils/cessation-des-paiements-delai-45-jours) : le délai pour agir est court.
 

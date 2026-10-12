@@ -8,6 +8,8 @@ resume: "La Médiation du crédit aide gratuitement et confidentiellement toute 
 sources:
   - titre: "Banque de France — Saisir la Médiation du crédit (consulté le 12 octobre 2026)"
     url: https://www.banque-france.fr/fr/a-votre-service/entreprises/saisir-mediation-credit
+  - titre: "Banque de France — Accord de place du 19 janvier 2022 sur les restructurations de PGE (texte de l’accord)"
+    url: https://www.banque-france.fr/system/files/2024-10/accord-de-place-du-19-janvier-2022.pdf
   - titre: "Code monétaire et financier, art. L313-12 (réduction ou interruption d’un concours bancaire, préavis de 60 jours)"
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000027643288
   - titre: "Code de commerce, art. L611-4 (conditions de la conciliation)"
@@ -85,7 +87,7 @@ La médiation ne force pas la banque. En 2025, la Banque de France indique un ta
 
 ## Et pour un PGE trop lourd ?
 
-La Médiation du crédit est aussi le cadre de la **restructuration des PGE** : allongement de 2 à 4 ans (jusqu’à 10 ans au total) avec maintien de la garantie de l’État, une seule fois, si vos difficultés sont attestées par un expert-comptable et que vous n’êtes pas en cessation des paiements. L’accord de place qui l’organise est prolongé jusqu’au **31 décembre 2026**. Pour un PGE de plus de 50 000 €, il faut d’abord contacter le conseiller départemental aux entreprises en difficulté. Tout est détaillé dans [PGE impossible à rembourser : quelles solutions ?](/conseils/pge-impossible-a-rembourser).
+La Médiation du crédit est aussi le cadre de la **restructuration des PGE** : allongement de 2 ans en général, 4 ans au plus si c’est particulièrement justifié (10 ans au total), avec maintien de la garantie de l’État, une seule fois. Il faut notamment avoir moins de 250 salarié·e·s, des difficultés attestées par un expert-comptable ou un commissaire aux comptes, et ne pas être en cessation des paiements. L’entreprise est ensuite classée « en défaut » par ses banques. L’accord de place qui l’organise est prolongé jusqu’au **31 décembre 2026**. Pour un PGE de plus de 50 000 €, la procédure n’est possible que par exception : il faut d’abord contacter le conseiller départemental aux entreprises en difficulté (Finances publiques). Tout est détaillé dans [PGE impossible à rembourser : quelles solutions ?](/conseils/pge-impossible-a-rembourser).
 
 ## Médiation du crédit ou conciliation : comment choisir ?
 

@@ -55,7 +55,7 @@ Deux conditions doivent être réunies (art. L620-1) :
 - **ne pas être en cessation des paiements**, c'est-à-dire pouvoir encore payer les dettes arrivées à échéance avec l'argent disponible ;
 - **justifier de difficultés que vous n'êtes pas en mesure de surmonter** seul·e : un gros client qui ne paie plus, un procès coûteux, une banque qui refuse de renouveler un crédit…
 
-Si le tribunal estime que vous êtes en mesure de surmonter vos difficultés, il vous invite plutôt à demander une conciliation (art. L621-1).
+Si votre situation ne fait pas apparaître de difficultés que vous ne pourriez pas surmonter, le tribunal vous invite plutôt à demander une conciliation (art. L621-1).
 
 Seul·e le ou la dirigeant·e peut déposer la demande : le ou la représentant·e légal·e pour une société, l'entrepreneur·e pour une entreprise individuelle. Ni un créancier ni le procureur ne peuvent vous imposer une sauvegarde.
 
@@ -72,8 +72,8 @@ Dès le jugement d'ouverture, plusieurs protections s'appliquent automatiquement
 
 Si vous êtes caution personnelle des dettes de l'entreprise, la sauvegarde vous protège aussi :
 
-- pendant la période d'observation, le créancier ne peut pas vous poursuivre en tant que caution (art. L622-28) ;
-- vous profitez de l'arrêt des intérêts ;
+- le créancier ne peut pas vous poursuivre en tant que caution jusqu'au jugement qui arrête le plan ou prononce la liquidation (art. L622-28) ;
+- vous profitez de l'arrêt des intérêts, sauf pour les prêts conclus pour un an ou plus, dont les intérêts continuent de courir (art. L622-28) ;
 - une fois le plan adopté, vous pouvez vous prévaloir de ses délais et remises en tant que caution personne physique (art. L626-11).
 
 Enfin, les sanctions personnelles les plus lourdes, comme la faillite personnelle ou l'interdiction de gérer, ne sont prévues qu'en redressement ou en liquidation judiciaire (art. L653-1). Agir tôt vous protège donc aussi personnellement.
@@ -104,7 +104,7 @@ La sauvegarde a aussi des limites, qu'il vaut mieux connaître avant de se lance
 
 ## Comment se déroule la procédure ?
 
-1. **La demande.** Vous déposez au greffe un dossier avec, notamment, les comptes du dernier exercice, une situation de trésorerie, un compte de résultat prévisionnel, l'état chiffré des créances et des dettes, l'inventaire sommaire des biens et une attestation sur l'honneur sur l'absence de mandat ad hoc ou de conciliation dans les 18 derniers mois (liste détaillée sur Service-public.fr).
+1. **La demande.** Vous déposez au greffe un dossier avec, notamment, les comptes du dernier exercice, une situation de trésorerie, un compte de résultat prévisionnel, l'état chiffré des créances et des dettes, l'inventaire sommaire des biens et une attestation sur l'honneur indiquant si l'entreprise a eu un mandat ad hoc ou une conciliation dans les 18 derniers mois (liste détaillée sur Service-public.fr). Un tel antécédent n'empêche pas la sauvegarde : la demande est alors examinée en présence du procureur (art. L621-1).
 2. **L'audience.** Le tribunal vous entend en chambre du conseil, c'est-à-dire hors de la présence du public, ainsi que les représentant·e·s du comité social et économique s'il existe (art. L621-1).
 3. **Le jugement d'ouverture.** Le tribunal nomme un juge-commissaire, un mandataire judiciaire et, si besoin, un administrateur judiciaire.
 4. **La déclaration des créances.** Vos créanciers ont deux mois à compter de la publication du jugement au BODACC pour déclarer leurs créances au mandataire judiciaire (art. R622-24). Il s'appuie sur la liste de créanciers jointe à votre demande : veillez à ce qu'elle soit complète.

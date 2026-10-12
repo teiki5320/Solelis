@@ -9,7 +9,7 @@ sources:
   - titre: "Code de commerce, art. L653-11 (durée maximale de la faillite personnelle et de l’interdiction de gérer)"
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000019984708
   - titre: "Code de commerce, art. L643-11 (effets de la clôture pour insuffisance d’actif)"
-    url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000035949929
+    url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046811404
   - titre: "Code de commerce, art. L681-2 (nouvelle activité de l’entrepreneur individuel pendant la liquidation)"
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000045170929
   - titre: "Banque de France — Comprendre la cotation et l’indicateur dirigeant (consulté le 12 octobre 2026)"
@@ -59,7 +59,7 @@ Ces sanctions ne sont pas automatiques : elles supposent des fautes précises. P
 - certaines dettes restent dues malgré la clôture, par exemple celles nées d’une infraction pénale ou de fraudes aux organismes sociaux ;
 - une condamnation personnelle à combler l’insuffisance d’actif reste à payer.
 
-Si vous êtes entrepreneur·e individuel·e, sans salarié et avec peu de biens, le [rétablissement professionnel](/conseils/retablissement-professionnel) peut effacer vos dettes professionnelles sans passer par une liquidation complète.
+Si la liquidation n’a pas encore été prononcée et que vous êtes entrepreneur·e individuel·le, sans salarié depuis 6 mois et avec moins de 15 000 € d’actif, le [rétablissement professionnel](/conseils/retablissement-professionnel) peut effacer vos dettes sans liquidation.
 
 ## Serez-vous « fiché·e » à la Banque de France ?
 
@@ -88,7 +88,7 @@ Une liquidation est souvent vécue comme un deuil. Prenez le temps qu’il faut 
 
 ## Que faire maintenant ?
 
-1. **Vérifiez qu’aucun jugement n’a prononcé contre vous** une faillite personnelle ou une interdiction de gérer : sinon, rien ne vous empêche de recréer.
+1. **Vérifiez si un jugement a prononcé contre vous** une faillite personnelle ou une interdiction de gérer : si ce n’est pas le cas, rien ne vous empêche de recréer.
 2. **Faites la liste de vos cautions personnelles** et des sommes que les banques pourraient vous réclamer.
 3. **Inscrivez-vous à France Travail** et vérifiez vos droits à l’ATI sans attendre.
 4. **Ouvrez un compte bancaire**, au besoin avec la procédure du droit au compte.
