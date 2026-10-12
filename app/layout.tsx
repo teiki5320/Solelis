@@ -98,6 +98,8 @@ export default function RootLayout({
           }}
         />
         <link rel="manifest" href="/manifest.json" />
+        {/* Nouvelle adresse d'icône : oblige Google à abandonner l'ancien favicon AVELOR gardé en cache. */}
+        <link rel="icon" href="/icons/solelis-favicon-96.png" type="image/png" sizes="96x96" />
         <link rel="icon" href="/favicon.ico" sizes="48x48" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
