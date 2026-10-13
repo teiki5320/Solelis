@@ -1,6 +1,6 @@
 # INFRA — fiche technique
 
-> Mise à jour le 12 octobre 2026 (sections au nom du Lexique, nom de domaine ajouté, mesure d'audience non active en production).
+> Mise à jour le 13 octobre 2026 (rubrique Conseils : articles générés au build et publiés par date, sans nouveau service ; mesure d'audience toujours inactive en production).
 > Aucun secret dans cette fiche — uniquement des références (noms de variables, consoles).
 
 ## Vue d'ensemble
@@ -12,8 +12,9 @@
 - **Base de données** : Cloudflare D1 « solelis » (juridiction UE), binding `DB`, schéma dans `migrations/`
 - **E-mail** : Resend (liens magiques + rappels quotidiens)
 - **Données d'entreprise** : API Recherche d'entreprises (serveur et navigateur), BODACC, INSEE Sirene en secours, Google Places pour les avocats
+- **Contenus** : rubrique Conseils — articles Markdown dans `content/conseils/`, convertis au build par `scripts/generer-conseils.ts` (lancé avant `dev`, `build`, `test` et dans la CI) ; `/conseils`, `/conseils/rss.xml` et `/sitemap.xml` sont rendus à la requête et n'affichent que les articles dont la date est passée (heure de Paris), ce qui publie les articles programmés sans redéploiement. Aucun service externe
 - **Tâche planifiée** : Cron Trigger Cloudflare chaque jour à 7 h UTC → `GET /api/cron/rappels`
-- **CI** : GitHub Actions (lint → TypeScript → build → tests → build OpenNext) à chaque push/PR vers `main`
+- **CI** : GitHub Actions (génération des Conseils → lint → TypeScript → build → tests → build OpenNext) à chaque push/PR vers `main`
 
 ## GitHub
 
@@ -71,7 +72,7 @@ Quatre sources, toutes appelées depuis le code (`lib/`) :
 ## Analytics (mesure d'usage) — non souscrit
 
 - **Prévu** : Plausible, sans cookies ; le script n'est chargé que si `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` est définie (`app/layout.tsx`). Mode manuel : adresses envoyées sans paramètres, `/fiche/<token>` remplacé par `/fiche/[token]`
-- **État le 12 octobre 2026** : aucun script de mesure sur https://solelis.com — la variable n'est pas définie en production et aucun compte n'est souscrit
+- **État le 13 octobre 2026** : aucun script de mesure sur https://solelis.com — la variable n'est pas définie en production et aucun compte n'est souscrit
 - **Console** : https://plausible.io
 - **Coût** : payant — à souscrire si besoin
 

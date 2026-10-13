@@ -1,15 +1,16 @@
 # PUBLICATION — état de la mise en ligne
 
-> Mise à jour le 12 octobre 2026 (domaine enregistré chez Cloudflare, mesure d'audience non active, contrôle en ligne du jour).
+> Mise à jour le 13 octobre 2026 (rubrique Conseils en ligne, sitemap de 90 adresses, site déclaré dans Search Console, contrôle en ligne du jour).
 
 ## Vue d'ensemble
 
-- **État** : ⏸️ projet en pause — le site reste en ligne et répond (contrôle du 12 octobre 2026)
+- **État** : ⏸️ projet en pause — le site reste en ligne et répond (contrôle du 13 octobre 2026)
 - **URL publique** : https://solelis.com (titre « Solelis — Aide aux chefs d'entreprise en difficulté »)
 - **Hébergeur** : Cloudflare Workers (Worker « solelis », adaptateur OpenNext)
 - **Base** : Cloudflare D1 « solelis » (UE)
 - **Domaine + SSL** : solelis.com, enregistré chez Cloudflare, déclaré comme domaine personnalisé du Worker (`wrangler.jsonc`) ; certificat géré automatiquement par Cloudflare
 - **Contact public** : solelis@toakeur.com (mentions légales, confidentialité, politique de données, accessibilité, témoignages)
+- **Ancienne adresse** : avelor.toakeur.com redirige (301) vers https://solelis.com (constaté le 13 octobre 2026)
 - **Dernière mise en production** : à lire dans la console Cloudflare (Worker → Déploiements)
 
 ### 1. Web · Production
@@ -22,14 +23,16 @@
 
 ### 2. Domaine & SSL
 
-- **Domaines servis** : `solelis.com` et `www.solelis.com` (redirection permanente 301 vers `solelis.com` dans `worker.ts`, constatée le 12 octobre 2026)
+- **Domaines servis** : `solelis.com` et `www.solelis.com` (redirection permanente 301 vers `solelis.com` dans `worker.ts`, constatée le 13 octobre 2026)
 - **SSL** : automatique (Cloudflare)
 - **Registrar / échéance** : Cloudflare ; domaine enregistré le 10 octobre 2026, échéance le 10 octobre 2027 (renouvellement automatique à vérifier dans la console)
 - **E-mail** : une clé DKIM Resend est publiée sur `toakeur.com` ; vérification du domaine d'envoi et réglage de `RESEND_FROM` à vérifier dans la console Resend
 
 ### 3. Visibilité
 
-- **Indexation** : `app/sitemap.ts` (servi sur `/sitemap.xml`, 138 adresses le 12 octobre 2026) et `app/robots.ts` (bloque `/api/` et `/fiche/`, autorise `/api/og`) ; déclaration dans Google Search Console encore à faire d'après `_plans/roadmap.md` (à vérifier dans la console)
+- **Indexation** : `app/sitemap.ts` (servi sur `/sitemap.xml`, rendu à la requête : 90 adresses le 13 octobre 2026, dont 21 pour la rubrique Conseils) et `app/robots.ts` (bloque `/api/` et `/fiche/`, autorise `/api/og`)
+- **Google Search Console** : domaine solelis.com déclaré, sitemap envoyé le 12 octobre 2026 (sans erreur, lecture en attente) ; 28 pages indexées sur 69 suivies, les 41 autres encore inconnues de Google (relevé du Studio, onglet Indexation)
+- **Rubrique Conseils** : https://solelis.com/conseils et son flux https://solelis.com/conseils/rss.xml répondent ; 20 articles publiés le 12 octobre 2026, 10 programmés du 19 octobre au 9 novembre 2026, qui paraîtront d'eux-mêmes à leur date
 - **Balises de partage** : Open Graph + Twitter Card par page (titre et description propres à chaque page), image générée dynamiquement par `/api/og` (runtime Node), URL canonique sur les pages qui la déclarent (`ogMeta({ chemin })`), JSON-LD Organization + WebSite (+ FAQPage, fil d'Ariane)
 - **Mesure d'audience** : aucune en production — Plausible est prévu dans le code mais ne se charge que si `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` est définie, ce qui n'est pas le cas
-- **PWA** : `manifest.json` + icônes 512/192/favicon — installable sur mobile
+- **PWA** : `manifest.json` + icônes 512/192/favicon — installable sur mobile ; favicon Solelis servi sous une nouvelle adresse (`/icons/solelis-favicon-96.png`) pour que Google remplace l'ancienne icône
