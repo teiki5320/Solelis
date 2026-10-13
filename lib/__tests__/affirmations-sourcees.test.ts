@@ -87,6 +87,13 @@ const INTERDITS: { re: RegExp; pourquoi: string }[] = [
   { re: /Jennings-Kilmaine/, pourquoi: 'TC de Tarascon : allée du Général-Jennings-de-Kilmaine (greffe-tc-tarascon.fr)' },
   { re: /— 2 mois pour les (ventes|cessions) conclues avant/, pourquoi: 'loi n° 2026-403, art. 22 II : ancien régime (2 mois, 2 %) présenté au passé' },
   { re: /IEOM · Correspondant TPE-PME|Correspondant TPE-PME IEOM/, pourquoi: 'ieom.fr : « accompagnement des entreprises », pas de correspondant TPE-PME confirmé' },
+  // Cohérence site / articles conseils (octobre 2026)
+  { re: /6 mois si ≤ 1 salarié et CA HT ≤ 300|6 mois \(1 salarié au plus et CA HT de 300/, pourquoi: 'liquidation simplifiée : un an seulement si plus d’1 salarié ET plus de 300 000 € de CA HT (C. com. L644-5, D641-10)' },
+  { re: /L313-22[^.]{0,40}cautions antérieures|anciens art\. L332-1 et L333-2/, pourquoi: 'information annuelle de la caution : art. 2302 à 2304 C. civ. applicables à toutes les cautions depuis 2022 (ordonnance 2021-1192, art. 37 III)' },
+  { re: /dettes de la société sont éteintes|oui pour la société, mais pas pour le dirigeant/, pourquoi: 'clôture pour insuffisance d’actif : pas d’extinction, les créanciers ne recouvrent pas leur droit de poursuite (C. com. L643-11)' },
+  { re: /dès le lendemain de la clôture|recréer immédiatement après la clôture|Après clôture de la liquidation, vous êtes libre/, pourquoi: 'rien n’oblige à attendre la clôture ; nouvelle activité possible pendant la liquidation pour l’EI (C. com. L681-2)' },
+  { re: /Cerfa\s*(n°\s*)?10530(?!\*02)/i, pourquoi: 'déclaration de cessation des paiements : Cerfa 10530*02 (service-public R17169)' },
+  { re: /classée en défaut[^.]{0,120}au moins un an/, pourquoi: 'restructuration de PGE : aucune durée de « défaut » sur une source officielle (fiche Médiation du crédit, banque-france.fr)' },
 ];
 
 describe('contre-audit : affirmations retirées', () => {
@@ -113,6 +120,38 @@ describe('contre-audit : affirmations retirées', () => {
     expect(SEUILS.find((s) => s.reference.includes('L1142-8'))?.seuil).toBe(50);
     expect(SEUILS.find((s) => s.reference.includes('L1153-5-1'))?.seuil).toBe(250);
     expect(SEUILS.find((s) => s.nom === 'BDESE complète')?.seuil).toBe(300);
+  });
+
+  it('rétablissement professionnel : pas de dessaisissement, le dirigeant reste en place (service-public F32095)', () => {
+    const t = fs.readFileSync(path.join(RACINE, 'app/procedures-comparaison/page.tsx'), 'utf8');
+    const bloc = t.slice(t.indexOf("nom: 'Rétablissement professionnel"));
+    expect(bloc).toMatch(/dirigeantReste: 'oui',/);
+    expect(bloc).toContain('Pas de dessaisissement');
+  });
+
+  it('liquidation simplifiée : un an seulement au-delà des deux seuils ; résidence principale sans effet (C. com. L644-5, L641-2)', () => {
+    const glossaire = fs.readFileSync(path.join(RACINE, 'app/glossaire/page.tsx'), 'utf8');
+    expect(glossaire).toContain('portés à un an seulement si l’entreprise dépasse à la fois 1 salarié et 300 000 €');
+    expect(glossaire).toContain("la résidence principale n'y fait pas obstacle");
+  });
+
+  it('aide juridictionnelle : réservée aux personnes physiques, pas aux sociétés commerciales (loi 91-647, art. 2)', () => {
+    const faq = fs.readFileSync(path.join(RACINE, 'app/faq/[situation]/page.tsx'), 'utf8');
+    const assignation = faq.slice(faq.indexOf("'assignation-tribunal'"));
+    expect(assignation).toMatch(/société commerciale assignée n\\'y a pas droit/);
+    const outil = fs.readFileSync(path.join(RACINE, 'app/outils/aide-juridictionnelle/page.tsx'), 'utf8');
+    expect(outil).toContain('une société commerciale n&apos;y a pas droit');
+  });
+
+  it('URSSAF : la mise en demeure pendant un délai accordé ne remet pas en cause l’accord (urssaf.fr)', () => {
+    const faq = fs.readFileSync(path.join(RACINE, 'app/faq/[situation]/page.tsx'), 'utf8');
+    expect(faq).toMatch(/qui ne remet pas en cause votre accord de délai/);
+  });
+
+  it('rebond : une seule liquidation ne donne pas l’indicateur dirigeant 060 (banque-france.fr)', () => {
+    const t = fs.readFileSync(path.join(RACINE, 'app/rebond/page.tsx'), 'utf8');
+    expect(t).toContain('indicateur dirigeant 060');
+    expect(t).toContain('3 entreprises liquidées depuis moins de 5 ans');
   });
 
   it('ATI : numéro des demandeurs d’emploi (39 49), pas la ligne employeurs (39 95)', () => {

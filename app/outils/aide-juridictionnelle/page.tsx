@@ -148,7 +148,9 @@ export default function AidejuridictionnellePage() {
         L&apos;aide juridictionnelle prend en charge, totalement ou en
         partie, les honoraires d&apos;avocat et les frais de procédure.
         Barèmes 2026 officiels (circulaire du 16 janvier 2026) basés sur le Revenu Fiscal de Référence
-        (RFR) et le patrimoine.
+        (RFR) et le patrimoine. Elle est réservée aux personnes physiques
+        (et, exceptionnellement, aux personnes morales à but non lucratif) :
+        une société commerciale n&apos;y a pas droit (loi 91-647, art. 2).
       </p>
 
       <div className="glass mt-8 space-y-4 p-6 sm:p-8">

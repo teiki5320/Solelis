@@ -77,7 +77,7 @@ export default function ResidencePrincipalePage() {
         </p>
         <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-navy/80">
           <li><strong>Proportionnalité</strong> : la caution ne doit pas être manifestement disproportionnée à vos biens et revenus au jour de la signature (art. 2300 C. civ. pour les cautions signées depuis 2022 ; ancien art. L332-1 C. conso avant)</li>
-          <li><strong>Information annuelle</strong> : la banque doit vous informer chaque année avant le 31 mars du montant restant dû (art. 2302 C. civ. ; ancien L313-22 C. mon. fin. pour les cautions antérieures à 2022)</li>
+          <li><strong>Information annuelle</strong> : la banque doit vous informer chaque année avant le 31 mars du montant restant dû (art. 2302 C. civ., applicable depuis le 1er janvier 2022 à toutes les cautions, même signées avant : ordonnance 2021-1192, art. 37 III)</li>
           <li><strong>Mention obligatoire</strong> : vous devez avoir apposé vous-même une mention précisant le montant et la nature de votre engagement, à peine de nullité (art. 2297 C. civ.)</li>
         </ul>
         <p className="mt-3 text-sm text-navy/80">

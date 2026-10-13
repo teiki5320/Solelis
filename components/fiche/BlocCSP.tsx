@@ -60,8 +60,9 @@ export default function BlocCSP() {
             <strong>Tout salarié</strong> totalisant au moins 88 jours ou
             610 heures de travail (4 mois) sur les 24 derniers mois (36
             mois à partir de 55 ans, pour un licenciement engagé depuis le
-            1er avril 2025 ; avenant n° 10 du 20 mars 2025) — soit la majorité (Unédic, France
-            Travail).
+            1er avril 2025 : avenant n° 10 du 20 mars 2025, qui renvoie à
+            l&apos;article 3 du règlement d&apos;assurance chômage de 2024) —
+            soit la majorité (Unédic, France Travail).
           </li>
         </ul>
       </div>
@@ -190,6 +191,7 @@ export default function BlocCSP() {
         Sources : C. trav. art. L1233-65 à L1233-70 (CSP) ; Convention
         Unédic relative au CSP du 26 janv. 2015 (avenant n° 10 du 20 mars
         2025, période de référence alignée sur l&apos;assurance chômage ;
+        circulaire Unédic n° 2025-03 : 36 mois à partir de 55 ans ;
         avenant n° 11 du 25 nov. 2025, prorogation jusqu&apos;au 31 déc.
         2026) ; circulaire Unédic n° 2022-04 ; service-public (fiche F13819).
       </p>

@@ -1,8 +1,11 @@
 import type { MetadataRoute } from 'next';
 import { COURRIERS } from '@/lib/courriers';
+import { entreesSitemapConseils } from '@/lib/conseils';
 
-// Généré une fois au build (pas à chaque requête).
-export const dynamic = 'force-static';
+// Rendu à la requête : les articles « Conseils » programmés y entrent le jour de
+// leur publication (heure de Paris) sans redéploiement. Coût : un filtre de dates
+// et une centaine de lignes XML.
+export const dynamic = 'force-dynamic';
 
 // Date de dernière mise à jour des contenus, fixe : un lastmod qui change à
 // chaque build (ou requête) sans changement réel fait perdre sa valeur au
@@ -68,10 +71,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...COURRIERS.map((c) => `/courriers/${c.slug}`),
   ];
 
-  return routes.map((route) => ({
-    url: `${base}${route}`,
-    lastModified: DERNIERE_MAJ,
-    changeFrequency: route === '/' ? 'weekly' : 'monthly',
-    priority: route === '/' ? 1 : 0.8,
-  }));
+  return [
+    ...routes.map((route) => ({
+      url: `${base}${route}`,
+      lastModified: DERNIERE_MAJ,
+      changeFrequency: route === '/' ? ('weekly' as const) : ('monthly' as const),
+      priority: route === '/' ? 1 : 0.8,
+    })),
+    // /conseils et les articles publiés ce jour, lastmod = date de mise à jour de l'article.
+    ...entreesSitemapConseils(),
+  ];
 }

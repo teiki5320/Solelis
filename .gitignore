@@ -28,3 +28,6 @@ _*.mjs
 
 # Copies de travail temporaires (worktrees)
 .claude/worktrees/
+
+# Rubrique Conseils : module généré au build depuis content/conseils/*.md (npm run conseils)
+lib/conseils/donnees.generated.ts

@@ -126,7 +126,34 @@ export default function RebondPage() {
             <dd className="mt-0.5 leading-relaxed text-navy/65">
               Sauf sanctions personnelles (interdiction de gérer,
               faillite personnelle, banqueroute), vous êtes LIBRE de
-              recréer immédiatement après la clôture.
+              recréer, sans attendre la clôture de la liquidation.
+              Entrepreneur individuel : vous pouvez même exercer une
+              nouvelle activité pendant la liquidation, avec un nouveau
+              patrimoine professionnel non concerné par la procédure
+              (art. L681-2 Code de commerce).
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-navy/80">
+              Banque de France : pas de « fichage » pour une seule liquidation
+            </dt>
+            <dd className="mt-0.5 leading-relaxed text-navy/65">
+              Dirigeant·e de société : une seule liquidation ne vous vaut
+              pas l’indicateur dirigeant 060. Il faut avoir dirigé au
+              moins 3 entreprises liquidées depuis moins de 5 ans, ou être
+              visé·e à titre personnel par une décision (faillite
+              personnelle, interdiction de gérer, redressement ou
+              liquidation judiciaire prononcés contre vous, ce qui peut
+              être le cas d’un·e entrepreneur·e individuel·le). Source :{' '}
+              <a
+                href="https://www.banque-france.fr/fr/a-votre-service/entreprises/comprendre-cotation-indicateur-dirigeant"
+                target="_blank"
+                rel="noreferrer"
+                className="text-bleu-fonce underline underline-offset-4"
+              >
+                banque-france.fr
+              </a>
+              .
             </dd>
           </div>
           <div>

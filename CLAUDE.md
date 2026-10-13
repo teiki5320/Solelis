@@ -9,6 +9,7 @@ Le dirigeant entre son SIRET, répond à un questionnaire, et reçoit une fiche 
 npm run dev      # Serveur local (port 3000)
 npm run build    # Build de production
 npm run lint     # ESLint CLI (eslint.config.mjs : next/core-web-vitals)
+npm run conseils # Vérifie content/conseils/*.md et génère lib/conseils/donnees.generated.ts (lancé aussi avant dev/build/test)
 npm test         # Vitest (758 tests dans lib/__tests__/, components/__tests__/, app/api/__tests__/, app/outils/__tests__/)
 npm run test:e2e # Playwright (parcours utilisateur)
 ```
@@ -61,7 +62,7 @@ app/
   api/cron/rappels/           # GET cron quotidien (Cron Trigger Cloudflare 7h UTC, worker.ts)
   api/og/                     # Image OG dynamique (runtime Node, autorisée dans robots.txt)
   api/stats/                  # Stats agrégées
-  sitemap.ts, robots.ts       # SEO
+  sitemap.ts, robots.ts       # SEO (sitemap rendu à la requête : inclut les articles Conseils publiés ce jour)
   error.tsx, loading.tsx, not-found.tsx, global-error.tsx  # Error boundaries
 
 components/
@@ -100,6 +101,15 @@ lib/
   FicheContext.tsx            # React Context pour la fiche (utilisé par 18 blocs)
   __tests__/                  # Tests Vitest (758 au total : lib + components + API routes + outils)
   opco.ts                     # Mapping NAF → OPCO (11 OPCO de la branche)
+  conseils/                   # Rubrique Conseils : types.ts, themes.ts, index.ts (filtres de date à la requête, fuseau Paris),
+                              #   construction.ts (build : en-tête, Zod, marked → HTML sûr, vérif. des liens internes),
+                              #   donnees.generated.ts (GÉNÉRÉ, non versionné)
+
+content/
+  conseils/                   # Articles Markdown <slug>.md + README.md (format, règles, veille hebdomadaire)
+
+scripts/
+  generer-conseils.ts         # Build : content/conseils → lib/conseils/donnees.generated.ts (échoue si article invalide)
 
 data/
   organismes.json             # 107 territoires (96 dpts + 11 DOM-TOM), ~20 organismes par dpt
