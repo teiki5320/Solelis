@@ -2,6 +2,34 @@
 
 > Mise à jour le 13 octobre 2026 (rubrique Conseils en ligne, sitemap de 90 adresses, site déclaré dans Search Console, contrôle en ligne du jour).
 
+## En bref
+
+- **Production** : https://solelis.com répond, projet en pause
+- **Domaine & SSL** : solelis.com chez Cloudflare, SSL automatique
+- **Visibilité** : 28 pages indexées sur 69 suivies, sitemap de 90 adresses
+- **Monétisation** : aucune, gratuit intégral
+- **Contact** : solelis@toakeur.com
+
+## Boutiques
+
+| | 🌐 Site |
+|---|---|
+| État | [ok] En ligne, projet en pause |
+| Hébergement | [ok] Cloudflare Workers, Worker « solelis » |
+| Domaine | [ok] solelis.com, www et avelor.toakeur.com redirigent |
+| SSL | [ok] Certificat automatique Cloudflare |
+| Indexation | [à faire] 28 pages sur 69 suivies dans Search Console |
+| Mesure d'audience | [pas encore] Plausible prévu, non souscrit |
+
+## Ce qui reste, dans l'ordre
+
+1. ✅ **Mise en ligne** : site servi par le Worker Cloudflare sur solelis.com depuis le 10 octobre 2026.
+2. ✅ **Search Console** : domaine déclaré et sitemap envoyé le 12 octobre 2026.
+3. **Parcours en production** : vérifier fiche, lien magique Resend, rappel du cron et boîte solelis@toakeur.com.
+4. **Indexation** : faire entrer dans Google les pages absentes, dont les articles Conseils.
+5. **Mesure d'audience** : souscrire Plausible et définir `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`.
+6. **Sortie de pause** : refonte Solelis (logo, design, nom partout), puis relance des canaux.
+
 ## Vue d'ensemble
 
 - **État** : ⏸️ projet en pause — le site reste en ligne et répond (contrôle du 13 octobre 2026)

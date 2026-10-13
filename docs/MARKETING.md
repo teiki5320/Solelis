@@ -1,19 +1,23 @@
 # MARKETING — plan marketing & rémunération
 
-> Mise à jour le 13 octobre 2026 (rubrique Conseils en ligne, Search Console déclaré, comptes TikTok et YouTube branchés).
+> Mise à jour le 13 octobre 2026 (rubrique Conseils en ligne, Search Console déclaré, comptes TikTok et YouTube branchés ; rémunération, points forts et mesures au format du Studio).
 > Aucun chiffre inventé : les valeurs non mesurées sont marquées comme telles.
 
-## Modèle de rémunération
+## Rémunération par phases
 
-| Phase | Modèle | Détail | Statut |
-|---|---|---|---|
-| 0 | **Gratuit intégral** | Aucune monétisation ; assumé dans les mentions légales (« projet d'accompagnement gratuit »). Coûts d'infra quasi nuls (free tiers) | **actuel** |
-| 1 | Soutien non marchand | Subventions, appels à projets, fondations (Entreprendre, MMA des Entrepreneurs du Futur), mécénat | ⬜ |
-| 2 | B2B prescripteurs | Tableau de bord multi-fiches / marque blanche pour experts-comptables, CIP, CCI-CMA — le dirigeant final ne paie jamais | ⬜ |
-| 3 | Partenariats qualifiés | Mise en relation transparente vers des professionnels vérifiés — ⚠️ encadrement déontologique à valider avec un avocat avant lancement | ⬜ |
-| 4 | Affiliation éthique | Outils de rebond (compta, assurance pro) avec lien d'affiliation affiché — jamais dans le parcours de crise | ⬜ |
+- [fait] **Aujourd'hui** : gratuit intégral, assumé dans les mentions légales
+- [en cours] **Soutien non marchand** : subventions, appels à projets, fondations, mécénat
+- **Prescripteurs (B2B)** : tableau multi-fiches pour experts-comptables, CIP, CCI-CMA
+- **Partenariats qualifiés** : mise en relation transparente, cadre déontologique à valider
+- **Affiliation éthique** : outils de rebond, jamais dans le parcours de crise
 
-Exclusions par design : pas de publicité display, pas de paywall sur la fiche, pas de revente de données (engagement `/politique-donnees`).
+Le dirigeant final ne paie jamais. Exclusions par design : pas de publicité display, pas de paywall sur la fiche, pas de revente de données (engagement `/politique-donnees`).
+
+## Points forts
+
+- 🧭 **Une fiche sur mesure** : un SIRET et 18 questions donnent stratégie, priorités, courriers, échéances et aides adaptés.
+- 🏛️ **Sources officielles seulement** : textes de loi et sites publics, organismes réels de 107 territoires, outre-mer compris.
+- 🤝 **Gratuit et humain** : aucune publicité ni revente de données, mode « perdu » réduit à trois infos et renvoi vers le soutien psychologique.
 
 ## Canaux
 
@@ -30,16 +34,14 @@ Exclusions par design : pas de publicité display, pas de paywall sur la fiche, 
 | Newsletter prescripteurs | Actualité juridique mensuelle (non pertinente pour le public en crise, one-shot par nature) | ⬜ |
 | SEA / réseaux grand public | Google Ads (coût/clic prohibitif), Instagram (inadapté au public) | — exclus |
 
-## KPIs
+## Mesures
 
-| Métrique | Valeur | Objectif |
-|---|---|---|
-| Fiches créées | à vérifier sur `/api/stats` (compteur ✅ câblé) | à définir après première mesure |
-| Visiteurs / sources de trafic | non mesuré (Plausible câblé dans le code, inactif en production, compte non souscrit) | activer la mesure |
-| Taux de complétion questionnaire → fiche | non mesuré | instrumenter (événements Plausible) |
-| Magic links envoyés / délivrés | à vérifier dans le dashboard Resend | surveiller la délivrabilité (< 5 % d'échecs) |
-| Pages indexées Google | 28 sur 69 suivies (relevé du Studio, 12 octobre 2026) | 100 % du sitemap |
-| Backlinks prescripteurs | 0 connu | 3 liens institutionnels au premier trimestre |
+- **Fiches créées** : à vérifier sur `/api/stats` (compteur câblé)
+- **Visiteurs et sources de trafic** : à instrumenter (Plausible prévu, inactif)
+- **Questionnaire mené jusqu'à la fiche** : à instrumenter
+- **Liens magiques délivrés** : à vérifier dans la console Resend
+- **Pages indexées par Google** : 28 sur 69 suivies (relevé du Studio, 12 octobre 2026)
+- **Liens entrants de prescripteurs** : aucun connu
 
 ## Calendrier
 
