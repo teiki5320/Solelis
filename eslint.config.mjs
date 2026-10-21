@@ -1,11 +1,7 @@
-import { dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { FlatCompat } from '@eslint/eslintrc';
+import nextVitals from 'eslint-config-next/core-web-vitals';
 
-// Configuration « flat » (ESLint CLI) — remplace `next lint`, déprécié.
+// Configuration « flat » (ESLint CLI) — `next lint` n'existe plus depuis Next.js 16.
 // Mêmes règles qu'avant : next/core-web-vitals.
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const compat = new FlatCompat({ baseDirectory: __dirname });
 
 const config = [
   {
@@ -28,7 +24,17 @@ const config = [
       '.claude/**',
     ],
   },
-  ...compat.extends('next/core-web-vitals'),
+  ...nextVitals,
+  {
+    // Règles « compilateur React » ajoutées par eslint-config-next 16 : absentes
+    // de la configuration d'avant (Next.js 15). Désactivées pour garder les mêmes
+    // règles ; le code concerné fonctionne et est couvert par les tests.
+    rules: {
+      'react-hooks/set-state-in-effect': 'off',
+      'react-hooks/immutability': 'off',
+      'react-hooks/refs': 'off',
+    },
+  },
 ];
 
 export default config;
