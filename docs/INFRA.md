@@ -6,7 +6,7 @@
 ## En bref
 
 - **Plateforme** : site web, en pause mais en ligne sur solelis.com
-- **Stack** : Next.js 15.5 · React 19 · TypeScript · Tailwind 3.4
+- **Stack** : Next.js 16.4 · React 19 · TypeScript · Tailwind 3.4
 - **Backend** : Worker Cloudflare (OpenNext) · base D1 « solelis » (UE)
 - **Distribution** : Cloudflare Workers, mise en ligne à la main (`npm run cf:deploy`)
 - **Site** : https://solelis.com (www redirige)
@@ -20,7 +20,7 @@
 ## Vue d'ensemble
 
 - **État** : ⏸️ projet en pause, mais le site répond sur https://solelis.com
-- **Stack** : Next.js 15.5 (App Router) · React 19 · TypeScript · Tailwind 3.4 · Node 22
+- **Stack** : Next.js 16.4 (App Router) · React 19 · TypeScript · Tailwind 3.4 · Node 22
 - **Hébergement** : Cloudflare Workers — Worker « solelis », site Next.js adapté par OpenNext (`@opennextjs/cloudflare`), mis en ligne à la main avec `npm run cf:deploy` (un envoi sur `main` ne déploie rien)
 - **Domaine** : solelis.com, enregistré chez Cloudflare (www.solelis.com redirige vers solelis.com, voir `worker.ts`)
 - **Base de données** : Cloudflare D1 « solelis » (juridiction UE), binding `DB`, schéma dans `migrations/`

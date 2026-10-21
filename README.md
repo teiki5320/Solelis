@@ -55,5 +55,5 @@ npx wrangler d1 migrations apply DB --remote   # base en ligne
 
 ## Stack
 
-Next.js 15.5 App Router · React 19 · Tailwind 3.4 · Framer Motion 11 ·
+Next.js 16.4 App Router · React 19 · Tailwind 3.4 · Framer Motion 11 ·
 Cloudflare Workers (OpenNext) + D1 · Resend.

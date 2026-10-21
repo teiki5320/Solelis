@@ -1,6 +1,6 @@
 # Solelis
 
-Plateforme SaaS (Next.js 15) d'aide aux dirigeants d'entreprise en difficulté en France.
+Plateforme SaaS (Next.js 16) d'aide aux dirigeants d'entreprise en difficulté en France.
 Le dirigeant entre son SIRET, répond à un questionnaire, et reçoit une fiche personnalisée (stratégie, courriers, échéances, aides, annuaires).
 
 ## Commandes
@@ -24,7 +24,7 @@ npm run cf:deploy    # Build + mise en ligne sur Cloudflare
 
 ## Stack
 
-- **Framework** : Next.js 15.5.x App Router, TypeScript, React 19 — Node 22 (`.nvmrc`)
+- **Framework** : Next.js 16.4.x App Router, TypeScript, React 19 — Node 22 (`.nvmrc`). Next.js 15 n'est plus maintenu depuis le 21/10/2026 et l'adaptateur OpenNext refuse les versions non maintenues : suivre les versions majeures (support de 2 ans)
 - **CSS** : Tailwind 3.4 (JIT) + classes custom (voir `tailwind.config.js`)
 - **Animations** : Framer Motion 11 (avec `LazyMotion` pour réduire le bundle)
 - **UI** : Glass morphism (backdrop-blur, ombres glass), polices Playfair Display + Outfit
@@ -34,7 +34,7 @@ npm run cf:deploy    # Build + mise en ligne sur Cloudflare
 - **Validation** : Zod (schémas dans `lib/schemas.ts`)
 - **Tests** : Vitest (922 tests, 60 fichiers, au 21 octobre 2026) + Playwright (E2E)
 - **CI** : GitHub Actions, Node 22 (lint → tsc → build → test → `opennextjs-cloudflare build`)
-- **Rate limiting** : middleware in-memory (propre à chaque instance du Worker) — limiteur Cloudflare à venir
+- **Rate limiting** : middleware in-memory (propre à chaque instance du Worker) — limiteur Cloudflare à venir. `middleware.ts` : convention dépréciée par Next.js 16 au profit de `proxy.ts`, encore fonctionnelle
 - **PWA** : manifest.json + icônes 512/192/favicon
 
 ## Variables d'environnement
