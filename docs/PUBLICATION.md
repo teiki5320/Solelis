@@ -1,6 +1,6 @@
 # PUBLICATION — état de la mise en ligne
 
-> Mise à jour le 20 octobre 2026 (78 pages indexées sur 91 suivies, sitemap de 91 adresses, 21 articles Conseils publiés, contrôle en ligne du jour).
+> Mise à jour le 21 octobre 2026 (mise en ligne manuelle uniquement, lien SOS Amitié corrigé dans le dépôt ; 78 pages indexées sur 91 suivies, sitemap de 91 adresses, 21 articles Conseils publiés, contrôle en ligne du jour).
 
 ## En bref
 
@@ -43,7 +43,7 @@
 
 ### 1. Web · Production
 
-- **Déploiement** : depuis la branche `main` (build Cloudflare), ou à la main avec `npm run cf:deploy`
+- **Déploiement** : à la main uniquement, avec `npm run cf:deploy` ; un envoi sur `main` ne met rien en ligne (la CI GitHub ne fait que vérifier)
 - **Avant de fusionner une PR** : la CI GitHub Actions vérifie lint, TypeScript, build Next.js, tests Vitest et build OpenNext (`npx opennextjs-cloudflare build`)
 - **Vérifier en local comme en production** : `npm run cf:preview` (simulateur Cloudflare, port 8787)
 - **Variables de production** : console Cloudflare → Worker « solelis » → Paramètres → Variables et secrets (liste dans `docs/INFRA.md`) ; ne jamais les écrire dans le dépôt

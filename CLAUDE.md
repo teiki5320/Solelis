@@ -10,11 +10,11 @@ npm run dev      # Serveur local (port 3000)
 npm run build    # Build de production
 npm run lint     # ESLint CLI (eslint.config.mjs : next/core-web-vitals)
 npm run conseils # Vérifie content/conseils/*.md et génère lib/conseils/donnees.generated.ts (lancé aussi avant dev/build/test)
-npm test         # Vitest (758 tests dans lib/__tests__/, components/__tests__/, app/api/__tests__/, app/outils/__tests__/)
+npm test         # Vitest (922 tests, 60 fichiers, au 21 octobre 2026, dans lib/__tests__/, components/__tests__/, app/api/__tests__/, app/outils/__tests__/)
 npm run test:e2e # Playwright (parcours utilisateur)
 ```
 
-Hébergement : Worker Cloudflare « solelis » via OpenNext (`wrangler.jsonc`, `worker.ts`), déployé depuis `main` → https://solelis.com
+Hébergement : Worker Cloudflare « solelis » via OpenNext (`wrangler.jsonc`, `worker.ts`) → https://solelis.com. Mise en ligne **à la main** avec `npm run cf:deploy` : un envoi sur `main` ne déploie rien, la CI GitHub ne fait que vérifier (lint, TypeScript, build, tests).
 
 ```bash
 npm run cf:build     # Build du Worker (OpenNext), sans déployer
@@ -32,7 +32,7 @@ npm run cf:deploy    # Build + mise en ligne sur Cloudflare
 - **Email** : Resend (magic link pour retrouver sa fiche + rappels cron quotidiens)
 - **APIs externes** : INSEE Sirene (gouv.fr + INSEE fallback), BODACC, Google Places (avocats locaux), Infogreffe (signaux)
 - **Validation** : Zod (schémas dans `lib/schemas.ts`)
-- **Tests** : Vitest (758 tests, 54 fichiers) + Playwright (E2E)
+- **Tests** : Vitest (922 tests, 60 fichiers, au 21 octobre 2026) + Playwright (E2E)
 - **CI** : GitHub Actions, Node 22 (lint → tsc → build → test → `opennextjs-cloudflare build`)
 - **Rate limiting** : middleware in-memory (propre à chaque instance du Worker) — limiteur Cloudflare à venir
 - **PWA** : manifest.json + icônes 512/192/favicon
@@ -99,7 +99,7 @@ lib/
   schemas.ts                  # Schémas Zod pour validation API
   hooks.ts                    # useLocalStorage
   FicheContext.tsx            # React Context pour la fiche (utilisé par 18 blocs)
-  __tests__/                  # Tests Vitest (758 au total : lib + components + API routes + outils)
+  __tests__/                  # Tests Vitest (922 au total au 21 octobre 2026 : lib + components + API routes + outils)
   opco.ts                     # Mapping NAF → OPCO (11 OPCO de la branche)
   conseils/                   # Rubrique Conseils : types.ts, themes.ts, index.ts (filtres de date à la requête, fuseau Paris),
                               #   construction.ts (build : en-tête, Zod, marked → HTML sûr, vérif. des liens internes),
@@ -166,7 +166,7 @@ En thème clair, `text-vert` et `text-jaune` sont rendus avec les variantes fonc
 - **107 territoires** couverts (96 départements + 11 DOM-TOM) — **8 datasets enrichis** avec adresses + téléphones réels (DDFiP, Barreaux, Chambres notaires, Chambres agriculture, URSSAF, Tribunaux commerce, CCI, CMA)
 - **3 thèmes** : clair (défaut) · sombre · contraste élevé (RGAA AAA) — bascule dans la Nav, persistance localStorage
 - **18 secteurs** enrichis (incluant finance, IT, éducation, immobilier, ESS/associations, services, culture/sport) + mapping 11 OPCO par NAF
-- **758 tests Vitest** + Playwright E2E configuré
+- **922 tests Vitest** (60 fichiers, au 21 octobre 2026) + Playwright E2E configuré
 - **11 calculateurs officiels** (ajout : valorisation stocks, seuils d'effectif)
 - **18 questions** au questionnaire
 

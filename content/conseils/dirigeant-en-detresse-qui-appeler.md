@@ -14,8 +14,8 @@ sources:
     url: https://www.apesa-france.com
   - titre: "APESA — Le dispositif (consulté le 12 octobre 2026)"
     url: https://www.apesa-france.com/decouvrir-apesa/dispositif
-  - titre: "SOS Amitié France (consulté le 12 octobre 2026)"
-    url: https://www.sos-amitie.com
+  - titre: "SOS Amitié France (site officiel, adresse vérifiée le 21 octobre 2026)"
+    url: https://www.sosamitie.org
   - titre: "MSA — Agri’écoute, un numéro pour les agriculteurs et salariés en détresse (consulté le 12 octobre 2026)"
     url: https://www.msa.fr/lfp/solidarite/prevention-suicide
 liens:
