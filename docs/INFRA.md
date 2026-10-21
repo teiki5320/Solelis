@@ -1,6 +1,6 @@
 # INFRA — fiche technique
 
-> Mise à jour le 21 octobre 2026 (mise en ligne manuelle avec `npm run cf:deploy`, la CI ne déploie pas ; indexation Google : 78 pages sur 91 suivies ; rubrique Conseils publiée par date, pages Conseils et sitemap mises en cache 1 h par le Worker ; mesure d'audience toujours inactive en production).
+> Mise à jour le 21 octobre 2026 (mise en ligne manuelle avec `npm run cf:deploy`, la CI ne déploie pas ; indexation Google : 79 pages sur 92 suivies ; correctif SOS Amitié du 21 octobre pas encore mis en ligne ; rubrique Conseils publiée par date, pages Conseils et sitemap mises en cache 1 h par le Worker ; mesure d'audience toujours inactive en production).
 > Aucun secret dans cette fiche — uniquement des références (noms de variables, consoles).
 
 ## En bref
@@ -14,8 +14,8 @@
 
 ## Parcours
 
-- 🌐 **Web** : 🐙 GitHub — main · CI au vert [ok] → 🌐 Hébergement web — Worker Cloudflare « solelis » [ok] → 🏷️ Nom de domaine — solelis.com, SSL auto [ok] → 🔎 Google — 78 pages indexées sur 91 [à faire]
-- 📝 **Contenu** : 🐙 GitHub — articles Markdown des Conseils [ok] → ⚙️ Build — génération des articles [ok] → 🕒 Publication — à sa date, sans redéploiement [ok] → 📣 Réseaux sociaux — comptes branchés, rien publié [pas encore]
+- 🌐 **Web** : 🐙 GitHub — main · CI au vert [ok] → 🌐 Hébergement web — Worker Cloudflare « solelis » [ok] → 🏷️ Nom de domaine — solelis.com, SSL auto [ok] → 🔎 Google — 79 pages indexées sur 92 [à faire]
+- 📝 **Contenu** : 🐙 GitHub — articles Markdown des Conseils [ok] → ⚙️ Build — génération des articles [ok] → 🕒 Publication — à sa date, sans redéploiement [ok] → 📣 Réseaux sociaux — aucun compte rattaché [pas encore]
 
 ## Vue d'ensemble
 
