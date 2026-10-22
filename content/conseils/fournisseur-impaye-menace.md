@@ -75,7 +75,7 @@ Faire opposition n'a de sens que si vous contestez la dette, son montant ou les 
 
 **Demander des délais au juge.** Si le fournisseur vous poursuit, le juge peut **reporter ou échelonner** le paiement, dans la limite de **deux ans**, en tenant compte de votre situation et des besoins du créancier (art. 1343-5 du Code civil). Pendant ce délai, les procédures d'exécution sont suspendues et les pénalités de retard ne courent pas.
 
-**Saisir le Médiateur des entreprises.** Selon service-public.fr, ce service public est **gratuit et confidentiel**. Il traite les litiges entre entreprises : retards de paiement, pénalités jugées abusives, exécution d'un contrat. La médiation concerne en général des litiges de plus de 1 500 €. La saisine se fait en ligne, un médiateur vous recontacte dans les 7 jours, et la médiation dure de quelques heures à 2 ou 3 mois. Elle suppose l'accord des deux parties. Un [modèle de saisine](/courriers/mediation-entreprises) vous aide à exposer les faits.
+**Saisir le Médiateur des entreprises.** Selon service-public.fr, ce service public est **gratuit et confidentiel**. Il traite les litiges entre entreprises : retards de paiement, pénalités jugées abusives, exécution d'un contrat. La médiation concerne en général des litiges de plus de 1 500 €. La saisine se fait en ligne, un médiateur vous recontacte dans les 7 jours, et la médiation dure de quelques heures à 2 ou 3 mois. Elle suppose l'accord des deux parties. Un [modèle de saisine](/courriers/mediation-entreprises) vous aide à exposer les faits. Les autres dispositifs gratuits sont réunis sur la page [Aides d’urgence et médiateur des entreprises](/aides).
 
 ## Faut-il payer ce fournisseur en priorité ?
 

@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/aides' },
-  title: 'Aides financières d’urgence — Solelis',
+  title: 'Aides d’urgence et médiateur des entreprises — Solelis',
   description:
-    'Annuaire des aides financières d’urgence pour dirigeants en difficulté : Bpifrance, médiation du crédit, activité partielle, aides régionales.',
+    'Aides d’urgence pour dirigeants en difficulté : médiateur des entreprises et médiation du crédit (gratuits), Bpifrance, CCSF, activité partielle, AGS.',
 };
 
 /* ---------- data ---------- */
@@ -16,6 +17,8 @@ type Aide = {
   urlLabel?: string;
   tel?: string;
   gratuit?: boolean;
+  /** Page de Solelis liée (modèle de courrier, annuaire). */
+  lienInterne?: { href: string; label: string };
 };
 
 type Section = {
@@ -48,7 +51,9 @@ const sections: Section[] = [
       },
       {
         nom: 'Médiateur des entreprises',
-        description: 'Litiges avec fournisseurs ou clients',
+        description:
+          'Service public gratuit et confidentiel pour les litiges entre entreprises : retards de paiement, pénalités jugées abusives, contrat mal exécuté avec un client ou un fournisseur. Saisine en ligne.',
+        lienInterne: { href: '/courriers/mediation-entreprises', label: 'Modèle de saisine' },
         url: 'https://www.economie.gouv.fr/mediateur-des-entreprises',
         urlLabel: 'economie.gouv.fr/mediateur-des-entreprises',
         gratuit: true,
@@ -113,6 +118,7 @@ const sections: Section[] = [
         nom: 'AGS',
         description:
           'Garantie des salaires si redressement/liquidation',
+        lienInterne: { href: '/annuaires/ags', label: 'Les 15 centres AGS (CGEA)' },
         url: 'https://ags-garantie-salaires.org',
         urlLabel: 'ags-garantie-salaires.org',
       },
@@ -254,6 +260,14 @@ export default function AidesPage() {
                         {a.urlLabel}
                       </a>
                     )}
+                    {a.lienInterne && (
+                      <Link
+                        href={a.lienInterne.href}
+                        className="text-bleu-fonce underline underline-offset-4"
+                      >
+                        {a.lienInterne.label}
+                      </Link>
+                    )}
                     {a.tel && (
                       <a
                         href={`tel:${a.tel.replace(/\s/g, '')}`}
@@ -282,6 +296,35 @@ export default function AidesPage() {
             )}
           </div>
         ))}
+      </div>
+
+      {/* Questions fréquentes : les deux médiations gratuites */}
+      <div className="glass-soft mt-12 p-6 text-sm leading-relaxed text-navy/75 sm:p-8">
+        <h2 className="font-display text-xl text-navy sm:text-2xl">
+          Médiateur des entreprises ou médiation du crédit ?
+        </h2>
+        <dl className="mt-4 space-y-4">
+          <div>
+            <dt className="font-semibold text-navy">Que fait le Médiateur des entreprises ?</dt>
+            <dd className="mt-1">
+              Ce service public, gratuit et confidentiel, aide à régler un litige
+              avec un client ou un fournisseur : retard de paiement, pénalités
+              jugées abusives, contrat mal exécuté. Il concerne en général des
+              litiges de plus de 1 500 €. La saisine se fait en ligne, un
+              médiateur vous recontacte dans les 7 jours, et la médiation
+              suppose l’accord des deux parties.
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-navy">Et si le problème vient de ma banque ?</dt>
+            <dd className="mt-1">
+              C’est la Médiation du crédit de la Banque de France, elle aussi
+              gratuite et confidentielle : crédit refusé, découvert dénoncé,
+              prêt qu’on refuse de rééchelonner (voir la carte « Médiation du
+              crédit » ci-dessus).
+            </dd>
+          </div>
+        </dl>
       </div>
 
       {/* Footer note */}

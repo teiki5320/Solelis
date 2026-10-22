@@ -52,7 +52,7 @@ D’après la Banque de France, les motifs les plus fréquents sont :
 - la **réduction ou la résiliation des garanties** d’un assureur-crédit ;
 - la **restructuration d’un prêt garanti par l’État** (PGE), dans le cadre d’une procédure spécifique (voir plus bas).
 
-La Médiation du crédit ne traite pas les litiges avec vos clients ou vos fournisseurs : pour ceux-là, il existe le Médiateur des entreprises (voir le [modèle de courrier](/courriers/mediation-entreprises)).
+La Médiation du crédit ne traite pas les litiges avec vos clients ou vos fournisseurs : pour ceux-là, il existe le Médiateur des entreprises (voir le [modèle de courrier](/courriers/mediation-entreprises) et la page [Aides d’urgence](/aides)).
 
 ## Avant de saisir : parlez à votre banque
 

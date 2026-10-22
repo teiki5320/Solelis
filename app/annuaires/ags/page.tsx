@@ -3,9 +3,9 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/annuaires/ags' },
-  title: 'Centres AGS (CGEA) — Solelis',
+  title: 'AGS CGEA : adresses et téléphones des 15 centres — Solelis',
   description:
-    'Les 15 centres de gestion et d\'études AGS (CGEA) — garantie des salaires — avec adresses, téléphones et départements couverts.',
+    'Les 15 CGEA de l’AGS (garantie des salaires) : adresse, téléphone et départements couverts, d’Annecy à Bordeaux, Nancy ou Marseille. Lequel est compétent ?',
 };
 
 interface Delegation {
@@ -128,6 +128,31 @@ const DELEGATIONS: Delegation[] = [
   },
 ];
 
+/** Ancre d'un centre : « CGEA Annecy » → « cgea-annecy ». */
+function idCentre(region: string): string {
+  return region
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+const QUESTIONS: { q: string; r: string }[] = [
+  {
+    q: 'Que veut dire CGEA ?',
+    r: 'Centre de gestion et d’études AGS. Ce sont les 15 antennes régionales de l’AGS : elles traitent les relevés de créances salariales établis par le mandataire judiciaire et lui versent les sommes garanties, qu’il reverse aux salariés.',
+  },
+  {
+    q: 'Quel CGEA est compétent ?',
+    r: 'Celui du tribunal qui a ouvert la procédure collective, et non celui du domicile du salarié. Par exemple, une procédure ouverte par un tribunal de Haute-Savoie relève du CGEA d’Annecy, une procédure ouverte en Gironde du CGEA de Bordeaux, en Meurthe-et-Moselle du CGEA de Nancy.',
+  },
+  {
+    q: 'Un salarié doit-il contacter le CGEA ?',
+    r: 'Non. Les centres ne reçoivent pas de public et le salarié n’a aucune démarche à faire auprès de l’AGS : son interlocuteur est le mandataire ou l’administrateur judiciaire. C’est le mandataire qui transmet le relevé de créances à l’AGS.',
+  },
+];
+
 export default function AgsPage() {
   return (
     <section className="mx-auto max-w-4xl px-5 py-10">
@@ -136,14 +161,15 @@ export default function AgsPage() {
       </Link>
 
       <h1 className="font-display text-3xl text-navy sm:text-4xl">
-        AGS — centres de gestion (CGEA)
+        AGS : les 15 centres CGEA, adresses et téléphones
       </h1>
       <p className="mt-3 text-base text-navy/70">
         L&apos;<strong>AGS</strong> (Association pour la gestion du
         régime de Garantie des créances des Salariés) couvre les
         salaires, indemnités de licenciement, congés payés et autres
         créances salariales en cas de procédure collective de
-        l&apos;employeur. Plafonds 2026 : 4, 5 ou 6 fois le plafond mensuel
+        l&apos;employeur. Elle s&apos;appuie sur 15 centres de gestion et
+        d&apos;études AGS, les <strong>CGEA</strong>, dont 2 outre-mer. Plafonds 2026 : 4, 5 ou 6 fois le plafond mensuel
         d&apos;assurance chômage (4 plafonds mensuels de la Sécurité sociale)
         selon la date de conclusion du contrat de travail, soit 64 080 € à 96 120 €.
         Le centre compétent est celui du tribunal qui a ouvert la procédure ;
@@ -152,8 +178,8 @@ export default function AgsPage() {
 
       <div className="mt-8 space-y-3">
         {DELEGATIONS.map((d) => (
-          <div key={d.ville} className="glass-soft rounded-2xl p-5">
-            <p className="font-display text-lg text-navy">{d.region}</p>
+          <div key={d.ville} id={idCentre(d.region)} className="glass-soft scroll-mt-24 rounded-2xl p-5">
+            <h2 className="font-display text-lg text-navy">{d.region}</h2>
             <p className="mt-1 text-sm text-navy/70">
               <strong>{d.ville}</strong> — {d.adresse}
             </p>
@@ -179,6 +205,25 @@ export default function AgsPage() {
           <li>Plafond 6 (24 PMSS) si le contrat a été conclu au moins 2 ans avant : 96 120 €.</li>
           <li>L&apos;AGS garantit, dans la limite du plafond, les sommes dues à la date du jugement d&apos;ouverture d&apos;un redressement ou d&apos;une liquidation judiciaire et, sous conditions, les indemnités des ruptures intervenues pendant la procédure (C. trav. L3253-8).</li>
         </ul>
+      </div>
+
+      <div className="mt-8 rounded-2xl border border-navy/10 bg-white/60 p-5 text-sm text-navy/75">
+        <h2 className="font-display text-base text-navy">Questions fréquentes sur les CGEA</h2>
+        <dl className="mt-2 space-y-3">
+          {QUESTIONS.map(({ q, r }) => (
+            <div key={q}>
+              <dt className="font-semibold text-navy">{q}</dt>
+              <dd className="mt-1">{r}</dd>
+            </div>
+          ))}
+        </dl>
+        <p className="mt-4">
+          Pour le détail des avances (délais, plafonds, rôle du dirigeant), lisez{' '}
+          <Link href="/conseils/ags-salaires-entreprise-en-difficulte" className="text-bleu-fonce underline underline-offset-4">
+            payer les salaires quand l&apos;entreprise ne peut plus : l&apos;AGS
+          </Link>
+          .
+        </p>
       </div>
 
       <p className="mt-6 text-xs text-navy/50">
