@@ -8,7 +8,7 @@
 - **Plateforme** : site web, en pause mais en ligne sur solelis.com
 - **Stack** : Next.js 16.4 · React 19 · TypeScript · Tailwind 3.4
 - **Backend** : Worker Cloudflare (OpenNext) · base D1 « solelis » (UE)
-- **Distribution** : Cloudflare Workers, mise en ligne à la main (`npm run cf:deploy`)
+- **Distribution** : Cloudflare Workers, mise en ligne automatique par la CI GitHub à chaque envoi sur `main` dès que les secrets Cloudflare sont réglés (en attente au 23 octobre 2026 ; d'ici là `npm run cf:deploy`)
 - **Site** : https://solelis.com (www redirige)
 - **IA et outils** : aucune IA · Resend, API Recherche d'entreprises, BODACC
 
@@ -21,7 +21,7 @@
 
 - **État** : ⏸️ projet en pause, mais le site répond sur https://solelis.com
 - **Stack** : Next.js 16.4 (App Router) · React 19 · TypeScript · Tailwind 3.4 · Node 22
-- **Hébergement** : Cloudflare Workers — Worker « solelis », site Next.js adapté par OpenNext (`@opennextjs/cloudflare`), mis en ligne à la main avec `npm run cf:deploy` (un envoi sur `main` ne déploie rien)
+- **Hébergement** : Cloudflare Workers — Worker « solelis », site Next.js adapté par OpenNext (`@opennextjs/cloudflare`), mis en ligne par la CI GitHub à chaque envoi sur `main` dès que les secrets Cloudflare sont réglés (d'ici là `npm run cf:deploy`)
 - **Domaine** : solelis.com, enregistré chez Cloudflare (www.solelis.com redirige vers solelis.com, voir `worker.ts`)
 - **Base de données** : Cloudflare D1 « solelis » (juridiction UE), binding `DB`, schéma dans `migrations/`
 - **E-mail** : Resend (liens magiques + rappels quotidiens)

@@ -14,7 +14,7 @@ npm test         # Vitest (922 tests, 60 fichiers, au 21 octobre 2026, dans lib/
 npm run test:e2e # Playwright (parcours utilisateur)
 ```
 
-Hébergement : Worker Cloudflare « solelis » via OpenNext (`wrangler.jsonc`, `worker.ts`) → https://solelis.com. Mise en ligne **à la main** avec `npm run cf:deploy` : un envoi sur `main` ne déploie rien, la CI GitHub ne fait que vérifier (lint, TypeScript, build, tests).
+Hébergement : Worker Cloudflare « solelis » via OpenNext (`wrangler.jsonc`, `worker.ts`) → https://solelis.com. Mise en ligne **automatique** : à chaque envoi sur `main`, la CI GitHub vérifie puis publie sur Cloudflare (`.github/workflows/ci.yml`), dès que les secrets `CLOUDFLARE_API_TOKEN` et `CLOUDFLARE_ACCOUNT_ID` sont réglés dans GitHub (en attente au 23 octobre 2026 : d'ici là, `npm run cf:deploy` à la main).
 
 ```bash
 npm run cf:build     # Build du Worker (OpenNext), sans déployer

@@ -44,7 +44,7 @@
 
 ### 1. Web · Production
 
-- **Déploiement** : à la main uniquement, avec `npm run cf:deploy` ; un envoi sur `main` ne met rien en ligne (la CI GitHub ne fait que vérifier)
+- **Déploiement** : automatique par la CI GitHub à chaque envoi sur `main` (vérification, publication sur Cloudflare, IndexNow) dès que les secrets `CLOUDFLARE_API_TOKEN` et `CLOUDFLARE_ACCOUNT_ID` sont réglés — en attente au 23 octobre 2026 ; d'ici là, `npm run cf:deploy` à la main
 - **Avant de fusionner une PR** : la CI GitHub Actions vérifie lint, TypeScript, build Next.js, tests Vitest et build OpenNext (`npx opennextjs-cloudflare build`)
 - **Vérifier en local comme en production** : `npm run cf:preview` (simulateur Cloudflare, port 8787)
 - **Variables de production** : console Cloudflare → Worker « solelis » → Paramètres → Variables et secrets (liste dans `docs/INFRA.md`) ; ne jamais les écrire dans le dépôt
