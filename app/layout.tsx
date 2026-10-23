@@ -28,6 +28,9 @@ export const metadata: Metadata = {
   // entre pages du site : l'adresse d'une fiche (/fiche/<token>) est son
   // secret d'accès et ne doit fuiter ni vers la mesure d'audience ni ailleurs.
   referrer: 'strict-origin',
+  // Google Discover : autorise l'aperçu en grande image (pages qui ne
+  // définissent pas leur propre « robots »).
+  robots: { index: true, follow: true, 'max-image-preview': 'large' },
   // Ni title, ni description, ni url ici : Next.js reprend alors le titre et
   // la description de CHAQUE page pour og:title / twitter:title (au lieu de
   // « Solelis » partout), et aucune page n'annonce l'URL de l'accueil.

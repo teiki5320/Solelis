@@ -59,7 +59,7 @@
 
 ### 3. Visibilité
 
-- **Indexation** : `app/sitemap.ts` (servi sur `/sitemap.xml`, rendu à la requête : 92 adresses le 21 octobre 2026, dont 23 pour la rubrique Conseils) et `app/robots.ts` (bloque `/api/` et `/fiche/`, autorise `/api/og`)
+- **Indexation** : `app/sitemap.ts` (servi sur `/sitemap.xml`, rendu à la requête : 92 adresses le 21 octobre 2026, dont 23 pour la rubrique Conseils ; page « Dettes fiscales et sociales » ajoutée au sitemap le 23 octobre, en ligne au prochain `npm run cf:deploy`) et `app/robots.ts` (bloque `/api/` et `/fiche/`, autorise `/api/og`)
 - **Google Search Console** : domaine solelis.com déclaré, sitemap envoyé le 12 octobre 2026 et renvoyé le 20 octobre (lu, sans erreur) ; 79 pages indexées sur 92 suivies, 2 découvertes mais non indexées, 11 inconnues de Google (relevé du Studio du 21 octobre, onglet Indexation)
 - **Rubrique Conseils** : https://solelis.com/conseils et son flux https://solelis.com/conseils/rss.xml répondent ; 22 articles publiés (20 le 12 octobre 2026, 1 le 19 octobre, 1 le 21 octobre), 8 programmés du 23 octobre au 9 novembre 2026, qui paraîtront d'eux-mêmes à leur date ; le lien SOS Amitié corrigé dans le dépôt le 21 octobre n'est pas encore en ligne (l'ancienne adresse reste affichée)
 - **Balises de partage** : Open Graph + Twitter Card par page (titre et description propres à chaque page), image générée dynamiquement par `/api/og` (runtime Node), URL canonique sur les pages qui la déclarent (`ogMeta({ chemin })`), JSON-LD Organization + WebSite (+ FAQPage, fil d'Ariane)

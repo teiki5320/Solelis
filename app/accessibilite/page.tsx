@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/accessibilite' },
   title: 'Accessibilité — Solelis',
   description: 'Déclaration d\'accessibilité de Solelis : conformité RGAA, fonctionnalités d\'accessibilité, contact en cas de difficulté.',
-  robots: { index: true, follow: true },
+  robots: { index: true, follow: true, 'max-image-preview': 'large' },
 };
 
 export default function AccessibilitePage() {

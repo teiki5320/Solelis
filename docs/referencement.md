@@ -13,3 +13,31 @@ Une page travaillée n'est pas retouchée avant 28 jours : Google a besoin de ce
 | /mentions-legales | solelis | 8,4 (5 vues) | inchangé | rien : la recherche « solelis » doit mener à l’accueil, dont le titre commence déjà par « Solelis » (« Solelis — Aide aux chefs d'entreprise en difficulté ») |
 
 Mise en ligne : à faire par Jean (`npm run cf:deploy`). À relire à partir du 19/11/2026.
+
+## 23/10/2026
+
+### Pages presque en première page
+
+Rien de nouveau : les 3 pages de la liste (/annuaires/ags 12,3e place et 81 vues ; /mentions-legales 8,4e et 5 vues ; /aides 6,7e et 3 vues) ont été travaillées le 22/10. À relire à partir du 19/11/2026.
+
+### Fiches enrichies vérifiées le 23/10/2026
+
+- Accueil : Organization + WebSite ; articles Conseils : Article (auteur, éditeur, sources) + BreadcrumbList ; courriers, outils, situations : HowTo et BreadcrumbList ; /faq et /faq/… : FAQPage (FAQ visible).
+- JSON-LD valide dans les pages construites (accueil, /faq, /dettes-fiscales-sociales).
+- Reste : /annuaires/ags a une petite FAQ visible depuis le 22/10 mais pas de FAQPage ; à ajouter après le 19/11 (page à ne pas retoucher avant).
+
+### Socle vérifié le 23/10/2026
+
+- IndexNow : clé créée (`public/6420c222dd7200cc295dd43a6324ec71.txt`) et script `scripts/indexnow.mjs`. À lancer après la prochaine mise en ligne (`npm run cf:deploy`), pas avant : la clé doit être en ligne.
+- Google Discover : `max-image-preview:large` ajouté au gabarit commun (app/layout.tsx) et aux 9 pages qui ont leur propre réglage « robots » ; l'image de partage /api/og fait déjà 1200 × 630.
+- Vitesse sur téléphone : outil PageSpeed hors quota ce matin (« Queries per day »). À refaire au prochain passage (accueil, /conseils/procedure-de-sauvegarde, /courriers/echelonnement-impots).
+
+### Page nouvelle
+
+| Page | Recherche visée | Situation avant | Liens ajoutés vers elle |
+|---|---|---|---|
+| /dettes-fiscales-sociales | dettes fiscales et sociales (21 vues en 28 jours) | Google montrait seulement deux articles, à la 43e et 58e place | /penalites-fiscales, /ciri-codefi, article CCSF |
+
+Contenu : les trois façons d'étaler (plan de règlement au SIE, échéancier URSSAF, plan unique CCSF), comment choisir, les délais de la mise en demeure et de la contrainte URSSAF, renvoi vers les pénalités et la cessation des paiements. Uniquement des faits déjà présents dans les articles du site (sources officielles). À relire à partir du 20/11/2026.
+
+Mise en ligne : à faire par Jean (`npm run cf:deploy`), puis `node scripts/indexnow.mjs`.

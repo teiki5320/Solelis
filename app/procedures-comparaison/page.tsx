@@ -10,7 +10,7 @@ export const metadata = {
     cat: 'procedure',
     pageTitle: 'Comparatif des procédures amiables et collectives — Solelis',
   }),
-  robots: { index: true, follow: true },
+  robots: { index: true, follow: true, 'max-image-preview': 'large' },
 };
 
 interface Procedure {

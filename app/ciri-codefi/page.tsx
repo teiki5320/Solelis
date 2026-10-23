@@ -10,7 +10,7 @@ export const metadata = {
     cat: 'aide',
     pageTitle: 'CIRI vs CODEFI : quel dispositif pour ma taille ? — Solelis',
   }),
-  robots: { index: true, follow: true },
+  robots: { index: true, follow: true, 'max-image-preview': 'large' },
 };
 
 export default function CiriCodefiPage() {
@@ -140,6 +140,9 @@ export default function CiriCodefiPage() {
       </div>
 
       <div className="mt-8 flex flex-wrap gap-3">
+        <Link href="/dettes-fiscales-sociales" className="rounded-full border border-navy/15 bg-white/80 px-4 py-2 text-sm text-navy/80 hover:bg-white">
+          Dettes fiscales et sociales
+        </Link>
         <Link href="/procedures-comparaison" className="rounded-full border border-navy/15 bg-white/80 px-4 py-2 text-sm text-navy/80 hover:bg-white">
           Comparatif des procédures
         </Link>

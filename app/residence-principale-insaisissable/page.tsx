@@ -10,7 +10,7 @@ export const metadata = {
     cat: 'situation',
     pageTitle: 'Résidence principale insaisissable : ce que vous devez savoir — Solelis',
   }),
-  robots: { index: true, follow: true },
+  robots: { index: true, follow: true, 'max-image-preview': 'large' },
 };
 
 export default function ResidencePrincipalePage() {

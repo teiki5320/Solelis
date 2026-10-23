@@ -66,6 +66,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/mediation-vs-conciliation',
     '/accessibilite',
     '/penalites-fiscales',
+    '/dettes-fiscales-sociales',
     '/ciri-codefi',
     '/residence-principale-insaisissable',
     ...COURRIERS.map((c) => `/courriers/${c.slug}`),

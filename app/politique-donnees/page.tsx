@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/politique-donnees' },
   title: 'Politique de protection des données — Solelis',
   description: 'Comment Solelis protège vos données personnelles : RGPD, base légale, durée, vos droits.',
-  robots: { index: true, follow: true },
+  robots: { index: true, follow: true, 'max-image-preview': 'large' },
 };
 
 export default function PolitiqueDonneesPage() {

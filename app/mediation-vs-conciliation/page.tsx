@@ -10,7 +10,7 @@ export const metadata = {
     cat: 'procedure',
     pageTitle: 'Médiation, mandat ad hoc, conciliation : différences — Solelis',
   }),
-  robots: { index: true, follow: true },
+  robots: { index: true, follow: true, 'max-image-preview': 'large' },
 };
 
 export default function MediationVsConciliationPage() {

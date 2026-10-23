@@ -104,6 +104,7 @@ En dehors des procédures, la CCSF accorde des **délais**, pas des effacements.
 
 - **Une seule dette**, auprès d'un seul organisme : demandez d'abord un délai directement. Voir [Dettes fiscales : obtenir un plan de règlement](/conseils/plan-de-reglement-impots) et [Comment demander un échéancier à l'URSSAF ?](/conseils/echeancier-urssaf).
 - **Plusieurs dettes publiques** (impôts et cotisations) : la CCSF évite de multiplier les démarches et donne une vision d'ensemble.
+- Pour comparer toutes les solutions en un coup d'œil : [Dettes fiscales et sociales : les solutions](/dettes-fiscales-sociales).
 - **Problème de financement plus large** (banques, investisseurs), entreprise de moins de 400 salarié·e·s : le CODEFI peut aussi intervenir. Voir [CIRI et CODEFI](/ciri-codefi).
 
 ## Que faire maintenant ?
