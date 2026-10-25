@@ -2,11 +2,11 @@
 title: "Dirigeant·e en détresse : qui appeler ?"
 description: "Urgence : 15 ou 112. Idées suicidaires : 3114, gratuit, 24 h/24. Soutien psychologique des entrepreneurs : APESA. Tous les numéros vérifiés pour être aidé·e."
 date: 2026-10-12
-miseAJour: 2026-10-12
+miseAJour: 2026-10-25
 theme: dirigeant
 resume: "Si vous ou un proche êtes en danger immédiat, appelez le 15 (Samu) ou le 112. Si vous pensez au suicide, ou si vous êtes inquiet·e pour quelqu’un, appelez le 3114 : gratuit, 24 h/24 et 7 j/7, des professionnel·le·s du soin vous répondent. Pour un soutien psychologique gratuit lié aux difficultés de l’entreprise, l’association APESA peut vous mettre en relation avec un·e psychologue."
 sources:
-  - titre: "Service-public.fr — Quels sont les numéros en cas d’urgence (Samu, pompiers...) et les numéros d’écoute ? (vérifié le 12 octobre 2026)"
+  - titre: "Service-public.fr — Quels sont les numéros en cas d’urgence (Samu, pompiers...) et les numéros d’écoute ? (vérifié le 25 octobre 2026)"
     url: https://www.service-public.gouv.fr/particuliers/vosdroits/F33954
   - titre: "3114 — Numéro national de prévention du suicide (site officiel, consulté le 12 octobre 2026)"
     url: https://3114.fr
@@ -14,9 +14,9 @@ sources:
     url: https://www.apesa-france.com
   - titre: "APESA — Le dispositif (consulté le 12 octobre 2026)"
     url: https://www.apesa-france.com/decouvrir-apesa/dispositif
-  - titre: "SOS Amitié France (site officiel, adresse vérifiée le 21 octobre 2026)"
+  - titre: "SOS Amitié France (site officiel, numéro vérifié le 25 octobre 2026)"
     url: https://www.sosamitie.org
-  - titre: "MSA — Agri’écoute, un numéro pour les agriculteurs et salariés en détresse (consulté le 12 octobre 2026)"
+  - titre: "MSA — Agri’écoute, un numéro pour les agriculteurs et salariés en détresse (consulté le 25 octobre 2026)"
     url: https://www.msa.fr/lfp/solidarite/prevention-suicide
 liens:
   - /parler

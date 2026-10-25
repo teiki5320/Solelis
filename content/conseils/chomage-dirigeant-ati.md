@@ -2,7 +2,7 @@
 title: "Chômage du dirigeant après une liquidation : avez-vous droit à l'ATI ?"
 description: "L'allocation des travailleurs indépendants (ATI) verse de 19,73 à 26,30 € par jour pendant 6 mois après une liquidation. Conditions, montant, démarches."
 date: 2026-10-12
-miseAJour: 2026-10-12
+miseAJour: 2026-10-25
 theme: aides
 resume: "Oui, souvent : après une liquidation judiciaire, un·e dirigeant·e indépendant·e peut toucher l'allocation des travailleurs indépendants (ATI), de 19,73 à 26,30 € par jour pendant 182 jours. Il faut notamment avoir exercé 2 ans dans la même entreprise, avoir gagné au moins 10 000 € sur l'une des 2 dernières années, avoir des ressources inférieures au RSA et s'inscrire à France Travail dans les 12 mois."
 sources:
@@ -30,9 +30,9 @@ sources:
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000039122263
   - titre: Code de commerce, art. L631-19-1 (remplacement du dirigeant en redressement)
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044052911
-  - titre: France Travail — Vous êtes travailleur non salarié ? Renseignez-vous sur vos droits à l'ATI (vérifié le 12 octobre 2026)
+  - titre: France Travail — Vous êtes travailleur non salarié ? Renseignez-vous sur vos droits à l'ATI (vérifié le 25 octobre 2026)
     url: https://www.francetravail.fr/candidat/mes-droits-aux-aides-et-allocati/a-chaque-situation-son-allocatio/qui-etait-mon-employeur/vous-etes-travailleur-non-salari.html
-  - titre: Unédic — Je suis travailleur indépendant, est-ce que j'ai droit aux allocations chômage ? (vérifié le 12 octobre 2026)
+  - titre: Unédic — Je suis travailleur indépendant, est-ce que j'ai droit aux allocations chômage ? (vérifié le 25 octobre 2026)
     url: https://www.unedic.org/l-assurance-chomage-et-vous/demandeur-d-emploi-ou-salarie/mes-droits-en-fonction-de-mon-statut-professionnel/je-suis-travailleur-independant-est-ce-que-j-ai-droit-aux-allocations-chomage
 liens:
   - /outils/ati

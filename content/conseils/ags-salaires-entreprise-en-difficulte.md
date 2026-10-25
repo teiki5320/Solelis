@@ -2,7 +2,7 @@
 title: "Payer les salaires quand l’entreprise ne peut plus : l’AGS"
 description: "Sauvegarde, redressement, liquidation : quand l’AGS avance les salaires, ce qu’elle couvre, les plafonds 2026 et le rôle du mandataire judiciaire."
 date: 2026-10-12
-miseAJour: 2026-10-12
+miseAJour: 2026-10-25
 theme: salaries
 resume: "Quand une entreprise en sauvegarde, en redressement ou en liquidation judiciaire n’a plus de quoi payer ses salarié·e·s, l’AGS avance les sommes dues, par l’intermédiaire du mandataire judiciaire. Elle n’intervient pas hors procédure collective. En 2026, sa garantie est plafonnée à 96 120 € par salarié·e pour un contrat de plus de 2 ans."
 sources:
@@ -14,7 +14,7 @@ sources:
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000018764773
   - titre: "Code de commerce, art. L625-8 (paiement des salaires superprivilégiés sous 10 jours)"
     url: https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000019984056
-  - titre: "Service-public.fr — Régime de garantie des salaires (AGS) (vérifié le 12 octobre 2026)"
+  - titre: "Service-public.fr — Régime de garantie des salaires (AGS) (vérifié le 25 octobre 2026)"
     url: https://entreprendre.service-public.gouv.fr/vosdroits/F31409
   - titre: "AGS — Bénéficier de la garantie AGS (consulté le 12 octobre 2026)"
     url: https://www.ags-garantie-salaires.org/salaries/beneficier-de-la-garantie-ags
