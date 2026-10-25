@@ -1,6 +1,6 @@
 # PUBLICATION — état de la mise en ligne
 
-> Mise à jour le 24 octobre 2026 (mise en ligne automatique par la CI GitHub depuis le 23 octobre 2026 ; lien SOS Amitié corrigé et page « Dettes fiscales et sociales » en ligne ; 82 pages indexées sur 94 suivies, sitemap de 94 adresses, 23 articles Conseils publiés, contrôle en ligne du jour).
+> Mise à jour le 25 octobre 2026 (mise en ligne automatique par la CI GitHub depuis le 23 octobre 2026, dernière publication le 25 octobre ; lien SOS Amitié corrigé et page « Dettes fiscales et sociales » en ligne ; 82 pages indexées sur 94 suivies, sitemap de 94 adresses, 23 articles Conseils publiés, contrôle en ligne du 25 octobre 2026).
 
 ## En bref
 
@@ -33,14 +33,14 @@
 
 ## Vue d'ensemble
 
-- **État** : ⏸️ projet en pause — le site reste en ligne et répond (contrôle du 24 octobre 2026)
+- **État** : ⏸️ projet en pause — le site reste en ligne et répond (contrôle du 25 octobre 2026)
 - **URL publique** : https://solelis.com (titre « Solelis — Aide aux chefs d'entreprise en difficulté »)
 - **Hébergeur** : Cloudflare Workers (Worker « solelis », adaptateur OpenNext)
 - **Base** : Cloudflare D1 « solelis » (UE)
 - **Domaine + SSL** : solelis.com, enregistré chez Cloudflare, déclaré comme domaine personnalisé du Worker (`wrangler.jsonc`) ; certificat géré automatiquement par Cloudflare
 - **Contact public** : solelis@toakeur.com (mentions légales, confidentialité, politique de données, accessibilité, témoignages)
 - **Ancienne adresse** : avelor.toakeur.com redirige (301) vers https://solelis.com (constaté le 21 octobre 2026)
-- **Dernière mise en production** : 23 octobre 2026, par la CI GitHub (envoi « CI : publication automatique sur Cloudflare… ») ; détail dans la console Cloudflare (Worker → Déploiements)
+- **Dernière mise en production** : 25 octobre 2026, par la CI GitHub (envoi « Conseils : 12 articles programmés du 11 novembre au 7 décembre 2026 », publication réussie) — la première publication par la CI date du 23 octobre 2026 ; détail dans la console Cloudflare (Worker → Déploiements)
 
 ### 1. Web · Production
 
