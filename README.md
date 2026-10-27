@@ -43,6 +43,14 @@ Cloudflare (Worker « solelis » → Paramètres → Variables et secrets).
 Les variables `NEXT_PUBLIC_*` sont intégrées au moment du build : elles
 doivent aussi être disponibles pour le build Cloudflare.
 
+## Actus et illustrations
+
+- **Actus** : `/actus` (20 actus) et un bloc « Dans l'actualité » en bas des pages situation lisent dans le navigateur
+  `https://teiki5320.github.io/veille/actus/solelis.json` (veille préparée à 12 h et 19 h, `lib/veille.ts`, `components/actus/`).
+  Aucune actu sur l'accueil. La veille lit les situations sur `/veille/entites.json` (`lib/situations.ts`).
+- **Illustrations** des conseils et des guides : `public/illustrations/` (WebP) et crédits dans `data/illustrations.json`.
+  `node scripts/illustrations.mjs` complète seulement les pages sans image (Wikimedia Commons, puis Openverse, sinon carte Solelis).
+
 ## Base de données
 
 Cloudflare D1 « solelis » (stockage limité à l'UE), reliée au Worker par le binding `DB`.

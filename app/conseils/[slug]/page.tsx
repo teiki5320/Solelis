@@ -13,6 +13,7 @@ import {
 } from '@/lib/conseils';
 import { CATEGORIES_OG, LIBELLES_THEMES } from '@/lib/conseils/themes';
 import { AppelFiche, CLASSES_CORPS, RappelConseil } from '../composants';
+import { IllustrationPage } from '@/components/IllustrationPage';
 
 // Rendu à chaque requête (pas de page figée au build ni dans le cache OpenNext) :
 // un article programmé apparaît le jour de sa date, sans redéploiement. Le travail
@@ -110,6 +111,8 @@ export default async function ConseilPage({ params }: Props) {
         Publié le <time dateTime={c.date}>{c.dateLisible}</time> · Mis à jour le{' '}
         <time dateTime={c.miseAJour}>{c.miseAJourLisible}</time>
       </p>
+
+      <IllustrationPage cle={`conseil:${c.slug}`} className="mt-8" />
 
       <div className="glass card-top-line mt-8 p-6">
         <h2 className="font-display text-xl text-navy">En bref</h2>

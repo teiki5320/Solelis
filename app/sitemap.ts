@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const routes = [
     '/',
+    '/actus',
     '/aides',
     '/aides-personnelles',
     '/glossaire',

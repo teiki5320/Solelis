@@ -332,7 +332,7 @@ export async function cataloguePages(racineProjet: string): Promise<Map<string, 
     COURRIERS: Array<{ slug: string; titre: string }>;
   };
   for (const c of COURRIERS) pages.set(`/courriers/${c.slug}`, `Modèle de courrier : ${c.titre}`);
-  for (const s of slugsDepuisSource(lire(join(app, 'situation', '[slug]', 'page.tsx')))) {
+  for (const s of slugsDepuisSource(lire(join(racineProjet, 'lib', 'situations.ts')))) {
     pages.set(`/situation/${s.slug}`, s.titre);
   }
   for (const s of slugsDepuisSource(lire(join(app, 'faq', '[situation]', 'page.tsx')))) {

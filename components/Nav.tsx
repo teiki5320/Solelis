@@ -17,6 +17,7 @@ const LINKS = [
   { href: '/proteger-famille', label: 'Famille', desc: 'Patrimoine et cautions' },
   { href: '/vendre', label: 'Vendre / Céder', desc: 'Cession, location-gérance' },
   { href: '/rebond', label: 'Rebondir', desc: 'Après une liquidation' },
+  { href: '/actus', label: 'Actualité', desc: 'Entreprises en difficulté en France' },
   { href: '/faq', label: 'FAQ', desc: 'Questions fréquentes' },
   { href: '/glossaire', label: 'Glossaire', desc: '38 termes expliqués' },
   { href: '/accompagnant', label: "J'accompagne", desc: 'Pour les proches' },

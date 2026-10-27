@@ -77,6 +77,7 @@ const PLAUSIBLE_INIT = `window.plausible=window.plausible||function(){(window.pl
 
 const PIED_DE_PAGE = [
   { href: '/conseils', label: 'Conseils' },
+  { href: '/actus', label: 'Actualité' },
   { href: '/confidentialite', label: 'Confidentialité' },
   { href: '/parler', label: 'Parler à quelqu\'un' },
   { href: '/temoignages', label: 'Exemples de parcours' },
