@@ -1,17 +1,31 @@
 import type { MetadataRoute } from 'next';
 import { COURRIERS } from '@/lib/courriers';
 import { entreesSitemapConseils } from '@/lib/conseils';
-import { ARTICLES_VEILLE } from '@/lib/veille-articles.generated';
+import { ARTICLES_VEILLE, GENERE_LE_VEILLE } from '@/lib/veille-articles.generated';
+import { DATES_PAGES } from '@/lib/dates-pages.generated';
 
 // Rendu à la requête : les articles « Conseils » programmés y entrent le jour de
 // leur publication (heure de Paris) sans redéploiement. Coût : un filtre de dates
 // et une centaine de lignes XML.
 export const dynamic = 'force-dynamic';
 
-// Date de dernière mise à jour des contenus, fixe : un lastmod qui change à
-// chaque build (ou requête) sans changement réel fait perdre sa valeur au
-// signal pour les moteurs. À avancer lors d'une mise à jour de contenu.
+// lastmod = dernière modification réelle de la page (historique git, scripts/dates-pages.ts) :
+// un lastmod qui change à chaque build sans changement réel ferait perdre sa valeur au signal.
+// Date fixe de repli si l'historique n'est pas disponible (clone superficiel).
 const DERNIERE_MAJ = new Date('2026-10-10');
+
+/** Date de la page, ou de son motif (`/courriers/[slug]`), sinon la date de repli. */
+function datePage(route: string): Date {
+  const motif = route.replace(/^(\/(?:courriers|situation|faq))\/[^/]+$/, (_, d: string) => `${d}/${d === '/faq' ? '[situation]' : '[slug]'}`);
+  const iso = DATES_PAGES[route] ?? DATES_PAGES[motif];
+  return iso ? new Date(iso) : DERNIERE_MAJ;
+}
+
+/** /actus change 2 fois par jour : date du fichier des actus lu au build. */
+function dateActus(): Date {
+  const d = GENERE_LE_VEILLE ? new Date(GENERE_LE_VEILLE) : null;
+  return d && !Number.isNaN(d.getTime()) ? d : datePage('/actus');
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = 'https://solelis.com';
@@ -77,8 +91,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...routes.map((route) => ({
       url: `${base}${route}`,
-      lastModified: DERNIERE_MAJ,
-      changeFrequency: route === '/' ? ('weekly' as const) : ('monthly' as const),
+      lastModified: route === '/actus' ? dateActus() : datePage(route),
+      changeFrequency: route === '/actus' ? ('daily' as const) : route === '/' ? ('weekly' as const) : ('monthly' as const),
       priority: route === '/' ? 1 : 0.8,
     })),
     // /conseils et les articles publiés ce jour, lastmod = date de mise à jour de l'article.

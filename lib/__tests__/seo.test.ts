@@ -29,11 +29,23 @@ describe('sitemap', () => {
     for (const c of COURRIERS) expect(urls).toContain(`https://solelis.com/courriers/${c.slug}`);
   });
 
-  it('exclut /questionnaire et utilise une date fixe (hors articles Conseils et actus, datés un par un)', () => {
+  it('exclut /questionnaire', () => {
     expect(urls).not.toContain('https://solelis.com/questionnaire');
-    const articleActu = (u: string) => /\/actus\/[^/]+$/.test(u);
-    const dates = new Set(sitemap().filter((e) => !e.url.includes('/conseils') && !articleActu(e.url)).map((e) => String(e.lastModified)));
-    expect(dates.size).toBe(1);
+  });
+
+  it('date chaque page par sa vraie dernière modification, stable d’une requête à l’autre', () => {
+    const a = sitemap();
+    const b = sitemap();
+    expect(a.map((e) => String(e.lastModified))).toEqual(b.map((e) => String(e.lastModified)));
+    for (const e of a) {
+      const t = new Date(e.lastModified as string | Date).getTime();
+      expect(Number.isNaN(t), e.url).toBe(false);
+      expect(t, e.url).toBeLessThanOrEqual(Date.now() + 60_000);
+    }
+    // Les 17 courriers partagent la date de leur modèle de page.
+    const courriers = new Set(a.filter((e) => /\/courriers\/[^/]+$/.test(e.url)).map((e) => String(e.lastModified)));
+    expect(courriers.size).toBe(1);
+    expect(a.find((e) => e.url === 'https://solelis.com/actus')?.changeFrequency).toBe('daily');
   });
 
   it('contient les articles d’actus construits, jamais la page de secours', () => {
