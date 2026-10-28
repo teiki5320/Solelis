@@ -11,6 +11,7 @@ npm run build    # Build de production
 npm run lint     # ESLint CLI (eslint.config.mjs : next/core-web-vitals)
 npm run conseils # Vérifie content/conseils/*.md et génère lib/conseils/donnees.generated.ts (lancé aussi avant dev/build/test)
 npm run veille   # Lit les articles complets des actus sur la veille → lib/veille-*.generated.ts (avant dev/build/test ; 0 article si la veille ne répond pas)
+npm run dates    # Dates de dernière modification des pages (historique git) → lib/dates-pages.generated.ts, lastmod du sitemap (avant dev/build/test)
 npm test         # Vitest (1022 tests, 65 fichiers, au 28 octobre 2026, dans lib/__tests__/, components/__tests__/, app/api/__tests__/, app/outils/__tests__/)
 npm run test:e2e # Playwright (parcours utilisateur)
 ```
@@ -67,7 +68,7 @@ app/
   api/cron/rappels/           # GET cron quotidien (Cron Trigger Cloudflare 7h UTC, worker.ts)
   api/og/                     # Image OG dynamique (runtime Node, autorisée dans robots.txt)
   api/stats/                  # Stats agrégées
-  sitemap.ts, robots.ts       # SEO (sitemap rendu à la requête : inclut les articles Conseils publiés ce jour)
+  sitemap.ts, robots.ts       # SEO (sitemap rendu à la requête : inclut les articles Conseils publiés ce jour ; lastmod = vraie date de modification, /actus en daily)
   error.tsx, loading.tsx, not-found.tsx, global-error.tsx  # Error boundaries
 
 components/
@@ -124,6 +125,7 @@ scripts/
   illustrations.mjs           # Images des conseils et guides, mode « compléter seulement » (Wikimedia > Openverse > carte), WebP dans public/illustrations/
   generer-conseils.ts         # Build : content/conseils → lib/conseils/donnees.generated.ts (échoue si article invalide)
   articles-veille.ts          # Build : articles des actus (veille) → lib/veille-*.generated.ts (ne casse jamais le build)
+  dates-pages.ts              # Build : date du dernier commit de chaque page → lib/dates-pages.generated.ts (vide si clone superficiel : date de repli)
 
 data/
   organismes.json             # 107 territoires (96 dpts + 11 DOM-TOM), ~20 organismes par dpt
@@ -159,6 +161,7 @@ En thème clair, `text-vert` et `text-jaune` sont rendus avec les variantes fonc
 - **URSSAF** : `36 98` travailleurs indépendants, `39 57` employeurs (urssaf.fr) ; MSA : pas de numéro national, numéro de la caisse locale (msa.fr) ; CGSS Outre-mer : `39 57` employeurs, `36 98` indépendants (sites des CGSS, annuaire service-public)
 - **Tribunal** : `getJuridiction(company)` → TJ pour libéraux/agri/santé (NAF 69-74, 01-03, 86-88), TC sinon (loi 22 déc. 2021)
 - **Commits** : format conventionnel `type(scope): message` en français
+- **Longueurs** : titre ≤ 65 caractères (« — Solelis » seulement s'il tient : `titrePage`), description ≤ 160 (`descriptionPage`), dans `lib/og.ts`
 - **Métadonnées** : pas de title/description/url dans l'openGraph racine (chaque page hérite des siens) ; `ogMeta({ …, chemin })` ajoute og:url + canonique. Les titres de page incluent déjà « Solelis » (pas de modèle de titre global)
 - **Cibles tactiles** : 44 × 44 px minimum (pseudo-élément `before:-inset-*` si le visuel doit rester petit)
 - **Print** : classes `no-print` sur les éléments à masquer en impression
