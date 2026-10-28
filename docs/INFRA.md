@@ -1,6 +1,6 @@
 # INFRA — fiche technique
 
-> Mise à jour le 28 octobre 2026 (actus : chaque actu a maintenant son article complet sur le site, page /actus/<slug> construite au build, page de secours /actus/article pour les plus récentes ; reconstruction automatique 2 fois par jour par la CI, à 11 h 50 et 18 h 50 UTC. Auparavant, le 27 octobre 2026 : Solelis n'est plus en pause : refonte faite, site actif ; veille actus lue depuis teiki5320.github.io sur la page /actus et les pages situation, aucune actu sur l'accueil ; images des conseils et des guides rangées dans le dépôt. Auparavant, le 24 octobre 2026 : mise en ligne automatique par la CI GitHub depuis le 23 octobre 2026 : secrets Cloudflare réglés, première publication par la CI réussie ; correctif SOS Amitié, page « Dettes fiscales et sociales » et IndexNow en ligne ; indexation Google : 82 pages sur 94 suivies ; rubrique Conseils publiée par date, pages Conseils et sitemap mises en cache 1 h par le Worker ; mesure d'audience toujours inactive en production).
+> Mise à jour le 28 octobre 2026 (contrôle du jour : site actif et en ligne, sitemap de 103 adresses dont 25 articles Conseils publiés, 86 pages indexées sur 103 suivies ; ancienne base Supabase de l'époque Avelor absente du compte Supabase ; actus : chaque actu a son article complet sur le site, page /actus/<slug> construite au build, page de secours /actus/article pour les plus récentes, reconstruction automatique 2 fois par jour par la CI, à 11 h 50 et 18 h 50 UTC. Auparavant, le 27 octobre 2026 : refonte faite, site actif ; veille actus lue depuis teiki5320.github.io sur la page /actus et les pages situation, aucune actu sur l'accueil ; images des conseils et des guides rangées dans le dépôt. Auparavant, le 24 octobre 2026 : mise en ligne automatique par la CI GitHub depuis le 23 octobre 2026 ; correctif SOS Amitié, page « Dettes fiscales et sociales » et IndexNow en ligne ; rubrique Conseils publiée par date, pages Conseils et sitemap mises en cache 1 h par le Worker ; mesure d'audience toujours inactive en production).
 > Aucun secret dans cette fiche — uniquement des références (noms de variables, consoles).
 
 ## En bref
@@ -14,7 +14,7 @@
 
 ## Parcours
 
-- 🌐 **Web** : 🐙 GitHub — main · CI au vert, publie à chaque envoi [ok] → 🌐 Hébergement web — Worker Cloudflare « solelis » [ok] → 🏷️ Nom de domaine — solelis.com, SSL auto [ok] → 🔎 Google — 82 pages indexées sur 94 [à faire]
+- 🌐 **Web** : 🐙 GitHub — main · CI au vert, publie à chaque envoi [ok] → 🌐 Hébergement web — Worker Cloudflare « solelis » [ok] → 🏷️ Nom de domaine — solelis.com, SSL auto [ok] → 🔎 Google — 86 pages indexées sur 103 [à faire]
 - 📝 **Contenu** : 🐙 GitHub — articles Markdown des Conseils [ok] → ⚙️ Build — génération des articles [ok] → 🕒 Publication — à sa date, sans redéploiement [ok] → 📣 Réseaux sociaux — aucun compte rattaché [pas encore]
 - 📰 **Actus** : 🤖 Tâche de veille — 12 h et 19 h, actus et articles complets [ok] → 🐙 GitHub Pages — teiki5320.github.io/veille (actus/solelis.json, articles/solelis/) [ok] → ⚙️ Reconstruction — CI 2 fois par jour (11 h 50 et 18 h 50 UTC) [ok] → 🌐 Site — /actus, articles /actus/<slug>, pages situation, jamais l'accueil [ok]
 
@@ -92,11 +92,11 @@ Quatre sources, toutes appelées depuis le code (`lib/`) :
 Mesure d'audience : aucun service n'est utilisé en production, cette section ne compte donc pas parmi les services de l'app.
 
 - **Prévu** : Plausible, sans cookies ; le script n'est chargé que si `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` est définie (`app/layout.tsx`). Mode manuel : adresses envoyées sans paramètres, `/fiche/<token>` remplacé par `/fiche/[token]`
-- **État le 13 octobre 2026** : aucun script de mesure sur https://solelis.com — la variable n'est pas définie en production et aucun compte n'est souscrit
+- **État vérifié le 28 octobre 2026** : aucun script de mesure sur https://solelis.com — la variable n'est pas définie en production et aucun compte n'est souscrit
 - **Console** : https://plausible.io
 - **Coût** : payant — à souscrire si besoin
 
 ## Limites connues
 
 - **Limitation de débit** : `middleware.ts` garde un compteur en mémoire, propre à chaque instance du Worker — peu efficace. Un limiteur Cloudflare (règle de limitation de débit ou binding Rate Limiting) est à venir.
-- **Ancienne base Supabase** : le projet Supabase de l'époque Avelor est en pause (rallumable) ; le code ne l'utilise plus depuis le passage à D1.
+- **Ancienne base Supabase** : le projet Supabase de l'époque Avelor n'apparaît plus dans le compte Supabase (vérifié le 28 octobre 2026) ; le code ne l'utilise plus depuis le passage à D1.
