@@ -28,6 +28,8 @@ const FICHIER_DONNEES = path.join(RACINE, 'data', 'illustrations.json');
 const USER_AGENT = 'Solelis/1.0 (https://solelis.com ; illustrations libres de droits)';
 const LARGEUR = 1200;
 const HAUTEUR = 675;
+// Petite version pour les téléphones (<nom>-640.webp), servie par srcset dans IllustrationPage.
+const LARGEUR_PETITE = 640;
 
 /**
  * Image retenue pour chaque page, choisie après vérification à l'œil (sujet, pas de personne en difficulté).
@@ -342,6 +344,7 @@ async function enregistrer(buffer, cle) {
   const sortie = path.join(RACINE, 'public', fichierDe(cle));
   fs.mkdirSync(path.dirname(sortie), { recursive: true });
   await sharp(buffer, { failOn: 'none' }).rotate().resize(LARGEUR, HAUTEUR, { fit: 'cover', position: 'attention' }).webp({ quality: 74 }).toFile(sortie);
+  await sharp(sortie).resize(LARGEUR_PETITE).webp({ quality: 72 }).toFile(sortie.replace(/\.webp$/, `-${LARGEUR_PETITE}.webp`));
 }
 
 async function photoChoisie(choix) {

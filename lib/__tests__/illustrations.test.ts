@@ -21,6 +21,10 @@ describe('illustrations des conseils et des guides', () => {
     const chemin = join(racine, 'public', img.fichier);
     expect(existsSync(chemin)).toBe(true);
     expect(statSync(chemin).size).toBeLessThan(400_000);
+    // Petite version pour les téléphones (srcset de IllustrationPage).
+    const petite = join(racine, 'public', img.fichier.replace(/\.webp$/, '-640.webp'));
+    expect(existsSync(petite)).toBe(true);
+    expect(statSync(petite).size).toBeLessThan(statSync(chemin).size + 1);
     expect(img.alt.trim().length).toBeGreaterThan(10);
     expect(img.credit.trim()).not.toBe('');
     expect(img.credit).not.toMatch(/unknown|inconnu|anonym/i);
