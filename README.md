@@ -48,6 +48,10 @@ doivent aussi être disponibles pour le build Cloudflare.
 - **Actus** : `/actus` (20 actus) et un bloc « Dans l'actualité » en bas des pages situation lisent dans le navigateur
   `https://teiki5320.github.io/veille/actus/solelis.json` (veille préparée à 12 h et 19 h, `lib/veille.ts`, `components/actus/`).
   Aucune actu sur l'accueil. La veille lit les situations sur `/veille/entites.json` (`lib/situations.ts`).
+- **Articles des actus** (depuis le 28 octobre 2026) : toute la carte ouvre l'article complet sur le site. Au build,
+  `npm run veille` (`scripts/articles-veille.ts`) lit `articles/solelis/<id>.json` sur la veille et construit `/actus/<slug>`
+  (0 page si la veille ne répond pas, le build passe) ; les plus récents s'ouvrent sur `/actus/article?id=<id>` (noindex).
+  La CI reconstruit le site à 11 h 50 et 18 h 50 UTC. Essai local : `VEILLE_DOSSIER=<dossier> npm run build`.
 - **Illustrations** des conseils et des guides : `public/illustrations/` (WebP) et crédits dans `data/illustrations.json`.
   `node scripts/illustrations.mjs` complète seulement les pages sans image (Wikimedia Commons, puis Openverse, sinon carte Solelis).
 

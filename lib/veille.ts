@@ -47,7 +47,101 @@ export const actuSchema = z.object({
   collecte_le: z.string().optional(),
   langue: z.string().optional(),
   image: imageActuSchema,
+  /** Article complet (veille, depuis le 28/10/2026) : absent tant que l'article n'est pas rédigé. */
+  slug: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/).max(80).optional(),
+  article_url: z.string().optional(),
+  lecture_min: z.number().int().positive().optional(),
 });
+
+/** Article complet d'une actu : articles/solelis/<id>.json (schéma veille/schema/article-schema-v1.json). */
+export const articleSchema = z.object({
+  version: z.literal(1),
+  site: z.string(),
+  id: z.string().regex(/^[0-9a-f]{40}$/),
+  slug: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/).max(80),
+  titre: texte,
+  chapo: texte,
+  blocs: z
+    .array(z.object({ intertitre: z.string().trim().min(1).nullable().optional(), paragraphes: z.array(texte).min(1) }))
+    .min(1),
+  mots: z.number().int().positive(),
+  lecture_min: z.number().int().positive(),
+  theme: z.string().optional(),
+  pays: z.array(z.string()).optional(),
+  tags: z.array(z.string()).optional(),
+  source_nom: texte,
+  source_url: lienWeb,
+  autres_sources: z.array(lienWeb).optional(),
+  publie_le: texte,
+  redige_le: texte,
+  image: imageActuSchema,
+});
+
+export type ArticleActu = z.infer<typeof articleSchema>;
+
+/**
+ * Dossier des articles complets sur la veille. NEXT_PUBLIC_VEILLE_ARTICLES (facultatif) sert
+ * seulement aux essais en local (copie d'exemple servie par le site) ; jamais réglé en production.
+ */
+export const URL_ARTICLES = process.env.NEXT_PUBLIC_VEILLE_ARTICLES || 'https://teiki5320.github.io/veille/articles/solelis/';
+
+/** Identifiant d'actu accepté par la page de secours (empreinte de 40 caractères hexadécimaux). */
+export function idActuValide(id: string | null | undefined): id is string {
+  return typeof id === 'string' && /^[0-9a-f]{40}$/.test(id);
+}
+
+/** Chemin de la page de secours d'un article (rendue dans le navigateur, noindex). */
+export function cheminSecours(id: string): string {
+  return `/actus/article?id=${id}`;
+}
+
+/**
+ * Où mène une carte d'actu :
+ * 1. la page construite `/actus/<slug>` si elle existe ;
+ * 2. sinon la page de secours, si la veille a déjà rédigé l'article (`article_url`) ;
+ * 3. sinon l'article d'origine (lien externe), comme avant les articles complets.
+ */
+export function lienActu(actu: Actu, slugsConstruits: ReadonlySet<string> | readonly string[]): { href: string; externe: boolean } {
+  const construits = slugsConstruits instanceof Set ? slugsConstruits : new Set(slugsConstruits as readonly string[]);
+  if (actu.slug && construits.has(actu.slug)) return { href: `/actus/${actu.slug}`, externe: false };
+  if (actu.article_url && idActuValide(actu.id)) return { href: cheminSecours(actu.id), externe: false };
+  return { href: actu.source_url, externe: true };
+}
+
+/** Lit un article reçu : null s'il n'a pas la forme attendue. */
+export function lireArticle(donnees: unknown): ArticleActu | null {
+  const r = articleSchema.safeParse(donnees);
+  return r.success ? r.data : null;
+}
+
+/**
+ * Charge un article complet dans le navigateur (page de secours) : délai de 8 s,
+ * requête anonyme, null si l'identifiant est invalide, l'article absent ou abîmé.
+ */
+export async function chargerArticle(id: string, base: string = URL_ARTICLES): Promise<ArticleActu | null> {
+  if (!idActuValide(id)) return null;
+  const controle = new AbortController();
+  const minuteur = setTimeout(() => controle.abort(), DELAI_MS);
+  try {
+    const rep = await fetch(`${base}${id}.json`, { signal: controle.signal, cache: 'no-cache', credentials: 'omit', referrerPolicy: 'no-referrer' });
+    if (!rep.ok) return null;
+    const article = lireArticle(await rep.json());
+    return article && article.id === id ? article : null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(minuteur);
+  }
+}
+
+/** Date lisible et stable (heure de Paris) : « 27 octobre 2026 », « 1er novembre 2026 ». */
+export function dateLongue(iso: string): string {
+  const date = new Date(iso);
+  if (!iso || Number.isNaN(date.getTime())) return '';
+  return new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Paris' })
+    .format(date)
+    .replace(/^1 /, '1er ');
+}
 
 export type ImageActu = z.infer<typeof imageActuSchema>;
 export type Actu = z.infer<typeof actuSchema>;

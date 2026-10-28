@@ -10,7 +10,8 @@ npm run dev      # Serveur local (port 3000)
 npm run build    # Build de production
 npm run lint     # ESLint CLI (eslint.config.mjs : next/core-web-vitals)
 npm run conseils # Vérifie content/conseils/*.md et génère lib/conseils/donnees.generated.ts (lancé aussi avant dev/build/test)
-npm test         # Vitest (990 tests, 63 fichiers, au 27 octobre 2026, dans lib/__tests__/, components/__tests__/, app/api/__tests__/, app/outils/__tests__/)
+npm run veille   # Lit les articles complets des actus sur la veille → lib/veille-*.generated.ts (avant dev/build/test ; 0 article si la veille ne répond pas)
+npm test         # Vitest (1012 tests, 65 fichiers, au 28 octobre 2026, dans lib/__tests__/, components/__tests__/, app/api/__tests__/, app/outils/__tests__/)
 npm run test:e2e # Playwright (parcours utilisateur)
 ```
 
@@ -32,8 +33,8 @@ npm run cf:deploy    # Build + mise en ligne sur Cloudflare
 - **Email** : Resend (magic link pour retrouver sa fiche + rappels cron quotidiens)
 - **APIs externes** : INSEE Sirene (gouv.fr + INSEE fallback), BODACC, Google Places (avocats locaux), Infogreffe (signaux)
 - **Validation** : Zod (schémas dans `lib/schemas.ts`)
-- **Tests** : Vitest (990 tests, 63 fichiers, au 27 octobre 2026) + Playwright (E2E)
-- **CI** : GitHub Actions, Node 22 (lint → tsc → build → test → `opennextjs-cloudflare build`)
+- **Tests** : Vitest (1012 tests, 65 fichiers, au 28 octobre 2026) + Playwright (E2E)
+- **CI** : GitHub Actions, Node 22 (lint → tsc → build → test → `opennextjs-cloudflare build`) ; aussi chaque jour à 11 h 50 et 18 h 50 UTC (reconstruction des articles d'actus, après la veille)
 - **Rate limiting** : middleware in-memory (propre à chaque instance du Worker) — limiteur Cloudflare à venir. `middleware.ts` : convention dépréciée par Next.js 16 au profit de `proxy.ts`, encore fonctionnelle
 - **PWA** : manifest.json + icônes 512/192/favicon
 
@@ -51,6 +52,8 @@ app/
   fiche/[token]/              # Fiche personnalisée (dashboard, SSR)
   situation/[slug]/           # 4 pages informatives par situation (données : lib/situations.ts) + bloc « Dans l'actualité » (3 actus, absent s'il n'y en a pas)
   actus/                      # Page « L'actualité des entreprises en difficulté » : 20 actus de la veille (jamais sur l'accueil)
+  actus/[slug]/               # Article complet d'une actu, page statique construite au build (NewsArticle, sitemap)
+  actus/article/              # Page de secours ?id=<id> : article lu dans le navigateur (noindex, hors sitemap)
   veille/entites.json/        # Route statique : les 4 situations exposées à la veille (tag situation:<slug>)
   courriers/[slug]/           # 17 modèles de courriers (page serveur + CourrierDetail client, SSG)
   outils/                     # 11 calculateurs (ATI, licenciement, prescription, AGS, stocks, seuils, etc.)
@@ -77,7 +80,7 @@ components/
     ProgressTracker.tsx       # Suivi de progression (localStorage)
   Questionnaire.tsx           # 17 slides (5 nouveaux : pgeEnCours, rqth, conjointStatut, coGerants, saisonnalite)
   SiretInput.tsx              # Input SIRET avec validation
-  actus/                      # BlocActus, ActuBandeau, ActuVignette, LienSource, CreditImage (composants client de la veille)
+  actus/                      # BlocActus, ActuBandeau, ActuVignette (carte entière cliquable : TitreCarte, lienCarte), SourceActu, CreditImage, ArticleActu
   IllustrationPage.tsx        # Image d'un conseil ou d'un guide + crédit (data/illustrations.json)
   Nav.tsx                     # Navigation (focus trap, aria-current, Escape ferme menu)
   Background.tsx              # Animations blob framer-motion
@@ -103,8 +106,10 @@ lib/
   schemas.ts                  # Schémas Zod pour validation API
   hooks.ts                    # useLocalStorage
   FicheContext.tsx            # React Context pour la fiche (utilisé par 18 blocs)
-  __tests__/                  # Tests Vitest (990 au total au 27 octobre 2026 : lib + components + API routes + outils)
-  veille.ts                   # Veille actus : URL_VEILLE, schéma Zod v3, chargerActus() (navigateur, 8 s, cache 15 min, [] si erreur)
+  __tests__/                  # Tests Vitest (1012 au total au 28 octobre 2026 : lib + components + API routes + outils)
+  veille.ts                   # Veille actus : URL_VEILLE, schéma Zod v3, chargerActus() (navigateur, 8 s, cache 15 min, [] si erreur), schéma article v1, lienActu()
+  articlesVeille.ts           # Build : choix des articles à construire + modules générés (veille-articles/slugs.generated.ts, non versionnés)
+  fichesVeille.ts             # Tags d'un article → liens vers les pages situation existantes
   situations.ts               # Contenu des 4 pages situation + entitesVeille()
   illustrations.ts            # Images des conseils et guides (data/illustrations.json)
   opco.ts                     # Mapping NAF → OPCO (11 OPCO de la branche)
@@ -118,6 +123,7 @@ content/
 scripts/
   illustrations.mjs           # Images des conseils et guides, mode « compléter seulement » (Wikimedia > Openverse > carte), WebP dans public/illustrations/
   generer-conseils.ts         # Build : content/conseils → lib/conseils/donnees.generated.ts (échoue si article invalide)
+  articles-veille.ts          # Build : articles des actus (veille) → lib/veille-*.generated.ts (ne casse jamais le build)
 
 data/
   organismes.json             # 107 territoires (96 dpts + 11 DOM-TOM), ~20 organismes par dpt
@@ -175,7 +181,7 @@ En thème clair, `text-vert` et `text-jaune` sont rendus avec les variantes fonc
 - **107 territoires** couverts (96 départements + 11 DOM-TOM) — **8 datasets enrichis** avec adresses + téléphones réels (DDFiP, Barreaux, Chambres notaires, Chambres agriculture, URSSAF, Tribunaux commerce, CCI, CMA)
 - **3 thèmes** : clair (défaut) · sombre · contraste élevé (RGAA AAA) — bascule dans la Nav, persistance localStorage
 - **18 secteurs** enrichis (incluant finance, IT, éducation, immobilier, ESS/associations, services, culture/sport) + mapping 11 OPCO par NAF
-- **990 tests Vitest** (63 fichiers, au 27 octobre 2026) + Playwright E2E configuré
+- **1012 tests Vitest** (65 fichiers, au 28 octobre 2026) + Playwright E2E configuré
 - **11 calculateurs officiels** (ajout : valorisation stocks, seuils d'effectif)
 - **18 questions** au questionnaire
 

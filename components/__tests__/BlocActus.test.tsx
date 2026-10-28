@@ -33,9 +33,12 @@ describe('BlocActus', () => {
     render(<BlocActus limite={20} avecDate />);
     expect(await screen.findByText('Actu 1')).toBeInTheDocument();
     expect(screen.getAllByRole('article')).toHaveLength(3);
-    const source = screen.getAllByRole('link', { name: /Source : Le Monde/ })[0];
-    expect(source).toHaveAttribute('target', '_blank');
-    expect(source).toHaveAttribute('rel', 'noopener nofollow');
+    // Sans article rédigé, la carte entière mène à l'article d'origine ; le nom de la source reste en texte.
+    expect(screen.getAllByText(/Source : Le Monde/)).toHaveLength(3);
+    const titre = screen.getByRole('link', { name: /Actu 1/ });
+    expect(titre).toHaveAttribute('href', 'https://www.lemonde.fr/1');
+    expect(titre).toHaveAttribute('target', '_blank');
+    expect(titre).toHaveAttribute('rel', 'noopener nofollow');
     expect(screen.getAllByText('Photo : Florent · CC BY-SA 3.0')).toHaveLength(2);
     expect(screen.getByText('Illustration : Solelis')).toBeInTheDocument();
     expect(screen.getByAltText('Photo 1')).toHaveAttribute('loading', 'lazy');

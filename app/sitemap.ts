@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { COURRIERS } from '@/lib/courriers';
 import { entreesSitemapConseils } from '@/lib/conseils';
+import { ARTICLES_VEILLE } from '@/lib/veille-articles.generated';
 
 // Rendu à la requête : les articles « Conseils » programmés y entrent le jour de
 // leur publication (heure de Paris) sans redéploiement. Coût : un filtre de dates
@@ -82,5 +83,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     // /conseils et les articles publiés ce jour, lastmod = date de mise à jour de l'article.
     ...entreesSitemapConseils(),
+    // Articles complets des actus construits avec ce déploiement (la page de secours n'y est jamais).
+    ...ARTICLES_VEILLE.map((a) => ({
+      url: `${base}/actus/${a.slug}`,
+      lastModified: new Date(a.redige_le),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
   ];
 }

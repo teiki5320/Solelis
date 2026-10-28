@@ -5,6 +5,7 @@ import { ogMeta } from '../og';
 import sitemap from '../../app/sitemap';
 import robots from '../../app/robots';
 import { COURRIERS } from '../courriers';
+import { ARTICLES_VEILLE } from '../veille-articles.generated';
 
 describe('ogMeta', () => {
   it('sans chemin : ni canonique ni og:url', () => {
@@ -28,10 +29,16 @@ describe('sitemap', () => {
     for (const c of COURRIERS) expect(urls).toContain(`https://solelis.com/courriers/${c.slug}`);
   });
 
-  it('exclut /questionnaire et utilise une date fixe (hors articles Conseils, datés un par un)', () => {
+  it('exclut /questionnaire et utilise une date fixe (hors articles Conseils et actus, datés un par un)', () => {
     expect(urls).not.toContain('https://solelis.com/questionnaire');
-    const dates = new Set(sitemap().filter((e) => !e.url.includes('/conseils')).map((e) => String(e.lastModified)));
+    const articleActu = (u: string) => /\/actus\/[^/]+$/.test(u);
+    const dates = new Set(sitemap().filter((e) => !e.url.includes('/conseils') && !articleActu(e.url)).map((e) => String(e.lastModified)));
     expect(dates.size).toBe(1);
+  });
+
+  it('contient les articles d’actus construits, jamais la page de secours', () => {
+    for (const a of ARTICLES_VEILLE) expect(urls).toContain(`https://solelis.com/actus/${a.slug}`);
+    expect(urls.some((u) => u.includes('/actus/article'))).toBe(false);
   });
 });
 
