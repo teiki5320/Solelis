@@ -2,16 +2,17 @@
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import { COURRIERS } from '@/lib/courriers';
 import ThemeToggle from './ThemeToggle';
 
 // « Parler à quelqu'un » en tête : c'est l'entrée la plus importante pour
 // une personne en détresse — elle est mise en avant dans le menu.
 const PARLER = { href: '/parler', label: "Parler à quelqu'un", desc: "Numéros d'écoute et d'orientation" };
 
-const LINKS = [
+// Le nombre de courriers vient du serveur (app/layout.tsx) : importer lib/courriers ici
+// enverrait les 17 modèles complets dans le JavaScript de chaque page.
+const liens = (nombreCourriers: number) => [
   { href: '/procedures', label: 'Procédures', desc: 'Comprendre vos options' },
-  { href: '/courriers', label: 'Courriers', desc: `${COURRIERS.length} modèles prêts` },
+  { href: '/courriers', label: 'Courriers', desc: `${nombreCourriers} modèles prêts` },
   { href: '/aides', label: 'Aides entreprise', desc: 'Financements et dispositifs' },
   { href: '/aides-personnelles', label: 'Droits personnels', desc: 'ATI, CSS, RSA...' },
   { href: '/proteger-famille', label: 'Famille', desc: 'Patrimoine et cautions' },
@@ -23,7 +24,7 @@ const LINKS = [
   { href: '/accompagnant', label: "J'accompagne", desc: 'Pour les proches' },
 ];
 
-export default function Nav() {
+export default function Nav({ nombreCourriers }: { nombreCourriers: number }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLElement>(null);
   const boutonMenuRef = useRef<HTMLButtonElement>(null);
@@ -132,7 +133,7 @@ export default function Nav() {
             <span className="text-xs text-navy/70">{PARLER.desc}</span>
           </Link>
           <ul>
-            {LINKS.map((l) => (
+            {liens(nombreCourriers).map((l) => (
               <li key={l.href}>
                 <Link
                   href={l.href}
