@@ -1,20 +1,21 @@
 /**
  * Génère lib/veille-slugs.generated.ts et lib/veille-articles.generated.ts :
- * les articles complets des actus, construits en pages /actus/<slug>.
+ * TOUS les articles complets de l'index de la veille (articles/solelis/index.json, jamais vidé),
+ * construits en pages /actus/<slug>. Index illisible : les articles des actus récentes.
  *
  * Lancé automatiquement avant `npm run build`, `npm run dev` et `npm test` ; à la main : `npm run veille`.
  * Ne casse JAMAIS le build : si la veille ne répond pas, 0 article (les cartes mènent
  * alors à la page de secours ou à la source).
  *
  * Variables facultatives :
- * - VEILLE_DOSSIER : dossier local qui imite la veille (actus/solelis.json, articles/solelis/<id>.json) ;
+ * - VEILLE_DOSSIER : dossier local qui imite la veille (actus/solelis.json, articles/solelis/index.json et <id>.json) ;
  * - VEILLE_HORS_LIGNE=1 : n'interroge pas la veille (0 article).
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { choisirArticles, moduleArticles, moduleSlugs } from '../lib/articlesVeille.ts';
-import { URL_ARTICLES, URL_VEILLE, lireFlux } from '../lib/veille.ts';
+import { choisirArticles, entreesArticles, moduleArticles, moduleSlugs } from '../lib/articlesVeille.ts';
+import { URL_ARTICLES, URL_VEILLE } from '../lib/veille.ts';
 
 const racine = join(dirname(fileURLToPath(import.meta.url)), '..');
 const dossier = process.env.VEILLE_DOSSIER ? resolve(process.env.VEILLE_DOSSIER) : null;
@@ -32,21 +33,21 @@ async function lireJson(url: string, local: string | null): Promise<unknown> {
 }
 
 const fluxBrut = horsLigne ? null : await lireJson(URL_VEILLE, dossier && join(dossier, 'actus', 'solelis.json'));
-const flux = lireFlux(fluxBrut);
-const avecSlug = flux?.actus.filter((a) => a.slug) ?? [];
+const indexBrut = horsLigne ? null : await lireJson(`${URL_ARTICLES}index.json`, dossier && join(dossier, 'articles', 'solelis', 'index.json'));
+const entrees = entreesArticles(indexBrut, fluxBrut);
 const articlesBruts: Record<string, unknown> = {};
-// Par paquets de 6 : la veille est un simple site GitHub Pages.
-for (let i = 0; i < avecSlug.length; i += 6) {
+// Par paquets de 10 : la veille est un simple site GitHub Pages.
+for (let i = 0; i < entrees.length; i += 10) {
   await Promise.all(
-    avecSlug.slice(i, i + 6).map(async (a) => {
-      articlesBruts[a.id] = await lireJson(`${URL_ARTICLES}${a.id}.json`, dossier && join(dossier, 'articles', 'solelis', `${a.id}.json`));
+    entrees.slice(i, i + 10).map(async (e) => {
+      articlesBruts[e.id] = await lireJson(`${URL_ARTICLES}${e.id}.json`, dossier && join(dossier, 'articles', 'solelis', `${e.id}.json`));
     }),
   );
 }
 
-const donnees = choisirArticles(fluxBrut, articlesBruts);
+const donnees = choisirArticles(entrees, fluxBrut, articlesBruts);
 writeFileSync(join(racine, 'lib', 'veille-slugs.generated.ts'), moduleSlugs(donnees));
 writeFileSync(join(racine, 'lib', 'veille-articles.generated.ts'), moduleArticles(donnees));
 
-const origine = horsLigne ? 'hors ligne' : dossier ? `dossier ${dossier}` : flux ? 'veille' : 'veille injoignable';
-console.log(`✓ Veille (${origine}) : ${donnees.actus.length} actu(s), ${donnees.articles.length} article(s) construit(s) sur ${avecSlug.length} annoncé(s)`);
+const origine = horsLigne ? 'hors ligne' : dossier ? `dossier ${dossier}` : indexBrut ? 'index de la veille' : fluxBrut ? 'veille sans index' : 'veille injoignable';
+console.log(`✓ Veille (${origine}) : ${donnees.actus.length} actu(s) récente(s), ${donnees.articles.length} article(s) construit(s) sur ${entrees.length} annoncé(s)`);

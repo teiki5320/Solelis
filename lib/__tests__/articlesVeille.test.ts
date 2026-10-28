@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { cheminSecours, dateLongue, idActuValide, lienActu, lireArticle, type Actu } from '../veille';
-import { choisirArticles, moduleSlugs } from '../articlesVeille';
+import { choisirArticles, entreesArticles, moduleSlugs } from '../articlesVeille';
 import { fichesDesTags } from '../fichesVeille';
 
 const ID = (n: number) => String(n).padStart(40, 'a');
@@ -68,29 +68,53 @@ describe('lienActu : où mène une carte d’actu', () => {
   });
 });
 
-describe('choisirArticles (build)', () => {
+describe('choisirArticles (build, depuis l’index de la veille)', () => {
   const flux = (actus: Actu[]) => ({ version: 3, genere_le: '2026-10-28T11:00:00Z', actus });
+  const index = (entrees: { id: string; slug: string }[]) => ({
+    version: 1,
+    site: 'solelis',
+    genere_le: '2026-10-28T11:00:00Z',
+    articles: entrees.map((e) => ({ ...e, titre: 't', publie_le: '2026-10-27T08:00:00Z', redige_le: '2026-10-27T09:00:00Z', url: 'x' })),
+  });
 
-  it('construit les articles valides, dans l’ordre des actus', () => {
-    const d = choisirArticles(flux([actu(1, { slug: 'un' }), actu(2), actu(3, { slug: 'trois' })]), {
+  it('construit tous les articles de l’index, même ceux sortis des actus récentes', () => {
+    const entrees = entreesArticles(index([{ id: ID(1), slug: 'un' }, { id: ID(9), slug: 'ancien' }]), flux([actu(1, { slug: 'un' })]));
+    const d = choisirArticles(entrees, flux([actu(1, { slug: 'un' })]), {
       [ID(1)]: article(1, 'un'),
-      [ID(3)]: article(3, 'trois'),
+      [ID(9)]: { ...article(9, 'ancien'), publie_le: '2026-09-01T08:00:00.000Z' },
     });
-    expect(d.articles.map((a) => a.slug)).toEqual(['un', 'trois']);
-    expect(d.actus).toHaveLength(3);
-    expect(moduleSlugs(d)).toContain('["un","trois"]');
+    expect(d.articles.map((a) => a.slug)).toEqual(['un', 'ancien']);
+    expect(d.actus).toHaveLength(1);
+    expect(moduleSlugs(d)).toContain('["un","ancien"]');
+  });
+
+  it('index illisible : les articles des actus récentes, comme avant', () => {
+    expect(entreesArticles(null, flux([actu(1, { slug: 'un' }), actu(2)]))).toEqual([{ id: ID(1), slug: 'un' }]);
+    expect(entreesArticles({ version: 1, articles: [{ id: 'abc', slug: 'x' }, { id: ID(3), slug: 'trois' }] }, null)).toEqual([{ id: ID(3), slug: 'trois' }]);
   });
 
   it('écarte article absent, abîmé, slug différent, réservé ou en double', () => {
-    const d = choisirArticles(
-      flux([actu(1, { slug: 'un' }), actu(2, { slug: 'deux' }), actu(3, { slug: 'article' }), actu(4, { slug: 'un' }), actu(5, { slug: 'cinq' })]),
-      { [ID(1)]: article(1, 'un'), [ID(2)]: article(2, 'autre'), [ID(3)]: article(3, 'article'), [ID(4)]: article(4, 'un'), [ID(5)]: { titre: 'abîmé' } },
-    );
+    const entrees = [
+      { id: ID(1), slug: 'un' },
+      { id: ID(2), slug: 'deux' },
+      { id: ID(3), slug: 'article' },
+      { id: ID(4), slug: 'un' },
+      { id: ID(5), slug: 'cinq' },
+      { id: ID(6), slug: 'six' },
+    ];
+    const d = choisirArticles(entrees, null, {
+      [ID(1)]: article(1, 'un'),
+      [ID(2)]: article(2, 'autre'),
+      [ID(3)]: article(3, 'article'),
+      [ID(4)]: article(4, 'un'),
+      [ID(5)]: { titre: 'abîmé' },
+    });
     expect(d.articles.map((a) => a.slug)).toEqual(['un']);
   });
 
   it('veille injoignable : 0 article, sans erreur', () => {
-    expect(choisirArticles(null, {})).toEqual({ articles: [], actus: [] });
+    expect(entreesArticles(null, null)).toEqual([]);
+    expect(choisirArticles([], null, {})).toEqual({ articles: [], actus: [] });
   });
 
   it('valide un article conforme au schéma v1', () => {
