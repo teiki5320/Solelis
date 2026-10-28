@@ -35,3 +35,4 @@ lib/conseils/donnees.generated.ts
 # Actus : articles complets lus sur la veille au build (npm run veille)
 lib/veille-slugs.generated.ts
 lib/veille-articles.generated.ts
+lib/dates-pages.generated.ts

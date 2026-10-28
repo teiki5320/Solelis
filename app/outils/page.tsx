@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/outils' },
   title: 'Boîte à outils — Solelis',
   description:
-    'Calculateurs et vérificateurs officiels pour les dirigeants : prescription, indemnités de licenciement, ATI, aide juridictionnelle, valorisation, coûts de procédures.',
+    'Calculateurs officiels pour les dirigeants : prescription, indemnités de licenciement, ATI, aide juridictionnelle, valorisation, coûts de procédures.',
 };
 
 interface Outil {

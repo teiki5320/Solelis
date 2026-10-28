@@ -3,6 +3,7 @@ import { Playfair_Display, Outfit } from 'next/font/google';
 import './globals.css';
 import Background from '@/components/Background';
 import Nav from '@/components/Nav';
+import { COURRIERS } from '@/lib/courriers';
 import Compteur from '@/components/Compteur';
 import LazyMotionProvider from '@/components/LazyMotionProvider';
 import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
@@ -128,7 +129,7 @@ export default function RootLayout({
         <ServiceWorkerRegister />
         <LazyMotionProvider>
         <Background />
-        <Nav />
+        <Nav nombreCourriers={COURRIERS.length} />
         <main id="contenu-principal" className="relative min-h-screen pt-20 sm:pt-24">{children}</main>
         <footer className="relative mt-24 space-y-2 pb-10 text-center text-xs text-navy/50">
           <p className="font-display text-sm tracking-wide">Solelis</p>

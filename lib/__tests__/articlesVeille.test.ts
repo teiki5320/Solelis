@@ -114,7 +114,7 @@ describe('choisirArticles (build, depuis l’index de la veille)', () => {
 
   it('veille injoignable : 0 article, sans erreur', () => {
     expect(entreesArticles(null, null)).toEqual([]);
-    expect(choisirArticles([], null, {})).toEqual({ articles: [], actus: [] });
+    expect(choisirArticles([], null, {})).toEqual({ articles: [], actus: [], genereLe: '' });
   });
 
   it('valide un article conforme au schéma v1', () => {

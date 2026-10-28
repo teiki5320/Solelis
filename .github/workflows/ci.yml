@@ -23,6 +23,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Historique complet : dates réelles de modification des pages (lastmod du sitemap).
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
@@ -32,6 +35,8 @@ jobs:
       - run: npm run conseils
       # Lit les articles complets des actus sur la veille (0 article si elle ne répond pas).
       - run: npm run veille
+      # Dates de dernière modification des pages, depuis l'historique git (sitemap).
+      - run: npm run dates
       - run: npm run lint
       - run: npx tsc --noEmit
       - run: npm run build

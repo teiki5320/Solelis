@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { META_PAGE_INTROUVABLE } from '@/lib/og';
+import { META_PAGE_INTROUVABLE, descriptionPage } from '@/lib/og';
 import { ACTUS_VEILLE, ARTICLES_VEILLE } from '@/lib/veille-articles.generated';
 import { fichesDesTags } from '@/lib/fichesVeille';
 import { ArticleActu, autresActus } from '@/components/actus/ArticleActu';
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const image = { url: article.image.url, width: article.image.largeur, height: article.image.hauteur, alt: article.image.alt };
   return {
     title: article.titre,
-    description: article.chapo,
+    description: descriptionPage(article.chapo),
     alternates: { canonical: chemin },
     openGraph: {
       title: article.titre,

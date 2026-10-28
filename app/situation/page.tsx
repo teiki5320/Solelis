@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { conseilPublie } from '@/lib/conseils';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/situation' },
@@ -8,10 +9,10 @@ export const metadata: Metadata = {
 };
 
 const SITUATIONS = [
-  { slug: 'dettes-urssaf', titre: 'Dettes URSSAF', desc: 'Échelonnement, prescription, contestation', icone: '🏛️', couleur: 'border-l-rouge' },
-  { slug: 'dettes-fournisseurs', titre: 'Dettes fournisseurs', desc: 'Négociation amiable, médiation', icone: '🤝', couleur: 'border-l-bleu' },
-  { slug: 'credit-bancaire', titre: 'Crédit bancaire', desc: 'Médiation du crédit, découvert, prêt refusé', icone: '🏦', couleur: 'border-l-bleu-fonce' },
-  { slug: 'impots-impayes', titre: 'Impôts impayés', desc: 'Délais de paiement, CCSF, remise gracieuse', icone: '📋', couleur: 'border-l-jaune' },
+  { slug: 'dettes-urssaf', titre: 'Dettes URSSAF', desc: 'Échelonnement, prescription, contestation', icone: '🏛️', couleur: 'border-l-rouge', conseils: ['mise-en-demeure-urssaf', 'echeancier-urssaf', 'contrainte-urssaf-contester'] },
+  { slug: 'dettes-fournisseurs', titre: 'Dettes fournisseurs', desc: 'Négociation amiable, médiation', icone: '🤝', couleur: 'border-l-bleu', conseils: ['fournisseur-impaye-menace', 'assignation-tribunal-creancier', 'procedure-de-conciliation'] },
+  { slug: 'credit-bancaire', titre: 'Crédit bancaire', desc: 'Médiation du crédit, découvert, prêt refusé', icone: '🏦', couleur: 'border-l-bleu-fonce', conseils: ['pge-impossible-a-rembourser', 'caution-personnelle-dirigeant', 'mandat-ad-hoc'] },
+  { slug: 'impots-impayes', titre: 'Impôts impayés', desc: 'Délais de paiement, CCSF, remise gracieuse', icone: '📋', couleur: 'border-l-jaune', conseils: ['plan-de-reglement-impots', 'ccsf-etaler-dettes-fiscales-sociales'] },
 ];
 
 const jsonLdBreadcrumb = {
@@ -48,6 +49,29 @@ export default function SituationsPage() {
           </Link>
         ))}
       </div>
+      {/* Articles Conseils liés à chaque situation (seulement ceux déjà publiés). */}
+      <div className="mt-12">
+        <h2 className="mb-4 font-display text-xl text-navy">Nos conseils pour chaque situation</h2>
+        <div className="space-y-6">
+          {SITUATIONS.map((s) => {
+            const articles = s.conseils.map((slug) => conseilPublie(slug)).filter((c) => c !== null);
+            if (articles.length === 0) return null;
+            return (
+              <div key={s.slug}>
+                <p className="mb-2 font-display text-base text-navy">{s.titre}</p>
+                <div className="grid gap-3">
+                  {articles.map((c) => (
+                    <Link key={c.slug} href={`/conseils/${c.slug}`} className="glass-soft p-4 text-sm text-bleu-fonce transition hover:bg-white">
+                      {c.title} →
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       <div className="mt-10 text-center">
         <Link href="/" className="btn-primary">Commencer le diagnostic Solelis →</Link>
       </div>
