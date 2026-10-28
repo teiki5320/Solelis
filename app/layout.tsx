@@ -7,6 +7,7 @@ import { COURRIERS } from '@/lib/courriers';
 import Compteur from '@/components/Compteur';
 import LazyMotionProvider from '@/components/LazyMotionProvider';
 import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
+import MesureAudience from '@/components/MesureAudience';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -127,6 +128,7 @@ export default function RootLayout({
       </head>
       <body>
         <ServiceWorkerRegister />
+        <MesureAudience />
         <LazyMotionProvider>
         <Background />
         <Nav nombreCourriers={COURRIERS.length} />

@@ -147,8 +147,9 @@ export default function MentionsLegalesPage() {
             réglages de votre navigateur.
           </p>
           <p className="mt-2">
-            Les statistiques d&apos;usage agrégées sont collectées via Plausible Analytics, conforme RGPD,
-            sans cookie et sans données personnelles identifiantes.
+            Les statistiques de visites agrégées sont collectées via Cloudflare Web Analytics, sans cookie ni
+            stockage dans votre navigateur et sans données personnelles identifiantes. Seule la page d&apos;arrivée
+            est comptée ; votre fiche et le questionnaire ne sont jamais mesurés.
           </p>
           <p className="mt-2">
             Pour le détail du traitement des données personnelles (RGPD), consultez la{' '}

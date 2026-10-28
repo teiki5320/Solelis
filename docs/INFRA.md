@@ -88,13 +88,15 @@ Quatre sources, toutes appelées depuis le code (`lib/`) :
 - **INSEE Sirene** (secours) : données SIRET si l'API gouv.fr échoue (`lib/sirene.ts`) — console https://portail-api.insee.fr, secret `INSEE_API_KEY` (optionnelle), gratuite
 - **Google Places** : recherche d'avocats près de la ville du dirigeant (`lib/googlePlaces.ts`, Places API New ; bloc vide sans clé, le reste du site fonctionne) — console https://console.cloud.google.com (projet avec « Places API (New) » activée), secret `GOOGLE_PLACES_API_KEY` (optionnelle, à restreindre à l'API Places), paiement à l'usage avec crédit mensuel offert (surveiller les quotas)
 
+## Cloudflare Web Analytics (mesure d'audience)
+
+- **Rôle** : visites et pages d'arrivée, sans cookie ni stockage dans le navigateur, gratuit — site « solelis.com » ajouté le 28 octobre 2026 dans le compte Cloudflare teiki5320@gmail.com (comme keurdeco.com)
+- **Code** : `components/MesureAudience.tsx` (jeton public du site, chargé par `app/layout.tsx`) ; script chargé seulement à l'arrivée, avec `spa: false` : la page d'arrivée est comptée, jamais la suite de la navigation ; jamais chargé sur `/fiche/…` (adresse secrète) ni `/questionnaire` (SIRET dans l'adresse)
+- **Lecture** : console Cloudflare → Analytics → Web Analytics, et page Audience du Studio (clé Cloudflare en lecture seule)
+
 ## Prévu mais pas branché
 
-Mesure d'audience : aucun service n'est utilisé en production, cette section ne compte donc pas parmi les services de l'app.
-
-- **Prévu** : Plausible, sans cookies ; le script n'est chargé que si `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` est définie (`app/layout.tsx`). Mode manuel : adresses envoyées sans paramètres, `/fiche/<token>` remplacé par `/fiche/[token]`
-- **État vérifié le 28 octobre 2026** : aucun script de mesure sur https://solelis.com — la variable n'est pas définie en production et aucun compte n'est souscrit
-- **Console** : https://plausible.io
+- **Plausible** : code toujours présent mais inactif (chargé seulement si `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` est définie, ce qui n'est pas le cas) ; remplacé par Cloudflare Web Analytics le 28 octobre 2026
 - **Coût** : payant — à souscrire si besoin
 
 ## Limites connues

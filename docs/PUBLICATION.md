@@ -19,7 +19,7 @@
 | Domaine | [ok] solelis.com, www et avelor.toakeur.com redirigent |
 | SSL | [ok] Certificat automatique Cloudflare |
 | Indexation | [à faire] 86 pages sur 103 suivies dans Search Console |
-| Mesure d'audience | [pas encore] Plausible prévu, non souscrit |
+| Mesure d'audience | [ok] Cloudflare Web Analytics, sans cookie, depuis le 28 octobre 2026 |
 
 ## Ce qui reste, dans l'ordre
 
@@ -28,7 +28,7 @@
 3. ✅ **Mise en ligne automatique** : la CI publie sur Cloudflare à chaque envoi depuis le 23 octobre 2026 (correctif SOS Amitié en ligne).
 4. **Parcours en production** : vérifier fiche, lien magique Resend, rappel du cron et boîte solelis@toakeur.com.
 5. **Indexation** : faire entrer dans Google les 17 pages encore absentes sur 103.
-6. **Mesure d'audience** : souscrire Plausible et définir `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`.
+6. ✅ **Mesure d'audience** : Cloudflare Web Analytics, gratuit et sans cookie, ajouté le 28 octobre 2026 (Plausible abandonné).
 7. **Relance des canaux** : prescripteurs institutionnels d'abord.
 
 ## Vue d'ensemble
@@ -64,5 +64,5 @@
 - **Actus** : https://solelis.com/actus (20 actus, celles du build écrites dans la page pour Google puis mises à jour en direct depuis la veille, dans le sitemap) et https://solelis.com/veille/entites.json (les 4 situations, pour la veille), en ligne depuis le 27 octobre 2026 ; aucune actu sur l'accueil. Depuis le 28 octobre 2026, chaque actu a son article complet sur le site, https://solelis.com/actus/<slug> (6 le 28 octobre, dans le sitemap, JSON-LD NewsArticle), reconstruit 2 fois par jour à partir de l'index de tous les articles (les anciens gardent leur page) ; les plus récentes passent par la page de secours /actus/article (noindex)
 - **Rubrique Conseils** : https://solelis.com/conseils et son flux https://solelis.com/conseils/rss.xml répondent ; 25 articles publiés (20 le 12 octobre 2026, 1 le 19 octobre, 1 le 21 octobre, 1 le 23 octobre, 1 le 26 octobre, 1 le 28 octobre), 25 programmés du 30 octobre au 28 décembre 2026 (dont 9 ajoutés le 28 octobre 2026), qui paraîtront d’eux-mêmes à leur date ; le lien SOS Amitié corrigé le 21 octobre est en ligne depuis la mise en ligne du 23 octobre (sosamitie.org, constaté le 24 octobre)
 - **Balises de partage** : Open Graph + Twitter Card par page (titre et description propres à chaque page), image générée dynamiquement par `/api/og` (runtime Node), URL canonique sur les pages qui la déclarent (`ogMeta({ chemin })`), JSON-LD Organization + WebSite (+ FAQPage, fil d'Ariane)
-- **Mesure d'audience** : aucune en production — Plausible est prévu dans le code mais ne se charge que si `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` est définie, ce qui n'est pas le cas
+- **Mesure d'audience** : Cloudflare Web Analytics depuis le 28 octobre 2026 (`components/MesureAudience.tsx`) : page d'arrivée seulement, jamais la fiche ni le questionnaire ; lecture dans la console Cloudflare et la page Audience du Studio. Avant, aucune mesure en production (Plausible prévu, jamais souscrit)
 - **PWA** : `manifest.json` + icônes 512/192/favicon — installable sur mobile ; favicon Solelis servi sous une nouvelle adresse (`/icons/solelis-favicon-96.png`) pour que Google remplace l'ancienne icône
