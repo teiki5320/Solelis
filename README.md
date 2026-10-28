@@ -38,7 +38,7 @@ Cloudflare (Worker « solelis » → Paramètres → Variables et secrets).
 - `RESEND_FROM` — expéditeur des emails, ex. `Solelis <contact@exemple.fr>`
 - `NEXT_PUBLIC_BASE_URL` — URL publique (liens magiques) : `https://solelis.com` en production
 - `CRON_SECRET` — secret partagé entre le Cron Trigger (`worker.ts`) et `/api/cron/rappels`
-- `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` — mesure d'audience Plausible (optionnelle)
+- `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` — mesure d'audience Plausible (optionnelle, inactive : la mesure se fait par Cloudflare Web Analytics, `components/MesureAudience.tsx`)
 
 Les variables `NEXT_PUBLIC_*` sont intégrées au moment du build : elles
 doivent aussi être disponibles pour le build Cloudflare.

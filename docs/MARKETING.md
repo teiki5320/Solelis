@@ -38,7 +38,7 @@ Le dirigeant final ne paie jamais. Exclusions par design : pas de publicité dis
 ## Mesures
 
 - **Fiches créées** : à vérifier sur `/api/stats` (compteur câblé)
-- **Visiteurs et sources de trafic** : à instrumenter (Plausible prévu, inactif)
+- **Visiteurs et sources de trafic** : Cloudflare Web Analytics depuis le 28 octobre 2026 (pages d'arrivée ; console Cloudflare ou page Audience du Studio)
 - **Questionnaire mené jusqu'à la fiche** : à instrumenter
 - **Liens magiques délivrés** : à vérifier dans la console Resend
 - **Pages indexées par Google** : 86 sur 103 suivies (relevé du Studio, 28 octobre 2026)
