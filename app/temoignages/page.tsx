@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   alternates: { canonical: '/temoignages' },
   title: 'Exemples de parcours (fictifs) — Solelis',
-  description: 'Exemples fictifs, inspirés de situations courantes, de dirigeant·e·s qui traversent des difficultés : prévention, redressement, cession, liquidation puis rebond.',
+  description: 'Exemples fictifs, inspirés de situations courantes, de dirigeant·e·s en difficulté : prévention, redressement, cession, liquidation puis rebond.',
 };
 
 interface Temoignage {

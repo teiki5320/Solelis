@@ -10,6 +10,34 @@ export const META_PAGE_INTROUVABLE: Metadata = {
   robots: { index: false, follow: true },
 };
 
+/** Au-delà, Google coupe le titre dans ses résultats (« … »). */
+export const TITRE_MAX = 65;
+/** Au-delà, Google coupe la description dans ses résultats. */
+export const DESCRIPTION_MAX = 160;
+
+/**
+ * Titre d'onglet et de résultat Google : « — Solelis » n'est ajouté que s'il tient dans
+ * TITRE_MAX caractères ; sinon, le titre seul. S'il reste trop long, les précisions entre
+ * parenthèses sont retirées (« Saisine de la CCSF (échelonnement…) » → « Saisine de la CCSF »).
+ */
+export function titrePage(titre: string): string {
+  const base = titre.replace(/ — Solelis$/, '');
+  const avecMarque = `${base} — Solelis`;
+  if (avecMarque.length <= TITRE_MAX) return avecMarque;
+  if (base.length <= TITRE_MAX) return base;
+  const sansParentheses = base.replace(/\s*\([^)]*\)/g, '').replace(/\s{2,}/g, ' ').trim();
+  return sansParentheses.length < base.length ? titrePage(sansParentheses) : base;
+}
+
+/** Description de résultat Google : coupée au dernier mot entier avant DESCRIPTION_MAX, avec « … ». */
+export function descriptionPage(texte: string): string {
+  const t = texte.replace(/\s+/g, ' ').trim();
+  if (t.length <= DESCRIPTION_MAX) return t;
+  const coupe = t.slice(0, DESCRIPTION_MAX - 1);
+  const dernierEspace = coupe.lastIndexOf(' ');
+  return `${(dernierEspace > 80 ? coupe.slice(0, dernierEspace) : coupe).replace(/[\s,;:.(«—–-]+$/, '')}…`;
+}
+
 export type OgCat = 'outil' | 'courrier' | 'procedure' | 'situation' | 'aide' | 'faq' | 'defaut';
 
 /**
@@ -38,8 +66,8 @@ export function ogMeta(opts: {
   const ogUrl = `/api/og?${params.toString()}`;
 
   return {
-    title: opts.pageTitle ?? `${opts.titre} — Solelis`,
-    description: opts.description,
+    title: titrePage(opts.pageTitle ?? opts.titre),
+    description: descriptionPage(opts.description),
     ...(opts.chemin ? { alternates: { canonical: opts.chemin } } : {}),
     openGraph: {
       title: opts.titre,

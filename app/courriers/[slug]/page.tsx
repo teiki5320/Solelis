@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { COURRIERS, getCourrier } from '@/lib/courriers';
-import { META_PAGE_INTROUVABLE, ogMeta } from '@/lib/og';
+import { DESCRIPTION_MAX, META_PAGE_INTROUVABLE, ogMeta } from '@/lib/og';
 import CourrierDetail from './CourrierDetail';
 
 interface PageProps {
@@ -19,10 +19,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const courrier = getCourrier(slug);
   if (!courrier) return META_PAGE_INTROUVABLE;
+  const complement = ' Modèle gratuit, prérempli avec les informations de votre entreprise, prêt à copier ou imprimer.';
   return ogMeta({
     titre: courrier.titre,
     sous: `Modèle de courrier · ${courrier.destinataire}`,
-    description: `${courrier.description} Modèle gratuit, prérempli avec les informations de votre entreprise, prêt à copier ou imprimer.`,
+    // Le complément seulement s'il tient dans la description affichée par Google.
+    description: courrier.description.length + complement.length <= DESCRIPTION_MAX ? courrier.description + complement : courrier.description,
     cat: 'courrier',
     pageTitle: `${courrier.titre} : modèle de courrier — Solelis`,
     chemin: `/courriers/${courrier.slug}`,
