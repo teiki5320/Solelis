@@ -23,7 +23,7 @@ Le dirigeant final ne paie jamais. Exclusions par design : pas de publicité dis
 
 | Canal | Détail | Statut |
 |---|---|---|
-| SEO organique | Métadonnées par page, sitemap (103 adresses le 28 octobre 2026 avec 6 articles d'actus ; 96 le 27 octobre avec la page Actus ; 95 le 26 octobre), robots, JSON-LD (site, FAQ, articles), image OG dynamique, aperçu en grande image autorisé pour Google Discover et IndexNow pour Bing (en ligne depuis le 23 octobre 2026, IndexNow prévenu par la CI à chaque mise en ligne) ; pages longue traîne (17 courriers, 11 calculateurs, 4 annuaires, FAQ, glossaire, page « Dettes fiscales et sociales ») et rubrique Conseils (24 articles publiés, 18 programmés du 28 octobre au 7 décembre 2026 dont 12 ajoutés le 25 octobre, flux RSS) | ✅ base technique |
+| SEO organique | Métadonnées par page, sitemap (103 adresses le 28 octobre 2026 avec 6 articles d'actus ; 96 le 27 octobre avec la page Actus ; 95 le 26 octobre), robots, JSON-LD (site, FAQ, articles), image OG dynamique, aperçu en grande image autorisé pour Google Discover et IndexNow pour Bing (en ligne depuis le 23 octobre 2026, IndexNow prévenu par la CI à chaque mise en ligne) ; pages longue traîne (17 courriers, 11 calculateurs, 4 annuaires, FAQ, glossaire, page « Dettes fiscales et sociales ») et rubrique Conseils (24 articles publiés au 26 octobre, 26 programmés du 30 octobre au 28 décembre 2026 dont 9 ajoutés le 28 octobre ; le 25 octobre, 18 étaient programmés jusqu’au 7 décembre ; flux RSS) | ✅ base technique |
 | Actus (veille) | Page https://solelis.com/actus : 20 actus des entreprises en difficulté en France (titres et résumés réécrits, source et crédit toujours visibles), mises à jour à 12 h et 19 h ; 3 actus « Dans l'actualité » en bas des pages situation quand elles sont liées. Aucune actu sur l'accueil (ton rassurant). Lien dans le menu et le pied de page, page dans le sitemap. Depuis le 28 octobre 2026, toucher une actu ouvre son article complet sur le site (300 à 450 mots, page /actus/<slug> indexable, dans le sitemap), reconstruit 2 fois par jour ; aucune publicité | ✅ depuis le 27 octobre 2026 |
 | Search Console | solelis.com déclaré, sitemap envoyé le 12 octobre 2026 et renvoyé le 20 octobre (relu par Google le 22 octobre) ; 82 pages indexées sur 94 suivies (onglet Indexation du Studio) | ✅ |
 | Prescripteurs institutionnels | Référencement par CIP, greffes, CCI/CMA, URSSAF, APESA, 60 000 Rebonds — le canal au meilleur rendement | ⬜ |
@@ -42,7 +42,7 @@ Le dirigeant final ne paie jamais. Exclusions par design : pas de publicité dis
 - **Questionnaire mené jusqu'à la fiche** : à instrumenter
 - **Liens magiques délivrés** : à vérifier dans la console Resend
 - **Pages indexées par Google** : 82 sur 94 suivies (relevé du Studio, 24 octobre 2026)
-- **Articles Conseils publiés** : 24 (sitemap du 26 octobre), 18 autres programmés jusqu’au 7 décembre 2026 (12 ajoutés le 25 octobre 2026 ; avant, 7 programmés jusqu’au 9 novembre)
+- **Articles Conseils publiés** : 24 (sitemap du 26 octobre), 26 autres programmés jusqu’au 28 décembre 2026 (9 ajoutés le 28 octobre 2026 ; le 25 octobre, 18 programmés jusqu’au 7 décembre ; avant, 7 programmés jusqu’au 9 novembre)
 - **Liens entrants de prescripteurs** : aucun connu
 
 ## Calendrier

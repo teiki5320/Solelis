@@ -65,6 +65,17 @@
     "largeur": 1200,
     "hauteur": 675
   },
+  "conseil:banque-ferme-compte-professionnel": {
+    "fichier": "/illustrations/conseils/banque-ferme-compte-professionnel.webp",
+    "source": "carte",
+    "credit": "Solelis",
+    "licence": null,
+    "page": null,
+    "alt": "Illustration Solelis : un soleil blanc sur fond bleu nuit, avec la mention « Solelis »",
+    "origine": "carte:conseil:banque-ferme-compte-professionnel",
+    "largeur": 1200,
+    "hauteur": 675
+  },
   "conseil:capitaux-propres-inferieurs-moitie-capital": {
     "fichier": "/illustrations/conseils/capitaux-propres-inferieurs-moitie-capital.webp",
     "source": "carte",
@@ -109,6 +120,17 @@
     "largeur": 1200,
     "hauteur": 675
   },
+  "conseil:cheque-sans-provision-interdit-bancaire": {
+    "fichier": "/illustrations/conseils/cheque-sans-provision-interdit-bancaire.webp",
+    "source": "carte",
+    "credit": "Solelis",
+    "licence": null,
+    "page": null,
+    "alt": "Illustration Solelis : un soleil blanc sur fond bleu nuit, avec la mention « Solelis »",
+    "origine": "carte:conseil:cheque-sans-provision-interdit-bancaire",
+    "largeur": 1200,
+    "hauteur": 675
+  },
   "conseil:chomage-dirigeant-ati": {
     "fichier": "/illustrations/conseils/chomage-dirigeant-ati.webp",
     "source": "wikimedia",
@@ -117,6 +139,28 @@
     "page": "https://commons.wikimedia.org/wiki/File:P%C3%B4le_emploi_%C3%A0_Petit-Bourg_en_Guadeloupe.jpg",
     "alt": "Une agence Pôle emploi (aujourd’hui France Travail) à Petit-Bourg, en Guadeloupe",
     "origine": "https://upload.wikimedia.org/wikipedia/commons/f/fd/P%C3%B4le_emploi_%C3%A0_Petit-Bourg_en_Guadeloupe.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "largeur": 1200,
+    "hauteur": 675
+  },
+  "conseil:clause-reserve-propriete-client-procedure": {
+    "fichier": "/illustrations/conseils/clause-reserve-propriete-client-procedure.webp",
+    "source": "carte",
+    "credit": "Solelis",
+    "licence": null,
+    "page": null,
+    "alt": "Illustration Solelis : un soleil blanc sur fond bleu nuit, avec la mention « Solelis »",
+    "origine": "carte:conseil:clause-reserve-propriete-client-procedure",
+    "largeur": 1200,
+    "hauteur": 675
+  },
+  "conseil:client-ne-paie-pas-factures": {
+    "fichier": "/illustrations/conseils/client-ne-paie-pas-factures.webp",
+    "source": "carte",
+    "credit": "Solelis",
+    "licence": null,
+    "page": null,
+    "alt": "Illustration Solelis : un soleil blanc sur fond bleu nuit, avec la mention « Solelis »",
+    "origine": "carte:conseil:client-ne-paie-pas-factures",
     "largeur": 1200,
     "hauteur": 675
   },
@@ -161,6 +205,28 @@
     "page": "https://commons.wikimedia.org/wiki/File:Escalier_de_l%27ancien_tribunal_de_commerce,_rue_du_Clo%C3%AEtre_St-Merry._IX,_G.8552(1).jpg",
     "alt": "Gravure ancienne de l’escalier de l’ancien tribunal de commerce de Paris",
     "origine": "https://upload.wikimedia.org/wikipedia/commons/0/04/Escalier_de_l%27ancien_tribunal_de_commerce%2C_rue_du_Clo%C3%AEtre_St-Merry._IX%2C_G.8552%281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "largeur": 1200,
+    "hauteur": 675
+  },
+  "conseil:declarer-creance-client-procedure-collective": {
+    "fichier": "/illustrations/conseils/declarer-creance-client-procedure-collective.webp",
+    "source": "carte",
+    "credit": "Solelis",
+    "licence": null,
+    "page": null,
+    "alt": "Illustration Solelis : un soleil blanc sur fond bleu nuit, avec la mention « Solelis »",
+    "origine": "carte:conseil:declarer-creance-client-procedure-collective",
+    "largeur": 1200,
+    "hauteur": 675
+  },
+  "conseil:demission-gerant-entreprise-difficulte": {
+    "fichier": "/illustrations/conseils/demission-gerant-entreprise-difficulte.webp",
+    "source": "carte",
+    "credit": "Solelis",
+    "licence": null,
+    "page": null,
+    "alt": "Illustration Solelis : un soleil blanc sur fond bleu nuit, avec la mention « Solelis »",
+    "origine": "carte:conseil:demission-gerant-entreprise-difficulte",
     "largeur": 1200,
     "hauteur": 675
   },
@@ -373,6 +439,17 @@
     "largeur": 1200,
     "hauteur": 675
   },
+  "conseil:procedure-alerte-commissaire-aux-comptes": {
+    "fichier": "/illustrations/conseils/procedure-alerte-commissaire-aux-comptes.webp",
+    "source": "carte",
+    "credit": "Solelis",
+    "licence": null,
+    "page": null,
+    "alt": "Illustration Solelis : un soleil blanc sur fond bleu nuit, avec la mention « Solelis »",
+    "origine": "carte:conseil:procedure-alerte-commissaire-aux-comptes",
+    "largeur": 1200,
+    "hauteur": 675
+  },
   "conseil:procedure-de-conciliation": {
     "fichier": "/illustrations/conseils/procedure-de-conciliation.webp",
     "source": "openverse",
@@ -447,6 +524,28 @@
     "page": "https://www.flickr.com/photos/111692634@N04/15327728653",
     "alt": "Un terminal de paiement par carte bancaire",
     "origine": "https://live.staticflickr.com/7535/15327728653_41aa769dd7_b.jpg",
+    "largeur": 1200,
+    "hauteur": 675
+  },
+  "conseil:salaires-payes-en-retard": {
+    "fichier": "/illustrations/conseils/salaires-payes-en-retard.webp",
+    "source": "carte",
+    "credit": "Solelis",
+    "licence": null,
+    "page": null,
+    "alt": "Illustration Solelis : un soleil blanc sur fond bleu nuit, avec la mention « Solelis »",
+    "origine": "carte:conseil:salaires-payes-en-retard",
+    "largeur": 1200,
+    "hauteur": 675
+  },
+  "conseil:surendettement-entrepreneur-dettes-personnelles": {
+    "fichier": "/illustrations/conseils/surendettement-entrepreneur-dettes-personnelles.webp",
+    "source": "carte",
+    "credit": "Solelis",
+    "licence": null,
+    "page": null,
+    "alt": "Illustration Solelis : un soleil blanc sur fond bleu nuit, avec la mention « Solelis »",
+    "origine": "carte:conseil:surendettement-entrepreneur-dettes-personnelles",
     "largeur": 1200,
     "hauteur": 675
   },
