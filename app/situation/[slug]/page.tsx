@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { META_PAGE_INTROUVABLE } from '@/lib/og';
 import { SITUATIONS as DATA } from '@/lib/situations';
 import { BlocActus } from '@/components/actus/BlocActus';
+import { ACTUS_VEILLE, GENERE_LE_VEILLE } from '@/lib/veille-articles.generated';
 import { IllustrationPage } from '@/components/IllustrationPage';
 
 export function generateStaticParams() {
@@ -86,7 +87,14 @@ export default async function SituationPage({ params }: { params: Promise<{ slug
 
       {/* Après les étapes et le courrier, jamais en haut de page : 3 actus de la situation au plus,
           bloc absent s'il n'y en a aucune (ou si la veille ne répond pas). */}
-      <BlocActus titre="Dans l'actualité" limite={3} tag={`situation:${slug}`} bandeau={false} className="mt-10" />
+      <BlocActus
+        titre="Dans l'actualité"
+        limite={3}
+        tag={`situation:${slug}`}
+        bandeau={false}
+        initiales={{ actus: ACTUS_VEILLE, genereLe: GENERE_LE_VEILLE }}
+        className="mt-10"
+      />
 
       <div className="mt-8">
         <h2 className="mb-4 font-display text-xl text-navy">Ressources utiles</h2>

@@ -73,6 +73,36 @@ describe('BlocActus', () => {
     expect(await screen.findByText('Indisponible')).toBeInTheDocument();
     expect(container).toBeEmptyDOMElement();
   });
+
+  it('affiche tout de suite les actus du build (HTML lu par Google), avec leur date', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockReturnValue(new Promise(() => {})));
+    const { BlocActus } = await import('../actus/BlocActus');
+    render(<BlocActus limite={20} avecDate initiales={{ actus: flux.actus as never, genereLe: flux.genere_le }} />);
+    expect(screen.getByText('Actu 1')).toBeInTheDocument();
+    expect(screen.getAllByRole('article')).toHaveLength(3);
+    expect(screen.getAllByText(/27 octobre 2026/).length).toBeGreaterThan(1);
+  });
+
+  it('garde les actus du build si la veille ne répond pas', async () => {
+    const appel = vi.fn().mockRejectedValue(new Error('coupé'));
+    vi.stubGlobal('fetch', appel);
+    const { BlocActus } = await import('../actus/BlocActus');
+    render(<BlocActus limite={3} tag="situation:dettes-urssaf" bandeau={false} initiales={{ actus: flux.actus as never, genereLe: flux.genere_le }} />);
+    await waitFor(() => expect(appel).toHaveBeenCalled());
+    await new Promise((r) => setTimeout(r, 0));
+    expect(screen.getByText('Actu 2')).toBeInTheDocument();
+    expect(screen.queryByText('Actu 1')).toBeNull();
+  });
+
+  it('remplace les actus du build par le fichier frais', async () => {
+    const frais = { ...flux, actus: [{ ...flux.actus[0], id: '9'.repeat(40), titre: 'Actu fraîche' }] };
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => frais }));
+    const { BlocActus } = await import('../actus/BlocActus');
+    render(<BlocActus limite={20} initiales={{ actus: flux.actus as never, genereLe: flux.genere_le }} />);
+    expect(screen.getByText('Actu 1')).toBeInTheDocument();
+    expect(await screen.findByText('Actu fraîche')).toBeInTheDocument();
+    expect(screen.queryByText('Actu 1')).toBeNull();
+  });
 });
 
 describe('grilleVignettes : jamais de case vide sur la dernière rangée', () => {

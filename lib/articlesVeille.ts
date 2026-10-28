@@ -50,6 +50,8 @@ export interface DonneesArticles {
   articles: ArticleActu[];
   /** Actus récentes du fichier de la veille (pour le bloc « Autres actus »). */
   actus: Actu[];
+  /** Date du fichier des actus (genere_le), '' s'il est absent. */
+  genereLe: string;
 }
 
 /**
@@ -67,7 +69,8 @@ export function choisirArticles(entrees: readonly EntreeArticle[], fluxBrut: unk
     articles.push(article);
   }
   articles.sort((a, b) => Date.parse(b.publie_le) - Date.parse(a.publie_le) || a.slug.localeCompare(b.slug));
-  return { articles, actus: lireFlux(fluxBrut)?.actus ?? [] };
+  const flux = lireFlux(fluxBrut);
+  return { articles, actus: flux?.actus ?? [], genereLe: flux?.genere_le ?? '' };
 }
 
 const ENTETE = '// GÉNÉRÉ par scripts/articles-veille.ts (npm run veille) — ne pas modifier, non versionné.\n';
@@ -80,6 +83,7 @@ export function moduleArticles(d: DonneesArticles): string {
   return (
     `${ENTETE}import type { ArticleActu, Actu } from './veille';\n\n` +
     `export const ARTICLES_VEILLE: readonly ArticleActu[] = ${JSON.stringify(d.articles, null, 1)};\n\n` +
-    `export const ACTUS_VEILLE: readonly Actu[] = ${JSON.stringify(d.actus, null, 1)};\n`
+    `export const ACTUS_VEILLE: readonly Actu[] = ${JSON.stringify(d.actus, null, 1)};\n\n` +
+    `export const GENERE_LE_VEILLE: string = ${JSON.stringify(d.genereLe)};\n`
   );
 }

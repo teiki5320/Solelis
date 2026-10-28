@@ -16,6 +16,11 @@ interface BlocActusProps {
   bandeau?: boolean;
   /** Affiche la date de mise à jour du fichier. */
   avecDate?: boolean;
+  /**
+   * Actus lues au build (lib/veille-articles.generated.ts) : rendues dans le HTML pour les moteurs
+   * de recherche et les visiteurs sans JavaScript, puis remplacées par le fichier frais de la veille.
+   */
+  initiales?: { actus: readonly Actu[]; genereLe: string };
   /** Texte montré quand aucune actu n'est disponible (par défaut : rien, le bloc disparaît). */
   siVide?: ReactNode;
   className?: string;
@@ -32,20 +37,30 @@ export function grilleVignettes(n: number, discret: boolean): { grille: string; 
   return { grille: 'md:grid-cols-2', derniere: n % 2 === 1 ? 'md:col-span-2' : '' };
 }
 
-type Etat = { phase: 'chargement' } | { phase: 'pret'; actus: Actu[]; genereLe: string };
+/** `fixe` : actus du build (dates fixes, l'âge serait faux) ; sinon, actus fraîches du navigateur. */
+type Etat = { phase: 'chargement' } | { phase: 'pret'; actus: Actu[]; genereLe: string; fixe: boolean };
 
 /**
  * Bloc d'actus lu en direct depuis la veille (voir lib/veille.ts).
- * Pendant le chargement, rien n'est affiché ; en cas d'erreur ou s'il n'y a aucune actu,
+ * Avec `initiales`, les actus du build sont affichées tout de suite (HTML lisible par Google),
+ * puis remplacées par le fichier frais ; si la veille ne répond pas, elles restent.
+ * Sans `initiales` : rien pendant le chargement ; en cas d'erreur ou s'il n'y a aucune actu,
  * le bloc reste absent : la page est intacte.
  */
-export function BlocActus({ titre, limite, tag, bandeau = true, avecDate = false, siVide = null, className = '' }: BlocActusProps) {
-  const [etat, setEtat] = useState<Etat>({ phase: 'chargement' });
+export function BlocActus({ titre, limite, tag, bandeau = true, avecDate = false, initiales, siVide = null, className = '' }: BlocActusProps) {
+  const [etat, setEtat] = useState<Etat>(() =>
+    initiales && initiales.actus.length > 0
+      ? { phase: 'pret', actus: filtrerActus([...initiales.actus], { tag, limite }), genereLe: initiales.genereLe, fixe: true }
+      : { phase: 'chargement' },
+  );
 
   useEffect(() => {
     let actif = true;
     chargerFlux().then((flux) => {
-      if (actif) setEtat({ phase: 'pret', actus: flux ? filtrerActus(flux.actus, { tag, limite }) : [], genereLe: flux?.genere_le ?? '' });
+      if (!actif) return;
+      // Veille injoignable : on garde les actus du build plutôt que de vider le bloc.
+      if (!flux) return setEtat((e) => (e.phase === 'pret' && e.fixe ? e : { phase: 'pret', actus: [], genereLe: '', fixe: false }));
+      setEtat({ phase: 'pret', actus: filtrerActus(flux.actus, { tag, limite }), genereLe: flux.genere_le, fixe: false });
     });
     return () => {
       actif = false;
@@ -65,12 +80,12 @@ export function BlocActus({ titre, limite, tag, bandeau = true, avecDate = false
       {titre && <h2 className="mb-4 font-display text-xl text-navy">{titre}</h2>}
       {maj && <p className="mb-4 text-sm text-navy/60">Mis à jour le {maj}.</p>}
       <div className="grid gap-4">
-        {une && <ActuBandeau actu={une} />}
+        {une && <ActuBandeau actu={une} dateFixe={etat.fixe} />}
         {suite.length > 0 && (
           <div className={`grid gap-3 ${grille.grille}`}>
             {suite.map((a, i) => (
               <div key={a.id} className={i === suite.length - 1 ? grille.derniere : ''}>
-                <ActuVignette actu={a} />
+                <ActuVignette actu={a} dateFixe={etat.fixe} />
               </div>
             ))}
           </div>

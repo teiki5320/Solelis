@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ogMeta } from '@/lib/og';
 import { BlocActus } from '@/components/actus/BlocActus';
+import { ACTUS_VEILLE, GENERE_LE_VEILLE } from '@/lib/veille-articles.generated';
 
 export const metadata: Metadata = ogMeta({
   chemin: '/actus',
@@ -23,8 +24,8 @@ const jsonLd = {
 };
 
 /**
- * Page /actus : les 20 dernières actus de la veille (1 bandeau + vignettes), lues dans le navigateur.
- * Le texte de la page est rendu au serveur ; seules les actus arrivent ensuite. Si la veille ne répond pas,
+ * Page /actus : les 20 dernières actus de la veille (1 bandeau + vignettes). Celles du build
+ * (2 constructions par jour) sont dans le HTML ; le navigateur les remplace par le fichier frais. Si la veille ne répond pas,
  * la page reste lisible avec un message court.
  */
 export default function ActusPage() {
@@ -62,6 +63,7 @@ export default function ActusPage() {
       <BlocActus
         limite={20}
         avecDate
+        initiales={{ actus: ACTUS_VEILLE, genereLe: GENERE_LE_VEILLE }}
         className="mt-10"
         siVide={
           <p className="glass-soft rounded-2xl p-6 text-center text-sm text-navy/70">
