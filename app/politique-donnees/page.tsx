@@ -23,7 +23,7 @@ export default function PolitiqueDonneesPage() {
         <section className="rounded-2xl border border-vert/30 bg-vert/5 p-5">
           <p className="font-display text-base text-vert">L&apos;essentiel</p>
           <ul className="mt-3 space-y-2 text-navy/80">
-            <li><strong>Aucun cookie publicitaire</strong>, aucun traceur tiers</li>
+            <li><strong>Aucun cookie</strong>, aucun traceur publicitaire ; mesure d&apos;audience sans cookie, jamais sur votre fiche ni sur le questionnaire</li>
             <li>Vos réponses au questionnaire et votre fiche sont <strong>stockées dans une base Cloudflare limitée à l&apos;UE</strong> derrière un token aléatoire (24 caractères)</li>
             <li>L&apos;<strong>email n&apos;est demandé que pour vous envoyer un lien magique</strong> de retour vers votre fiche — pas de mailing, pas de partage</li>
             <li>Vous pouvez <strong>demander la suppression</strong> de votre fiche à tout moment, sur simple demande à solelis@toakeur.com</li>
@@ -88,7 +88,7 @@ export default function PolitiqueDonneesPage() {
             <li>Produire votre fiche personnalisée</li>
             <li>Vous renvoyer un lien magique pour retrouver votre fiche (si email fourni)</li>
             <li>Vous envoyer des rappels que vous avez explicitement demandés</li>
-            <li>Mesurer l&apos;usage du site de manière agrégée (Plausible Analytics, sans cookie ni profilage)</li>
+            <li>Mesurer l&apos;usage du site de manière agrégée (Cloudflare Web Analytics, sans cookie ni profilage ; seule la page d&apos;arrivée est comptée, jamais votre fiche ni le questionnaire)</li>
           </ul>
         </section>
 
@@ -98,7 +98,7 @@ export default function PolitiqueDonneesPage() {
             <li><strong>Fiche personnalisée</strong> : conservée 24 mois maximum après sa création. Vous pouvez en obtenir la suppression à tout moment sur simple demande à solelis@toakeur.com. L&apos;effacement automatique à l&apos;issue de ce délai sera mis en place prochainement ; d&apos;ici là, les fiches arrivées à échéance sont supprimées manuellement.</li>
             <li><strong>Email associé à un lien magique</strong> : 24 mois.</li>
             <li><strong>Logs serveur</strong> : 90 jours (à des fins de sécurité et de diagnostic).</li>
-            <li><strong>Statistiques agrégées Plausible</strong> : indéfiniment, sans données identifiantes.</li>
+            <li><strong>Statistiques de visites (Cloudflare Web Analytics)</strong> : agrégées, sans données identifiantes.</li>
           </ul>
         </section>
 
@@ -127,7 +127,7 @@ export default function PolitiqueDonneesPage() {
             <li><strong>Cloudflare, Inc.</strong> (États-Unis) : hébergement de l&apos;application — transfert UE → États-Unis encadré par le cadre de protection des données UE–États-Unis (Data Privacy Framework), auquel Cloudflare est certifiée, et par les clauses contractuelles types de la Commission européenne</li>
             <li><strong>Cloudflare, Inc.</strong> (base Cloudflare D1, stockage limité à l&apos;UE) : base de données fiches</li>
             <li><strong>Resend</strong> (Plus Five Five, Inc., États-Unis) : envoi du lien magique et des rappels par email — vos données d&apos;email sont traitées aux États-Unis ; transfert encadré par le Data Privacy Framework UE–États-Unis, auquel Resend est certifiée, et par les clauses contractuelles types (décision 2021/914 de la Commission européenne)</li>
-            <li><strong>Plausible Analytics</strong> (UE) : statistiques d&apos;usage agrégées</li>
+            <li><strong>Cloudflare, Inc.</strong> (Cloudflare Web Analytics) : statistiques de visites agrégées, sans cookie — même encadrement des transferts que l&apos;hébergement</li>
             <li><strong>INSEE / API Sirene</strong> : récupération des données publiques d&apos;entreprise (en lecture uniquement)</li>
             <li><strong>API Recherche d&apos;entreprises</strong> (État, api.gouv.fr) : même recherche des données publiques d&apos;entreprise, faite par notre serveur et aussi directement par votre navigateur pendant le questionnaire — l&apos;API reçoit alors le SIRET saisi et l&apos;adresse IP de votre connexion, sans cookie ni autre donnée</li>
             <li><strong>Google LLC</strong> (États-Unis, API Google Places) : recherche d&apos;avocats à proximité — la requête, envoyée par notre serveur, contient seulement une zone géographique, sans donnée personnelle directe ; Google est certifiée au Data Privacy Framework UE–États-Unis et recourt aux clauses contractuelles types</li>
