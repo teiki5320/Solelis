@@ -129,6 +129,7 @@ export default function CourrierDetail({ slug }: { slug: string }) {
         <p className="mt-2 text-navy/60">
           Destinataire : {personalized?.destinataire ?? template.destinataire}
         </p>
+        {template.aSavoir && <p className="mt-2 max-w-3xl text-sm text-navy/60">{template.aSavoir}</p>}
         {context && (personalized?.preambule || personalized?.closing) && (
           <p className="mt-3 text-xs text-vert">
             ✓ Courrier adapté à votre situation

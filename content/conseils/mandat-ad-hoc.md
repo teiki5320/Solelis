@@ -117,5 +117,5 @@ Pour comparer avec les autres procédures, consultez [Médiation, mandat ad hoc,
 1. **Vérifiez que l'entreprise n'est pas en cessation des paiements**, avec votre expert-comptable.
 2. **Listez vos principaux créanciers** et ce que vous voulez obtenir de chacun (délais, remise, maintien d'un financement).
 3. **Prenez un avis gratuit** auprès d'un centre d'information sur la prévention des difficultés (CIP) : voir notre [annuaire des CIP](/annuaires/cip).
-4. **Rédigez la demande** avec notre [modèle](/courriers/mandat-ad-hoc) et déposez-la via Tribunal digital ou au greffe.
+4. **Rédigez la demande** avec notre [modèle de formulaire de mandat ad hoc](/courriers/mandat-ad-hoc) et déposez-la via Tribunal digital ou au greffe.
 5. **Discutez la rémunération** avant de donner votre accord : demandez les critères et le montant maximal par écrit.

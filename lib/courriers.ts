@@ -9,6 +9,12 @@ export interface CourrierTemplate {
   description: string;
   objet: string;
   corps: string;
+  /** Titre pour Google (page /courriers/<slug>), s'il diffère de « <titre> : modèle de courrier ». */
+  titreRecherche?: string;
+  /** Description pour Google, si elle diffère de la description du modèle. */
+  descriptionRecherche?: string;
+  /** Court paragraphe visible sous le titre, qui répond à la recherche la plus fréquente. */
+  aSavoir?: string;
 }
 
 export interface CourrierContext {
@@ -347,6 +353,9 @@ Cordialement,`,
     categorie: 'tribunal',
     icone: '🔒',
     description: 'Demander la désignation d\'un mandataire pour négocier confidentiellement.',
+    titreRecherche: 'Formulaire de mandat ad hoc : modèle de requête — Solelis',
+    descriptionRecherche: 'Modèle gratuit de requête en désignation d\'un mandataire ad hoc (art. L611-3 du Code de commerce), prérempli, avec la liste des pièces à joindre.',
+    aSavoir: 'Le greffe du tribunal propose aussi un formulaire « Demande de désignation d\'un mandataire ad hoc ». Ce modèle vous aide à rédiger la requête et à réunir les pièces à joindre ; la demande se dépose en ligne (Tribunal digital) ou en 2 exemplaires au greffe du tribunal du siège.',
     objet: 'Requête aux fins de désignation d\'un mandataire ad hoc',
     corps: `Madame, Monsieur le Président du {{TRIBUNAL}},
 
@@ -521,6 +530,8 @@ Important : la commission de recours amiable doit être saisie dans un délai de
     categorie: 'impots',
     icone: '🏛️',
     description: 'Demande d\'échelonnement global de vos dettes fiscales ET sociales en un seul dossier.',
+    titreRecherche: 'Saisine de la CCSF : modèle de courrier gratuit — Solelis',
+    descriptionRecherche: 'Saisine de la CCSF : modèle gratuit pour étaler en un seul plan vos dettes fiscales et sociales, courrier prérempli et liste des pièces à joindre.',
     objet: 'Demande de saisine de la CCSF — plan d\'apurement global',
     corps: `Madame, Monsieur,
 

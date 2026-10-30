@@ -24,9 +24,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     titre: courrier.titre,
     sous: `Modèle de courrier · ${courrier.destinataire}`,
     // Le complément seulement s'il tient dans la description affichée par Google.
-    description: courrier.description.length + complement.length <= DESCRIPTION_MAX ? courrier.description + complement : courrier.description,
+    description:
+      courrier.descriptionRecherche ??
+      (courrier.description.length + complement.length <= DESCRIPTION_MAX ? courrier.description + complement : courrier.description),
     cat: 'courrier',
-    pageTitle: `${courrier.titre} : modèle de courrier — Solelis`,
+    pageTitle: courrier.titreRecherche ?? `${courrier.titre} : modèle de courrier — Solelis`,
     chemin: `/courriers/${courrier.slug}`,
   });
 }
